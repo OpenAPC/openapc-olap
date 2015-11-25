@@ -1,0 +1,55 @@
+{
+    "name": "openapc_model",
+    "label": "openapc standard model",
+    "description": "model for open apc data",
+    "cubes": [
+        {
+            "name": "openapc",
+            "label": "openapc cube",
+            "measures": [
+                {
+                    "name": "Euro",
+                    "label": "APC Amount"
+                }
+            ],
+            "aggregates": [
+                {
+                    "name": "apc_amount_sum",
+                    "label": "sum of apc",
+                    "measure": "Euro",
+                    "function": "sum"
+                },
+                {
+                    "name": "apc_amount_avg",
+                    "label": "average apc",
+                    "measure": "Euro",
+                    "function": "avg"
+                },
+                {
+                    "name": "apc_num_items",
+                    "label": "count of apc transactions",
+                    "measure": "Euro",
+                    "function": "count"
+                }
+            ],
+            "dimensions": ["institution", "period", "publisher"]
+        }
+    ],
+    "dimensions": [
+        {
+            "name": "period",
+            "description": "Time Period (Year)",
+            "attributes": ["Period"]
+        },
+        {
+            "name": "institution",
+            "description": "A data-providing institution (like unibi)",
+            "attributes": ["Institution"]
+        },
+        {
+            "name": "publisher",
+            "description": "A publisher for publications",
+            "attributes": ["publisher"]
+        }
+    ]
+}

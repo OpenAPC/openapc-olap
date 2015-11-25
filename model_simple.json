@@ -1,0 +1,8 @@
+{
+    "cubes": [
+        {
+            "name": "openapc",
+            "dimensions": ["item", "period", "euro"]
+        }
+    ]
+}

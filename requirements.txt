@@ -1,0 +1,16 @@
+Flask==0.10.1
+Flask-Cors==2.1.2
+Jinja2==2.8
+MarkupSafe==0.23
+SQLAlchemy==1.0.9
+Werkzeug==0.11.1
+argparse==1.2.1
+cubes==1.0.1
+functools32==3.2.3-2
+itsdangerous==0.24
+jsonschema==2.5.1
+psycopg2==2.6.1
+python-dateutil==2.4.2
+pytz==2015.7
+six==1.10.0
+wsgiref==0.1.2
