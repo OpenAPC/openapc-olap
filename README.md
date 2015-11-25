@@ -1,6 +1,7 @@
 openapc_cubes is a minimal [OLAP](https://en.wikipedia.org/wiki/Online_analytical_processing) Server based on [cubes](http://cubes.databrewery.org/), meant to provide a backend for [OpenAPC data](https://github.com/OpenAPC).
 
 Installation:
+
     clone or download/unzip
     cd openapc_cubes
     virtualenv venv (Create a python virtual environment)
