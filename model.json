@@ -32,7 +32,7 @@
                     "function": "count"
                 }
             ],
-            "dimensions": ["institution", "period", "publisher"]
+            "dimensions": ["institution", "period", "publisher", "journal"]
         }
     ],
     "dimensions": [
@@ -50,6 +50,11 @@
             "name": "publisher",
             "description": "A publisher for publications",
             "attributes": ["publisher"]
+        },
+        {
+            "name": "journal",
+            "description": "title of a journal an article was pubished in",
+            "attributes": ["journal_full_title"]
         }
     ]
 }
