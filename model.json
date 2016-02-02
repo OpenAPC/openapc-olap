@@ -8,7 +8,7 @@
             "label": "openapc cube",
             "measures": [
                 {
-                    "name": "Euro",
+                    "name": "euro",
                     "label": "APC Amount"
                 }
             ],
@@ -16,35 +16,35 @@
                 {
                     "name": "apc_amount_sum",
                     "label": "sum of apc",
-                    "measure": "Euro",
+                    "measure": "euro",
                     "function": "sum"
                 },
                 {
                     "name": "apc_amount_avg",
                     "label": "average apc",
-                    "measure": "Euro",
+                    "measure": "euro",
                     "function": "avg"
                 },
                 {
                     "name": "apc_num_items",
                     "label": "count of apc transactions",
-                    "measure": "Euro",
+                    "measure": "euro",
                     "function": "count"
                 }
             ],
-            "dimensions": ["institution", "period", "publisher", "journal", "doi"]
+            "dimensions": ["institution", "period", "publisher", "journal_full_title", "doi"]
         }
     ],
     "dimensions": [
         {
             "name": "period",
             "description": "Time Period (Year)",
-            "attributes": ["Period"]
+            "attributes": ["period"]
         },
         {
             "name": "institution",
             "description": "A data-providing institution (like unibi)",
-            "attributes": ["Institution"]
+            "attributes": ["institution"]
         },
         {
             "name": "publisher",
@@ -52,8 +52,8 @@
             "attributes": ["publisher"]
         },
         {
-            "name": "journal",
-            "description": "title of a journal an article was pubished in",
+            "name": "journal_full_title",
+            "description": "title of a journal an article was published in",
             "attributes": ["journal_full_title"]
         },
         {
