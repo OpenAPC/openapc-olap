@@ -1,0 +1,14 @@
+default: publisher
+
+filters:
+  - field: 'period'
+    name: 'Jahr'
+    nullable: true
+
+hierarchies:
+    publisher:
+        name: Publisher
+        drilldowns:
+            - publisher
+            - journal_full_title
+            - doi

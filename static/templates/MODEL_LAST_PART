@@ -1,0 +1,29 @@
+    ],
+    "dimensions": [
+        {
+            "name": "period",
+            "description": "Time Period (Year)",
+            "attributes": ["period"]
+        },
+        {
+            "name": "institution",
+            "description": "A data-providing institution (like unibi)",
+            "attributes": ["institution"]
+        },
+        {
+            "name": "publisher",
+            "description": "A publisher for publications",
+            "attributes": ["publisher"]
+        },
+        {
+            "name": "journal_full_title",
+            "description": "title of a journal an article was published in",
+            "attributes": ["journal_full_title"]
+        },
+        {
+            "name": "doi",
+            "description": "doi identifying an article",
+            "attributes": ["doi"]
+        }
+    ]
+}

@@ -34,6 +34,934 @@
             ],
             "dimensions": ["institution", "period", "publisher", "journal_full_title", "doi"]
         }
+        ,
+        {
+            "name": "bamberg_u",
+            "label": "Bamberg University openAPC data cube",
+            "measures": [
+                {
+                    "name": "euro",
+                    "label": "APC Amount"
+                }
+            ],
+            "aggregates": [
+                {
+                    "name": "apc_amount_sum",
+                    "label": "sum of apc",
+                    "measure": "euro",
+                    "function": "sum"
+                },
+                {
+                    "name": "apc_amount_avg",
+                    "label": "average apc",
+                    "measure": "euro",
+                    "function": "avg"
+                },
+                {
+                    "name": "apc_num_items",
+                    "label": "count of apc transactions",
+                    "measure": "euro",
+                    "function": "count"
+                }
+            ],
+            "dimensions": ["period", "publisher", "journal_full_title", "doi"]
+        }
+        ,
+        {
+            "name": "bielefeld_u",
+            "label": "Bielefeld University openAPC data cube",
+            "measures": [
+                {
+                    "name": "euro",
+                    "label": "APC Amount"
+                }
+            ],
+            "aggregates": [
+                {
+                    "name": "apc_amount_sum",
+                    "label": "sum of apc",
+                    "measure": "euro",
+                    "function": "sum"
+                },
+                {
+                    "name": "apc_amount_avg",
+                    "label": "average apc",
+                    "measure": "euro",
+                    "function": "avg"
+                },
+                {
+                    "name": "apc_num_items",
+                    "label": "count of apc transactions",
+                    "measure": "euro",
+                    "function": "count"
+                }
+            ],
+            "dimensions": ["period", "publisher", "journal_full_title", "doi"]
+        }
+        ,
+        {
+            "name": "duisburg_essen_u",
+            "label": "University of Duisburg-Essen openAPC data cube",
+            "measures": [
+                {
+                    "name": "euro",
+                    "label": "APC Amount"
+                }
+            ],
+            "aggregates": [
+                {
+                    "name": "apc_amount_sum",
+                    "label": "sum of apc",
+                    "measure": "euro",
+                    "function": "sum"
+                },
+                {
+                    "name": "apc_amount_avg",
+                    "label": "average apc",
+                    "measure": "euro",
+                    "function": "avg"
+                },
+                {
+                    "name": "apc_num_items",
+                    "label": "count of apc transactions",
+                    "measure": "euro",
+                    "function": "count"
+                }
+            ],
+            "dimensions": ["period", "publisher", "journal_full_title", "doi"]
+        }
+        ,
+        {
+            "name": "fu_berlin",
+            "label": "Free University of Berlin openAPC data cube",
+            "measures": [
+                {
+                    "name": "euro",
+                    "label": "APC Amount"
+                }
+            ],
+            "aggregates": [
+                {
+                    "name": "apc_amount_sum",
+                    "label": "sum of apc",
+                    "measure": "euro",
+                    "function": "sum"
+                },
+                {
+                    "name": "apc_amount_avg",
+                    "label": "average apc",
+                    "measure": "euro",
+                    "function": "avg"
+                },
+                {
+                    "name": "apc_num_items",
+                    "label": "count of apc transactions",
+                    "measure": "euro",
+                    "function": "count"
+                }
+            ],
+            "dimensions": ["period", "publisher", "journal_full_title", "doi"]
+        }
+        ,
+        {
+            "name": "gfz_potsdam",
+            "label": "Library Wissenschaftspark Albert Einstein openAPC data cube",
+            "measures": [
+                {
+                    "name": "euro",
+                    "label": "APC Amount"
+                }
+            ],
+            "aggregates": [
+                {
+                    "name": "apc_amount_sum",
+                    "label": "sum of apc",
+                    "measure": "euro",
+                    "function": "sum"
+                },
+                {
+                    "name": "apc_amount_avg",
+                    "label": "average apc",
+                    "measure": "euro",
+                    "function": "avg"
+                },
+                {
+                    "name": "apc_num_items",
+                    "label": "count of apc transactions",
+                    "measure": "euro",
+                    "function": "count"
+                }
+            ],
+            "dimensions": ["period", "publisher", "journal_full_title", "doi"]
+        }
+        ,
+        {
+            "name": "konstanz_u",
+            "label": "University of Konstanz openAPC data cube",
+            "measures": [
+                {
+                    "name": "euro",
+                    "label": "APC Amount"
+                }
+            ],
+            "aggregates": [
+                {
+                    "name": "apc_amount_sum",
+                    "label": "sum of apc",
+                    "measure": "euro",
+                    "function": "sum"
+                },
+                {
+                    "name": "apc_amount_avg",
+                    "label": "average apc",
+                    "measure": "euro",
+                    "function": "avg"
+                },
+                {
+                    "name": "apc_num_items",
+                    "label": "count of apc transactions",
+                    "measure": "euro",
+                    "function": "count"
+                }
+            ],
+            "dimensions": ["period", "publisher", "journal_full_title", "doi"]
+        }
+        ,
+        {
+            "name": "lepzig_u",
+            "label": "Leipzig University openAPC data cube",
+            "measures": [
+                {
+                    "name": "euro",
+                    "label": "APC Amount"
+                }
+            ],
+            "aggregates": [
+                {
+                    "name": "apc_amount_sum",
+                    "label": "sum of apc",
+                    "measure": "euro",
+                    "function": "sum"
+                },
+                {
+                    "name": "apc_amount_avg",
+                    "label": "average apc",
+                    "measure": "euro",
+                    "function": "avg"
+                },
+                {
+                    "name": "apc_num_items",
+                    "label": "count of apc transactions",
+                    "measure": "euro",
+                    "function": "count"
+                }
+            ],
+            "dimensions": ["period", "publisher", "journal_full_title", "doi"]
+        }
+        ,
+        {
+            "name": "mpg",
+            "label": "Max Planck Digital Library openAPC data cube",
+            "measures": [
+                {
+                    "name": "euro",
+                    "label": "APC Amount"
+                }
+            ],
+            "aggregates": [
+                {
+                    "name": "apc_amount_sum",
+                    "label": "sum of apc",
+                    "measure": "euro",
+                    "function": "sum"
+                },
+                {
+                    "name": "apc_amount_avg",
+                    "label": "average apc",
+                    "measure": "euro",
+                    "function": "avg"
+                },
+                {
+                    "name": "apc_num_items",
+                    "label": "count of apc transactions",
+                    "measure": "euro",
+                    "function": "count"
+                }
+            ],
+            "dimensions": ["period", "publisher", "journal_full_title", "doi"]
+        }
+        ,
+        {
+            "name": "regensburg_u",
+            "label": "University of Regensburg openAPC data cube",
+            "measures": [
+                {
+                    "name": "euro",
+                    "label": "APC Amount"
+                }
+            ],
+            "aggregates": [
+                {
+                    "name": "apc_amount_sum",
+                    "label": "sum of apc",
+                    "measure": "euro",
+                    "function": "sum"
+                },
+                {
+                    "name": "apc_amount_avg",
+                    "label": "average apc",
+                    "measure": "euro",
+                    "function": "avg"
+                },
+                {
+                    "name": "apc_num_items",
+                    "label": "count of apc transactions",
+                    "measure": "euro",
+                    "function": "count"
+                }
+            ],
+            "dimensions": ["period", "publisher", "journal_full_title", "doi"]
+        }
+        ,
+        {
+            "name": "tu_clausthal",
+            "label": "Clausthal University of Technology openAPC data cube",
+            "measures": [
+                {
+                    "name": "euro",
+                    "label": "APC Amount"
+                }
+            ],
+            "aggregates": [
+                {
+                    "name": "apc_amount_sum",
+                    "label": "sum of apc",
+                    "measure": "euro",
+                    "function": "sum"
+                },
+                {
+                    "name": "apc_amount_avg",
+                    "label": "average apc",
+                    "measure": "euro",
+                    "function": "avg"
+                },
+                {
+                    "name": "apc_num_items",
+                    "label": "count of apc transactions",
+                    "measure": "euro",
+                    "function": "count"
+                }
+            ],
+            "dimensions": ["period", "publisher", "journal_full_title", "doi"]
+        }
+        ,
+        {
+            "name": "muenchen_lmu",
+            "label": "Ludwig-Maximilians-Universität München openAPC data cube",
+            "measures": [
+                {
+                    "name": "euro",
+                    "label": "APC Amount"
+                }
+            ],
+            "aggregates": [
+                {
+                    "name": "apc_amount_sum",
+                    "label": "sum of apc",
+                    "measure": "euro",
+                    "function": "sum"
+                },
+                {
+                    "name": "apc_amount_avg",
+                    "label": "average apc",
+                    "measure": "euro",
+                    "function": "avg"
+                },
+                {
+                    "name": "apc_num_items",
+                    "label": "count of apc transactions",
+                    "measure": "euro",
+                    "function": "count"
+                }
+            ],
+            "dimensions": ["period", "publisher", "journal_full_title", "doi"]
+        }
+        ,
+        {
+            "name": "goettingen_u",
+            "label": "University of Göttingen openAPC data cube",
+            "measures": [
+                {
+                    "name": "euro",
+                    "label": "APC Amount"
+                }
+            ],
+            "aggregates": [
+                {
+                    "name": "apc_amount_sum",
+                    "label": "sum of apc",
+                    "measure": "euro",
+                    "function": "sum"
+                },
+                {
+                    "name": "apc_amount_avg",
+                    "label": "average apc",
+                    "measure": "euro",
+                    "function": "avg"
+                },
+                {
+                    "name": "apc_num_items",
+                    "label": "count of apc transactions",
+                    "measure": "euro",
+                    "function": "count"
+                }
+            ],
+            "dimensions": ["period", "publisher", "journal_full_title", "doi"]
+        }
+        ,
+        {
+            "name": "heidelberg_u",
+            "label": "Heidelberg University openAPC data cube",
+            "measures": [
+                {
+                    "name": "euro",
+                    "label": "APC Amount"
+                }
+            ],
+            "aggregates": [
+                {
+                    "name": "apc_amount_sum",
+                    "label": "sum of apc",
+                    "measure": "euro",
+                    "function": "sum"
+                },
+                {
+                    "name": "apc_amount_avg",
+                    "label": "average apc",
+                    "measure": "euro",
+                    "function": "avg"
+                },
+                {
+                    "name": "apc_num_items",
+                    "label": "count of apc transactions",
+                    "measure": "euro",
+                    "function": "count"
+                }
+            ],
+            "dimensions": ["period", "publisher", "journal_full_title", "doi"]
+        }
+        ,
+        {
+            "name": "hamburg_tuhh",
+            "label": "Hamburg University of Technology openAPC data cube",
+            "measures": [
+                {
+                    "name": "euro",
+                    "label": "APC Amount"
+                }
+            ],
+            "aggregates": [
+                {
+                    "name": "apc_amount_sum",
+                    "label": "sum of apc",
+                    "measure": "euro",
+                    "function": "sum"
+                },
+                {
+                    "name": "apc_amount_avg",
+                    "label": "average apc",
+                    "measure": "euro",
+                    "function": "avg"
+                },
+                {
+                    "name": "apc_num_items",
+                    "label": "count of apc transactions",
+                    "measure": "euro",
+                    "function": "count"
+                }
+            ],
+            "dimensions": ["period", "publisher", "journal_full_title", "doi"]
+        }
+        ,
+        {
+            "name": "bayreuth_u",
+            "label": "Bayreuth University openAPC data cube",
+            "measures": [
+                {
+                    "name": "euro",
+                    "label": "APC Amount"
+                }
+            ],
+            "aggregates": [
+                {
+                    "name": "apc_amount_sum",
+                    "label": "sum of apc",
+                    "measure": "euro",
+                    "function": "sum"
+                },
+                {
+                    "name": "apc_amount_avg",
+                    "label": "average apc",
+                    "measure": "euro",
+                    "function": "avg"
+                },
+                {
+                    "name": "apc_num_items",
+                    "label": "count of apc transactions",
+                    "measure": "euro",
+                    "function": "count"
+                }
+            ],
+            "dimensions": ["period", "publisher", "journal_full_title", "doi"]
+        }
+        ,
+        {
+            "name": "kit",
+            "label": "KIT Karlsruhe openAPC data cube",
+            "measures": [
+                {
+                    "name": "euro",
+                    "label": "APC Amount"
+                }
+            ],
+            "aggregates": [
+                {
+                    "name": "apc_amount_sum",
+                    "label": "sum of apc",
+                    "measure": "euro",
+                    "function": "sum"
+                },
+                {
+                    "name": "apc_amount_avg",
+                    "label": "average apc",
+                    "measure": "euro",
+                    "function": "avg"
+                },
+                {
+                    "name": "apc_num_items",
+                    "label": "count of apc transactions",
+                    "measure": "euro",
+                    "function": "count"
+                }
+            ],
+            "dimensions": ["period", "publisher", "journal_full_title", "doi"]
+        }
+        ,
+        {
+            "name": "inm",
+            "label": "INM - Leibniz Institute for New Materials openAPC data cube",
+            "measures": [
+                {
+                    "name": "euro",
+                    "label": "APC Amount"
+                }
+            ],
+            "aggregates": [
+                {
+                    "name": "apc_amount_sum",
+                    "label": "sum of apc",
+                    "measure": "euro",
+                    "function": "sum"
+                },
+                {
+                    "name": "apc_amount_avg",
+                    "label": "average apc",
+                    "measure": "euro",
+                    "function": "avg"
+                },
+                {
+                    "name": "apc_num_items",
+                    "label": "count of apc transactions",
+                    "measure": "euro",
+                    "function": "count"
+                }
+            ],
+            "dimensions": ["period", "publisher", "journal_full_title", "doi"]
+        }
+        ,
+        {
+            "name": "mdc",
+            "label": "Max Delbrück Center for Molecular Medicine (MDC) openAPC data cube",
+            "measures": [
+                {
+                    "name": "euro",
+                    "label": "APC Amount"
+                }
+            ],
+            "aggregates": [
+                {
+                    "name": "apc_amount_sum",
+                    "label": "sum of apc",
+                    "measure": "euro",
+                    "function": "sum"
+                },
+                {
+                    "name": "apc_amount_avg",
+                    "label": "average apc",
+                    "measure": "euro",
+                    "function": "avg"
+                },
+                {
+                    "name": "apc_num_items",
+                    "label": "count of apc transactions",
+                    "measure": "euro",
+                    "function": "count"
+                }
+            ],
+            "dimensions": ["period", "publisher", "journal_full_title", "doi"]
+        }
+        ,
+        {
+            "name": "tu_chemnitz",
+            "label": "Technische Universität Chemnitz openAPC data cube",
+            "measures": [
+                {
+                    "name": "euro",
+                    "label": "APC Amount"
+                }
+            ],
+            "aggregates": [
+                {
+                    "name": "apc_amount_sum",
+                    "label": "sum of apc",
+                    "measure": "euro",
+                    "function": "sum"
+                },
+                {
+                    "name": "apc_amount_avg",
+                    "label": "average apc",
+                    "measure": "euro",
+                    "function": "avg"
+                },
+                {
+                    "name": "apc_num_items",
+                    "label": "count of apc transactions",
+                    "measure": "euro",
+                    "function": "count"
+                }
+            ],
+            "dimensions": ["period", "publisher", "journal_full_title", "doi"]
+        }
+        ,
+        {
+            "name": "tu_dresden",
+            "label": "Technische Universität Dresden openAPC data cube",
+            "measures": [
+                {
+                    "name": "euro",
+                    "label": "APC Amount"
+                }
+            ],
+            "aggregates": [
+                {
+                    "name": "apc_amount_sum",
+                    "label": "sum of apc",
+                    "measure": "euro",
+                    "function": "sum"
+                },
+                {
+                    "name": "apc_amount_avg",
+                    "label": "average apc",
+                    "measure": "euro",
+                    "function": "avg"
+                },
+                {
+                    "name": "apc_num_items",
+                    "label": "count of apc transactions",
+                    "measure": "euro",
+                    "function": "count"
+                }
+            ],
+            "dimensions": ["period", "publisher", "journal_full_title", "doi"]
+        }
+        ,
+        {
+            "name": "dortmund_tu",
+            "label": "Technische Universität Dortmund openAPC data cube",
+            "measures": [
+                {
+                    "name": "euro",
+                    "label": "APC Amount"
+                }
+            ],
+            "aggregates": [
+                {
+                    "name": "apc_amount_sum",
+                    "label": "sum of apc",
+                    "measure": "euro",
+                    "function": "sum"
+                },
+                {
+                    "name": "apc_amount_avg",
+                    "label": "average apc",
+                    "measure": "euro",
+                    "function": "avg"
+                },
+                {
+                    "name": "apc_num_items",
+                    "label": "count of apc transactions",
+                    "measure": "euro",
+                    "function": "count"
+                }
+            ],
+            "dimensions": ["period", "publisher", "journal_full_title", "doi"]
+        }
+        ,
+        {
+            "name": "bochum_u",
+            "label": "Ruhr Universität Bochum openAPC data cube",
+            "measures": [
+                {
+                    "name": "euro",
+                    "label": "APC Amount"
+                }
+            ],
+            "aggregates": [
+                {
+                    "name": "apc_amount_sum",
+                    "label": "sum of apc",
+                    "measure": "euro",
+                    "function": "sum"
+                },
+                {
+                    "name": "apc_amount_avg",
+                    "label": "average apc",
+                    "measure": "euro",
+                    "function": "avg"
+                },
+                {
+                    "name": "apc_num_items",
+                    "label": "count of apc transactions",
+                    "measure": "euro",
+                    "function": "count"
+                }
+            ],
+            "dimensions": ["period", "publisher", "journal_full_title", "doi"]
+        }
+        ,
+        {
+            "name": "giessen_u",
+            "label": "JLU Gießen openAPC data cube",
+            "measures": [
+                {
+                    "name": "euro",
+                    "label": "APC Amount"
+                }
+            ],
+            "aggregates": [
+                {
+                    "name": "apc_amount_sum",
+                    "label": "sum of apc",
+                    "measure": "euro",
+                    "function": "sum"
+                },
+                {
+                    "name": "apc_amount_avg",
+                    "label": "average apc",
+                    "measure": "euro",
+                    "function": "avg"
+                },
+                {
+                    "name": "apc_num_items",
+                    "label": "count of apc transactions",
+                    "measure": "euro",
+                    "function": "count"
+                }
+            ],
+            "dimensions": ["period", "publisher", "journal_full_title", "doi"]
+        }
+        ,
+        {
+            "name": "fzj_fb",
+            "label": "Forschungszentrum Jülich openAPC data cube",
+            "measures": [
+                {
+                    "name": "euro",
+                    "label": "APC Amount"
+                }
+            ],
+            "aggregates": [
+                {
+                    "name": "apc_amount_sum",
+                    "label": "sum of apc",
+                    "measure": "euro",
+                    "function": "sum"
+                },
+                {
+                    "name": "apc_amount_avg",
+                    "label": "average apc",
+                    "measure": "euro",
+                    "function": "avg"
+                },
+                {
+                    "name": "apc_num_items",
+                    "label": "count of apc transactions",
+                    "measure": "euro",
+                    "function": "count"
+                }
+            ],
+            "dimensions": ["period", "publisher", "journal_full_title", "doi"]
+        }
+        ,
+        {
+            "name": "kassel_u",
+            "label": "University of Kassel openAPC data cube",
+            "measures": [
+                {
+                    "name": "euro",
+                    "label": "APC Amount"
+                }
+            ],
+            "aggregates": [
+                {
+                    "name": "apc_amount_sum",
+                    "label": "sum of apc",
+                    "measure": "euro",
+                    "function": "sum"
+                },
+                {
+                    "name": "apc_amount_avg",
+                    "label": "average apc",
+                    "measure": "euro",
+                    "function": "avg"
+                },
+                {
+                    "name": "apc_num_items",
+                    "label": "count of apc transactions",
+                    "measure": "euro",
+                    "function": "count"
+                }
+            ],
+            "dimensions": ["period", "publisher", "journal_full_title", "doi"]
+        }
+        ,
+        {
+            "name": "tu_ilmenau",
+            "label": "Technische Universität Ilmenau openAPC data cube",
+            "measures": [
+                {
+                    "name": "euro",
+                    "label": "APC Amount"
+                }
+            ],
+            "aggregates": [
+                {
+                    "name": "apc_amount_sum",
+                    "label": "sum of apc",
+                    "measure": "euro",
+                    "function": "sum"
+                },
+                {
+                    "name": "apc_amount_avg",
+                    "label": "average apc",
+                    "measure": "euro",
+                    "function": "avg"
+                },
+                {
+                    "name": "apc_num_items",
+                    "label": "count of apc transactions",
+                    "measure": "euro",
+                    "function": "count"
+                }
+            ],
+            "dimensions": ["period", "publisher", "journal_full_title", "doi"]
+        }
+        ,
+        {
+            "name": "tu_muenchen",
+            "label": "Technische Universität München openAPC data cube",
+            "measures": [
+                {
+                    "name": "euro",
+                    "label": "APC Amount"
+                }
+            ],
+            "aggregates": [
+                {
+                    "name": "apc_amount_sum",
+                    "label": "sum of apc",
+                    "measure": "euro",
+                    "function": "sum"
+                },
+                {
+                    "name": "apc_amount_avg",
+                    "label": "average apc",
+                    "measure": "euro",
+                    "function": "avg"
+                },
+                {
+                    "name": "apc_num_items",
+                    "label": "count of apc transactions",
+                    "measure": "euro",
+                    "function": "count"
+                }
+            ],
+            "dimensions": ["period", "publisher", "journal_full_title", "doi"]
+        }
+        ,
+        {
+            "name": "hannover_u",
+            "label": "Leibniz Universität Hannover openAPC data cube",
+            "measures": [
+                {
+                    "name": "euro",
+                    "label": "APC Amount"
+                }
+            ],
+            "aggregates": [
+                {
+                    "name": "apc_amount_sum",
+                    "label": "sum of apc",
+                    "measure": "euro",
+                    "function": "sum"
+                },
+                {
+                    "name": "apc_amount_avg",
+                    "label": "average apc",
+                    "measure": "euro",
+                    "function": "avg"
+                },
+                {
+                    "name": "apc_num_items",
+                    "label": "count of apc transactions",
+                    "measure": "euro",
+                    "function": "count"
+                }
+            ],
+            "dimensions": ["period", "publisher", "journal_full_title", "doi"]
+        }
+        ,
+        {
+            "name": "wuerzburg_u",
+            "label": "University of Würzburg openAPC data cube",
+            "measures": [
+                {
+                    "name": "euro",
+                    "label": "APC Amount"
+                }
+            ],
+            "aggregates": [
+                {
+                    "name": "apc_amount_sum",
+                    "label": "sum of apc",
+                    "measure": "euro",
+                    "function": "sum"
+                },
+                {
+                    "name": "apc_amount_avg",
+                    "label": "average apc",
+                    "measure": "euro",
+                    "function": "avg"
+                },
+                {
+                    "name": "apc_num_items",
+                    "label": "count of apc transactions",
+                    "measure": "euro",
+                    "function": "count"
+                }
+            ],
+            "dimensions": ["period", "publisher", "journal_full_title", "doi"]
+        }
     ],
     "dimensions": [
         {

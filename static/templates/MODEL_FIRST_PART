@@ -1,0 +1,36 @@
+{
+    "name": "openapc_model",
+    "label": "openapc standard model",
+    "description": "model for open apc data",
+    "cubes": [
+        {
+            "name": "openapc",
+            "label": "openapc cube",
+            "measures": [
+                {
+                    "name": "euro",
+                    "label": "APC Amount"
+                }
+            ],
+            "aggregates": [
+                {
+                    "name": "apc_amount_sum",
+                    "label": "sum of apc",
+                    "measure": "euro",
+                    "function": "sum"
+                },
+                {
+                    "name": "apc_amount_avg",
+                    "label": "average apc",
+                    "measure": "euro",
+                    "function": "avg"
+                },
+                {
+                    "name": "apc_num_items",
+                    "label": "count of apc transactions",
+                    "measure": "euro",
+                    "function": "count"
+                }
+            ],
+            "dimensions": ["institution", "period", "publisher", "journal_full_title", "doi"]
+        }
