@@ -1,0 +1,16 @@
+{
+    "name": "olap.intact-project.org",
+    "label": "Open APC",
+    "description": "The Open APC initiative releases datasets on fees paid for open access journal articles by universities and research institutions under an open database license.",
+    "license": "Open Database License",
+    "keywords": ["financial", "APC", "publication fees", "Open Access"],
+    "maintainer": "Christoph Broschinski <https://github.com/cbroschinski>",
+    "contributors": ["https://github.com/OpenAPC/openapc-de#contributors"],
+    "visualizers": [
+        {
+            "label": "OpenAPC",
+            "url": "http://129.70.40.89/"
+        }
+    ]
+}
+
