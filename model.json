@@ -994,6 +994,38 @@
             ],
             "dimensions": ["period", "publisher", "journal_full_title", "doi"]
         }
+        ,
+        {
+            "name": "potsdam_u",
+            "label": "University of Potsdam openAPC data cube",
+            "measures": [
+                {
+                    "name": "euro",
+                    "label": "APC Amount"
+                }
+            ],
+            "aggregates": [
+                {
+                    "name": "apc_amount_sum",
+                    "label": "sum of apc",
+                    "measure": "euro",
+                    "function": "sum"
+                },
+                {
+                    "name": "apc_amount_avg",
+                    "label": "average apc",
+                    "measure": "euro",
+                    "function": "avg"
+                },
+                {
+                    "name": "apc_num_items",
+                    "label": "count of apc transactions",
+                    "measure": "euro",
+                    "function": "count"
+                }
+            ],
+            "dimensions": ["period", "publisher", "journal_full_title", "doi"]
+        }
     ],
     "dimensions": [
         {
