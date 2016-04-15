@@ -3,6 +3,7 @@
 import argparse
 import csv
 import codecs
+import os
 
 import sqlalchemy
 
@@ -38,19 +39,34 @@ class UnicodeReader(object):
 
     def __iter__(self):
         return self
+        
+ARG_HELP_STRINGS = {
+    
+    "dir": "A path to a directory where the generated output files should be stored. " +
+           "If omitted, output will be written to the current directory."
+}
 
 def main():
     parser = argparse.ArgumentParser()
     parser.add_argument("job", choices=["tables", "model", "yamls"])
+    parser.add_argument("-d", "--dir", help=ARG_HELP_STRINGS["dir"])
     args = parser.parse_args()
     
+    path = "."
+    if args.dir:
+        if os.path.isdir(args.dir):
+            path = args.dir
+        else:
+            print "ERROR: '" + args.dir + "' is no valid directory!"
+    
     if args.job == "tables":
-        engine = sqlalchemy.create_engine('sqlite:////var/local/openapc_cubes/cubes.sqlite')
+        sqlite_file = "sqlite:///" + os.path.join(path, "cubes.sqlite")
+        engine = sqlalchemy.create_engine(sqlite_file)
         create_openapc_cubes_tables(engine, "apc_de.csv")
     elif args.job == "model":
-        generate_model_file()
+        generate_model_file(path)
     elif args.job == "yamls":
-        generate_yamls()
+        generate_yamls(path)
         
         
 def init_table(table, fields, create_id=False):
@@ -125,7 +141,7 @@ def create_openapc_cubes_tables(connectable, file_name, schema=None):
         tables_insert_commands[institution].execute(row)
         tables_insert_commands["openapc"].execute(row)
 
-def generate_model_file():
+def generate_model_file(path):
     content = u""
     with open("static/templates/MODEL_FIRST_PART", "r") as model:
         content += model.read()
@@ -143,10 +159,11 @@ def generate_model_file():
     with open("static/templates/MODEL_LAST_PART", "r") as model:
         content += model.read()
     
-    with open("model.json", "w") as model:
+    output_file = os.path.join(path, "model.json")
+    with open(output_file, "w") as model:
         model.write(content.encode("utf-8"))
         
-def generate_yamls():
+def generate_yamls(path):
     with open("static/templates/YAML_STATIC_PART", "r") as yaml:
         yaml_static = yaml.read()
     
@@ -164,7 +181,8 @@ def generate_yamls():
         content += yaml_static
         
         out_file_name = row["institution_cubes_name"] + ".yaml"
-        with open(out_file_name, "w") as outfile:
+        out_file_path = os.path.join(path, out_file_name)
+        with open(out_file_path, "w") as outfile:
             outfile.write(content.encode("utf-8"))
 
 if __name__ == '__main__':
