@@ -1,4 +1,4 @@
-openapc_cubes is a minimal [OLAP](https://en.wikipedia.org/wiki/Online_analytical_processing) Server based on [cubes](http://cubes.databrewery.org/). It offers a fast and efficient way of querying the [OpenAPC data](https://github.com/OpenAPC) and also works as backend for the OpenAPC treemaps server.
+openapc-olap is a minimal [OLAP](https://en.wikipedia.org/wiki/Online_analytical_processing) Server based on [cubes](http://cubes.databrewery.org/). It offers a fast and efficient way of querying the [OpenAPC data](https://github.com/OpenAPC) and also works as backend for the OpenAPC treemaps server.
 
 Installation:
 
