@@ -1,6 +1,6 @@
 import os.path
 
-activate_this = '/var/www/wsgi-scripts/openapc_cubes/venv/bin/activate_this.py'
+activate_this = '/var/www/wsgi-scripts/openapc-olap/venv/bin/activate_this.py'
 execfile(activate_this, dict(__file__=activate_this))
 
 from cubes.server import create_server
