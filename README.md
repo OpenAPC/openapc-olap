@@ -1,4 +1,4 @@
-openapc_cubes is a minimal [OLAP](https://en.wikipedia.org/wiki/Online_analytical_processing) Server based on [cubes](http://cubes.databrewery.org/), meant to provide a backend for [OpenAPC data](https://github.com/OpenAPC).
+openapc_cubes is a minimal [OLAP](https://en.wikipedia.org/wiki/Online_analytical_processing) Server based on [cubes](http://cubes.databrewery.org/). It offers a fast and efficient way of querying the [OpenAPC data](https://github.com/OpenAPC) and also works as backend for the OpenAPC treemaps server.
 
 Installation:
 
@@ -6,5 +6,8 @@ Installation:
     cd openapc_cubes
     virtualenv venv (Create a python virtual environment)
     pip install -r requirements.txt
-    python init_db.py (At the moment this will try to create a SQLite database at /var/local/openapc_cubes. If you want to use another database/path/credentials you have to change the SQLAlchemy URI in init_db.py and slicer.ini)
+    python assets_generator.py model (Requires the openapc core data file (apc_de.csv) to be present in the directory. Generates a model file for the cubes server.)
+    python assets_generator.py tables (Same prerequisite as above. Generates a SQLite database file. The store url in slicer.ini must point to this file.)
     python cubes_server.py
+
+These instructions will fire up a [flask](http://flask.pocoo.org/)-based development server at localhost under port 3001 (Can be modified in cubes_server.py). For a long-term setup you should deploy a [WSGI-based configuration](https://pythonhosted.org/cubes/deployment.html).
