@@ -2,7 +2,7 @@ default: publisher
 
 filters:
   - field: 'period'
-    name: 'Jahr'
+    name: 'Year'
     nullable: true
 
 hierarchies:
