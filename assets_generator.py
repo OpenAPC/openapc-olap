@@ -138,6 +138,9 @@ def create_openapc_cubes_tables(connectable, file_name, schema=None):
     reader = UnicodeReader(open(file_name, "rb"))
     for row in reader:
         institution = row["institution"]
+        # colons cannot be escaped in URL queries to the cubes server, so we have
+        # to remove them here
+        row["journal_full_title"] = row["journal_full_title"].replace(":", "")
         tables_insert_commands[institution].execute(row)
         tables_insert_commands["openapc"].execute(row)
 
