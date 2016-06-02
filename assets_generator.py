@@ -178,6 +178,7 @@ def generate_yamls(path):
         content += u"source: Open APC\n"
         content += u"source_url: https://github.com/OpenAPC/openapc-de\n"
         content += u"data_url: https://github.com/OpenAPC/openapc-de/blob/master/data/apc_de.csv\n" 
+        content += u"country: " + row["country"] + u"\n"
         content += u"state: " + row["state"] + u"\n"
         content += u"level: kommune\n"
         content += u"dataset: '" + row["institution_cubes_name"] + "'\n"
