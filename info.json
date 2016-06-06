@@ -8,8 +8,8 @@
     "contributors": ["https://github.com/OpenAPC/openapc-de#contributors"],
     "visualizers": [
         {
-            "label": "OpenAPC",
-            "url": "http://129.70.40.89/"
+            "label": "OpenAPC Treemaps",
+            "url": "http://treemaps.intact-project.org"
         }
     ]
 }
