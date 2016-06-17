@@ -62,7 +62,7 @@ def main():
     if args.job == "tables":
         sqlite_file = "sqlite:///" + os.path.join(path, "cubes.sqlite")
         engine = sqlalchemy.create_engine(sqlite_file)
-        create_openapc_cubes_tables(engine, "apc_de.csv")
+        create_cubes_tables(engine, "apc_de.csv", "offsetting.csv")
     elif args.job == "model":
         generate_model_file(path)
     elif args.job == "yamls":
@@ -88,12 +88,31 @@ def init_table(table, fields, create_id=False):
 
     table.create()
 
-def create_openapc_cubes_tables(connectable, file_name, schema=None):
+def create_cubes_tables(connectable, apc_file_name, offsetting_file_name, schema=None):
     
-    fields = [
+    apc_fields = [
         ("institution", "string"),
         ("period", "string"),
         ("euro", "float"),
+        ("doi", "string"),
+        ("is_hybrid", "string"),
+        ("publisher", "string"),
+        ("journal_full_title", "string"),
+        ("issn", "string"),
+        ("issn_print", "string"),
+        ("issn_electronic", "string"),
+        ("license_ref", "string"),
+        ("indexed_in_crossref", "string"),
+        ("pmid", "string"),
+        ("pmcid", "string"),
+        ("ut", "string"),
+        ("url", "string"),
+        ("doaj", "string"),
+    ]
+    
+    offsetting_fields = [
+        ("institution", "string"),
+        ("period", "string"),
         ("doi", "string"),
         ("is_hybrid", "string"),
         ("publisher", "string"),
@@ -115,12 +134,19 @@ def create_openapc_cubes_tables(connectable, file_name, schema=None):
     full_table = sqlalchemy.Table("openapc", metadata, autoload=False, schema=schema)
     if full_table.exists():
         full_table.drop(checkfirst=False)
-    init_table(full_table, fields)
+    init_table(full_table, apc_fields)
     openapc_insert_command = full_table.insert()
+    
+    offsetting_table = sqlalchemy.Table("offsetting", metadata, autoload=False, schema=schema)
+    if offsetting_table.exists():
+        offsetting_table.drop(checkfirst=False)
+    init_table(offsetting_table, offsetting_fields)
+    offsetting_insert_command = offsetting_table.insert()
     
     # a dict to store individual insert commands for every table
     tables_insert_commands = {
-        "openapc": openapc_insert_command
+        "openapc": openapc_insert_command,
+        "offsetting": offsetting_insert_command
     }
     
     reader = UnicodeReader(open("static/institutions.csv", "rb"))
@@ -131,11 +157,11 @@ def create_openapc_cubes_tables(connectable, file_name, schema=None):
             table = sqlalchemy.Table(cubes_name, metadata, autoload=False, schema=schema)
             if table.exists():
                 table.drop(checkfirst=False)
-            init_table(table, fields)
+            init_table(table, apc_fields)
             insert_command = table.insert()
             tables_insert_commands[institution_name] = insert_command
     
-    reader = UnicodeReader(open(file_name, "rb"))
+    reader = UnicodeReader(open(apc_file_name, "rb"))
     for row in reader:
         institution = row["institution"]
         # colons cannot be escaped in URL queries to the cubes server, so we have
@@ -143,6 +169,14 @@ def create_openapc_cubes_tables(connectable, file_name, schema=None):
         row["journal_full_title"] = row["journal_full_title"].replace(":", "")
         tables_insert_commands[institution].execute(row)
         tables_insert_commands["openapc"].execute(row)
+        
+    reader = UnicodeReader(open(offsetting_file_name, "rb"))
+    for row in reader:
+        institution = row["institution"]
+        # colons cannot be escaped in URL queries to the cubes server, so we have
+        # to remove them here
+        row["journal_full_title"] = row["journal_full_title"].replace(":", "")
+        tables_insert_commands["offsetting"].execute(row)
 
 def generate_model_file(path):
     content = u""

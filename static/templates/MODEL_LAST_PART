@@ -1,3 +1,17 @@
+        ,
+        {
+            "name": "offsetting",
+            "label": "Offsetting data cube (No monetary values!)",
+            "aggregates": [
+                {
+                    "name": "num_items",
+                    "label": "count of articles",
+                    "measure": "journal_full_title",
+                    "function": "count"
+                }
+            ],
+            "dimensions": ["period", "publisher", "journal_full_title", "doi"]
+        }
     ],
     "dimensions": [
         {
