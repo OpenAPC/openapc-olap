@@ -5,7 +5,7 @@
             "aggregates": [
                 {
                     "name": "num_items",
-                    "label": "count of articles",
+                    "label": "Number of Articles",
                     "measure": "journal_full_title",
                     "function": "count"
                 }

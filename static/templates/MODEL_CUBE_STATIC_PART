@@ -7,19 +7,19 @@
             "aggregates": [
                 {
                     "name": "apc_amount_sum",
-                    "label": "sum of apc",
+                    "label": "Sum",
                     "measure": "euro",
                     "function": "sum"
                 },
                 {
                     "name": "apc_amount_avg",
-                    "label": "average apc",
+                    "label": "Mean Value",
                     "measure": "euro",
                     "function": "avg"
                 },
                 {
                     "name": "apc_num_items",
-                    "label": "count of apc transactions",
+                    "label": "Number of Articles",
                     "measure": "euro",
                     "function": "count"
                 }
