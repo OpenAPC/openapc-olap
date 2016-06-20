@@ -10,7 +10,7 @@
                     "function": "count"
                 }
             ],
-            "dimensions": ["period", "publisher", "journal_full_title", "doi"]
+            "dimensions": ["institution", "period", "publisher", "journal_full_title", "doi"]
         }
     ],
     "dimensions": [
