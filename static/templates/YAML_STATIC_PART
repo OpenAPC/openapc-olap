@@ -4,6 +4,9 @@ filters:
   - field: 'period'
     name: 'Year'
     nullable: true
+  - field: 'is_hybrid'
+    name: 'Hybrid Status'
+    nullable: true
 
 hierarchies:
     publisher:

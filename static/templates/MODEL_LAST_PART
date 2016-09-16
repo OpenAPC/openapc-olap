@@ -38,6 +38,11 @@
             "name": "doi",
             "description": "doi identifying an article",
             "attributes": ["doi"]
+        },
+        {
+            "name": "is_hybrid",
+            "description": "flag identifying if the article was published in a hybrid (TRUE) or a fully OA journal (FALSE)",
+            "attributes": ["is_hybrid"]
         }
     ]
 }
