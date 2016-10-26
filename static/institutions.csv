@@ -1,41 +1,41 @@
-"institution","institution_cubes_name","institution_full_name","country","state"
-Bamberg U,bamberg_u,Bamberg University,DEU,BY
-Bielefeld U,bielefeld_u,Bielefeld University,DEU,NW
-Duisburg-Essen U,duisburg_essen_u,University of Duisburg-Essen,DEU,NW
-FU Berlin,fu_berlin,Freie Universität Berlin,DEU,BE
-GFZ-Potsdam,gfz_potsdam,Library Wissenschaftspark Albert Einstein,DEU,BB
-Konstanz U,konstanz_u,University of Konstanz,DEU,BW
-Leipzig U,lepzig_u,Leipzig University,DEU,SN
-MPG,mpg,Max Planck Digital Library,DEU,BY
-Regensburg U,regensburg_u,University of Regensburg,DEU,BY
-TU Clausthal,tu_clausthal,Clausthal University of Technology,DEU,NI
-Muenchen LMU,muenchen_lmu,Ludwig-Maximilians-Universität München,DEU,BY
-Goettingen U,goettingen_u,University of Göttingen,DEU,NI
-Heidelberg U,heidelberg_u,Heidelberg University,DEU,BW
-Hamburg TUHH,hamburg_tuhh,Hamburg University of Technology,DEU,HH
-Bayreuth U,bayreuth_u,Bayreuth University,DEU,BY
-KIT,kit,KIT Karlsruhe,DEU,BW
-INM - Leibniz-Institut für Neue Materialien,inm,INM - Leibniz Institute for New Materials,DEU,SL
-MDC,mdc,Max Delbrück Center for Molecular Medicine (MDC),DEU,BE
-TU Chemnitz,tu_chemnitz,Technische Universität Chemnitz,DEU,SN
-TU Dresden,tu_dresden,Technische Universität Dresden,DEU,SN
-Dortmund TU,dortmund_tu,Technische Universität Dortmund,DEU,NW
-Bochum U,bochum_u,Ruhr Universität Bochum,DEU,NW
-Giessen U,giessen_u,JLU Gießen,DEU,HE
-FZJ - ZB,fzj_fb,Forschungszentrum Jülich,DEU,NW
-Kassel U,kassel_u,University of Kassel,DEU,HE
-TU Ilmenau,tu_ilmenau,Technische Universität Ilmenau,DEU,TH
-TU Muenchen,tu_muenchen,Technische Universität München,DEU,BY
-Hannover U,hannover_u,Leibniz Universität Hannover,DEU,NI
-Wuerzburg U,wuerzburg_u,University of Würzburg,DEU,BY
-Leibniz-Fonds,leibnizfonds,Leibniz-Fonds,DEU,BE
-Potsdam U,potsdam_u,University of Potsdam,DEU,BB
-FWF - Austrian Science Fund,fwf,FWF - Austrian Science Fund,AUT,WI
-Bremen U,bremen_u,University of Bremen,DEU,HB
-Erlangen Nuernberg U,erlangen_nuernberg_u,Friedrich-Alexander-Universität Erlangen-Nürnberg,DEU,BY
-Wellcome Trust,wellcome_trust, Wellcome Trust,GBR,ENG
-Tuebingen U,tuebingen_u,Eberhard Karls Universität Tübingen,DEU,BW
-Ulm U,ulm_u,Ulm University,DEU,BW
-Freiburg U,freiburg_u,University of Freiburg,DEU,BW
-TU Wien,tu_wien,Technische Universität Wien,AUT,WI
-HZDR,hzdr,Helmholtz-Zentrum Dresden-Rossendorf,DEU,SN
+"institution","institution_cubes_name","institution_full_name","continent","country","state"
+Bamberg U,bamberg_u,Bamberg University,EUROPE,DEU,BY
+Bielefeld U,bielefeld_u,Bielefeld University,EUROPE,DEU,NW
+Duisburg-Essen U,duisburg_essen_u,University of Duisburg-Essen,EUROPE,DEU,NW
+FU Berlin,fu_berlin,Freie Universität Berlin,EUROPE,DEU,BE
+GFZ-Potsdam,gfz_potsdam,Library Wissenschaftspark Albert Einstein,EUROPE,DEU,BB
+Konstanz U,konstanz_u,University of Konstanz,EUROPE,DEU,BW
+Leipzig U,lepzig_u,Leipzig University,EUROPE,DEU,SN
+MPG,mpg,Max Planck Digital Library,EUROPE,DEU,BY
+Regensburg U,regensburg_u,University of Regensburg,EUROPE,DEU,BY
+TU Clausthal,tu_clausthal,Clausthal University of Technology,EUROPE,DEU,NI
+Muenchen LMU,muenchen_lmu,Ludwig-Maximilians-Universität München,EUROPE,DEU,BY
+Goettingen U,goettingen_u,University of Göttingen,EUROPE,DEU,NI
+Heidelberg U,heidelberg_u,Heidelberg University,EUROPE,DEU,BW
+Hamburg TUHH,hamburg_tuhh,Hamburg University of Technology,EUROPE,DEU,HH
+Bayreuth U,bayreuth_u,Bayreuth University,EUROPE,DEU,BY
+KIT,kit,KIT Karlsruhe,EUROPE,DEU,BW
+INM - Leibniz-Institut für Neue Materialien,inm,INM - Leibniz Institute for New Materials,EUROPE,DEU,SL
+MDC,mdc,Max Delbrück Center for Molecular Medicine (MDC),EUROPE,DEU,BE
+TU Chemnitz,tu_chemnitz,Technische Universität Chemnitz,EUROPE,DEU,SN
+TU Dresden,tu_dresden,Technische Universität Dresden,EUROPE,DEU,SN
+Dortmund TU,dortmund_tu,Technische Universität Dortmund,EUROPE,DEU,NW
+Bochum U,bochum_u,Ruhr Universität Bochum,EUROPE,DEU,NW
+Giessen U,giessen_u,JLU Gießen,EUROPE,DEU,HE
+FZJ - ZB,fzj_fb,Forschungszentrum Jülich,EUROPE,DEU,NW
+Kassel U,kassel_u,University of Kassel,EUROPE,DEU,HE
+TU Ilmenau,tu_ilmenau,Technische Universität Ilmenau,EUROPE,DEU,TH
+TU Muenchen,tu_muenchen,Technische Universität München,EUROPE,DEU,BY
+Hannover U,hannover_u,Leibniz Universität Hannover,EUROPE,DEU,NI
+Wuerzburg U,wuerzburg_u,University of Würzburg,EUROPE,DEU,BY
+Leibniz-Fonds,leibnizfonds,Leibniz-Fonds,EUROPE,DEU,BE
+Potsdam U,potsdam_u,University of Potsdam,EUROPE,DEU,BB
+FWF - Austrian Science Fund,fwf,FWF - Austrian Science Fund,EUROPE,AUT,WI
+Bremen U,bremen_u,University of Bremen,EUROPE,DEU,HB
+Erlangen Nuernberg U,erlangen_nuernberg_u,Friedrich-Alexander-Universität Erlangen-Nürnberg,EUROPE,DEU,BY
+Wellcome Trust,wellcome_trust, Wellcome Trust,EUROPE,GBR,ENG
+Tuebingen U,tuebingen_u,Eberhard Karls Universität Tübingen,EUROPE,DEU,BW
+Ulm U,ulm_u,Ulm University,EUROPE,DEU,BW
+Freiburg U,freiburg_u,University of Freiburg,EUROPE,DEU,BW
+TU Wien,tu_wien,Technische Universität Wien,EUROPE,AUT,WI
+HZDR,hzdr,Helmholtz-Zentrum Dresden-Rossendorf,EUROPE,DEU,SN
