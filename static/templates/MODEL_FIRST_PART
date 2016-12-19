@@ -32,5 +32,5 @@
                     "function": "count"
                 }
             ],
-            "dimensions": ["institution", "period", "publisher", "journal_full_title", "doi", "is_hybrid"]
+            "dimensions": ["institution", "period", "publisher", "journal_full_title", "doi", "is_hybrid", "country"]
         }

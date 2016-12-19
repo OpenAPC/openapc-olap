@@ -43,6 +43,11 @@
             "name": "is_hybrid",
             "description": "flag identifying if the article was published in a hybrid (TRUE) or a fully OA journal (FALSE)",
             "attributes": ["is_hybrid"]
+        },
+        {
+            "name": "country",
+            "description": "country the institution is located in",
+            "attributes": ["country"]
         }
     ]
 }

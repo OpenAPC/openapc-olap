@@ -109,6 +109,7 @@ def create_cubes_tables(connectable, apc_file_name, offsetting_file_name, schema
         ("ut", "string"),
         ("url", "string"),
         ("doaj", "string"),
+        ("country", "string")
     ]
     
     offsetting_fields = [
@@ -128,7 +129,7 @@ def create_cubes_tables(connectable, apc_file_name, offsetting_file_name, schema
         ("pmcid", "string"),
         ("ut", "string"),
         ("url", "string"),
-        ("doaj", "string"),
+        ("doaj", "string")
     ]
 
     metadata = sqlalchemy.MetaData(bind=connectable)
@@ -151,10 +152,14 @@ def create_cubes_tables(connectable, apc_file_name, offsetting_file_name, schema
         "offsetting": offsetting_insert_command
     }
     
+    institution_countries = {}
+    
     reader = UnicodeReader(open("static/institutions.csv", "rb"))
     for row in reader:
         cubes_name = row["institution_cubes_name"]
         institution_name = row["institution"]
+        country = row["country"]
+        institution_countries[institution_name] = country
         if institution_name not in tables_insert_commands:
             table = sqlalchemy.Table(cubes_name, metadata, autoload=False, schema=schema)
             if table.exists():
@@ -169,6 +174,7 @@ def create_cubes_tables(connectable, apc_file_name, offsetting_file_name, schema
         # colons cannot be escaped in URL queries to the cubes server, so we have
         # to remove them here
         row["journal_full_title"] = row["journal_full_title"].replace(":", "")
+        row["country"] = institution_countries[institution]
         tables_insert_commands[institution].execute(row)
         tables_insert_commands["openapc"].execute(row)
         
