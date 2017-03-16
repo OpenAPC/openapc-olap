@@ -80,12 +80,12 @@ University of St Andrews,st_andrews_u,University of St Andrews,EUROPE,GBR,SCT
 University of Liverpool,liverpool_u,University of Liverpool,EUROPE,GBR,ENG
 University of York,york_u,University of York,EUROPE,GBR,ENG
 Aston University,aston_u,Aston University,EUROPE,GBR,ENG
-University of Aberdeen,aberdeen_u,EUROPE,GBR,SCT
+University of Aberdeen,aberdeen_u,University of Aberdeen,EUROPE,GBR,SCT
 University of Huddersfield,huddersfield_u,University of Huddersfield,EUROPE,GBR,ENG
 University of Hull,hull_u,University of Hull,EUROPE,GBR,ENG
 University of Surrey,surrey_u,University of Surrey,EUROPE,GBR,ENG
 Northumbria University,northumbria_u,Northumbria University,EUROPE,GBR,ENG
 University of Leicester,leicester_u,University of Leicester,EUROPE,GBR,ENG
 University of Reading,reading_u,University of Reading,EUROPE,GBR,ENG
-Institute of Cancer Research (ICR),icr,Institute of Cancer Research (ICR),EUROPE,GBR,ENG
-London School of Economics (LSE),lse,London School of Economics (LSE),EUROPE,GBR,ENG
+ICR,icr,Institute of Cancer Research (ICR),EUROPE,GBR,ENG
+LSE,lse,London School of Economics (LSE),EUROPE,GBR,ENG
