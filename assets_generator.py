@@ -4,6 +4,7 @@ import argparse
 import csv
 import codecs
 import os
+import sys
 
 import sqlalchemy
 
@@ -129,7 +130,8 @@ def create_cubes_tables(connectable, apc_file_name, offsetting_file_name, schema
         ("pmcid", "string"),
         ("ut", "string"),
         ("url", "string"),
-        ("doaj", "string")
+        ("doaj", "string"),
+        ("country", "string")
     ]
 
     metadata = sqlalchemy.MetaData(bind=connectable)
@@ -151,6 +153,28 @@ def create_cubes_tables(connectable, apc_file_name, offsetting_file_name, schema
         "openapc": openapc_insert_command,
         "offsetting": offsetting_insert_command
     }
+    
+    offsetting_institution_countries = {}
+    
+    reader = UnicodeReader(open("static/institutions_offsetting.csv", "rb"))
+    for row in reader:
+        institution_name = row["institution"]
+        country = row["country"]
+        offsetting_institution_countries[institution_name] = country
+        
+    reader = UnicodeReader(open(offsetting_file_name, "rb"))
+    for row in reader:
+        institution = row["institution"]
+        # colons cannot be escaped in URL queries to the cubes server, so we have
+        # to remove them here
+        row["journal_full_title"] = row["journal_full_title"].replace(":", "")
+        try:
+            row["country"] = offsetting_institution_countries[institution]
+        except KeyError as ke:
+            msg = (u"KeyError: The institution '{}' was not found in the institutions_offsetting file!")
+            print msg.format(institution)
+            sys.exit()
+        tables_insert_commands["offsetting"].execute(row)
     
     institution_countries = {}
     
@@ -177,14 +201,6 @@ def create_cubes_tables(connectable, apc_file_name, offsetting_file_name, schema
         row["country"] = institution_countries[institution]
         tables_insert_commands[institution].execute(row)
         tables_insert_commands["openapc"].execute(row)
-        
-    reader = UnicodeReader(open(offsetting_file_name, "rb"))
-    for row in reader:
-        institution = row["institution"]
-        # colons cannot be escaped in URL queries to the cubes server, so we have
-        # to remove them here
-        row["journal_full_title"] = row["journal_full_title"].replace(":", "")
-        tables_insert_commands["offsetting"].execute(row)
 
 def generate_model_file(path):
     content = u""
