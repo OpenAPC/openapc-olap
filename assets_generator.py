@@ -136,11 +136,11 @@ def create_cubes_tables(connectable, apc_file_name, offsetting_file_name, schema
 
     metadata = sqlalchemy.MetaData(bind=connectable)
     
-    full_table = sqlalchemy.Table("openapc", metadata, autoload=False, schema=schema)
-    if full_table.exists():
-        full_table.drop(checkfirst=False)
-    init_table(full_table, apc_fields)
-    openapc_insert_command = full_table.insert()
+    openapc_table = sqlalchemy.Table("openapc", metadata, autoload=False, schema=schema)
+    if openapc_table.exists():
+        openapc_table.drop(checkfirst=False)
+    init_table(openapc_table, apc_fields)
+    openapc_insert_command = openapc_table.insert()
     
     offsetting_table = sqlalchemy.Table("offsetting", metadata, autoload=False, schema=schema)
     if offsetting_table.exists():
@@ -148,10 +148,17 @@ def create_cubes_tables(connectable, apc_file_name, offsetting_file_name, schema
     init_table(offsetting_table, offsetting_fields)
     offsetting_insert_command = offsetting_table.insert()
     
+    combined_table = sqlalchemy.Table("combined", metadata, autoload=False, schema=schema)
+    if combined_table.exists():
+        combined_table.drop(checkfirst=False)
+    init_table(combined_table, apc_fields)
+    combined_insert_command = combined_table.insert()
+    
     # a dict to store individual insert commands for every table
     tables_insert_commands = {
         "openapc": openapc_insert_command,
-        "offsetting": offsetting_insert_command
+        "offsetting": offsetting_insert_command,
+        "combined": combined_insert_command
     }
     
     offsetting_institution_countries = {}
@@ -175,6 +182,8 @@ def create_cubes_tables(connectable, apc_file_name, offsetting_file_name, schema
             print msg.format(institution)
             sys.exit()
         tables_insert_commands["offsetting"].execute(row)
+        if row["euro"] != "NA":
+            tables_insert_commands["combined"].execute(row)
     
     institution_countries = {}
     
@@ -201,6 +210,7 @@ def create_cubes_tables(connectable, apc_file_name, offsetting_file_name, schema
         row["country"] = institution_countries[institution]
         tables_insert_commands[institution].execute(row)
         tables_insert_commands["openapc"].execute(row)
+        tables_insert_commands["combined"].execute(row)
 
 def generate_model_file(path):
     content = u""

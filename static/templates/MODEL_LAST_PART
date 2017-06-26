@@ -12,6 +12,38 @@
             ],
             "dimensions": ["institution", "period", "publisher", "journal_full_title", "doi", "is_hybrid", "country"]
         }
+        ,
+        {
+            "name": "combined",
+            "label": "combined cube (combines cost data from openapc and offsetting model)",
+            "measures": [
+                {
+                    "name": "euro",
+                    "label": "APC Amount"
+                }
+            ],
+            "aggregates": [
+                {
+                    "name": "apc_amount_sum",
+                    "label": "Sum",
+                    "measure": "euro",
+                    "function": "sum"
+                },
+                {
+                    "name": "apc_amount_avg",
+                    "label": "Mean Value",
+                    "measure": "euro",
+                    "function": "avg"
+                },
+                {
+                    "name": "apc_num_items",
+                    "label": "Number of Articles",
+                    "measure": "euro",
+                    "function": "count"
+                }
+            ],
+            "dimensions": ["institution", "period", "publisher", "journal_full_title", "doi", "is_hybrid", "country"]
+        }
     ],
     "dimensions": [
         {
