@@ -12,16 +12,28 @@
                     "function": "sum"
                 },
                 {
+                    "name": "apc_num_items",
+                    "label": "Number of Articles",
+                    "measure": "euro",
+                    "function": "count"
+                },
+                {
                     "name": "apc_amount_avg",
                     "label": "Mean Value",
                     "measure": "euro",
                     "function": "avg"
                 },
                 {
-                    "name": "apc_num_items",
-                    "label": "Number of Articles",
+                    "name": "apc_amount_min",
+                    "label": "Lowest Amount",
                     "measure": "euro",
-                    "function": "count"
+                    "function": "min"
+                },
+                {
+                    "name": "apc_amount_max",
+                    "label": "Highest Amount",
+                    "measure": "euro",
+                    "function": "max"
                 }
             ],
             "dimensions": ["institution", "period", "publisher", "journal_full_title", "doi", "is_hybrid", "country"]
