@@ -3,6 +3,7 @@
 import argparse
 import csv
 import codecs
+import ConfigParser
 import os
 import sys
 
@@ -49,7 +50,7 @@ ARG_HELP_STRINGS = {
 
 def main():
     parser = argparse.ArgumentParser()
-    parser.add_argument("job", choices=["tables", "model", "yamls"])
+    parser.add_argument("job", choices=["tables", "model", "yamls", "db_settings"])
     parser.add_argument("-d", "--dir", help=ARG_HELP_STRINGS["dir"])
     args = parser.parse_args()
     
@@ -61,20 +62,41 @@ def main():
             print "ERROR: '" + args.dir + "' is no valid directory!"
     
     if args.job == "tables":
-        sqlite_file = "sqlite:///" + os.path.join(path, "cubes.sqlite")
-        engine = sqlalchemy.create_engine(sqlite_file)
+        if not os.path.isfile("db_settings.ini"):
+            print "ERROR: Database Configuration file db_settings.ini not found!"
+            sys.exit()
+        scp = ConfigParser.SafeConfigParser()
+        scp.read("db_settings.ini")
+        try:
+            db_user = scp.get("postgres_credentials", "user")
+            db_pass = scp.get("postgres_credentials", "pass")
+        except (ConfigParser.NoSectionError, ConfigParser.NoOptionError) as e:
+            print "ERROR: db_settings.ini is malformed ({})".format(e.message)
+            sys.exit()
+        psql_uri = "postgresql://" + db_user + ":" + db_pass + "@localhost/openapc_db"
+        engine = sqlalchemy.create_engine(psql_uri)
         create_cubes_tables(engine, "apc_de.csv", "offsetting.csv")
     elif args.job == "model":
         generate_model_file(path)
     elif args.job == "yamls":
         generate_yamls(path)
+    elif args.job == "db_settings":
+        if os.path.isfile("db_settings.ini"):
+            print "ERROR: db_settings.ini already exists"
+            sys.exit()
+        scp = ConfigParser.SafeConfigParser()
+        scp.add_section('postgres_credentials')
+        scp.set('postgres_credentials', 'USER', 'table_creator')
+        scp.set('postgres_credentials', 'PASS', 'change_me')
+        with open('db_settings.ini', 'w') as config_file:
+            scp.write(config_file)
         
         
 def init_table(table, fields, create_id=False):
     
     type_map = {"integer": sqlalchemy.Integer,
                 "float": sqlalchemy.Numeric,
-                "string": sqlalchemy.String(256),
+                "string": sqlalchemy.String(512),
                 "text": sqlalchemy.Text,
                 "date": sqlalchemy.Text,
                 "boolean": sqlalchemy.Integer}
@@ -89,7 +111,7 @@ def init_table(table, fields, create_id=False):
 
     table.create()
 
-def create_cubes_tables(connectable, apc_file_name, offsetting_file_name, schema=None):
+def create_cubes_tables(connectable, apc_file_name, offsetting_file_name, schema="openapc_schema"):
     
     apc_fields = [
         ("institution", "string"),
