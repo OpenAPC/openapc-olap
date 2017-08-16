@@ -1,6 +1,7 @@
 openapc-olap is a small [OLAP](https://en.wikipedia.org/wiki/Online_analytical_processing) Server based on [cubes](http://cubes.databrewery.org/). It offers a fast and efficient way of querying the [OpenAPC data](https://github.com/OpenAPC/openapc-de) and also works as backend for the OpenAPC treemaps server.
 
 Installation (requires a working PostgreSQL installation):
+
     clone or download/unzip
     cd openapc-olap
     virtualenv venv (Create a python virtual environment)
