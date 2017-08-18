@@ -5,6 +5,7 @@ Installation (requires a working PostgreSQL installation):
     clone or download/unzip
     cd openapc-olap
     virtualenv venv (Create a python virtual environment)
+    source venv/bin/activate
     pip install -r requirements.txt
     python assets_generator.py db_settings (Generates a credentials file for the database)
     sudo -u postgres psql -f setup.sql -v pw="'secret'" (Set up a database with roles and schema. Change the 'pw' parameter to something more sophisticated and copy the value to the 'pass' field in db_settings.ini, without any quotes.)

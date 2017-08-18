@@ -76,6 +76,10 @@ def main():
         psql_uri = "postgresql://" + db_user + ":" + db_pass + "@localhost/openapc_db"
         engine = sqlalchemy.create_engine(psql_uri)
         create_cubes_tables(engine, "apc_de.csv", "offsetting.csv")
+        with engine.begin() as connection:
+            connection.execute("GRANT SELECT ON ALL TABLES IN SCHEMA openapc_schema TO cubes_user")
+        
+        
     elif args.job == "model":
         generate_model_file(path)
     elif args.job == "yamls":

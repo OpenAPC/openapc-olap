@@ -7,5 +7,5 @@ CREATE USER cubes_user WITH PASSWORD 'no_password';
 CREATE DATABASE openapc_db;
 \c openapc_db;
 CREATE SCHEMA openapc_schema;
-GRANT ALL PRIVILEGES ON SCHEMA openapc_schema TO table_creator;
-GRANT SELECT ON ALL TABLES IN SCHEMA openapc_schema TO cubes_user; 
+GRANT ALL PRIVILEGES ON SCHEMA openapc_schema TO table_creator WITH GRANT OPTION;
+GRANT USAGE ON SCHEMA openapc_schema TO cubes_user;
