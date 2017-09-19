@@ -58,7 +58,6 @@ Aston University,aston_u,Aston University,EUROPE,GBR,ENG
 Bangor University,bangor_u,Bangor University,EUROPE,GBR,WLS
 Cardiff University,cardiff_u,Cardiff University,EUROPE,GBR,WLS
 Cranfield University,cranfield_u,Cranfield University,EUROPE,GBR,ENG
-Durham University,durham_u,Durham University,EUROPE,GBR,ENG
 Goldsmiths,goldsmiths_u,"Goldsmiths, University of London",EUROPE,GBR,ENG
 Imperial College London,imperial_college_london,Imperial College London,EUROPE,GBR,ENG
 Institute of Cancer Research,icr,Institute of Cancer Research (ICR),EUROPE,GBR,ENG
@@ -67,9 +66,7 @@ King's College London,kings_college,King's College London,EUROPE,GBR,ENG
 LSE,lse,London School of Economics (LSE),EUROPE,GBR,ENG
 LSHTM,lhstm,London School of Hygiene & Tropical Medicine (LSHTM),EUROPE,GBR,ENG
 Lancaster University,lancaster_u,Lancaster University,EUROPE,GBR,ENG
-Loughborough University,loughborough_u,Loughborough University,EUROPE,GBR,ENG
 Manchester Metropolitan University,manchester_met_u,Manchester Metropolitan University,EUROPE,GBR,ENG
-Newcastle University,newcastle_u,Newcastle University,EUROPE,GBR,ENG
 Northumbria University,northumbria_u,Northumbria University,EUROPE,GBR,ENG
 Plymouth University,plymouth_u,Plymouth University,EUROPE,GBR,ENG
 "Queen Mary, University of London",queen_mary_u,Queen Mary University of London,EUROPE,GBR,ENG
@@ -106,3 +103,16 @@ University of Surrey,surrey_u,University of Surrey,EUROPE,GBR,ENG
 University of Sussex,sussex_u,University of Sussex,EUROPE,GBR,ENG
 University of Warwick,warwick_u,University of Warwick,EUROPE,GBR,ENG
 University of York,york_u,University of York,EUROPE,GBR,ENG
+Chalmers University of Technology,chalmers_u,Chalmers University of Technology,EUROPE,SWE,SE-O
+Dalarna University College,dalarna_u,Dalarna University College,EUROPE,SWE,SE-W
+Karolinska Institutet,karolinska,Karolinska Institutet,EUROPE,SWE,SE-AB
+KTH Royal Institute of Technology,kth,KTH Royal Institute of Technology,EUROPE,SWE,SE-AB
+Linköping University,linkoping_u,Linköping University,EUROPE,SWE,SE-E
+Luleå University of Technology,lulea_tu,Luleå University of Technology,EUROPE,SWE,SE-BD
+Lund University,lund_u,Lund University,EUROPE,SWE,SE-M
+Malmö University College,malmo_u,Malmö University College,EUROPE,SWE,SE-M
+Stockholm University,stockholm_u,Stockholm University,EUROPE,SWE,SE-AB
+Swedish University of Agricultural Sciences,swedish_agricultural_u,Swedish University of Agricultural Sciences,EUROPE,SWE,SE-C
+Umeå University,umea_u,Umeå University,EUROPE,SWE,SE-AC
+University of Gothenburg,gothenburg_u,University of Gothenburg,EUROPE,SWE,SE-O
+Uppsala University,uppsala_u,Uppsala University,EUROPE,SWE,SE-C
