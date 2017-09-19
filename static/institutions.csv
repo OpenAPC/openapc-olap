@@ -42,28 +42,6 @@ HZDR,hzdr,Helmholtz-Zentrum Dresden-Rossendorf,EUROPE,DEU,SN
 Harvard U,harvard_u,Harvard University,NORTH_AMERICA,USA,US-MA
 Oldenburg U,oldenburg_u,Carl von Ossietzky Universität Oldenburg,EUROPE,DEU,NI
 OpenAIRE,openaire,OpenAIRE (FP7 Post-Grant OA Pilot),EUROPE,GRC,GR-I
-Bangor University,bangor_u,Bangor University,EUROPE,GBR,WLS
-Cranfield University,cranfield_u,Cranfield University,EUROPE,GBR,ENG
-Durham University,durham_u,Durham University,EUROPE,GBR,ENG
-Imperial College London,imperial_college_london,Imperial College London,EUROPE,GBR,ENG
-Loughborough University,loughborough_u,Loughborough University,EUROPE,GBR,ENG
-LSHTM,lhstm,London School of Hygiene & Tropical Medicine (LSHTM),EUROPE,GBR,ENG
-Newcastle University,newcastle_u,Newcastle University,EUROPE,GBR,ENG
-Plymouth University,plymouth_u,Plymouth University,EUROPE,GBR,ENG
-"Queen Mary, University of London",queen_mary_u,Queen Mary University of London,EUROPE,GBR,ENG
-Royal Holloway,royal_holloway,"Royal Holloway, University of London",EUROPE,GBR,ENG
-Swansea University,swansea_u,Swansea University,EUROPE,GBR,WLS
-UCL,ucl,University College London (UCL),EUROPE,GBR,ENG
-University of Bath,bath_u,University of Bath,EUROPE,GBR,ENG
-University of Birmingham,birgmingham_u,University of Birmingham,EUROPE,GBR,ENG
-University of Bristol,bristol_u,University of Bristol,EUROPE,GBR,ENG
-University of Cambridge,cambridge_u,University of Cambridge,EUROPE,GBR,ENG
-University of Glasgow,glasgow_u,University of Glasgow,EUROPE,GBR,SCT
-University of Portsmouth,portsmouth_u,University of Portsmouth,EUROPE,GBR,ENG
-University of Salford,salford_u,University of Salford,EUROPE,GBR,ENG
-University of Sheffield,sheffield_u,University of Sheffield,EUROPE,GBR,ENG
-University of Sussex,sussex_u,University of Sussex,EUROPE,GBR,ENG
-University of Warwick,warwick_u,University of Warwick,EUROPE,GBR,ENG
 University of Calgary,calgary_u,University of Calgary,NORTH_AMERICA,CAN,CA-AB
 IPN,ipn,IPN - Leibniz Institute for Science and Mathematics Education,EUROPE,DEU,SH
 UFZ,ufz,Helmholtz-Zentrum für Umweltforschung – UFZ,EUROPE,DEU,SN
@@ -71,25 +49,60 @@ TiHo Hannover,tiho,"University of Veterinary Medicine Hannover, Foundation",EURO
 Milano U,milano_u,Università degli Studi di Milano,EUROPE,ITA,IT-25
 Virginia Tech,virginia_tech,Virginia Polytechnic Institute and State University,NORTH_AMERICA,USA,US-VA
 Münster U,muenster_u,Münster University,EUROPE,DEU,NW
-University of Oxford,oxford_u,University of Oxford,EUROPE,GBR,ENG
-University of Manchester,manchester_u,University of Manchester,EUROPE,GBR,ENG
-Queen's University Belfast,belfast_u,Queen's University Belfast,EUROPE,GBR,NIR
-King's College London,kings_college,King's College London,EUROPE,GBR,ENG
-Cardiff University,cardiff_u,Cardiff University,EUROPE,GBR,WLS
-University of St Andrews,st_andrews_u,University of St Andrews,EUROPE,GBR,SCT
-University of Liverpool,liverpool_u,University of Liverpool,EUROPE,GBR,ENG
-University of York,york_u,University of York,EUROPE,GBR,ENG
-Aston University,aston_u,Aston University,EUROPE,GBR,ENG
-University of Aberdeen,aberdeen_u,University of Aberdeen,EUROPE,GBR,SCT
-University of Huddersfield,huddersfield_u,University of Huddersfield,EUROPE,GBR,ENG
-University of Hull,hull_u,University of Hull,EUROPE,GBR,ENG
-University of Surrey,surrey_u,University of Surrey,EUROPE,GBR,ENG
-Northumbria University,northumbria_u,Northumbria University,EUROPE,GBR,ENG
-University of Leicester,leicester_u,University of Leicester,EUROPE,GBR,ENG
-University of Reading,reading_u,University of Reading,EUROPE,GBR,ENG
-ICR,icr,Institute of Cancer Research (ICR),EUROPE,GBR,ENG
-LSE,lse,London School of Economics (LSE),EUROPE,GBR,ENG
 JGU Mainz,jgu_mainz,Johannes Gutenberg University of Mainz,EUROPE,DEU,RP
 Universitat de Barcelona,barcelona_u,Universitat de Barcelona,EUROPE,ESP,ES.CT
 IST Austria,ist_austria,Institute of Science and Technology Austria,EUROPE,AUT,AUT-NO
 TIB,tib,TIB – German National Library of Science and Technology,EUROPE,DEU,NI
+Aberystwyth University,aberystwyth_u,Aberystwyth University,EUROPE,GBR,WLS
+Aston University,aston_u,Aston University,EUROPE,GBR,ENG
+Bangor University,bangor_u,Bangor University,EUROPE,GBR,WLS
+Cardiff University,cardiff_u,Cardiff University,EUROPE,GBR,WLS
+Cranfield University,cranfield_u,Cranfield University,EUROPE,GBR,ENG
+Durham University,durham_u,Durham University,EUROPE,GBR,ENG
+Goldsmiths,goldsmiths_u,"Goldsmiths, University of London",EUROPE,GBR,ENG
+Imperial College London,imperial_college_london,Imperial College London,EUROPE,GBR,ENG
+Institute of Cancer Research,icr,Institute of Cancer Research (ICR),EUROPE,GBR,ENG
+Keele University,keele_u,Keele University,EUROPE,GBR,ENG
+King's College London,kings_college,King's College London,EUROPE,GBR,ENG
+LSE,lse,London School of Economics (LSE),EUROPE,GBR,ENG
+LSHTM,lhstm,London School of Hygiene & Tropical Medicine (LSHTM),EUROPE,GBR,ENG
+Lancaster University,lancaster_u,Lancaster University,EUROPE,GBR,ENG
+Loughborough University,loughborough_u,Loughborough University,EUROPE,GBR,ENG
+Manchester Metropolitan University,manchester_met_u,Manchester Metropolitan University,EUROPE,GBR,ENG
+Newcastle University,newcastle_u,Newcastle University,EUROPE,GBR,ENG
+Northumbria University,northumbria_u,Northumbria University,EUROPE,GBR,ENG
+Plymouth University,plymouth_u,Plymouth University,EUROPE,GBR,ENG
+"Queen Mary, University of London",queen_mary_u,Queen Mary University of London,EUROPE,GBR,ENG
+Queen's University Belfast,belfast_u,Queen's University Belfast,EUROPE,GBR,NIR
+Royal Holloway,royal_holloway,"Royal Holloway, University of London",EUROPE,GBR,ENG
+"St George's, University of London",st_georges_u,"St George's, University of London",EUROPE,GBR,ENG
+Swansea University,swansea_u,Swansea University,EUROPE,GBR,WLS
+UCL,ucl,University College London (UCL),EUROPE,GBR,ENG
+University of Aberdeen,aberdeen_u,University of Aberdeen,EUROPE,GBR,SCT
+University of Bath,bath_u,University of Bath,EUROPE,GBR,ENG
+University of Birmingham,birgmingham_u,University of Birmingham,EUROPE,GBR,ENG
+University of Bristol,bristol_u,University of Bristol,EUROPE,GBR,ENG
+University of Cambridge,cambridge_u,University of Cambridge,EUROPE,GBR,ENG
+University of Durham,durham_u,University of Durham,EUROPE,GBR,ENG
+University of Edinburgh,edinburgh_u,University of Edinburgh,EUROPE,GBR,SCT
+University of Exeter,exeter_u,University of Exeter,EUROPE,GBR,ENG
+University of Glasgow,glasgow_u,University of Glasgow,EUROPE,GBR,SCT
+University of Huddersfield,huddersfield_u,University of Huddersfield,EUROPE,GBR,ENG
+University of Hull,hull_u,University of Hull,EUROPE,GBR,ENG
+University of Leicester,leicester_u,University of Leicester,EUROPE,GBR,ENG
+University of Liverpool,liverpool_u,University of Liverpool,EUROPE,GBR,ENG
+University of Loughborough,loughborough_u,University of Loughborough,EUROPE,GBR,ENG
+University of Manchester,manchester_u,University of Manchester,EUROPE,GBR,ENG
+University of Newcastle,newcastle_u,University of Newcastle,EUROPE,GBR,ENG
+University of Nottingham,nottingham_u,University of Nottingham,EUROPE,GBR,ENG
+University of Oxford,oxford_u,University of Oxford,EUROPE,GBR,ENG
+University of Portsmouth,portsmouth_u,University of Portsmouth,EUROPE,GBR,ENG
+University of Reading,reading_u,University of Reading,EUROPE,GBR,ENG
+University of Salford,salford_u,University of Salford,EUROPE,GBR,ENG
+University of Sheffield,sheffield_u,University of Sheffield,EUROPE,GBR,EN
+University of Southampton,southampton_u,University of Southampton,EUROPE,GBR,EN
+University of St Andrews,st_andrews_u,University of St Andrews,EUROPE,GBR,SCT
+University of Surrey,surrey_u,University of Surrey,EUROPE,GBR,ENG
+University of Sussex,sussex_u,University of Sussex,EUROPE,GBR,ENG
+University of Warwick,warwick_u,University of Warwick,EUROPE,GBR,ENG
+University of York,york_u,University of York,EUROPE,GBR,ENG
