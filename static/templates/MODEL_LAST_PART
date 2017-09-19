@@ -52,6 +52,12 @@
                     "label": "Highest Amount",
                     "measure": "euro",
                     "function": "max"
+                },
+                {
+                    "name": "apc_amount_stddev",
+                    "label": "Standard Deviation",
+                    "measure": "euro",
+                    "function": "stddev"
                 }
             ],
             "dimensions": ["institution", "period", "publisher", "journal_full_title", "doi", "is_hybrid", "country"]
