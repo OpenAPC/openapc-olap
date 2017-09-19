@@ -24,18 +24,6 @@
                     "function": "avg"
                 },
                 {
-                    "name": "apc_amount_min",
-                    "label": "Lowest Amount",
-                    "measure": "euro",
-                    "function": "min"
-                },
-                {
-                    "name": "apc_amount_max",
-                    "label": "Highest Amount",
-                    "measure": "euro",
-                    "function": "max"
-                },
-                {
                     "name": "apc_amount_stddev",
                     "label": "Standard Deviation",
                     "measure": "euro",
