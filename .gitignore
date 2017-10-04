@@ -2,3 +2,7 @@ venv
 model.json
 build
 *.pyc
+apc_de.csv
+db_settings.ini
+offsetting.csv
+
