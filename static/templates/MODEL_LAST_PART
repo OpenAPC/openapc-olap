@@ -2,18 +2,24 @@
         {
             "name": "offsetting",
             "label": "Offsetting data cube (No monetary values!)",
+            "measures": [
+                {
+                    "name": "list_price",
+                    "label": "Article list price"
+                }
+            ],
             "aggregates": [
+                {
+                    "name": "list_price_amount_sum",
+                    "label": "List price sum",
+                    "measure": "list_price",
+                    "function": "sum"
+                },
                 {
                     "name": "num_items",
                     "label": "Number of Articles",
-                    "measure": "journal_full_title",
-                    "function": "count"
-                },
-                {
-                    "name": "list_price_amount_sum",
-                    "label": "Sum",
                     "measure": "list_price",
-                    "function": "sum"
+                    "function": "count"
                 }
             ],
             "dimensions": ["institution", "period", "publisher", "journal_full_title", "doi", "is_hybrid", "country", "contract", "list_price"]

@@ -159,7 +159,7 @@ def create_cubes_tables(connectable, apc_file_name, offsetting_file_name, schema
         ("doaj", "string"),
         ("country", "string"),
         ("contract", "string"),
-        ("list_price", "string")
+        ("list_price", "float")
     ]
 
     metadata = sqlalchemy.MetaData(bind=connectable)
