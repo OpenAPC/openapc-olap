@@ -8,9 +8,15 @@
                     "label": "Number of Articles",
                     "measure": "journal_full_title",
                     "function": "count"
+                },
+                {
+                    "name": "list_price_amount_sum",
+                    "label": "Sum",
+                    "measure": "list_price",
+                    "function": "sum"
                 }
             ],
-            "dimensions": ["institution", "period", "publisher", "journal_full_title", "doi", "is_hybrid", "country"]
+            "dimensions": ["institution", "period", "publisher", "journal_full_title", "doi", "is_hybrid", "country", "contract", "list_price"]
         }
         ,
         {
@@ -86,6 +92,16 @@
             "name": "country",
             "description": "country the institution is located in",
             "attributes": ["country"]
+        },
+        {
+            "name": "contract",
+            "description": "an offsetting contract an article was published under",
+            "attributes": ["contract"]
+        },
+        {
+            "name": "list_price",
+            "description": "list price of an article according to an offsetting contract",
+            "attributes": ["list_price"]
         }
     ]
 }
