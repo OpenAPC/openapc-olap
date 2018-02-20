@@ -75,7 +75,7 @@ def main():
             sys.exit()
         psql_uri = "postgresql://" + db_user + ":" + db_pass + "@localhost/openapc_db"
         engine = sqlalchemy.create_engine(psql_uri)
-        create_cubes_tables(engine, "apc_de.csv", "offsetting.csv")
+        create_cubes_tables(engine, "apc_de.csv", "offsetting_demo.csv")
         with engine.begin() as connection:
             connection.execute("GRANT SELECT ON ALL TABLES IN SCHEMA openapc_schema TO cubes_user")
         
