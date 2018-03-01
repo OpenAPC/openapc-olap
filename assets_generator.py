@@ -4,8 +4,10 @@ import argparse
 import csv
 import codecs
 import ConfigParser
+import json
 import os
 import sys
+import urllib2
 
 import sqlalchemy
 
@@ -48,9 +50,15 @@ ARG_HELP_STRINGS = {
            "If omitted, output will be written to the current directory."
 }
 
+CROSSREF_CACHE_FILE = "crossref_stats.json"
+CLASSIFICATOR_CACHE_FILE = "license_classification.json"
+
+CROSSREF_CACHE = {}
+CLASSIFICATOR_CACHE = {}
+
 def main():
     parser = argparse.ArgumentParser()
-    parser.add_argument("job", choices=["tables", "model", "yamls", "db_settings"])
+    parser.add_argument("job", choices=["tables", "model", "yamls", "db_settings", "crossref_stats"])
     parser.add_argument("-d", "--dir", help=ARG_HELP_STRINGS["dir"])
     args = parser.parse_args()
     
@@ -94,6 +102,9 @@ def main():
         scp.set('postgres_credentials', 'PASS', 'change_me')
         with open('db_settings.ini', 'w') as config_file:
             scp.write(config_file)
+    elif args.job == "crossref_stats":
+        update_crossref_stats()
+        
         
         
 def init_table(table, fields, create_id=False):
@@ -283,6 +294,105 @@ def generate_yamls(path):
         out_file_path = os.path.join(path, out_file_name)
         with open(out_file_path, "w") as outfile:
             outfile.write(content.encode("utf-8"))
+            
+        
+            
+def _query_crossref(issn, year):
+    api_url = "http://api.crossref.org/works?filter="
+    facet = "&facet=license:*"
+    filters = [
+        "issn:" + issn,
+        "from-pub-date:" + year + "-01-01",
+        "until-pub-date:" + year + "-12-31",
+        "type:journal-article"
+    ]
+    url = api_url + ",".join(filters) + facet
+    print url
+    req = urllib2.Request(url, None)
+    try:
+        response = urllib2.urlopen(req)
+        content = json.loads(response.read())
+        return content
+    except urllib2.HTTPError as httpe:
+        _print("r", "HTTPError while querying crossref: " + httpe.reason)
+        _shutdown()
+    except urllib2.URLError as urle:
+        _print("r", "URLError while querying crossref: " + urle.reason)
+        _shutdown()
+         
+def _analyse_crossref_data(content):
+    try:
+        result = {}
+        result["num_articles"] = content["message"]["total-results"]
+        result["num_oa_articles"] = 0
+        licenses = content["message"]["facets"]["license"]["values"]
+        for lic, count in licenses.iteritems():
+            if lic not in CLASSIFICATOR_CACHE:
+                doi_url = "https://doi.org/" + item["DOI"]
+                msg = ('Encountered unknown license url "{}". Please decide if it denotes ' +
+                       '(c)losed access or (o)pen access:')
+                msg = msg.format(url)
+                answer = raw_input(msg)
+                while answer not in ["c", "o"]:
+                    answer = raw_input("Please type 'o' for open access or 'c' for closed access:")
+                CLASSIFICATOR_CACHE[url] = "open" if answer == "o" else "closed"
+            if CLASSIFICATOR_CACHE[lic] == "open":
+                result["num_oa_articles"] += count
+        return result
+    except KeyError as ke:
+        print "KeyError while accessing crossref JSON structure: " + ke.message
+        _shutdown()
+         
+def _shutdown():
+    print "Updating cache files.."
+    with open(CROSSREF_CACHE_FILE, "w") as f:
+        f.write(json.dumps(CROSSREF_CACHE, sort_keys=True, indent=4, separators=(',', ': ')))
+        f.flush()
+    with open(CLASSIFICATOR_CACHE_FILE, "w") as f:
+        f.write(json.dumps(CLASSIFICATOR_CACHE, sort_keys=True, indent=4, separators=(',', ': ')))
+        f.flush()
+    print "Done."
+    sys.exit()
+    
+def update_crossref_stats():
+    global CROSSREF_CACHE, CLASSIFICATOR_CACHE
+    if os.path.isfile(CROSSREF_CACHE_FILE):
+        with open(CROSSREF_CACHE_FILE, "r") as f:
+            try:
+               CROSSREF_CACHE  = json.loads(f.read())
+               print "Crossref cache file sucessfully loaded."
+            except ValueError:
+                print "Could not decode a cache structure from " + CROSSREF_CACHE_FILE + ", starting with an empty crossref cache."
+    else:
+        print "No cache file (" + CROSSREF_CACHE_FILE + ") found, starting with an empty crossref cache."
+    if os.path.isfile(CLASSIFICATOR_CACHE_FILE):
+        with open(CLASSIFICATOR_CACHE_FILE, "r") as f:
+            try:
+               CLASSIFICATOR_CACHE  = json.loads(f.read())
+               print "Classificator cache file sucessfully loaded."
+            except ValueError:
+                print "Could not decode a cache structure from " + CLASSIFICATOR_CACHE_FILE + ", starting with an empty classificator cache."
+    else:
+        print "No cache file (" + CLASSIFICATOR_CACHE_FILE + ") found, starting with an empty classificator cache."
+    
+    reader = UnicodeReader(open("offsetting_demo.csv", "r"))
+    for line in reader:
+        year = line["period"]
+        issn = line["issn"]
+        title = line["journal_full_title"]
+        try:
+            _ = CROSSREF_CACHE[issn][year]["num_articles"]
+            _ = CROSSREF_CACHE[issn][year]["num_oa_articles"]
+        except KeyError:
+            msg = 'No cached entry found for journal "{}" ({}) in the {} period, querying crossref...'
+            print msg.format(title, issn, year)
+            content = _query_crossref(issn, year)
+            result = _analyse_crossref_data(content)
+            if issn not in CROSSREF_CACHE:
+                CROSSREF_CACHE[issn] = {}
+            CROSSREF_CACHE[issn][year] = result
+    _shutdown()
+    
 
 if __name__ == '__main__':
     main()
