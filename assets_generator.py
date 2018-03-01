@@ -50,6 +50,9 @@ ARG_HELP_STRINGS = {
            "If omitted, output will be written to the current directory."
 }
 
+APC_DE_FILE = "apc_de_demo.csv"
+OFFSETTING_FILE = "offsetting_demo.csv"
+
 CROSSREF_CACHE_FILE = "crossref_stats.json"
 CLASSIFICATOR_CACHE_FILE = "license_classification.json"
 
@@ -83,7 +86,7 @@ def main():
             sys.exit()
         psql_uri = "postgresql://" + db_user + ":" + db_pass + "@localhost/openapc_db"
         engine = sqlalchemy.create_engine(psql_uri)
-        create_cubes_tables(engine, "apc_de.csv", "offsetting.csv")
+        create_cubes_tables(engine, APC_DE_FILE, OFFSETTING_FILE)
         with engine.begin() as connection:
             connection.execute("GRANT SELECT ON ALL TABLES IN SCHEMA openapc_schema TO cubes_user")
         
@@ -168,7 +171,9 @@ def create_cubes_tables(connectable, apc_file_name, offsetting_file_name, schema
         ("ut", "string"),
         ("url", "string"),
         ("doaj", "string"),
-        ("country", "string")
+        ("country", "string"),
+        ("journal_article_count_in_period", "float"),
+        ("journal_oa_count_in_period", "float")
     ]
 
     metadata = sqlalchemy.MetaData(bind=connectable)
@@ -206,9 +211,25 @@ def create_cubes_tables(connectable, apc_file_name, offsetting_file_name, schema
         country = row["country"]
         offsetting_institution_countries[institution_name] = country
         
+    crossref_mappings = None
+    try:
+        cache_file = open(CROSSREF_CACHE_FILE, "r")
+        crossref_mappings = json.loads(cache_file.read())
+    except IOError as ioe:
+        msg = "Error while trying to open crossref cache file {}: {}"
+        print msg.format(CROSSREF_CACHE_FILE, ioe)
+        sys.exit()
+    except ValueError as ve:
+        msg = "Error while trying to decode cache structure in {}: {}"
+        print msg.format(CROSSREF_CACHE_FILE, ve.message)
+        sys.exit()
+    
     reader = UnicodeReader(open(offsetting_file_name, "rb"))
     for row in reader:
         institution = row["institution"]
+        title = row["journal_full_title"]
+        period = row["period"]
+        issn = row["issn"]
         # colons cannot be escaped in URL queries to the cubes server, so we have
         # to remove them here
         row["journal_full_title"] = row["journal_full_title"].replace(":", "")
@@ -217,6 +238,16 @@ def create_cubes_tables(connectable, apc_file_name, offsetting_file_name, schema
         except KeyError as ke:
             msg = (u"KeyError: The institution '{}' was not found in the institutions_offsetting file!")
             print msg.format(institution)
+            sys.exit()
+        try:
+            crossref_info = crossref_mappings[issn][period]
+            row["journal_article_count_in_period"] = crossref_info["num_articles"]
+            row["journal_oa_count_in_period"] = crossref_info["num_oa_articles"]
+        except KeyError as ke:
+            msg = ("KeyError: No crossref statistics found for journal '{}' " +
+                   "({}) in the {} period. Update the crossref cache with " +
+                   "'python assets_generator.py crossref_stats'.")
+            print msg.format(title, issn, period)
             sys.exit()
         tables_insert_commands["offsetting"].execute(row)
         if row["euro"] != "NA":
@@ -375,7 +406,7 @@ def update_crossref_stats():
     else:
         print "No cache file (" + CLASSIFICATOR_CACHE_FILE + ") found, starting with an empty classificator cache."
     
-    reader = UnicodeReader(open("offsetting_demo.csv", "r"))
+    reader = UnicodeReader(open(OFFSETTING_FILE, "r"))
     for line in reader:
         year = line["period"]
         issn = line["issn"]
@@ -384,7 +415,7 @@ def update_crossref_stats():
             _ = CROSSREF_CACHE[issn][year]["num_articles"]
             _ = CROSSREF_CACHE[issn][year]["num_oa_articles"]
         except KeyError:
-            msg = 'No cached entry found for journal "{}" ({}) in the {} period, querying crossref...'
+            msg = u'No cached entry found for journal "{}" ({}) in the {} period, querying crossref...'
             print msg.format(title, issn, year)
             content = _query_crossref(issn, year)
             result = _analyse_crossref_data(content)
