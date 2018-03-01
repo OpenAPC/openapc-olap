@@ -172,8 +172,15 @@ def create_cubes_tables(connectable, apc_file_name, offsetting_file_name, schema
         ("url", "string"),
         ("doaj", "string"),
         ("country", "string"),
-        ("journal_article_count_in_period", "float"),
-        ("journal_oa_count_in_period", "float")
+    ]
+    
+    offsetting_article_share_fields = [
+        ("period", "string"),
+        ("publisher", "string"),
+        ("journal_full_title", "string"),
+        ("num_offsetting_articles", "float"),
+        ("total_journal_articles", "float"),
+        ("journal_oa_articles", "float")
     ]
 
     metadata = sqlalchemy.MetaData(bind=connectable)
@@ -196,11 +203,18 @@ def create_cubes_tables(connectable, apc_file_name, offsetting_file_name, schema
     init_table(combined_table, apc_fields)
     combined_insert_command = combined_table.insert()
     
+    offsetting_article_shares_table = sqlalchemy.Table("offsetting_article_shares", metadata, autoload=False, schema=schema)
+    if offsetting_article_shares_table.exists():
+        offsetting_article_shares_table.drop(checkfirst=False)
+    init_table(offsetting_article_shares_table, offsetting_article_share_fields)
+    offsetting_article_shares_insert_command = offsetting_article_shares_table.insert()
+    
     # a dict to store individual insert commands for every table
     tables_insert_commands = {
         "openapc": openapc_insert_command,
         "offsetting": offsetting_insert_command,
-        "combined": combined_insert_command
+        "combined": combined_insert_command,
+        "offsetting_article_shares": offsetting_article_shares_insert_command
     }
     
     offsetting_institution_countries = {}
@@ -224,34 +238,61 @@ def create_cubes_tables(connectable, apc_file_name, offsetting_file_name, schema
         print msg.format(CROSSREF_CACHE_FILE, ve.message)
         sys.exit()
     
+    summarised_offsetting = {}
+    issn_title_map = {}
+    
     reader = UnicodeReader(open(offsetting_file_name, "rb"))
     for row in reader:
         institution = row["institution"]
-        title = row["journal_full_title"]
         period = row["period"]
+        publisher = row["publisher"]
         issn = row["issn"]
         # colons cannot be escaped in URL queries to the cubes server, so we have
         # to remove them here
         row["journal_full_title"] = row["journal_full_title"].replace(":", "")
+        title = row["journal_full_title"]
         try:
             row["country"] = offsetting_institution_countries[institution]
         except KeyError as ke:
             msg = (u"KeyError: The institution '{}' was not found in the institutions_offsetting file!")
             print msg.format(institution)
             sys.exit()
-        try:
-            crossref_info = crossref_mappings[issn][period]
-            row["journal_article_count_in_period"] = crossref_info["num_articles"]
-            row["journal_oa_count_in_period"] = crossref_info["num_oa_articles"]
-        except KeyError as ke:
-            msg = ("KeyError: No crossref statistics found for journal '{}' " +
-                   "({}) in the {} period. Update the crossref cache with " +
-                   "'python assets_generator.py crossref_stats'.")
-            print msg.format(title, issn, period)
-            sys.exit()
         tables_insert_commands["offsetting"].execute(row)
         if row["euro"] != "NA":
             tables_insert_commands["combined"].execute(row)
+        
+        issn_title_map[issn] = title
+        
+        if publisher not in summarised_offsetting:
+            summarised_offsetting[publisher] = {}
+        if issn not in summarised_offsetting[publisher]:
+            summarised_offsetting[publisher][issn] = {}
+        if period not in summarised_offsetting[publisher][issn]:
+            summarised_offsetting[publisher][issn][period] = 1
+        else:
+            summarised_offsetting[publisher][issn][period] += 1
+    
+    for publisher, issns in summarised_offsetting.iteritems():
+        for issn, periods in issns.iteritems():
+            for period, count in periods.iteritems():
+                try:
+                    row = {
+                        "publisher": publisher,
+                        "journal_full_title": issn_title_map[issn],
+                        "period": period,
+                        "num_offsetting_articles": count
+                    }
+                    print row
+                    crossref_info = crossref_mappings[issn][period]
+                    row["total_journal_articles"] = crossref_info["num_articles"]
+                    row["journal_oa_articles"] = crossref_info["num_oa_articles"]
+                    tables_insert_commands["offsetting_article_shares"].execute(row)
+                except KeyError as ke:
+                    msg = ("KeyError: No crossref statistics found for journal '{}' " +
+                           "({}) in the {} period. Update the crossref cache with " +
+                           "'python assets_generator.py crossref_stats'.")
+                    print msg.format(title, issn, period)
+                    sys.exit()
     
     institution_countries = {}
     
