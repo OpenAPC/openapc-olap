@@ -178,6 +178,7 @@ def create_cubes_tables(connectable, apc_file_name, offsetting_file_name, schema
         ("period", "string"),
         ("publisher", "string"),
         ("journal_full_title", "string"),
+        ("is_hybrid", "string"),
         ("num_offsetting_articles", "float"),
         ("total_journal_articles", "float"),
         ("journal_oa_articles", "float")
@@ -246,6 +247,7 @@ def create_cubes_tables(connectable, apc_file_name, offsetting_file_name, schema
         institution = row["institution"]
         period = row["period"]
         publisher = row["publisher"]
+        is_hybrid = row["is_hybrid"]
         issn = row["issn"]
         # colons cannot be escaped in URL queries to the cubes server, so we have
         # to remove them here
@@ -275,24 +277,24 @@ def create_cubes_tables(connectable, apc_file_name, offsetting_file_name, schema
     for publisher, issns in summarised_offsetting.iteritems():
         for issn, periods in issns.iteritems():
             for period, count in periods.iteritems():
-                try:
                     row = {
                         "publisher": publisher,
                         "journal_full_title": issn_title_map[issn],
                         "period": period,
+                        "is_hybrid": is_hybrid,
                         "num_offsetting_articles": count
                     }
-                    print row
-                    crossref_info = crossref_mappings[issn][period]
-                    row["total_journal_articles"] = crossref_info["num_articles"]
-                    row["journal_oa_articles"] = crossref_info["num_oa_articles"]
+                    try:
+                        crossref_info = crossref_mappings[issn][period]
+                        row["total_journal_articles"] = crossref_info["num_articles"]
+                        row["journal_oa_articles"] = crossref_info["num_oa_articles"]
+                    except KeyError as ke:
+                        msg = ("KeyError: No crossref statistics found for journal '{}' " +
+                               "({}) in the {} period. Update the crossref cache with " +
+                               "'python assets_generator.py crossref_stats'.")
+                        print msg.format(title, issn, period)
+                        sys.exit()
                     tables_insert_commands["offsetting_article_shares"].execute(row)
-                except KeyError as ke:
-                    msg = ("KeyError: No crossref statistics found for journal '{}' " +
-                           "({}) in the {} period. Update the crossref cache with " +
-                           "'python assets_generator.py crossref_stats'.")
-                    print msg.format(title, issn, period)
-                    sys.exit()
     
     institution_countries = {}
     
