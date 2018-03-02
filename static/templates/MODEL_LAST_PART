@@ -14,6 +14,39 @@
         }
         ,
         {
+            "name": "offsetting_article_shares",
+            "label": "Number of offsetting articles compared to number of journal total and oa articles",
+            "measures": [
+                {
+                    "name": "num_offsetting_articles",
+                    "label": "Number of articles in offsetting dataset"
+                }
+            ],
+            "aggregates": [
+                {
+                    "name": "num_offsetting_articles",
+                    "label": "Number of Offsetting Articles",
+                    "measure": "num_offsetting_articles",
+                    "function": "sum"
+                },
+                {
+                    "name": "total_journal_articles",
+                    "label": "Total number of articles for a given journal and year (according to Crossref)",
+                    "measure": "total_journal_articles",
+                    "function": "sum"
+                },
+                {
+                    "name": "journal_oa_articles",
+                    "label": "Number of open access articles for a given journal and year (based on Crossref license analysis, might be inaccurate!)",
+                    "measure": "journal_oa_articles",
+                    "function": "sum"
+                }
+
+            ],
+            "dimensions": ["period", "publisher", "journal_full_title", "is_hybrid", "num_offsetting_articles", "total_journal_articles", "journal_oa_articles"]
+        }
+        ,
+        {
             "name": "combined",
             "label": "combined cube (combines cost data from openapc and offsetting model)",
             "measures": [
@@ -86,6 +119,21 @@
             "name": "country",
             "description": "country the institution is located in",
             "attributes": ["country"]
+        },
+        {
+            "name": "num_offsetting_articles",
+            "description": "number of articles in the ofsetting collection for a given journal and year",
+            "attributes": ["num_offsetting_articles"]
+        },
+        {
+            "name": "total_journal_articles",
+            "description": "total number of articles for a given journal and year (according to Crossref)",
+            "attributes": ["total_journal_articles"]
+        },
+        {
+            "name": "journal_oa_articles",
+            "description": "number of open access articles for a given journal and year (based on Crossref license analysis, might be inaccurate!)",
+            "attributes": ["journal_oa_articles"]
         }
     ]
 }
