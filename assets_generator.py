@@ -174,14 +174,14 @@ def create_cubes_tables(connectable, apc_file_name, offsetting_file_name, schema
         ("country", "string"),
     ]
     
-    offsetting_article_share_fields = [
+    offsetting_coverage_fields = [
         ("period", "string"),
         ("publisher", "string"),
         ("journal_full_title", "string"),
         ("is_hybrid", "string"),
         ("num_offsetting_articles", "float"),
-        ("total_journal_articles", "float"),
-        ("journal_oa_articles", "float")
+        ("num_journal_total_articles", "float"),
+        ("num_journal_oa_articles", "float")
     ]
 
     metadata = sqlalchemy.MetaData(bind=connectable)
@@ -204,18 +204,18 @@ def create_cubes_tables(connectable, apc_file_name, offsetting_file_name, schema
     init_table(combined_table, apc_fields)
     combined_insert_command = combined_table.insert()
     
-    offsetting_article_shares_table = sqlalchemy.Table("offsetting_article_shares", metadata, autoload=False, schema=schema)
-    if offsetting_article_shares_table.exists():
-        offsetting_article_shares_table.drop(checkfirst=False)
-    init_table(offsetting_article_shares_table, offsetting_article_share_fields)
-    offsetting_article_shares_insert_command = offsetting_article_shares_table.insert()
+    offsetting_coverage_table = sqlalchemy.Table("offsetting_coverage", metadata, autoload=False, schema=schema)
+    if offsetting_coverage_table.exists():
+        offsetting_coverage_table.drop(checkfirst=False)
+    init_table(offsetting_coverage_table, offsetting_coverage_fields)
+    offsetting_coverage_insert_command = offsetting_coverage_table.insert()
     
     # a dict to store individual insert commands for every table
     tables_insert_commands = {
         "openapc": openapc_insert_command,
         "offsetting": offsetting_insert_command,
         "combined": combined_insert_command,
-        "offsetting_article_shares": offsetting_article_shares_insert_command
+        "offsetting_coverage": offsetting_coverage_insert_command
     }
     
     offsetting_institution_countries = {}
@@ -286,15 +286,15 @@ def create_cubes_tables(connectable, apc_file_name, offsetting_file_name, schema
                     }
                     try:
                         crossref_info = crossref_mappings[issn][period]
-                        row["total_journal_articles"] = crossref_info["num_articles"]
-                        row["journal_oa_articles"] = crossref_info["num_oa_articles"]
+                        row["num_journal_total_articles"] = crossref_info["num_journal_total_articles"]
+                        row["num_journal_oa_articles"] = crossref_info["num_journal_oa_articles"]
                     except KeyError as ke:
                         msg = ("KeyError: No crossref statistics found for journal '{}' " +
                                "({}) in the {} period. Update the crossref cache with " +
                                "'python assets_generator.py crossref_stats'.")
                         print msg.format(title, issn, period)
                         sys.exit()
-                    tables_insert_commands["offsetting_article_shares"].execute(row)
+                    tables_insert_commands["offsetting_coverage"].execute(row)
     
     institution_countries = {}
     
@@ -397,8 +397,8 @@ def _query_crossref(issn, year):
 def _analyse_crossref_data(content):
     try:
         result = {}
-        result["num_articles"] = content["message"]["total-results"]
-        result["num_oa_articles"] = 0
+        result["num_journal_total_articles"] = content["message"]["total-results"]
+        result["num_journal_oa_articles"] = 0
         licenses = content["message"]["facets"]["license"]["values"]
         for lic, count in licenses.iteritems():
             if lic not in CLASSIFICATOR_CACHE:
@@ -411,7 +411,7 @@ def _analyse_crossref_data(content):
                     answer = raw_input("Please type 'o' for open access or 'c' for closed access:")
                 CLASSIFICATOR_CACHE[url] = "open" if answer == "o" else "closed"
             if CLASSIFICATOR_CACHE[lic] == "open":
-                result["num_oa_articles"] += count
+                result["num_journal_oa_articles"] += count
         return result
     except KeyError as ke:
         print "KeyError while accessing crossref JSON structure: " + ke.message
@@ -455,8 +455,8 @@ def update_crossref_stats():
         issn = line["issn"]
         title = line["journal_full_title"]
         try:
-            _ = CROSSREF_CACHE[issn][year]["num_articles"]
-            _ = CROSSREF_CACHE[issn][year]["num_oa_articles"]
+            _ = CROSSREF_CACHE[issn][year]["num_journal_total_articles"]
+            _ = CROSSREF_CACHE[issn][year]["num_journal_oa_articles"]
         except KeyError:
             msg = u'No cached entry found for journal "{}" ({}) in the {} period, querying crossref...'
             print msg.format(title, issn, year)
