@@ -7,6 +7,7 @@ import ConfigParser
 import json
 import os
 import sys
+import time
 import urllib2
 
 import sqlalchemy
@@ -47,11 +48,14 @@ class UnicodeReader(object):
 ARG_HELP_STRINGS = {
     
     "dir": "A path to a directory where the generated output files should be stored. " +
-           "If omitted, output will be written to the current directory."
+           "If omitted, output will be written to the current directory.",
+    "num_crossref_lookups": "stop execution after n journal lookups to crossref " +
+                            "when performing the crossref_stats job. Useful for " +
+                            "reducing API loads and saving results from time to time."
 }
 
-APC_DE_FILE = "apc_de_demo.csv"
-OFFSETTING_FILE = "offsetting_demo.csv"
+APC_DE_FILE = "apc_de.csv"
+OFFSETTING_FILE = "offsetting.csv"
 
 CROSSREF_CACHE_FILE = "crossref_stats.json"
 CLASSIFICATOR_CACHE_FILE = "license_classification.json"
@@ -63,6 +67,7 @@ def main():
     parser = argparse.ArgumentParser()
     parser.add_argument("job", choices=["tables", "model", "yamls", "db_settings", "crossref_stats"])
     parser.add_argument("-d", "--dir", help=ARG_HELP_STRINGS["dir"])
+    parser.add_argument("-n", "--num_crossref_lookups", type=int, help=ARG_HELP_STRINGS["num_crossref_lookups"])
     args = parser.parse_args()
     
     path = "."
@@ -106,7 +111,7 @@ def main():
         with open('db_settings.ini', 'w') as config_file:
             scp.write(config_file)
     elif args.job == "crossref_stats":
-        update_crossref_stats()
+        update_crossref_stats(args.num_crossref_lookups)
         
         
         
@@ -371,7 +376,9 @@ def generate_yamls(path):
             
         
             
-def _query_crossref(issn, year):
+def _query_crossref(issn, year, pause = 1):
+    time.sleep(pause) # reduce API load
+    start_time = time.time()
     api_url = "http://api.crossref.org/works?filter="
     facet = "&facet=license:*"
     filters = [
@@ -380,12 +387,14 @@ def _query_crossref(issn, year):
         "until-pub-date:" + year + "-12-31",
         "type:journal-article"
     ]
+    headers = {"User-Agent": "OpenAPC treemaps updater (https://treemaps.intact-project.org/); mailto:openapc@uni-bielefeld.de"}
     url = api_url + ",".join(filters) + facet
-    print url
-    req = urllib2.Request(url, None)
+    req = urllib2.Request(url, None, headers)
     try:
         response = urllib2.urlopen(req)
         content = json.loads(response.read())
+        end_time = time.time()
+        print "crossref data received, took {}s (+ {}s pause)".format(round(end_time - start_time, 2), pause)
         return content
     except urllib2.HTTPError as httpe:
         _print("r", "HTTPError while querying crossref: " + httpe.reason)
@@ -402,14 +411,13 @@ def _analyse_crossref_data(content):
         licenses = content["message"]["facets"]["license"]["values"]
         for lic, count in licenses.iteritems():
             if lic not in CLASSIFICATOR_CACHE:
-                doi_url = "https://doi.org/" + item["DOI"]
                 msg = ('Encountered unknown license url "{}". Please decide if it denotes ' +
                        '(c)losed access or (o)pen access:')
-                msg = msg.format(url)
+                msg = msg.format(lic)
                 answer = raw_input(msg)
                 while answer not in ["c", "o"]:
                     answer = raw_input("Please type 'o' for open access or 'c' for closed access:")
-                CLASSIFICATOR_CACHE[url] = "open" if answer == "o" else "closed"
+                CLASSIFICATOR_CACHE[lic] = "open" if answer == "o" else "closed"
             if CLASSIFICATOR_CACHE[lic] == "open":
                 result["num_journal_oa_articles"] += count
         return result
@@ -428,7 +436,7 @@ def _shutdown():
     print "Done."
     sys.exit()
     
-def update_crossref_stats():
+def update_crossref_stats(max_lookups):
     global CROSSREF_CACHE, CLASSIFICATOR_CACHE
     if os.path.isfile(CROSSREF_CACHE_FILE):
         with open(CROSSREF_CACHE_FILE, "r") as f:
@@ -450,6 +458,7 @@ def update_crossref_stats():
         print "No cache file (" + CLASSIFICATOR_CACHE_FILE + ") found, starting with an empty classificator cache."
     
     reader = UnicodeReader(open(OFFSETTING_FILE, "r"))
+    num_lookups = 0
     for line in reader:
         year = line["period"]
         issn = line["issn"]
@@ -465,6 +474,10 @@ def update_crossref_stats():
             if issn not in CROSSREF_CACHE:
                 CROSSREF_CACHE[issn] = {}
             CROSSREF_CACHE[issn][year] = result
+            num_lookups += 1
+            if max_lookups is not None and num_lookups >= max_lookups:
+                print "maximum number of lookups performed."
+                _shutdown()
     _shutdown()
     
 
