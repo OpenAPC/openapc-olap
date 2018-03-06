@@ -6,6 +6,7 @@ import codecs
 import ConfigParser
 import json
 import os
+import re
 import sys
 import time
 import urllib2
@@ -49,25 +50,32 @@ ARG_HELP_STRINGS = {
     
     "dir": "A path to a directory where the generated output files should be stored. " +
            "If omitted, output will be written to the current directory.",
-    "num_crossref_lookups": "stop execution after n journal lookups to crossref " +
-                            "when performing the crossref_stats job. Useful for " +
-                            "reducing API loads and saving results from time to time."
+    "num_api_lookups": "stop execution after n journal lookups to " +
+                        "when performing the coverage_stats job. Useful for " +
+                        "reducing API loads and saving results from time to time."
 }
+
+JOURNAL_ID_RE = re.compile('<a href="/journal/(?P<journal_id>\d+)" title=".*?">', re.IGNORECASE)
+SEARCH_RESULTS_COUNT_RE = re.compile('<h1 class="number-of-search-results-and-search-terms">\s*<strong>(?P<count>[\d,]+)</strong>', re.IGNORECASE)
+SEARCH_RESULTS_TITLE_RE = re.compile('<p class="message">You are now only searching within the Journal</p>\s*<p class="title">\s*<a href="/journal/\d+">(?P<title>.*?)</a>', re.IGNORECASE | re.UNICODE)
+
+SPRINGER_OA_SEARCH = "https://link.springer.com/search?facet-journal-id={}&package=openaccessarticles&search-within=Journal&query=&date-facet-mode=in&facet-start-year={}&facet-end-year={}"
+SPRINGER_FULL_SEARCH = "https://link.springer.com/search?facet-journal-id={}&query=&date-facet-mode=in&facet-start-year={}&facet-end-year={}"
 
 APC_DE_FILE = "apc_de.csv"
 OFFSETTING_FILE = "offsetting.csv"
 
-CROSSREF_CACHE_FILE = "crossref_stats.json"
+COVERAGE_CACHE_FILE = "coverage_stats.json"
 CLASSIFICATOR_CACHE_FILE = "license_classification.json"
 
-CROSSREF_CACHE = {}
+COVERAGE_CACHE = {}
 CLASSIFICATOR_CACHE = {}
 
 def main():
     parser = argparse.ArgumentParser()
-    parser.add_argument("job", choices=["tables", "model", "yamls", "db_settings", "crossref_stats"])
+    parser.add_argument("job", choices=["tables", "model", "yamls", "db_settings", "coverage_stats"])
     parser.add_argument("-d", "--dir", help=ARG_HELP_STRINGS["dir"])
-    parser.add_argument("-n", "--num_crossref_lookups", type=int, help=ARG_HELP_STRINGS["num_crossref_lookups"])
+    parser.add_argument("-n", "--num_api_lookups", type=int, help=ARG_HELP_STRINGS["num_api_lookups"])
     args = parser.parse_args()
     
     path = "."
@@ -111,7 +119,7 @@ def main():
         with open('db_settings.ini', 'w') as config_file:
             scp.write(config_file)
     elif args.job == "crossref_stats":
-        update_crossref_stats(args.num_crossref_lookups)
+        update_coverage_stats(args.num_crossref_lookups)
         
         
         
@@ -233,15 +241,15 @@ def create_cubes_tables(connectable, apc_file_name, offsetting_file_name, schema
         
     crossref_mappings = None
     try:
-        cache_file = open(CROSSREF_CACHE_FILE, "r")
+        cache_file = open(COVERAGE_CACHE_FILE, "r")
         crossref_mappings = json.loads(cache_file.read())
     except IOError as ioe:
         msg = "Error while trying to open crossref cache file {}: {}"
-        print msg.format(CROSSREF_CACHE_FILE, ioe)
+        print msg.format(COVERAGE_CACHE_FILE, ioe)
         sys.exit()
     except ValueError as ve:
         msg = "Error while trying to decode cache structure in {}: {}"
-        print msg.format(CROSSREF_CACHE_FILE, ve.message)
+        print msg.format(COVERAGE_CACHE_FILE, ve.message)
         sys.exit()
     
     summarised_offsetting = {}
@@ -375,7 +383,51 @@ def generate_yamls(path):
             outfile.write(content.encode("utf-8"))
             
         
+def _query_springer_link(journal_id, period, oa=False, pause=0.5):
+    if not journal_id.isdigit():
+        raise ValueError("Invalid journal id " + journal_id + " (not a number)")
+    url = SPRINGER_FULL_SEARCH.format(journal_id, period, period)
+    if oa:
+        url = SPRINGER_OA_SEARCH.format(journal_id, period, period)
+    print url
+    req = urllib2.Request(url, None)
+    response = urllib2.urlopen(req)
+    content = response.read()
+    results = {}
+    count_match = SEARCH_RESULTS_COUNT_RE.search(content)
+    if count_match:
+        count = count_match.groupdict()['count']
+        results['count'] = count.replace(",", "")
+    else:
+        raise ValueError("Regex could not detect a results count at " + url)
+    title_match = SEARCH_RESULTS_TITLE_RE.search(content)
+    if title_match:
+        title = title_match.groupdict()['title']
+        htmlparser = HTMLParser()
+        results['title'] = htmlparser.unescape(title)
+    else:
+        raise ValueError("Regex could not detect a journal title at " + url)
+    return results        
             
+def _get_springer_journal_id_from_doi(doi):
+    if doi.startswith(("10.1007/s", "10.3758/s", "10.1245/s", "10.1617/s")):
+        return doi[9:14].lstrip("0")
+    elif doi.startswith("10.1140"):
+    # In case of the "European Physical journal" family, the journal id cannot be extracted directly from the DOI.
+        print "No direct journal id extraction possible for doi " + doi + ", analysing landing page..." 
+        req = urllib2.Request("https://doi.org/" + doi, None)
+        response = urllib2.urlopen(req)
+        content = response.read()
+        match = JOURNAL_ID_RE.search(content)
+        if match:
+            journal_id = match.groupdict()["journal_id"]
+            print "journal id found: " + journal_id
+            return journal_id
+        else:
+            raise ValueError("Regex could not detect a journal id for doi " + doi)
+    else:
+        raise ValueError(doi + " does not seem to be a Springer DOI (prefix not in list)!")      
+        
 def _query_crossref(issn, year, pause = 1):
     time.sleep(pause) # reduce API load
     start_time = time.time()
@@ -427,8 +479,8 @@ def _analyse_crossref_data(content):
          
 def _shutdown():
     print "Updating cache files.."
-    with open(CROSSREF_CACHE_FILE, "w") as f:
-        f.write(json.dumps(CROSSREF_CACHE, sort_keys=True, indent=4, separators=(',', ': ')))
+    with open(COVERAGE_CACHE_FILE, "w") as f:
+        f.write(json.dumps(COVERAGE_CACHE, sort_keys=True, indent=4, separators=(',', ': ')))
         f.flush()
     with open(CLASSIFICATOR_CACHE_FILE, "w") as f:
         f.write(json.dumps(CLASSIFICATOR_CACHE, sort_keys=True, indent=4, separators=(',', ': ')))
@@ -436,17 +488,17 @@ def _shutdown():
     print "Done."
     sys.exit()
     
-def update_crossref_stats(max_lookups):
-    global CROSSREF_CACHE, CLASSIFICATOR_CACHE
-    if os.path.isfile(CROSSREF_CACHE_FILE):
-        with open(CROSSREF_CACHE_FILE, "r") as f:
+def update_coverage_stats(max_lookups):
+    global COVERAGE_CACHE, CLASSIFICATOR_CACHE
+    if os.path.isfile(COVERAGE_CACHE_FILE):
+        with open(COVERAGE_CACHE_FILE, "r") as f:
             try:
-               CROSSREF_CACHE  = json.loads(f.read())
-               print "Crossref cache file sucessfully loaded."
+               COVERAGE_CACHE  = json.loads(f.read())
+               print "coverage cache file sucessfully loaded."
             except ValueError:
-                print "Could not decode a cache structure from " + CROSSREF_CACHE_FILE + ", starting with an empty crossref cache."
+                print "Could not decode a cache structure from " + COVERAGE_CACHE_FILE + ", starting with an empty coverage cache."
     else:
-        print "No cache file (" + CROSSREF_CACHE_FILE + ") found, starting with an empty crossref cache."
+        print "No cache file (" + COVERAGE_CACHE_FILE + ") found, starting with an empty coverage cache."
     if os.path.isfile(CLASSIFICATOR_CACHE_FILE):
         with open(CLASSIFICATOR_CACHE_FILE, "r") as f:
             try:
@@ -460,20 +512,31 @@ def update_crossref_stats(max_lookups):
     reader = UnicodeReader(open(OFFSETTING_FILE, "r"))
     num_lookups = 0
     for line in reader:
+        publisher = line["publisher"]
+        if publisher != "Springer Nature":
+            continue
         year = line["period"]
         issn = line["issn"]
         title = line["journal_full_title"]
+        doi = line["doi"]
         try:
-            _ = CROSSREF_CACHE[issn][year]["num_journal_total_articles"]
-            _ = CROSSREF_CACHE[issn][year]["num_journal_oa_articles"]
+            _ = COVERAGE_CACHE[issn][year]["num_journal_total_articles"]
+            _ = COVERAGE_CACHE[issn][year]["num_journal_oa_articles"]
         except KeyError:
-            msg = u'No cached entry found for journal "{}" ({}) in the {} period, querying crossref...'
+            msg = u'No cached entry found for journal "{}" ({}) in the {} period, querying SpringerLink...'
             print msg.format(title, issn, year)
-            content = _query_crossref(issn, year)
-            result = _analyse_crossref_data(content)
-            if issn not in CROSSREF_CACHE:
-                CROSSREF_CACHE[issn] = {}
-            CROSSREF_CACHE[issn][year] = result
+            journal_id = _get_springer_journal_id_from_doi(doi)
+            total_res = _query_springer_link(journal_id, year, oa=False)
+            oa_res = _query_springer_link(journal_id, year, oa=True)
+            result = {
+                "num_journal_total_articles": total_res["count"],
+                "num_journal_oa_articles": oa_res["count"]
+            }
+            #content = _query_crossref(issn, year)
+            #result = _analyse_crossref_data(content)
+            if issn not in COVERAGE_CACHE:
+                COVERAGE_CACHE[issn] = {}
+            COVERAGE_CACHE[issn][year] = result
             num_lookups += 1
             if max_lookups is not None and num_lookups >= max_lookups:
                 print "maximum number of lookups performed."
