@@ -401,7 +401,8 @@ def _query_springer_link(journal_id, period, oa=False, pause=0.5):
     count_match = SEARCH_RESULTS_COUNT_RE.search(content)
     if count_match:
         count = count_match.groupdict()['count']
-        results['count'] = count.replace(",", "")
+        count = count.replace(",", "")
+        results['count'] = int(count)
     else:
         raise ValueError("Regex could not detect a results count at " + url)
     title_match = SEARCH_RESULTS_TITLE_RE.search(content)
