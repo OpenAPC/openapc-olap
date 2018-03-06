@@ -4,6 +4,7 @@ import argparse
 import csv
 import codecs
 import ConfigParser
+from HTMLParser import HTMLParser
 import json
 import os
 import re
@@ -118,8 +119,8 @@ def main():
         scp.set('postgres_credentials', 'PASS', 'change_me')
         with open('db_settings.ini', 'w') as config_file:
             scp.write(config_file)
-    elif args.job == "crossref_stats":
-        update_coverage_stats(args.num_crossref_lookups)
+    elif args.job == "coverage_stats":
+        update_coverage_stats(args.num_api_lookups)
         
         
         
@@ -277,6 +278,9 @@ def create_cubes_tables(connectable, apc_file_name, offsetting_file_name, schema
             tables_insert_commands["combined"].execute(row)
         
         issn_title_map[issn] = title
+        
+        if publisher != "Springer Nature":
+            continue
         
         if publisher not in summarised_offsetting:
             summarised_offsetting[publisher] = {}
