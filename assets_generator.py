@@ -407,7 +407,8 @@ def _query_springer_link(journal_id, period, oa=False, pause=0.5):
         raise ValueError("Regex could not detect a results count at " + url)
     title_match = SEARCH_RESULTS_TITLE_RE.search(content)
     if title_match:
-        title = title_match.groupdict()['title']
+        title = (title_match.groupdict()['title'])
+        title = unicode(title, "utf-8")
         htmlparser = HTMLParser()
         results['title'] = htmlparser.unescape(title)
     else:
@@ -415,7 +416,7 @@ def _query_springer_link(journal_id, period, oa=False, pause=0.5):
     return results        
             
 def _get_springer_journal_id_from_doi(doi):
-    if doi.startswith(("10.1007/s", "10.3758/s", "10.1245/s", "10.1617/s")):
+    if doi.startswith(("10.1007/s", "10.3758/s", "10.1245/s", "10.1617/s", "10.1186/s")):
         return doi[9:14].lstrip("0")
     elif doi.startswith("10.1140"):
     # In case of the "European Physical journal" family, the journal id cannot be extracted directly from the DOI.
