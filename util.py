@@ -35,3 +35,20 @@ class UnicodeReader(object):
 
     def __iter__(self):
         return self
+
+def colorise(text, color):
+    return colorise_text_segment(text, 0, len(text), color)
+    
+def colorise_text_segment(text, start, end, color):
+    ANSI_COLORS = {
+        "red": "\033[91m",
+        "green": "\033[92m",
+        "yellow": "\033[93m",
+        "blue": "\033[94m",
+        "cyan": "\033[96m"
+    }
+    if color not in ANSI_COLORS.keys():
+        raise ValueError("Argument 'color' must be one of [" + ", ".join(ANSI_COLORS.keys()) + "]")
+    s = ANSI_COLORS[color]
+    e = "\033[0m"
+    return text[:start] + s + text[start:end] + e + text[end:]
