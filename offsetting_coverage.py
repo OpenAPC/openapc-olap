@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 
 import datetime
+from HTMLParser import HTMLParser
 import json
 import os
 import re
@@ -129,29 +130,11 @@ def update_coverage_stats(offsetting_file, max_lookups):
         publisher = line["publisher"]
         if publisher != "Springer Nature":
             continue
-        year = line["period"]
         issn = line["issn"]
+        period = line["period"]
         title = line["journal_full_title"]
         doi = line["doi"]
         journal_id = None
-        try:
-            _ = COVERAGE_CACHE[issn][year]["num_journal_total_articles"]
-            _ = COVERAGE_CACHE[issn][year]["num_journal_oa_articles"]
-        except KeyError:
-            msg = u'No cached entry found for journal "{}" ({}) in the {} period, querying SpringerLink...'
-            print msg.format(title, issn, year)
-            journal_id = _get_springer_journal_id_from_doi(doi)
-            total_res = _query_springer_link(journal_id, year, oa=False)
-            oa_res = _query_springer_link(journal_id, year, oa=True)
-            result = {
-                "num_journal_total_articles": total_res["count"],
-                "num_journal_oa_articles": oa_res["count"]
-            }
-            if issn not in COVERAGE_CACHE:
-                COVERAGE_CACHE[issn] = {}
-            COVERAGE_CACHE[issn][year] = result
-            lookup_performed = True
-            
         # Retreive publication dates for articles from CSV summaries on SpringerLink.
         # Employ a multi-level cache structure to minimize IO:
         #  - try to look up the doi in the persistent journal article cache
@@ -164,11 +147,10 @@ def update_coverage_stats(offsetting_file, max_lookups):
             if issn not in TEMP_ARTICLE_CACHE:
                 msg = u"Journal {} ('{}'): Not found in temp cache, repopulating..."
                 print msg.format(issn, title)
-                if journal_id is None:
-                    journal_id = _get_springer_journal_id_from_doi(doi)
+                journal_id = _get_springer_journal_id_from_doi(doi)
                 TEMP_ARTICLE_CACHE[issn] = _get_journal_cache_from_csv(issn, journal_id, refetch=False)
             if doi not in TEMP_ARTICLE_CACHE[issn]:
-                msg = u"Journal {} ('{}'): DOI {} still not found in cache, re-fetching csv file..."
+                msg = u"Journal {} ('{}'): DOI {} not found in cache, re-fetching csv file..."
                 print msg.format(issn, title, doi)
                 TEMP_ARTICLE_CACHE[issn] = _get_journal_cache_from_csv(issn, journal_id, refetch=True)
                 if doi not in TEMP_ARTICLE_CACHE[issn]:
@@ -181,14 +163,47 @@ def update_coverage_stats(offsetting_file, max_lookups):
             if issn not in PERSISTENT_ARTICLE_CACHE:
                 PERSISTENT_ARTICLE_CACHE[issn] = {}
             PERSISTENT_ARTICLE_CACHE[issn][doi] = TEMP_ARTICLE_CACHE[issn][doi]
-            pub_year = TEMP_ARTICLE_CACHE[issn][doi]
+            pub_year = PERSISTENT_ARTICLE_CACHE[issn][doi]
             compare_msg = u"DOI {} found in Springer data, Pub year is {} ".format(doi, pub_year)
-            if pub_year == year:
+            if pub_year == period:
                 compare_msg += colorise("(same as offsetting period)", "green")
             else:
-                compare_msg += colorise("(DIFFERENT from offsetting period, which is {})".format(year), "yellow")
+                compare_msg += colorise("(DIFFERENT from offsetting period, which is {})".format(period), "yellow")
             msg = u"Journal {} ('{}'): ".format(issn, title)
             print msg.ljust(80) + compare_msg
+        # Retreive journal total and OA statistics for every covered publication year.
+        pub_year = PERSISTENT_ARTICLE_CACHE[issn][doi]
+        if issn not in COVERAGE_CACHE:
+            COVERAGE_CACHE[issn] = {}
+        if pub_year not in COVERAGE_CACHE[issn]:
+            COVERAGE_CACHE[issn][pub_year] = {}
+        try:
+            _ = COVERAGE_CACHE[issn][pub_year]["num_journal_total_articles"]
+        except KeyError:
+            # If the total stats are missing, we have to scrap them from the SpringerLink search site HTML
+            msg = u'No cached entry found for total article numbers in journal "{}" ({}) in the {} publication period, querying SpringerLink...'
+            print msg.format(title, issn, pub_year)
+            if issn not in COVERAGE_CACHE:
+                COVERAGE_CACHE[issn] = {}
+            if journal_id is None:
+                journal_id = _get_springer_journal_id_from_doi(doi)
+            total = _get_springer_journal_stats(journal_id, pub_year, oa=False)
+            COVERAGE_CACHE[issn][pub_year]["num_journal_total_articles"] = total["count"]
+            lookup_performed = True
+        try:
+            _ = COVERAGE_CACHE[issn][pub_year]["num_journal_oa_articles"]
+        except KeyError:
+            # OA total numbers can be deduced from the cached CSV files
+            msg = u'No cached entry found for oa article numbers in journal "{}" ({}) in the {} publication period, looking up cache...'
+            print msg.format(title, issn, pub_year)
+            if journal_id is None:
+                journal_id = _get_springer_journal_id_from_doi(doi)
+            cache = _get_journal_cache_from_csv(issn, journal_id, refetch=False)
+            count = 0
+            for year in cache.values():
+                if year == pub_year:
+                    count += 1
+            COVERAGE_CACHE[issn][pub_year]["num_journal_oa_articles"] = count
         if lookup_performed:
             num_lookups += 1
         if max_lookups is not None and num_lookups >= max_lookups:
