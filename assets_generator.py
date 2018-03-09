@@ -2,50 +2,18 @@
 
 import argparse
 import csv
-import codecs
 import ConfigParser
 from HTMLParser import HTMLParser
 import json
 import os
-import re
 import sys
 import time
 import urllib2
 
+from compat import UnicodeReader
+import offsetting_coverage as oc
+
 import sqlalchemy
-
-# These two classes were adopted from 
-# https://docs.python.org/2/library/csv.html#examples
-# UnicodeReader was slightly modified to return a DictReader
-class UTF8Recoder:
-    """
-    Iterator that reads an encoded stream and reencodes the input to UTF-8
-    """
-    def __init__(self, f, encoding):
-        self.reader = codecs.getreader(encoding)(f)
-
-    def __iter__(self):
-        return self
-
-    def next(self):
-        return self.reader.next().encode("utf-8")
-        
-class UnicodeReader(object):
-    """
-    A CSV reader which will iterate over lines in the CSV file "f",
-    which is encoded in the given encoding.
-    """
-
-    def __init__(self, f, dialect=csv.excel, encoding="utf-8", **kwds):
-        f = UTF8Recoder(f, encoding)
-        self.reader = csv.DictReader(f, dialect=dialect, **kwds)
-
-    def next(self):
-        row = self.reader.next()
-        return {k: unicode(v, "utf-8") for (k, v) in row.iteritems()}
-
-    def __iter__(self):
-        return self
         
 ARG_HELP_STRINGS = {
     
@@ -56,21 +24,8 @@ ARG_HELP_STRINGS = {
                         "reducing API loads and saving results from time to time."
 }
 
-JOURNAL_ID_RE = re.compile('<a href="/journal/(?P<journal_id>\d+)" title=".*?">', re.IGNORECASE)
-SEARCH_RESULTS_COUNT_RE = re.compile('<h1 class="number-of-search-results-and-search-terms">\s*<strong>(?P<count>[\d,]+)</strong>', re.IGNORECASE)
-SEARCH_RESULTS_TITLE_RE = re.compile('<p class="message">You are now only searching within the Journal</p>\s*<p class="title">\s*<a href="/journal/\d+">(?P<title>.*?)</a>', re.IGNORECASE | re.UNICODE)
-
-SPRINGER_OA_SEARCH = "https://link.springer.com/search?facet-journal-id={}&package=openaccessarticles&search-within=Journal&query=&date-facet-mode=in&facet-start-year={}&facet-end-year={}"
-SPRINGER_FULL_SEARCH = "https://link.springer.com/search?facet-journal-id={}&query=&date-facet-mode=in&facet-start-year={}&facet-end-year={}"
-
 APC_DE_FILE = "apc_de.csv"
 OFFSETTING_FILE = "offsetting.csv"
-
-COVERAGE_CACHE_FILE = "coverage_stats.json"
-CLASSIFICATOR_CACHE_FILE = "license_classification.json"
-
-COVERAGE_CACHE = {}
-CLASSIFICATOR_CACHE = {}
 
 def main():
     parser = argparse.ArgumentParser()
@@ -120,7 +75,7 @@ def main():
         with open('db_settings.ini', 'w') as config_file:
             scp.write(config_file)
     elif args.job == "coverage_stats":
-        update_coverage_stats(args.num_api_lookups)
+        oc.update_coverage_stats(OFFSETTING_FILE, args.num_api_lookups)
         
         
         
@@ -242,15 +197,15 @@ def create_cubes_tables(connectable, apc_file_name, offsetting_file_name, schema
         
     crossref_mappings = None
     try:
-        cache_file = open(COVERAGE_CACHE_FILE, "r")
+        cache_file = open(oc.COVERAGE_CACHE_FILE, "r")
         crossref_mappings = json.loads(cache_file.read())
     except IOError as ioe:
         msg = "Error while trying to open crossref cache file {}: {}"
-        print msg.format(COVERAGE_CACHE_FILE, ioe)
+        print msg.format(oc.COVERAGE_CACHE_FILE, ioe)
         sys.exit()
     except ValueError as ve:
         msg = "Error while trying to decode cache structure in {}: {}"
-        print msg.format(COVERAGE_CACHE_FILE, ve.message)
+        print msg.format(oc.COVERAGE_CACHE_FILE, ve.message)
         sys.exit()
     
     summarised_offsetting = {}
@@ -385,170 +340,7 @@ def generate_yamls(path):
         out_file_path = os.path.join(path, out_file_name)
         with open(out_file_path, "w") as outfile:
             outfile.write(content.encode("utf-8"))
-            
-        
-def _query_springer_link(journal_id, period, oa=False, pause=0.5):
-    if not journal_id.isdigit():
-        raise ValueError("Invalid journal id " + journal_id + " (not a number)")
-    url = SPRINGER_FULL_SEARCH.format(journal_id, period, period)
-    if oa:
-        url = SPRINGER_OA_SEARCH.format(journal_id, period, period)
-    print url
-    req = urllib2.Request(url, None)
-    response = urllib2.urlopen(req)
-    content = response.read()
-    results = {}
-    count_match = SEARCH_RESULTS_COUNT_RE.search(content)
-    if count_match:
-        count = count_match.groupdict()['count']
-        count = count.replace(",", "")
-        results['count'] = int(count)
-    else:
-        raise ValueError("Regex could not detect a results count at " + url)
-    title_match = SEARCH_RESULTS_TITLE_RE.search(content)
-    if title_match:
-        title = (title_match.groupdict()['title'])
-        title = unicode(title, "utf-8")
-        htmlparser = HTMLParser()
-        results['title'] = htmlparser.unescape(title)
-    else:
-        raise ValueError("Regex could not detect a journal title at " + url)
-    return results        
-            
-def _get_springer_journal_id_from_doi(doi):
-    if doi.startswith(("10.1007/s", "10.3758/s", "10.1245/s", "10.1617/s", "10.1186/s")):
-        return doi[9:14].lstrip("0")
-    elif doi.startswith("10.1140"):
-    # In case of the "European Physical journal" family, the journal id cannot be extracted directly from the DOI.
-        print "No direct journal id extraction possible for doi " + doi + ", analysing landing page..." 
-        req = urllib2.Request("https://doi.org/" + doi, None)
-        response = urllib2.urlopen(req)
-        content = response.read()
-        match = JOURNAL_ID_RE.search(content)
-        if match:
-            journal_id = match.groupdict()["journal_id"]
-            print "journal id found: " + journal_id
-            return journal_id
-        else:
-            raise ValueError("Regex could not detect a journal id for doi " + doi)
-    else:
-        raise ValueError(doi + " does not seem to be a Springer DOI (prefix not in list)!")      
-        
-def _query_crossref(issn, year, pause = 1):
-    time.sleep(pause) # reduce API load
-    start_time = time.time()
-    api_url = "http://api.crossref.org/works?filter="
-    facet = "&facet=license:*"
-    filters = [
-        "issn:" + issn,
-        "from-pub-date:" + year + "-01-01",
-        "until-pub-date:" + year + "-12-31",
-        "type:journal-article"
-    ]
-    headers = {"User-Agent": "OpenAPC treemaps updater (https://treemaps.intact-project.org/); mailto:openapc@uni-bielefeld.de"}
-    url = api_url + ",".join(filters) + facet
-    req = urllib2.Request(url, None, headers)
-    try:
-        response = urllib2.urlopen(req)
-        content = json.loads(response.read())
-        end_time = time.time()
-        print "crossref data received, took {}s (+ {}s pause)".format(round(end_time - start_time, 2), pause)
-        return content
-    except urllib2.HTTPError as httpe:
-        _print("r", "HTTPError while querying crossref: " + httpe.reason)
-        _shutdown()
-    except urllib2.URLError as urle:
-        _print("r", "URLError while querying crossref: " + urle.reason)
-        _shutdown()
-         
-def _analyse_crossref_data(content):
-    try:
-        result = {}
-        result["num_journal_total_articles"] = content["message"]["total-results"]
-        result["num_journal_oa_articles"] = 0
-        licenses = content["message"]["facets"]["license"]["values"]
-        for lic, count in licenses.iteritems():
-            if lic not in CLASSIFICATOR_CACHE:
-                msg = ('Encountered unknown license url "{}". Please decide if it denotes ' +
-                       '(c)losed access or (o)pen access:')
-                msg = msg.format(lic)
-                answer = raw_input(msg)
-                while answer not in ["c", "o"]:
-                    answer = raw_input("Please type 'o' for open access or 'c' for closed access:")
-                CLASSIFICATOR_CACHE[lic] = "open" if answer == "o" else "closed"
-            if CLASSIFICATOR_CACHE[lic] == "open":
-                result["num_journal_oa_articles"] += count
-        return result
-    except KeyError as ke:
-        print "KeyError while accessing crossref JSON structure: " + ke.message
-        _shutdown()
-         
-def _shutdown():
-    print "Updating cache files.."
-    with open(COVERAGE_CACHE_FILE, "w") as f:
-        f.write(json.dumps(COVERAGE_CACHE, sort_keys=True, indent=4, separators=(',', ': ')))
-        f.flush()
-    with open(CLASSIFICATOR_CACHE_FILE, "w") as f:
-        f.write(json.dumps(CLASSIFICATOR_CACHE, sort_keys=True, indent=4, separators=(',', ': ')))
-        f.flush()
-    print "Done."
-    sys.exit()
-    
-def update_coverage_stats(max_lookups):
-    global COVERAGE_CACHE, CLASSIFICATOR_CACHE
-    if os.path.isfile(COVERAGE_CACHE_FILE):
-        with open(COVERAGE_CACHE_FILE, "r") as f:
-            try:
-               COVERAGE_CACHE  = json.loads(f.read())
-               print "coverage cache file sucessfully loaded."
-            except ValueError:
-                print "Could not decode a cache structure from " + COVERAGE_CACHE_FILE + ", starting with an empty coverage cache."
-    else:
-        print "No cache file (" + COVERAGE_CACHE_FILE + ") found, starting with an empty coverage cache."
-    if os.path.isfile(CLASSIFICATOR_CACHE_FILE):
-        with open(CLASSIFICATOR_CACHE_FILE, "r") as f:
-            try:
-               CLASSIFICATOR_CACHE  = json.loads(f.read())
-               print "Classificator cache file sucessfully loaded."
-            except ValueError:
-                print "Could not decode a cache structure from " + CLASSIFICATOR_CACHE_FILE + ", starting with an empty classificator cache."
-    else:
-        print "No cache file (" + CLASSIFICATOR_CACHE_FILE + ") found, starting with an empty classificator cache."
-    
-    reader = UnicodeReader(open(OFFSETTING_FILE, "r"))
-    num_lookups = 0
-    for line in reader:
-        publisher = line["publisher"]
-        if publisher != "Springer Nature":
-            continue
-        year = line["period"]
-        issn = line["issn"]
-        title = line["journal_full_title"]
-        doi = line["doi"]
-        try:
-            _ = COVERAGE_CACHE[issn][year]["num_journal_total_articles"]
-            _ = COVERAGE_CACHE[issn][year]["num_journal_oa_articles"]
-        except KeyError:
-            msg = u'No cached entry found for journal "{}" ({}) in the {} period, querying SpringerLink...'
-            print msg.format(title, issn, year)
-            journal_id = _get_springer_journal_id_from_doi(doi)
-            total_res = _query_springer_link(journal_id, year, oa=False)
-            oa_res = _query_springer_link(journal_id, year, oa=True)
-            result = {
-                "num_journal_total_articles": total_res["count"],
-                "num_journal_oa_articles": oa_res["count"]
-            }
-            #content = _query_crossref(issn, year)
-            #result = _analyse_crossref_data(content)
-            if issn not in COVERAGE_CACHE:
-                COVERAGE_CACHE[issn] = {}
-            COVERAGE_CACHE[issn][year] = result
-            num_lookups += 1
-            if max_lookups is not None and num_lookups >= max_lookups:
-                print "maximum number of lookups performed."
-                _shutdown()
-    _shutdown()
-    
+
 
 if __name__ == '__main__':
     main()
