@@ -3,14 +3,13 @@
 import argparse
 import csv
 import ConfigParser
-from HTMLParser import HTMLParser
 import json
 import os
 import sys
 import time
 import urllib2
 
-from compat import UnicodeReader
+from util import UnicodeReader, colorise
 import offsetting_coverage as oc
 
 import sqlalchemy
@@ -195,17 +194,22 @@ def create_cubes_tables(connectable, apc_file_name, offsetting_file_name, schema
         country = row["country"]
         offsetting_institution_countries[institution_name] = country
         
-    crossref_mappings = None
+    journal_coverage = None
+    article_pubyears = None
     try:
         cache_file = open(oc.COVERAGE_CACHE_FILE, "r")
-        crossref_mappings = json.loads(cache_file.read())
+        journal_coverage = json.loads(cache_file.read())
+        cache_file.close()
+        cache_file = open(oc.ARTICLE_CACHE_FILE, "r")
+        article_pubyears = json.loads(cache_file.read())
+        cache_file.close()
     except IOError as ioe:
-        msg = "Error while trying to open crossref cache file {}: {}"
-        print msg.format(oc.COVERAGE_CACHE_FILE, ioe)
+        msg = "Error while trying to cache file: {}"
+        print msg.format(ioe)
         sys.exit()
     except ValueError as ve:
-        msg = "Error while trying to decode cache structure in {}: {}"
-        print msg.format(oc.COVERAGE_CACHE_FILE, ve.message)
+        msg = "Error while trying to decode cache structure in: {}"
+        print msg.format(ve.message)
         sys.exit()
     
     summarised_offsetting = {}
@@ -214,10 +218,10 @@ def create_cubes_tables(connectable, apc_file_name, offsetting_file_name, schema
     reader = UnicodeReader(open(offsetting_file_name, "rb"))
     for row in reader:
         institution = row["institution"]
-        period = row["period"]
         publisher = row["publisher"]
         is_hybrid = row["is_hybrid"]
         issn = row["issn"]
+        doi = row["doi"]
         # colons cannot be escaped in URL queries to the cubes server, so we have
         # to remove them here
         row["journal_full_title"] = row["journal_full_title"].replace(":", "")
@@ -236,35 +240,45 @@ def create_cubes_tables(connectable, apc_file_name, offsetting_file_name, schema
         
         if publisher != "Springer Nature":
             continue
+            
+        try:
+            pub_year = article_pubyears[issn][doi]
+        except KeyError:
+            msg = ("Publication year entry not found in article cache for {}. " +
+                   "You might have to update the article cache with 'python " +
+                   "assets_generator.py coverage_stats'. Using the 'period' " +
+                   "column for now.")
+            print colorise(msg.format(doi), "yellow")
+            pub_year = row["period"]
         
         if publisher not in summarised_offsetting:
             summarised_offsetting[publisher] = {}
         if issn not in summarised_offsetting[publisher]:
             summarised_offsetting[publisher][issn] = {}
-        if period not in summarised_offsetting[publisher][issn]:
-            summarised_offsetting[publisher][issn][period] = 1
+        if pub_year not in summarised_offsetting[publisher][issn]:
+            summarised_offsetting[publisher][issn][pub_year] = 1
         else:
-            summarised_offsetting[publisher][issn][period] += 1
+            summarised_offsetting[publisher][issn][pub_year] += 1
     
     for publisher, issns in summarised_offsetting.iteritems():
-        for issn, periods in issns.iteritems():
-            for period, count in periods.iteritems():
+        for issn, pub_years in issns.iteritems():
+            for pub_year, count in pub_years.iteritems():
                     row = {
                         "publisher": publisher,
                         "journal_full_title": issn_title_map[issn],
-                        "period": period,
+                        "period": pub_year,
                         "is_hybrid": is_hybrid,
                         "num_offsetting_articles": count
                     }
                     try:
-                        crossref_info = crossref_mappings[issn][period]
-                        row["num_journal_total_articles"] = crossref_info["num_journal_total_articles"]
-                        row["num_journal_oa_articles"] = crossref_info["num_journal_oa_articles"]
+                        stats = journal_coverage[issn][pub_year]
+                        row["num_journal_total_articles"] = stats["num_journal_total_articles"]
+                        row["num_journal_oa_articles"] = stats["num_journal_oa_articles"]
                     except KeyError as ke:
-                        msg = ("KeyError: No crossref statistics found for journal '{}' " +
+                        msg = ("KeyError: No coverage stats found for journal '{}' " +
                                "({}) in the {} period. Update the crossref cache with " +
                                "'python assets_generator.py crossref_stats'.")
-                        print msg.format(title, issn, period)
+                        print colorise(msg.format(title, issn, pub_year), "red")
                         sys.exit()
                     tables_insert_commands["offsetting_coverage"].execute(row)
     
