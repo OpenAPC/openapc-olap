@@ -20,7 +20,9 @@ SPRINGER_GET_CSV = "https://link.springer.com/search/csv?date-facet-mode=between
 
 COVERAGE_CACHE = {}
 PERSISTENT_PUBDATES_CACHE = {} # Persistent cache, loaded from PUBDATES_CACHE_FILE on startup
+
 TEMP_JOURNAL_CACHE = {} # keeps cached journal statistics imported from CSV files. Intended to reduce I/O workload when multiple articles from the same journal have to be looked up. 
+TEMP_JOURNAL_ID_CACHE = {} # keeps journal IDs cached which had to be retreived from SpringerLink to avoid multiple lookups.
 
 COVERAGE_CACHE_FILE = "coverage_stats.json"
 PUBDATES_CACHE_FILE = "article_pubdates.json"
@@ -135,7 +137,7 @@ def update_coverage_stats(offsetting_file, max_lookups):
         period = line["period"]
         title = line["journal_full_title"]
         doi = line["doi"]
-        journal_id = None
+        journal_id = _get_springer_journal_id_from_doi(doi, issn)
         # Retreive publication dates for articles from CSV summaries on SpringerLink.
         # Employ a multi-level cache structure to minimize IO:
         #  1. try to look up the doi in the persistent publication dates cache
@@ -149,7 +151,6 @@ def update_coverage_stats(offsetting_file, max_lookups):
             if issn not in TEMP_JOURNAL_CACHE:
                 msg = u"Journal {} ('{}'): Not found in temp cache, repopulating..."
                 print msg.format(issn, title)
-                journal_id = _get_springer_journal_id_from_doi(doi)
                 TEMP_JOURNAL_CACHE[issn] = _get_journal_cache_from_csv(issn, journal_id, refetch=False)
             if doi not in TEMP_JOURNAL_CACHE[issn]:
                 msg = u"Journal {} ('{}'): DOI {} not found in cache, re-fetching csv file..."
@@ -194,7 +195,7 @@ def update_coverage_stats(offsetting_file, max_lookups):
             if issn not in COVERAGE_CACHE:
                 COVERAGE_CACHE[issn] = {}
             if journal_id is None:
-                journal_id = _get_springer_journal_id_from_doi(doi)
+                journal_id = _get_springer_journal_id_from_doi(doi, issn)
             total = _get_springer_journal_stats(journal_id, pub_year, oa=False)
             COVERAGE_CACHE[issn][pub_year]["num_journal_total_articles"] = total["count"]
             lookup_performed = True
@@ -206,7 +207,7 @@ def update_coverage_stats(offsetting_file, max_lookups):
             if issn not in COVERAGE_CACHE:
                 COVERAGE_CACHE[issn] = {}
             if journal_id is None:
-                journal_id = _get_springer_journal_id_from_doi(doi)
+                journal_id = _get_springer_journal_id_from_doi(doi, issn)
             oa = _get_springer_journal_stats(journal_id, pub_year, oa=True)
             COVERAGE_CACHE[issn][pub_year]["num_journal_oa_articles"] = oa["count"]
             lookup_performed = True
@@ -242,22 +243,28 @@ def _fetch_springer_journal_csv(path, journal_id):
     with open(path, "wb") as f:
         f.write(content)
     
-def _get_springer_journal_id_from_doi(doi):
+def _get_springer_journal_id_from_doi(doi, issn=None):
+    global TEMP_JOURNAL_ID_CACHE
     if doi.startswith(("10.1007/s", "10.3758/s", "10.1245/s", "10.1617/s", "10.1186/s")):
         return doi[9:14].lstrip("0")
     elif doi.startswith("10.1140"):
     # In case of the "European Physical journal" family, the journal id cannot be extracted directly from the DOI.
-        print "No direct journal id extraction possible for doi " + doi + ", analysing landing page..." 
-        req = urllib2.Request("https://doi.org/" + doi, None)
-        response = urllib2.urlopen(req)
-        content = response.read()
-        match = JOURNAL_ID_RE.search(content)
-        if match:
-            journal_id = match.groupdict()["journal_id"]
-            print "journal id found: " + journal_id
-            return journal_id
+        if issn is None or issn not in TEMP_JOURNAL_ID_CACHE:
+            print "No local journal id extraction possible for doi " + doi + ", analysing landing page..." 
+            req = urllib2.Request("https://doi.org/" + doi, None)
+            response = urllib2.urlopen(req)
+            content = response.read()
+            match = JOURNAL_ID_RE.search(content)
+            if match:
+                journal_id = match.groupdict()["journal_id"]
+                print "journal id found: " + journal_id
+                if issn:
+                    TEMP_JOURNAL_ID_CACHE[issn] = journal_id
+                return journal_id
+            else:
+                raise ValueError("Regex could not detect a journal id for doi " + doi)
         else:
-            raise ValueError("Regex could not detect a journal id for doi " + doi)
+            return TEMP_JOURNAL_ID_CACHE[issn]
     else:
         raise ValueError(doi + " does not seem to be a Springer DOI (prefix not in list)!") 
     
