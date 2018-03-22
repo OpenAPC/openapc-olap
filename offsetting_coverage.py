@@ -30,59 +30,12 @@ PUBDATES_CACHE_FILE = "article_pubdates.json"
 JOURNAL_CSV_DIR = "coverage_article_files"
 
 ERROR_MSGS = []
-             
-        
-def _query_crossref(issn, year, pause = 1):
-    time.sleep(pause) # reduce API load
-    start_time = time.time()
-    api_url = "http://api.crossref.org/works?filter="
-    facet = "&facet=license:*"
-    filters = [
-        "issn:" + issn,
-        "from-pub-date:" + year + "-01-01",
-        "until-pub-date:" + year + "-12-31",
-        "type:journal-article"
-    ]
-    headers = {"User-Agent": "OpenAPC treemaps updater (https://treemaps.intact-project.org/); mailto:openapc@uni-bielefeld.de"}
-    url = api_url + ",".join(filters) + facet
-    print url
-    req = urllib2.Request(url, None, headers)
-    try:
-        response = urllib2.urlopen(req)
-        content = json.loads(response.read())
-        end_time = time.time()
-        print "crossref data received, took {}s (+ {}s pause)".format(round(end_time - start_time, 2), pause)
-        return content
-    except urllib2.HTTPError as httpe:
-        _print("r", "HTTPError while querying crossref: " + httpe.reason)
-        _shutdown()
-    except urllib2.URLError as urle:
-        _print("r", "URLError while querying crossref: " + urle.reason)
-        _shutdown()
 
-def _analyse_crossref_data(content):
-    try:
-        result = {}
-        result["num_journal_total_articles"] = content["message"]["total-results"]
-        result["num_journal_oa_articles"] = 0
-        licenses = content["message"]["facets"]["license"]["values"]
-        for lic, count in licenses.iteritems():
-            if lic not in CLASSIFICATOR_CACHE:
-                msg = ('Encountered unknown license url "{}". Please decide if it denotes ' +
-                       '(c)losed access or (o)pen access:')
-                msg = msg.format(lic)
-                answer = raw_input(msg)
-                while answer not in ["c", "o"]:
-                    answer = raw_input("Please type 'o' for open access or 'c' for closed access:")
-                CLASSIFICATOR_CACHE[lic] = "open" if answer == "o" else "closed"
-            if CLASSIFICATOR_CACHE[lic] == "open":
-                result["num_journal_oa_articles"] += count
-        return result
-    except KeyError as ke:
-        print "KeyError while accessing crossref JSON structure: " + ke.message
-        _shutdown()
          
 def _shutdown():
+    """
+    Write cache content back to disk before terminating and display collected error messages.
+    """
     print "Updating cache files.."
     with open(COVERAGE_CACHE_FILE, "w") as f:
         f.write(json.dumps(COVERAGE_CACHE, sort_keys=True, indent=4, separators=(',', ': ')))
@@ -219,6 +172,23 @@ def update_coverage_stats(offsetting_file, max_lookups):
     _shutdown()
     
 def _get_journal_cache_from_csv(issn, journal_id, refetch):
+    """
+    Get a mapping dict (doi -> pub_year) from a SpringerLink CSV.
+    
+    Open a Springerlink search results CSV file and obtain a doi -> pub_year
+    mapping from the "Item DOI" and "Publication Year" columns. Download the file
+    first if necessary or advised.
+    
+    Args:
+        issn: The journal ISSN
+        journal_id: The SpringerLink internal journal ID. Can be obtained
+                    using _get_springer_journal_id_from_doi()
+        refetch: Bool. If True, the CSV file will always be re-downloaded, otherwise
+                 a local copy will be tried first.
+    
+    Returns:
+        A dict with a doi -> pub_year mapping.
+    """
     path = os.path.join(JOURNAL_CSV_DIR, issn + ".csv")
     if not os.path.isfile(path) or refetch:
         _fetch_springer_journal_csv(path, journal_id)
