@@ -19,13 +19,13 @@ SPRINGER_FULL_SEARCH = "https://link.springer.com/search?facet-journal-id={}&que
 SPRINGER_GET_CSV = "https://link.springer.com/search/csv?date-facet-mode=between&search-within=Journal&package=openaccessarticles&facet-journal-id={}&facet-end-year={}&query=&facet-start-year=2015"
 
 COVERAGE_CACHE = {}
-PERSISTENT_ARTICLE_CACHE = {} # Persistent cache, loaded from ARTICLE_CACHE_FILE on startup
-TEMP_ARTICLE_CACHE = {} # temp cache, results will be included into the persistent cache on shutdown
+PERSISTENT_PUBDATES_CACHE = {} # Persistent cache, loaded from PUBDATES_CACHE_FILE on startup
+TEMP_PUBDATES_CACHE = {} # temp cache, results will be included into the persistent cache on shutdown
 
 COVERAGE_CACHE_FILE = "coverage_stats.json"
-ARTICLE_CACHE_FILE = "article_pubdates.json"
+PUBDATES_CACHE_FILE = "article_pubdates.json"
 
-ARTICLE_CSV_DIR = "coverage_article_files"
+JOURNAL_CSV_DIR = "coverage_article_files"
 
 ERROR_MSGS = []
              
@@ -85,12 +85,12 @@ def _shutdown():
     with open(COVERAGE_CACHE_FILE, "w") as f:
         f.write(json.dumps(COVERAGE_CACHE, sort_keys=True, indent=4, separators=(',', ': ')))
         f.flush()
-    with open(ARTICLE_CACHE_FILE, "w") as f:
-        f.write(json.dumps(PERSISTENT_ARTICLE_CACHE, sort_keys=True, indent=4, separators=(',', ': ')))
+    with open(PUBDATES_CACHE_FILE, "w") as f:
+        f.write(json.dumps(PERSISTENT_PUBDATES_CACHE, sort_keys=True, indent=4, separators=(',', ': ')))
         f.flush()
     print "Done."
     num_articles = 0
-    for issn, dois in PERSISTENT_ARTICLE_CACHE.iteritems():
+    for issn, dois in PERSISTENT_PUBDATES_CACHE.iteritems():
         num_articles += len(dois)
     print "The article cache now contains publication dates for {} DOIs".format(num_articles)
     if ERROR_MSGS:
@@ -100,7 +100,7 @@ def _shutdown():
     sys.exit()
     
 def update_coverage_stats(offsetting_file, max_lookups):
-    global COVERAGE_CACHE, PERSISTENT_ARTICLE_CACHE
+    global COVERAGE_CACHE, PERSISTENT_PUBDATES_CACHE
     if os.path.isfile(COVERAGE_CACHE_FILE):
         with open(COVERAGE_CACHE_FILE, "r") as f:
             try:
@@ -110,18 +110,18 @@ def update_coverage_stats(offsetting_file, max_lookups):
                 print "Could not decode a cache structure from " + COVERAGE_CACHE_FILE + ", starting with an empty coverage cache."
     else:
         print "No cache file (" + COVERAGE_CACHE_FILE + ") found, starting with an empty coverage cache."
-    if os.path.isfile(ARTICLE_CACHE_FILE):
-        with open(ARTICLE_CACHE_FILE, "r") as f:
+    if os.path.isfile(PUBDATES_CACHE_FILE):
+        with open(PUBDATES_CACHE_FILE, "r") as f:
             try:
-               PERSISTENT_ARTICLE_CACHE  = json.loads(f.read())
-               print "Article cache file sucessfully loaded."
+               PERSISTENT_PUBDATES_CACHE  = json.loads(f.read())
+               print "Pub dates cache file sucessfully loaded."
             except ValueError:
-                print "Could not decode a cache structure from " + ARTICLE_CACHE_FILE + ", starting with an empty classificator cache."
+                print "Could not decode a cache structure from " + PUBDATES_CACHE_FILE + ", starting with an empty pub date cache."
     else:
-        print "No cache file (" + ARTICLE_CACHE_FILE + ") found, starting with an empty classificator cache."
+        print "No cache file (" + PUBDATES_CACHE_FILE + ") found, starting with an empty pub date cache."
     
-    if not os.path.isdir(ARTICLE_CSV_DIR):
-        raise IOError("Article cache directory " + ARTICLE_CSV_DIR + " not found!")
+    if not os.path.isdir(JOURNAL_CSV_DIR):
+        raise IOError("Journal CSV directory " + JOURNAL_CSV_DIR + " not found!")
     
     reader = UnicodeReader(open(offsetting_file, "r"))
     num_lookups = 0
@@ -137,33 +137,34 @@ def update_coverage_stats(offsetting_file, max_lookups):
         journal_id = None
         # Retreive publication dates for articles from CSV summaries on SpringerLink.
         # Employ a multi-level cache structure to minimize IO:
-        #  - try to look up the doi in the persistent journal article cache
-        #  - if the journal is not present, repopulate local cache segment from a CSV file in article cache dir
-        #  - if no CSV for the journal could be found, fetch it from SpringerLink
+        #  1. try to look up the doi in the persistent publication dates cache
+        #  2. if the journal is not present, repopulate local cache segment from a CSV file in the journal CSV dir
+        #  3a. if no CSV for the journal could be found, fetch it from SpringerLink
+        #  3b. If a CSV was found but it does not contain the DOI, re-fetch it from SpringerLink 
         try:
-            _ = PERSISTENT_ARTICLE_CACHE[issn][doi]
-            print u"Journal {} ('{}'): DOI {} already cached.".format(issn, title, doi)
+            _ = PERSISTENT_PUBDATES_CACHE[issn][doi]
+            print u"Journal {} ('{}'): Pub date for DOI {} already cached.".format(issn, title, doi)
         except KeyError:
-            if issn not in TEMP_ARTICLE_CACHE:
+            if issn not in TEMP_PUBDATES_CACHE:
                 msg = u"Journal {} ('{}'): Not found in temp cache, repopulating..."
                 print msg.format(issn, title)
                 journal_id = _get_springer_journal_id_from_doi(doi)
-                TEMP_ARTICLE_CACHE[issn] = _get_journal_cache_from_csv(issn, journal_id, refetch=False)
-            if doi not in TEMP_ARTICLE_CACHE[issn]:
+                TEMP_PUBDATES_CACHE[issn] = _get_journal_cache_from_csv(issn, journal_id, refetch=False)
+            if doi not in TEMP_PUBDATES_CACHE[issn]:
                 msg = u"Journal {} ('{}'): DOI {} not found in cache, re-fetching csv file..."
                 print msg.format(issn, title, doi)
-                TEMP_ARTICLE_CACHE[issn] = _get_journal_cache_from_csv(issn, journal_id, refetch=True)
-                if doi not in TEMP_ARTICLE_CACHE[issn]:
+                TEMP_PUBDATES_CACHE[issn] = _get_journal_cache_from_csv(issn, journal_id, refetch=True)
+                if doi not in TEMP_PUBDATES_CACHE[issn]:
                     msg = u"Journal {} ('{}'): DOI {} NOT FOUND in SpringerLink data!"
                     msg = colorise(msg.format(title, issn, doi), "red")
                     print msg
                     ERROR_MSGS.append(msg)
                     continue
             lookup_performed = True
-            if issn not in PERSISTENT_ARTICLE_CACHE:
-                PERSISTENT_ARTICLE_CACHE[issn] = {}
-            PERSISTENT_ARTICLE_CACHE[issn][doi] = TEMP_ARTICLE_CACHE[issn][doi]
-            pub_year = PERSISTENT_ARTICLE_CACHE[issn][doi]
+            if issn not in PERSISTENT_PUBDATES_CACHE:
+                PERSISTENT_PUBDATES_CACHE[issn] = {}
+            PERSISTENT_PUBDATES_CACHE[issn][doi] = TEMP_PUBDATES_CACHE[issn][doi]
+            pub_year = PERSISTENT_PUBDATES_CACHE[issn][doi]
             compare_msg = u"DOI {} found in Springer data, Pub year is {} ".format(doi, pub_year)
             if pub_year == period:
                 compare_msg += colorise("(same as offsetting period)", "green")
@@ -172,7 +173,7 @@ def update_coverage_stats(offsetting_file, max_lookups):
             msg = u"Journal {} ('{}'): ".format(issn, title)
             print msg.ljust(80) + compare_msg
         # Retreive journal total and OA statistics for every covered publication year.
-        pub_year = PERSISTENT_ARTICLE_CACHE[issn][doi]
+        pub_year = PERSISTENT_PUBDATES_CACHE[issn][doi]
         if issn not in COVERAGE_CACHE:
             COVERAGE_CACHE[issn] = {}
         if pub_year not in COVERAGE_CACHE[issn]:
@@ -210,7 +211,7 @@ def update_coverage_stats(offsetting_file, max_lookups):
     _shutdown()
     
 def _get_journal_cache_from_csv(issn, journal_id, refetch):
-    path = os.path.join(ARTICLE_CSV_DIR, issn + ".csv")
+    path = os.path.join(JOURNAL_CSV_DIR, issn + ".csv")
     if not os.path.isfile(path) or refetch:
         _fetch_springer_journal_csv(path, journal_id)
         msg = u"Journal {}: Fetching article CSV table from SpringerLink..."
