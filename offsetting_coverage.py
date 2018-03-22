@@ -177,10 +177,10 @@ def update_coverage_stats(offsetting_file, max_lookups):
             COVERAGE_CACHE[issn] = {}
         if pub_year not in COVERAGE_CACHE[issn]:
             COVERAGE_CACHE[issn][pub_year] = {}
+        # If coverage stats are missing, we have to scrap them from the SpringerLink search site HTML
         try:
             _ = COVERAGE_CACHE[issn][pub_year]["num_journal_total_articles"]
         except KeyError:
-            # If the total stats are missing, we have to scrap them from the SpringerLink search site HTML
             msg = u'No cached entry found for total article numbers in journal "{}" ({}) in the {} publication period, querying SpringerLink...'
             print msg.format(title, issn, pub_year)
             if issn not in COVERAGE_CACHE:
@@ -193,17 +193,15 @@ def update_coverage_stats(offsetting_file, max_lookups):
         try:
             _ = COVERAGE_CACHE[issn][pub_year]["num_journal_oa_articles"]
         except KeyError:
-            # OA total numbers can be deduced from the cached CSV files
-            msg = u'No cached entry found for oa article numbers in journal "{}" ({}) in the {} publication period, looking up cache...'
+            msg = u'No cached entry found for OA article numbers in journal "{}" ({}) in the {} publication period, querying SpringerLink...'
             print msg.format(title, issn, pub_year)
+            if issn not in COVERAGE_CACHE:
+                COVERAGE_CACHE[issn] = {}
             if journal_id is None:
                 journal_id = _get_springer_journal_id_from_doi(doi)
-            cache = _get_journal_cache_from_csv(issn, journal_id, refetch=False)
-            count = 0
-            for year in cache.values():
-                if year == pub_year:
-                    count += 1
-            COVERAGE_CACHE[issn][pub_year]["num_journal_oa_articles"] = count
+            oa = _get_springer_journal_stats(journal_id, pub_year, oa=True)
+            COVERAGE_CACHE[issn][pub_year]["num_journal_oa_articles"] = oa["count"]
+            lookup_performed = True
         if lookup_performed:
             num_lookups += 1
         if max_lookups is not None and num_lookups >= max_lookups:
