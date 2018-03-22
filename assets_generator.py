@@ -200,7 +200,7 @@ def create_cubes_tables(connectable, apc_file_name, offsetting_file_name, schema
         cache_file = open(oc.COVERAGE_CACHE_FILE, "r")
         journal_coverage = json.loads(cache_file.read())
         cache_file.close()
-        cache_file = open(oc.ARTICLE_CACHE_FILE, "r")
+        cache_file = open(oc.PUBDATES_CACHE_FILE, "r")
         article_pubyears = json.loads(cache_file.read())
         cache_file.close()
     except IOError as ioe:
@@ -278,7 +278,7 @@ def create_cubes_tables(connectable, apc_file_name, offsetting_file_name, schema
                         msg = ("KeyError: No coverage stats found for journal '{}' " +
                                "({}) in the {} period. Update the crossref cache with " +
                                "'python assets_generator.py crossref_stats'.")
-                        print colorise(msg.format(title, issn, pub_year), "red")
+                        print colorise(msg.format(issn_title_map[issn], issn, pub_year), "red")
                         sys.exit()
                     tables_insert_commands["offsetting_coverage"].execute(row)
     
