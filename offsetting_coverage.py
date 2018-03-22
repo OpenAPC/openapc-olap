@@ -20,7 +20,7 @@ SPRINGER_GET_CSV = "https://link.springer.com/search/csv?date-facet-mode=between
 
 COVERAGE_CACHE = {}
 PERSISTENT_PUBDATES_CACHE = {} # Persistent cache, loaded from PUBDATES_CACHE_FILE on startup
-TEMP_PUBDATES_CACHE = {} # temp cache, results will be included into the persistent cache on shutdown
+TEMP_JOURNAL_CACHE = {} # keeps cached journal statistics imported from CSV files. Intended to reduce I/O workload when multiple articles from the same journal have to be looked up. 
 
 COVERAGE_CACHE_FILE = "coverage_stats.json"
 PUBDATES_CACHE_FILE = "article_pubdates.json"
@@ -127,6 +127,7 @@ def update_coverage_stats(offsetting_file, max_lookups):
     num_lookups = 0
     for line in reader:
         lookup_performed = False
+        found = True
         publisher = line["publisher"]
         if publisher != "Springer Nature":
             continue
@@ -140,40 +141,46 @@ def update_coverage_stats(offsetting_file, max_lookups):
         #  1. try to look up the doi in the persistent publication dates cache
         #  2. if the journal is not present, repopulate local cache segment from a CSV file in the journal CSV dir
         #  3a. if no CSV for the journal could be found, fetch it from SpringerLink
-        #  3b. If a CSV was found but it does not contain the DOI, re-fetch it from SpringerLink 
+        #  3b. Alternative to 3: If a CSV was found but it does not contain the DOI, re-fetch it from SpringerLink 
         try:
             _ = PERSISTENT_PUBDATES_CACHE[issn][doi]
-            print u"Journal {} ('{}'): Pub date for DOI {} already cached.".format(issn, title, doi)
+            print u"Journal {} ('{}'): DOI {} already cached.".format(issn, title, doi)
         except KeyError:
-            if issn not in TEMP_PUBDATES_CACHE:
+            if issn not in TEMP_JOURNAL_CACHE:
                 msg = u"Journal {} ('{}'): Not found in temp cache, repopulating..."
                 print msg.format(issn, title)
                 journal_id = _get_springer_journal_id_from_doi(doi)
-                TEMP_PUBDATES_CACHE[issn] = _get_journal_cache_from_csv(issn, journal_id, refetch=False)
-            if doi not in TEMP_PUBDATES_CACHE[issn]:
+                TEMP_JOURNAL_CACHE[issn] = _get_journal_cache_from_csv(issn, journal_id, refetch=False)
+            if doi not in TEMP_JOURNAL_CACHE[issn]:
                 msg = u"Journal {} ('{}'): DOI {} not found in cache, re-fetching csv file..."
                 print msg.format(issn, title, doi)
-                TEMP_PUBDATES_CACHE[issn] = _get_journal_cache_from_csv(issn, journal_id, refetch=True)
-                if doi not in TEMP_PUBDATES_CACHE[issn]:
+                TEMP_JOURNAL_CACHE[issn] = _get_journal_cache_from_csv(issn, journal_id, refetch=True)
+                if doi not in TEMP_JOURNAL_CACHE[issn]:
                     msg = u"Journal {} ('{}'): DOI {} NOT FOUND in SpringerLink data!"
                     msg = colorise(msg.format(title, issn, doi), "red")
                     print msg
                     ERROR_MSGS.append(msg)
-                    continue
+                    found = False
             lookup_performed = True
             if issn not in PERSISTENT_PUBDATES_CACHE:
                 PERSISTENT_PUBDATES_CACHE[issn] = {}
-            PERSISTENT_PUBDATES_CACHE[issn][doi] = TEMP_PUBDATES_CACHE[issn][doi]
-            pub_year = PERSISTENT_PUBDATES_CACHE[issn][doi]
-            compare_msg = u"DOI {} found in Springer data, Pub year is {} ".format(doi, pub_year)
-            if pub_year == period:
-                compare_msg += colorise("(same as offsetting period)", "green")
-            else:
-                compare_msg += colorise("(DIFFERENT from offsetting period, which is {})".format(period), "yellow")
-            msg = u"Journal {} ('{}'): ".format(issn, title)
-            print msg.ljust(80) + compare_msg
+            if found:
+                PERSISTENT_PUBDATES_CACHE[issn][doi] = TEMP_JOURNAL_CACHE[issn][doi]
+                pub_year = PERSISTENT_PUBDATES_CACHE[issn][doi]
+                compare_msg = u"DOI {} found in Springer data, Pub year is {} ".format(doi, pub_year)
+                if pub_year == period:
+                    compare_msg += colorise("(same as offsetting period)", "green")
+                else:
+                    compare_msg += colorise("(DIFFERENT from offsetting period, which is {})".format(period), "yellow")
+                msg = u"Journal {} ('{}'): ".format(issn, title)
+                print msg.ljust(80) + compare_msg
         # Retreive journal total and OA statistics for every covered publication year.
-        pub_year = PERSISTENT_PUBDATES_CACHE[issn][doi]
+        if found:
+            pub_year = PERSISTENT_PUBDATES_CACHE[issn][doi]
+        else:
+            # If a lookup error occured we will retreive coverage stats for the period year instead, since
+            # the aggregation process will make use of this value.
+            pub_year = period
         if issn not in COVERAGE_CACHE:
             COVERAGE_CACHE[issn] = {}
         if pub_year not in COVERAGE_CACHE[issn]:
