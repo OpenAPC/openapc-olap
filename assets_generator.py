@@ -267,7 +267,7 @@ def create_cubes_tables(connectable, apc_file_name, offsetting_file_name, schema
                         "publisher": publisher,
                         "journal_full_title": issn_title_map[issn],
                         "period": pub_year,
-                        "is_hybrid": is_hybrid,
+                        "is_hybrid": "TRUE",
                         "num_offsetting_articles": count
                     }
                     try:
