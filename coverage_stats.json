@@ -16,7 +16,7 @@
         },
         "2018": {
             "num_journal_oa_articles": 2,
-            "num_journal_total_articles": 20
+            "num_journal_total_articles": 21
         }
     },
     "0001-5970": {
@@ -26,11 +26,11 @@
         },
         "2017": {
             "num_journal_oa_articles": 10,
-            "num_journal_total_articles": 299
+            "num_journal_total_articles": 292
         },
         "2018": {
             "num_journal_oa_articles": 13,
-            "num_journal_total_articles": 171
+            "num_journal_total_articles": 181
         }
     },
     "0001-6268": {
@@ -47,8 +47,8 @@
             "num_journal_total_articles": 367
         },
         "2018": {
-            "num_journal_oa_articles": 19,
-            "num_journal_total_articles": 185
+            "num_journal_oa_articles": 20,
+            "num_journal_total_articles": 196
         }
     },
     "0001-6322": {
@@ -66,7 +66,7 @@
         },
         "2018": {
             "num_journal_oa_articles": 32,
-            "num_journal_total_articles": 73
+            "num_journal_total_articles": 76
         }
     },
     "0001-7701": {
@@ -84,7 +84,7 @@
         },
         "2018": {
             "num_journal_oa_articles": 3,
-            "num_journal_total_articles": 38
+            "num_journal_total_articles": 40
         }
     },
     "0001-8244": {
@@ -102,7 +102,7 @@
         },
         "2018": {
             "num_journal_oa_articles": 8,
-            "num_journal_total_articles": 22
+            "num_journal_total_articles": 24
         }
     },
     "0001-9054": {
@@ -115,6 +115,10 @@
         "2016": {
             "num_journal_oa_articles": 6,
             "num_journal_total_articles": 58
+        },
+        "2017": {
+            "num_journal_oa_articles": 2,
+            "num_journal_total_articles": 61
         }
     },
     "0003-021X": {
@@ -180,11 +184,11 @@
         },
         "2017": {
             "num_journal_oa_articles": 15,
-            "num_journal_total_articles": 186
+            "num_journal_total_articles": 184
         },
         "2018": {
             "num_journal_oa_articles": 16,
-            "num_journal_total_articles": 135
+            "num_journal_total_articles": 138
         }
     },
     "0003-6862": {
@@ -224,7 +228,7 @@
         },
         "2018": {
             "num_journal_oa_articles": 7,
-            "num_journal_total_articles": 89
+            "num_journal_total_articles": 90
         }
     },
     "0004-0002": {
@@ -237,8 +241,8 @@
             "num_journal_total_articles": 274
         },
         "2018": {
-            "num_journal_oa_articles": 17,
-            "num_journal_total_articles": 173
+            "num_journal_oa_articles": 18,
+            "num_journal_total_articles": 179
         }
     },
     "0004-069X": {
@@ -266,7 +270,7 @@
         },
         "2018": {
             "num_journal_oa_articles": 3,
-            "num_journal_total_articles": 88
+            "num_journal_total_articles": 91
         }
     },
     "0005-8912": {
@@ -277,6 +281,10 @@
         "2017": {
             "num_journal_oa_articles": 26,
             "num_journal_total_articles": 127
+        },
+        "2018": {
+            "num_journal_oa_articles": 8,
+            "num_journal_total_articles": 40
         }
     },
     "0006-3835": {
@@ -347,8 +355,8 @@
             "num_journal_total_articles": 100
         },
         "2018": {
-            "num_journal_oa_articles": 11,
-            "num_journal_total_articles": 72
+            "num_journal_oa_articles": 12,
+            "num_journal_total_articles": 73
         }
     },
     "0009-4722": {
@@ -368,7 +376,7 @@
         },
         "2017": {
             "num_journal_oa_articles": 8,
-            "num_journal_total_articles": 220
+            "num_journal_total_articles": 218
         }
     },
     "0009-5915": {
@@ -418,11 +426,11 @@
         },
         "2017": {
             "num_journal_oa_articles": 40,
-            "num_journal_total_articles": 278
+            "num_journal_total_articles": 276
         },
         "2018": {
             "num_journal_oa_articles": 20,
-            "num_journal_total_articles": 138
+            "num_journal_total_articles": 141
         }
     },
     "0010-3853": {
@@ -431,12 +439,12 @@
             "num_journal_total_articles": 142
         },
         "2017": {
-            "num_journal_oa_articles": 9,
-            "num_journal_total_articles": 166
+            "num_journal_oa_articles": 8,
+            "num_journal_total_articles": 152
         },
         "2018": {
-            "num_journal_oa_articles": 3,
-            "num_journal_total_articles": 94
+            "num_journal_oa_articles": 4,
+            "num_journal_total_articles": 114
         }
     },
     "0010-485X": {
@@ -463,14 +471,18 @@
             "num_journal_total_articles": 111
         },
         "2018": {
-            "num_journal_oa_articles": 6,
-            "num_journal_total_articles": 32
+            "num_journal_oa_articles": 8,
+            "num_journal_total_articles": 37
         }
     },
     "0012-0936": {
         "2016": {
             "num_journal_oa_articles": 1,
             "num_journal_total_articles": 25
+        },
+        "2017": {
+            "num_journal_oa_articles": 1,
+            "num_journal_total_articles": 21
         }
     },
     "0012-186X": {
@@ -487,8 +499,8 @@
             "num_journal_total_articles": 314
         },
         "2018": {
-            "num_journal_oa_articles": 82,
-            "num_journal_total_articles": 172
+            "num_journal_oa_articles": 83,
+            "num_journal_total_articles": 176
         }
     },
     "0012-4486": {
@@ -515,8 +527,8 @@
             "num_journal_total_articles": 174
         },
         "2018": {
-            "num_journal_oa_articles": 6,
-            "num_journal_total_articles": 62
+            "num_journal_oa_articles": 8,
+            "num_journal_total_articles": 65
         }
     },
     "0013-0001": {
@@ -565,6 +577,12 @@
             "num_journal_total_articles": 33
         }
     },
+    "0014-0309": {
+        "2017": {
+            "num_journal_oa_articles": 2,
+            "num_journal_total_articles": 61
+        }
+    },
     "0014-2336": {
         "2015": {
             "num_journal_oa_articles": 23,
@@ -607,8 +625,8 @@
             "num_journal_total_articles": 332
         },
         "2018": {
-            "num_journal_oa_articles": 24,
-            "num_journal_total_articles": 161
+            "num_journal_oa_articles": 27,
+            "num_journal_total_articles": 170
         }
     },
     "0014-4851": {
@@ -626,7 +644,7 @@
         },
         "2018": {
             "num_journal_oa_articles": 7,
-            "num_journal_total_articles": 69
+            "num_journal_total_articles": 70
         }
     },
     "0015-2684": {
@@ -643,6 +661,10 @@
         "2016": {
             "num_journal_oa_articles": 3,
             "num_journal_total_articles": 68
+        },
+        "2017": {
+            "num_journal_oa_articles": 3,
+            "num_journal_total_articles": 59
         }
     },
     "0015-9018": {
@@ -660,7 +682,7 @@
         },
         "2018": {
             "num_journal_oa_articles": 7,
-            "num_journal_total_articles": 41
+            "num_journal_total_articles": 42
         }
     },
     "0017-5994": {
@@ -674,13 +696,17 @@
         },
         "2018": {
             "num_journal_oa_articles": 3,
-            "num_journal_total_articles": 74
+            "num_journal_total_articles": 75
         }
     },
     "0017-6192": {
+        "2017": {
+            "num_journal_oa_articles": 7,
+            "num_journal_total_articles": 187
+        },
         "2018": {
             "num_journal_oa_articles": 1,
-            "num_journal_total_articles": 75
+            "num_journal_total_articles": 76
         }
     },
     "0017-8470": {
@@ -707,8 +733,8 @@
             "num_journal_total_articles": 185
         },
         "2018": {
-            "num_journal_oa_articles": 17,
-            "num_journal_total_articles": 90
+            "num_journal_oa_articles": 18,
+            "num_journal_total_articles": 93
         }
     },
     "0018-3768": {
@@ -722,7 +748,7 @@
         },
         "2018": {
             "num_journal_oa_articles": 12,
-            "num_journal_total_articles": 135
+            "num_journal_total_articles": 139
         }
     },
     "0018-8158": {
@@ -740,7 +766,7 @@
         },
         "2018": {
             "num_journal_oa_articles": 41,
-            "num_journal_total_articles": 332
+            "num_journal_total_articles": 335
         }
     },
     "0018-9855": {
@@ -750,7 +776,7 @@
         },
         "2018": {
             "num_journal_oa_articles": 6,
-            "num_journal_total_articles": 42
+            "num_journal_total_articles": 48
         }
     },
     "0019-5294": {
@@ -904,7 +930,7 @@
         },
         "2018": {
             "num_journal_oa_articles": 8,
-            "num_journal_total_articles": 50
+            "num_journal_total_articles": 51
         }
     },
     "0021-1265": {
@@ -928,7 +954,7 @@
         },
         "2018": {
             "num_journal_oa_articles": 2,
-            "num_journal_total_articles": 67
+            "num_journal_total_articles": 68
         }
     },
     "0022-0116": {
@@ -938,7 +964,7 @@
         },
         "2018": {
             "num_journal_oa_articles": 7,
-            "num_journal_total_articles": 22
+            "num_journal_total_articles": 29
         }
     },
     "0022-0833": {
@@ -972,7 +998,7 @@
         },
         "2018": {
             "num_journal_oa_articles": 3,
-            "num_journal_total_articles": 95
+            "num_journal_total_articles": 101
         }
     },
     "0022-2461": {
@@ -989,8 +1015,8 @@
             "num_journal_total_articles": 1171
         },
         "2018": {
-            "num_journal_oa_articles": 44,
-            "num_journal_total_articles": 835
+            "num_journal_oa_articles": 45,
+            "num_journal_total_articles": 861
         }
     },
     "0022-2631": {
@@ -999,12 +1025,12 @@
             "num_journal_total_articles": 83
         },
         "2017": {
-            "num_journal_oa_articles": 12,
-            "num_journal_total_articles": 70
+            "num_journal_oa_articles": 11,
+            "num_journal_total_articles": 62
         },
         "2018": {
-            "num_journal_oa_articles": 5,
-            "num_journal_total_articles": 36
+            "num_journal_oa_articles": 6,
+            "num_journal_total_articles": 44
         }
     },
     "0022-2844": {
@@ -1028,7 +1054,7 @@
         },
         "2018": {
             "num_journal_oa_articles": 6,
-            "num_journal_total_articles": 93
+            "num_journal_total_articles": 95
         }
     },
     "0022-3611": {
@@ -1055,8 +1081,8 @@
             "num_journal_total_articles": 257
         },
         "2018": {
-            "num_journal_oa_articles": 10,
-            "num_journal_total_articles": 148
+            "num_journal_oa_articles": 12,
+            "num_journal_total_articles": 158
         }
     },
     "0022-4715": {
@@ -1073,8 +1099,8 @@
             "num_journal_total_articles": 274
         },
         "2018": {
-            "num_journal_oa_articles": 12,
-            "num_journal_total_articles": 117
+            "num_journal_oa_articles": 14,
+            "num_journal_total_articles": 128
         }
     },
     "0022-5010": {
@@ -1102,7 +1128,13 @@
         },
         "2018": {
             "num_journal_oa_articles": 3,
-            "num_journal_total_articles": 19
+            "num_journal_total_articles": 20
+        }
+    },
+    "0023-2653": {
+        "2017": {
+            "num_journal_oa_articles": 4,
+            "num_journal_total_articles": 106
         }
     },
     "0024-4201": {
@@ -1115,6 +1147,16 @@
             "num_journal_total_articles": 100
         }
     },
+    "0025-2514": {
+        "2017": {
+            "num_journal_oa_articles": 2,
+            "num_journal_total_articles": 131
+        },
+        "2018": {
+            "num_journal_oa_articles": 3,
+            "num_journal_total_articles": 61
+        }
+    },
     "0025-2611": {
         "2016": {
             "num_journal_oa_articles": 5,
@@ -1125,8 +1167,8 @@
             "num_journal_total_articles": 107
         },
         "2018": {
-            "num_journal_oa_articles": 6,
-            "num_journal_total_articles": 71
+            "num_journal_oa_articles": 7,
+            "num_journal_total_articles": 74
         }
     },
     "0025-3162": {
@@ -1140,7 +1182,7 @@
         },
         "2018": {
             "num_journal_oa_articles": 5,
-            "num_journal_total_articles": 67
+            "num_journal_total_articles": 69
         }
     },
     "0025-5610": {
@@ -1154,7 +1196,7 @@
         },
         "2018": {
             "num_journal_oa_articles": 5,
-            "num_journal_total_articles": 105
+            "num_journal_total_articles": 107
         }
     },
     "0025-5831": {
@@ -1171,8 +1213,8 @@
             "num_journal_total_articles": 184
         },
         "2018": {
-            "num_journal_oa_articles": 11,
-            "num_journal_total_articles": 107
+            "num_journal_oa_articles": 12,
+            "num_journal_total_articles": 110
         }
     },
     "0025-5874": {
@@ -1200,7 +1242,7 @@
         },
         "2018": {
             "num_journal_oa_articles": 4,
-            "num_journal_total_articles": 154
+            "num_journal_total_articles": 157
         }
     },
     "0026-1335": {
@@ -1273,6 +1315,10 @@
         "2017": {
             "num_journal_oa_articles": 34,
             "num_journal_total_articles": 255
+        },
+        "2018": {
+            "num_journal_oa_articles": 18,
+            "num_journal_total_articles": 138
         }
     },
     "0026-9255": {
@@ -1286,7 +1332,7 @@
         },
         "2018": {
             "num_journal_oa_articles": 16,
-            "num_journal_total_articles": 78
+            "num_journal_total_articles": 79
         }
     },
     "0026-9298": {
@@ -1324,7 +1370,7 @@
         },
         "2018": {
             "num_journal_oa_articles": 7,
-            "num_journal_total_articles": 68
+            "num_journal_total_articles": 72
         }
     },
     "0028-2677": {
@@ -1370,7 +1416,7 @@
         },
         "2018": {
             "num_journal_oa_articles": 5,
-            "num_journal_total_articles": 85
+            "num_journal_total_articles": 86
         }
     },
     "0028-8276": {
@@ -1408,7 +1454,7 @@
         },
         "2018": {
             "num_journal_oa_articles": 14,
-            "num_journal_total_articles": 155
+            "num_journal_total_articles": 162
         }
     },
     "0030-770X": {
@@ -1433,12 +1479,20 @@
         "2016": {
             "num_journal_oa_articles": 11,
             "num_journal_total_articles": 101
+        },
+        "2017": {
+            "num_journal_oa_articles": 8,
+            "num_journal_total_articles": 94
         }
     },
     "0031-0220": {
         "2017": {
             "num_journal_oa_articles": 4,
             "num_journal_total_articles": 50
+        },
+        "2018": {
+            "num_journal_oa_articles": 1,
+            "num_journal_total_articles": 27
         }
     },
     "0031-2789": {
@@ -1452,7 +1506,7 @@
         },
         "2018": {
             "num_journal_oa_articles": 2,
-            "num_journal_total_articles": 27
+            "num_journal_total_articles": 29
         }
     },
     "0031-5303": {
@@ -1463,6 +1517,10 @@
         "2017": {
             "num_journal_oa_articles": 2,
             "num_journal_total_articles": 82
+        },
+        "2018": {
+            "num_journal_oa_articles": 1,
+            "num_journal_total_articles": 12
         }
     },
     "0031-6768": {
@@ -1480,7 +1538,7 @@
         },
         "2018": {
             "num_journal_oa_articles": 19,
-            "num_journal_total_articles": 94
+            "num_journal_total_articles": 96
         }
     },
     "0031-6970": {
@@ -1512,7 +1570,7 @@
         },
         "2018": {
             "num_journal_oa_articles": 22,
-            "num_journal_total_articles": 126
+            "num_journal_total_articles": 127
         }
     },
     "0032-079X": {
@@ -1526,11 +1584,11 @@
         },
         "2017": {
             "num_journal_oa_articles": 51,
-            "num_journal_total_articles": 464
+            "num_journal_total_articles": 462
         },
         "2018": {
             "num_journal_oa_articles": 19,
-            "num_journal_total_articles": 201
+            "num_journal_total_articles": 209
         }
     },
     "0032-0935": {
@@ -1548,7 +1606,7 @@
         },
         "2018": {
             "num_journal_oa_articles": 10,
-            "num_journal_total_articles": 118
+            "num_journal_total_articles": 122
         }
     },
     "0032-2687": {
@@ -1580,11 +1638,11 @@
         },
         "2017": {
             "num_journal_oa_articles": 2,
-            "num_journal_total_articles": 70
+            "num_journal_total_articles": 66
         },
         "2018": {
             "num_journal_oa_articles": 3,
-            "num_journal_total_articles": 36
+            "num_journal_total_articles": 41
         }
     },
     "0033-1538": {
@@ -1604,7 +1662,7 @@
         },
         "2018": {
             "num_journal_oa_articles": 20,
-            "num_journal_total_articles": 124
+            "num_journal_total_articles": 126
         }
     },
     "0033-2720": {
@@ -1638,11 +1696,11 @@
         },
         "2017": {
             "num_journal_oa_articles": 47,
-            "num_journal_total_articles": 304
+            "num_journal_total_articles": 303
         },
         "2018": {
-            "num_journal_oa_articles": 40,
-            "num_journal_total_articles": 162
+            "num_journal_oa_articles": 42,
+            "num_journal_total_articles": 171
         }
     },
     "0033-4006": {
@@ -1657,12 +1715,12 @@
     },
     "0033-4553": {
         "2017": {
-            "num_journal_oa_articles": 46,
-            "num_journal_total_articles": 326
+            "num_journal_oa_articles": 45,
+            "num_journal_total_articles": 317
         },
         "2018": {
-            "num_journal_oa_articles": 21,
-            "num_journal_total_articles": 172
+            "num_journal_oa_articles": 22,
+            "num_journal_total_articles": 187
         }
     },
     "0033-5177": {
@@ -1675,26 +1733,38 @@
             "num_journal_total_articles": 301
         },
         "2018": {
-            "num_journal_oa_articles": 14,
-            "num_journal_total_articles": 159
+            "num_journal_oa_articles": 15,
+            "num_journal_total_articles": 161
         }
     },
     "0033-832X": {
         "2016": {
             "num_journal_oa_articles": 6,
             "num_journal_total_articles": 138
+        },
+        "2017": {
+            "num_journal_oa_articles": 14,
+            "num_journal_total_articles": 131
+        },
+        "2018": {
+            "num_journal_oa_articles": 4,
+            "num_journal_total_articles": 57
         }
     },
     "0033-8362": {
         "2016": {
             "num_journal_oa_articles": 5,
             "num_journal_total_articles": 117
+        },
+        "2017": {
+            "num_journal_oa_articles": 4,
+            "num_journal_total_articles": 122
         }
     },
     "0034-0111": {
         "2017": {
             "num_journal_oa_articles": 5,
-            "num_journal_total_articles": 67
+            "num_journal_total_articles": 65
         }
     },
     "0034-673X": {
@@ -1718,7 +1788,7 @@
         },
         "2018": {
             "num_journal_oa_articles": 1,
-            "num_journal_total_articles": 36
+            "num_journal_total_articles": 38
         }
     },
     "0035-5038": {
@@ -1732,7 +1802,7 @@
         },
         "2018": {
             "num_journal_oa_articles": 2,
-            "num_journal_total_articles": 48
+            "num_journal_total_articles": 51
         }
     },
     "0036-6978": {
@@ -1773,8 +1843,8 @@
             "num_journal_total_articles": 183
         },
         "2018": {
-            "num_journal_oa_articles": 11,
-            "num_journal_total_articles": 72
+            "num_journal_oa_articles": 12,
+            "num_journal_total_articles": 73
         }
     },
     "0038-1527": {
@@ -1792,7 +1862,7 @@
         },
         "2018": {
             "num_journal_oa_articles": 2,
-            "num_journal_total_articles": 16
+            "num_journal_total_articles": 17
         }
     },
     "0038-6308": {
@@ -1805,8 +1875,8 @@
             "num_journal_total_articles": 193
         },
         "2018": {
-            "num_journal_oa_articles": 13,
-            "num_journal_total_articles": 46
+            "num_journal_oa_articles": 14,
+            "num_journal_total_articles": 47
         }
     },
     "0039-3215": {
@@ -1824,7 +1894,7 @@
         },
         "2018": {
             "num_journal_oa_articles": 11,
-            "num_journal_total_articles": 41
+            "num_journal_total_articles": 42
         }
     },
     "0039-3606": {
@@ -1833,8 +1903,8 @@
             "num_journal_total_articles": 29
         },
         "2018": {
-            "num_journal_oa_articles": 2,
-            "num_journal_total_articles": 12
+            "num_journal_oa_articles": 3,
+            "num_journal_total_articles": 14
         }
     },
     "0039-3746": {
@@ -1865,8 +1935,8 @@
             "num_journal_total_articles": 559
         },
         "2018": {
-            "num_journal_oa_articles": 53,
-            "num_journal_total_articles": 231
+            "num_journal_oa_articles": 54,
+            "num_journal_total_articles": 235
         }
     },
     "0040-5752": {
@@ -1884,7 +1954,7 @@
         },
         "2018": {
             "num_journal_oa_articles": 26,
-            "num_journal_total_articles": 114
+            "num_journal_total_articles": 118
         }
     },
     "0040-5833": {
@@ -1897,12 +1967,12 @@
             "num_journal_total_articles": 66
         },
         "2017": {
-            "num_journal_oa_articles": 18,
-            "num_journal_total_articles": 83
+            "num_journal_oa_articles": 16,
+            "num_journal_total_articles": 75
         },
         "2018": {
-            "num_journal_oa_articles": 3,
-            "num_journal_total_articles": 27
+            "num_journal_oa_articles": 5,
+            "num_journal_total_articles": 36
         }
     },
     "0042-0972": {
@@ -1929,8 +1999,8 @@
             "num_journal_total_articles": 124
         },
         "2018": {
-            "num_journal_oa_articles": 8,
-            "num_journal_total_articles": 76
+            "num_journal_oa_articles": 9,
+            "num_journal_total_articles": 82
         }
     },
     "0043-5325": {
@@ -1941,6 +2011,10 @@
         "2017": {
             "num_journal_oa_articles": 48,
             "num_journal_total_articles": 165
+        },
+        "2018": {
+            "num_journal_oa_articles": 22,
+            "num_journal_total_articles": 60
         }
     },
     "0043-5341": {
@@ -1951,6 +2025,10 @@
         "2017": {
             "num_journal_oa_articles": 16,
             "num_journal_total_articles": 101
+        },
+        "2018": {
+            "num_journal_oa_articles": 10,
+            "num_journal_total_articles": 44
         }
     },
     "0043-7719": {
@@ -1964,7 +2042,7 @@
         },
         "2018": {
             "num_journal_oa_articles": 10,
-            "num_journal_total_articles": 60
+            "num_journal_total_articles": 61
         }
     },
     "0044-2275": {
@@ -1987,6 +2065,12 @@
             "num_journal_total_articles": 55
         }
     },
+    "0044-2585": {
+        "2017": {
+            "num_journal_oa_articles": 1,
+            "num_journal_total_articles": 32
+        }
+    },
     "0044-7447": {
         "2015": {
             "num_journal_oa_articles": 68,
@@ -2001,8 +2085,8 @@
             "num_journal_total_articles": 127
         },
         "2018": {
-            "num_journal_oa_articles": 51,
-            "num_journal_total_articles": 98
+            "num_journal_oa_articles": 52,
+            "num_journal_total_articles": 99
         }
     },
     "0044-8435": {
@@ -2094,7 +2178,7 @@
         },
         "2018": {
             "num_journal_oa_articles": 2,
-            "num_journal_total_articles": 45
+            "num_journal_total_articles": 46
         }
     },
     "0048-5829": {
@@ -2121,8 +2205,8 @@
             "num_journal_total_articles": 152
         },
         "2018": {
-            "num_journal_oa_articles": 18,
-            "num_journal_total_articles": 73
+            "num_journal_oa_articles": 19,
+            "num_journal_total_articles": 74
         }
     },
     "0049-4747": {
@@ -2136,7 +2220,7 @@
         },
         "2018": {
             "num_journal_oa_articles": 12,
-            "num_journal_total_articles": 200
+            "num_journal_total_articles": 206
         }
     },
     "0049-6979": {
@@ -2157,6 +2241,10 @@
         "2016": {
             "num_journal_oa_articles": 2,
             "num_journal_total_articles": 42
+        },
+        "2017": {
+            "num_journal_oa_articles": 2,
+            "num_journal_total_articles": 37
         }
     },
     "0070-3370": {
@@ -2173,8 +2261,8 @@
             "num_journal_total_articles": 103
         },
         "2018": {
-            "num_journal_oa_articles": 2,
-            "num_journal_total_articles": 37
+            "num_journal_oa_articles": 3,
+            "num_journal_total_articles": 39
         }
     },
     "0071-3260": {
@@ -2209,6 +2297,10 @@
         "2017": {
             "num_journal_oa_articles": 10,
             "num_journal_total_articles": 145
+        },
+        "2018": {
+            "num_journal_oa_articles": 2,
+            "num_journal_total_articles": 75
         }
     },
     "0090-4341": {
@@ -2218,7 +2310,7 @@
         },
         "2018": {
             "num_journal_oa_articles": 6,
-            "num_journal_total_articles": 77
+            "num_journal_total_articles": 78
         }
     },
     "0090-502X": {
@@ -2232,7 +2324,7 @@
         },
         "2018": {
             "num_journal_oa_articles": 10,
-            "num_journal_total_articles": 68
+            "num_journal_total_articles": 70
         }
     },
     "0090-6905": {
@@ -2263,8 +2355,8 @@
             "num_journal_total_articles": 250
         },
         "2018": {
-            "num_journal_oa_articles": 14,
-            "num_journal_total_articles": 99
+            "num_journal_oa_articles": 15,
+            "num_journal_total_articles": 105
         }
     },
     "0091-0627": {
@@ -2281,8 +2373,8 @@
             "num_journal_total_articles": 168
         },
         "2018": {
-            "num_journal_oa_articles": 17,
-            "num_journal_total_articles": 116
+            "num_journal_oa_articles": 18,
+            "num_journal_total_articles": 121
         }
     },
     "0091-1674": {
@@ -2292,7 +2384,7 @@
         },
         "2018": {
             "num_journal_oa_articles": 3,
-            "num_journal_total_articles": 17
+            "num_journal_total_articles": 18
         }
     },
     "0092-0606": {
@@ -2312,15 +2404,15 @@
         },
         "2016": {
             "num_journal_oa_articles": 3,
-            "num_journal_total_articles": 56
+            "num_journal_total_articles": 55
         },
         "2017": {
-            "num_journal_oa_articles": 6,
-            "num_journal_total_articles": 76
+            "num_journal_oa_articles": 5,
+            "num_journal_total_articles": 68
         },
         "2018": {
-            "num_journal_oa_articles": 2,
-            "num_journal_total_articles": 27
+            "num_journal_oa_articles": 3,
+            "num_journal_total_articles": 37
         }
     },
     "0092-8240": {
@@ -2338,7 +2430,7 @@
         },
         "2018": {
             "num_journal_oa_articles": 8,
-            "num_journal_total_articles": 68
+            "num_journal_total_articles": 73
         }
     },
     "0093-7711": {
@@ -2356,7 +2448,7 @@
         },
         "2018": {
             "num_journal_oa_articles": 9,
-            "num_journal_total_articles": 40
+            "num_journal_total_articles": 42
         }
     },
     "0094-5145": {
@@ -2365,8 +2457,8 @@
             "num_journal_total_articles": 161
         },
         "2018": {
-            "num_journal_oa_articles": 7,
-            "num_journal_total_articles": 111
+            "num_journal_oa_articles": 8,
+            "num_journal_total_articles": 131
         }
     },
     "0095-3628": {
@@ -2380,7 +2472,7 @@
         },
         "2018": {
             "num_journal_oa_articles": 17,
-            "num_journal_total_articles": 158
+            "num_journal_total_articles": 162
         }
     },
     "0095-4616": {
@@ -2394,7 +2486,7 @@
         },
         "2018": {
             "num_journal_oa_articles": 6,
-            "num_journal_total_articles": 45
+            "num_journal_total_articles": 46
         }
     },
     "0095-9782": {
@@ -2408,7 +2500,7 @@
         },
         "2018": {
             "num_journal_oa_articles": 2,
-            "num_journal_total_articles": 52
+            "num_journal_total_articles": 54
         }
     },
     "0098-0331": {
@@ -2426,7 +2518,7 @@
         },
         "2018": {
             "num_journal_oa_articles": 4,
-            "num_journal_total_articles": 52
+            "num_journal_total_articles": 53
         }
     },
     "0103-9733": {
@@ -2449,8 +2541,8 @@
             "num_journal_total_articles": 209
         },
         "2018": {
-            "num_journal_oa_articles": 29,
-            "num_journal_total_articles": 143
+            "num_journal_oa_articles": 30,
+            "num_journal_total_articles": 147
         }
     },
     "0114-5916": {
@@ -2467,8 +2559,8 @@
             "num_journal_total_articles": 123
         },
         "2018": {
-            "num_journal_oa_articles": 23,
-            "num_journal_total_articles": 78
+            "num_journal_oa_articles": 24,
+            "num_journal_total_articles": 79
         }
     },
     "0119-5646": {
@@ -2500,7 +2592,7 @@
         },
         "2018": {
             "num_journal_oa_articles": 5,
-            "num_journal_total_articles": 32
+            "num_journal_total_articles": 36
         }
     },
     "0138-9130": {
@@ -2532,7 +2624,7 @@
         },
         "2018": {
             "num_journal_oa_articles": 14,
-            "num_journal_total_articles": 119
+            "num_journal_total_articles": 123
         }
     },
     "0141-5492": {
@@ -2545,8 +2637,8 @@
             "num_journal_total_articles": 225
         },
         "2018": {
-            "num_journal_oa_articles": 6,
-            "num_journal_total_articles": 117
+            "num_journal_oa_articles": 7,
+            "num_journal_total_articles": 121
         }
     },
     "0141-8955": {
@@ -2626,7 +2718,7 @@
         },
         "2018": {
             "num_journal_oa_articles": 6,
-            "num_journal_total_articles": 51
+            "num_journal_total_articles": 52
         }
     },
     "0147-2011": {
@@ -2662,7 +2754,7 @@
         },
         "2018": {
             "num_journal_oa_articles": 2,
-            "num_journal_total_articles": 51
+            "num_journal_total_articles": 54
         }
     },
     "0148-5598": {
@@ -2680,7 +2772,7 @@
         },
         "2018": {
             "num_journal_oa_articles": 3,
-            "num_journal_total_articles": 72
+            "num_journal_total_articles": 77
         }
     },
     "0157-244X": {
@@ -2718,7 +2810,7 @@
         },
         "2018": {
             "num_journal_oa_articles": 4,
-            "num_journal_total_articles": 43
+            "num_journal_total_articles": 44
         }
     },
     "0161-9152": {
@@ -2751,8 +2843,8 @@
             "num_journal_total_articles": 375
         },
         "2018": {
-            "num_journal_oa_articles": 47,
-            "num_journal_total_articles": 288
+            "num_journal_oa_articles": 49,
+            "num_journal_total_articles": 299
         }
     },
     "0163-2116": {
@@ -2827,8 +2919,8 @@
             "num_journal_total_articles": 288
         },
         "2018": {
-            "num_journal_oa_articles": 32,
-            "num_journal_total_articles": 120
+            "num_journal_oa_articles": 34,
+            "num_journal_total_articles": 123
         }
     },
     "0165-005X": {
@@ -2837,8 +2929,8 @@
             "num_journal_total_articles": 43
         },
         "2018": {
-            "num_journal_oa_articles": 5,
-            "num_journal_total_articles": 26
+            "num_journal_oa_articles": 6,
+            "num_journal_total_articles": 29
         }
     },
     "0165-0106": {
@@ -2880,7 +2972,7 @@
         },
         "2017": {
             "num_journal_oa_articles": 1,
-            "num_journal_total_articles": 34
+            "num_journal_total_articles": 29
         }
     },
     "0165-070X": {
@@ -2903,8 +2995,8 @@
             "num_journal_total_articles": 526
         },
         "2018": {
-            "num_journal_oa_articles": 11,
-            "num_journal_total_articles": 167
+            "num_journal_oa_articles": 12,
+            "num_journal_total_articles": 173
         }
     },
     "0165-5752": {
@@ -2938,7 +3030,7 @@
         },
         "2018": {
             "num_journal_oa_articles": 19,
-            "num_journal_total_articles": 84
+            "num_journal_total_articles": 86
         }
     },
     "0167-4366": {
@@ -2956,7 +3048,7 @@
         },
         "2018": {
             "num_journal_oa_articles": 4,
-            "num_journal_total_articles": 98
+            "num_journal_total_articles": 99
         }
     },
     "0167-4412": {
@@ -2983,8 +3075,8 @@
             "num_journal_total_articles": 672
         },
         "2018": {
-            "num_journal_oa_articles": 18,
-            "num_journal_total_articles": 206
+            "num_journal_oa_articles": 20,
+            "num_journal_total_articles": 213
         }
     },
     "0167-5249": {
@@ -3011,8 +3103,8 @@
             "num_journal_total_articles": 39
         },
         "2018": {
-            "num_journal_oa_articles": 2,
-            "num_journal_total_articles": 19
+            "num_journal_oa_articles": 3,
+            "num_journal_total_articles": 21
         }
     },
     "0167-594X": {
@@ -3030,7 +3122,7 @@
         },
         "2018": {
             "num_journal_oa_articles": 20,
-            "num_journal_total_articles": 246
+            "num_journal_total_articles": 254
         }
     },
     "0167-6369": {
@@ -3061,8 +3153,8 @@
             "num_journal_total_articles": 454
         },
         "2018": {
-            "num_journal_oa_articles": 64,
-            "num_journal_total_articles": 302
+            "num_journal_oa_articles": 65,
+            "num_journal_total_articles": 308
         }
     },
     "0167-6857": {
@@ -3075,8 +3167,8 @@
             "num_journal_total_articles": 220
         },
         "2018": {
-            "num_journal_oa_articles": 7,
-            "num_journal_total_articles": 102
+            "num_journal_oa_articles": 8,
+            "num_journal_total_articles": 105
         }
     },
     "0167-6997": {
@@ -3094,7 +3186,7 @@
         },
         "2018": {
             "num_journal_oa_articles": 11,
-            "num_journal_total_articles": 88
+            "num_journal_total_articles": 89
         }
     },
     "0167-7411": {
@@ -3136,7 +3228,7 @@
         },
         "2018": {
             "num_journal_oa_articles": 1,
-            "num_journal_total_articles": 52
+            "num_journal_total_articles": 57
         }
     },
     "0167-806X": {
@@ -3154,7 +3246,7 @@
         },
         "2018": {
             "num_journal_oa_articles": 5,
-            "num_journal_total_articles": 27
+            "num_journal_total_articles": 28
         }
     },
     "0167-8094": {
@@ -3185,6 +3277,10 @@
         "2017": {
             "num_journal_oa_articles": 1,
             "num_journal_total_articles": 19
+        },
+        "2018": {
+            "num_journal_oa_articles": 2,
+            "num_journal_total_articles": 15
         }
     },
     "0168-2563": {
@@ -3215,8 +3311,8 @@
             "num_journal_total_articles": 54
         },
         "2018": {
-            "num_journal_oa_articles": 17,
-            "num_journal_total_articles": 35
+            "num_journal_oa_articles": 18,
+            "num_journal_total_articles": 37
         }
     },
     "0168-7034": {
@@ -3234,7 +3330,7 @@
         },
         "2018": {
             "num_journal_oa_articles": 2,
-            "num_journal_total_articles": 11
+            "num_journal_total_articles": 12
         }
     },
     "0168-7433": {
@@ -3333,8 +3429,8 @@
             "num_journal_total_articles": 179
         },
         "2018": {
-            "num_journal_oa_articles": 14,
-            "num_journal_total_articles": 103
+            "num_journal_oa_articles": 15,
+            "num_journal_total_articles": 113
         }
     },
     "0169-4286": {
@@ -3344,7 +3440,7 @@
         },
         "2018": {
             "num_journal_oa_articles": 5,
-            "num_journal_total_articles": 41
+            "num_journal_total_articles": 42
         }
     },
     "0169-6149": {
@@ -3360,7 +3456,7 @@
     "0170-0839": {
         "2018": {
             "num_journal_oa_articles": 10,
-            "num_journal_total_articles": 209
+            "num_journal_total_articles": 218
         }
     },
     "0171-5216": {
@@ -3378,7 +3474,7 @@
         },
         "2018": {
             "num_journal_oa_articles": 20,
-            "num_journal_total_articles": 126
+            "num_journal_total_articles": 129
         }
     },
     "0171-6468": {
@@ -3396,7 +3492,7 @@
         },
         "2018": {
             "num_journal_oa_articles": 5,
-            "num_journal_total_articles": 29
+            "num_journal_total_articles": 30
         }
     },
     "0171-967X": {
@@ -3414,7 +3510,7 @@
         },
         "2018": {
             "num_journal_oa_articles": 18,
-            "num_journal_total_articles": 90
+            "num_journal_total_articles": 92
         }
     },
     "0172-0643": {
@@ -3428,7 +3524,7 @@
         },
         "2018": {
             "num_journal_oa_articles": 11,
-            "num_journal_total_articles": 156
+            "num_journal_total_articles": 158
         }
     },
     "0172-8083": {
@@ -3442,13 +3538,17 @@
         },
         "2018": {
             "num_journal_oa_articles": 14,
-            "num_journal_total_articles": 96
+            "num_journal_total_articles": 98
         }
     },
     "0172-8113": {
         "2016": {
             "num_journal_oa_articles": 8,
             "num_journal_total_articles": 133
+        },
+        "2017": {
+            "num_journal_oa_articles": 10,
+            "num_journal_total_articles": 136
         }
     },
     "0172-8172": {
@@ -3461,12 +3561,12 @@
             "num_journal_total_articles": 226
         },
         "2017": {
-            "num_journal_oa_articles": 23,
-            "num_journal_total_articles": 281
+            "num_journal_oa_articles": 22,
+            "num_journal_total_articles": 274
         },
         "2018": {
-            "num_journal_oa_articles": 67,
-            "num_journal_total_articles": 182
+            "num_journal_oa_articles": 68,
+            "num_journal_total_articles": 190
         }
     },
     "0172-9179": {
@@ -3513,8 +3613,8 @@
             "num_journal_total_articles": 306
         },
         "2018": {
-            "num_journal_oa_articles": 19,
-            "num_journal_total_articles": 196
+            "num_journal_oa_articles": 21,
+            "num_journal_total_articles": 203
         }
     },
     "0174-1578": {
@@ -3527,14 +3627,18 @@
             "num_journal_total_articles": 83
         },
         "2017": {
-            "num_journal_oa_articles": 10,
-            "num_journal_total_articles": 98
+            "num_journal_oa_articles": 9,
+            "num_journal_total_articles": 89
         }
     },
     "0174-2442": {
         "2016": {
             "num_journal_oa_articles": 3,
             "num_journal_total_articles": 69
+        },
+        "2017": {
+            "num_journal_oa_articles": 3,
+            "num_journal_total_articles": 83
         }
     },
     "0175-7571": {
@@ -3552,7 +3656,7 @@
         },
         "2018": {
             "num_journal_oa_articles": 9,
-            "num_journal_total_articles": 57
+            "num_journal_total_articles": 59
         }
     },
     "0175-7598": {
@@ -3569,8 +3673,8 @@
             "num_journal_total_articles": 713
         },
         "2018": {
-            "num_journal_oa_articles": 36,
-            "num_journal_total_articles": 403
+            "num_journal_oa_articles": 38,
+            "num_journal_total_articles": 430
         }
     },
     "0176-1714": {
@@ -3588,7 +3692,7 @@
         },
         "2018": {
             "num_journal_oa_articles": 7,
-            "num_journal_total_articles": 53
+            "num_journal_total_articles": 54
         }
     },
     "0176-4268": {
@@ -3598,7 +3702,7 @@
         },
         "2017": {
             "num_journal_oa_articles": 2,
-            "num_journal_total_articles": 28
+            "num_journal_total_articles": 27
         }
     },
     "0176-4276": {
@@ -3626,7 +3730,7 @@
         },
         "2018": {
             "num_journal_oa_articles": 5,
-            "num_journal_total_articles": 67
+            "num_journal_total_articles": 68
         }
     },
     "0177-5537": {
@@ -3654,7 +3758,7 @@
         },
         "2018": {
             "num_journal_oa_articles": 4,
-            "num_journal_total_articles": 51
+            "num_journal_total_articles": 55
         }
     },
     "0177-798X": {
@@ -3664,7 +3768,7 @@
         },
         "2018": {
             "num_journal_oa_articles": 31,
-            "num_journal_total_articles": 324
+            "num_journal_total_articles": 327
         }
     },
     "0178-2762": {
@@ -3681,8 +3785,8 @@
             "num_journal_total_articles": 86
         },
         "2018": {
-            "num_journal_oa_articles": 5,
-            "num_journal_total_articles": 45
+            "num_journal_oa_articles": 6,
+            "num_journal_total_articles": 48
         }
     },
     "0178-2770": {
@@ -3691,12 +3795,12 @@
             "num_journal_total_articles": 28
         },
         "2017": {
-            "num_journal_oa_articles": 6,
-            "num_journal_total_articles": 46
+            "num_journal_oa_articles": 5,
+            "num_journal_total_articles": 42
         },
         "2018": {
-            "num_journal_oa_articles": 2,
-            "num_journal_total_articles": 17
+            "num_journal_oa_articles": 3,
+            "num_journal_total_articles": 21
         }
     },
     "0178-2789": {
@@ -3710,7 +3814,7 @@
         },
         "2018": {
             "num_journal_oa_articles": 3,
-            "num_journal_total_articles": 90
+            "num_journal_total_articles": 92
         }
     },
     "0178-4617": {
@@ -3724,11 +3828,11 @@
         },
         "2017": {
             "num_journal_oa_articles": 27,
-            "num_journal_total_articles": 220
+            "num_journal_total_articles": 212
         },
         "2018": {
             "num_journal_oa_articles": 19,
-            "num_journal_total_articles": 114
+            "num_journal_total_articles": 123
         }
     },
     "0178-7675": {
@@ -3742,11 +3846,11 @@
         },
         "2017": {
             "num_journal_oa_articles": 17,
-            "num_journal_total_articles": 184
+            "num_journal_total_articles": 176
         },
         "2018": {
             "num_journal_oa_articles": 3,
-            "num_journal_total_articles": 59
+            "num_journal_total_articles": 69
         }
     },
     "0178-7888": {
@@ -3780,7 +3884,7 @@
         },
         "2018": {
             "num_journal_oa_articles": 6,
-            "num_journal_total_articles": 94
+            "num_journal_total_articles": 95
         }
     },
     "0179-051X": {
@@ -3798,7 +3902,7 @@
         },
         "2018": {
             "num_journal_oa_articles": 4,
-            "num_journal_total_articles": 56
+            "num_journal_total_articles": 59
         }
     },
     "0179-1958": {
@@ -3815,8 +3919,8 @@
             "num_journal_total_articles": 257
         },
         "2018": {
-            "num_journal_oa_articles": 13,
-            "num_journal_total_articles": 133
+            "num_journal_oa_articles": 16,
+            "num_journal_total_articles": 141
         }
     },
     "0179-5376": {
@@ -3834,7 +3938,7 @@
         },
         "2018": {
             "num_journal_oa_articles": 7,
-            "num_journal_total_articles": 66
+            "num_journal_total_articles": 68
         }
     },
     "0179-7158": {
@@ -3848,7 +3952,7 @@
         },
         "2018": {
             "num_journal_oa_articles": 16,
-            "num_journal_total_articles": 94
+            "num_journal_total_articles": 96
         }
     },
     "0188-7009": {
@@ -3872,7 +3976,7 @@
         },
         "2018": {
             "num_journal_oa_articles": 1,
-            "num_journal_total_articles": 31
+            "num_journal_total_articles": 32
         }
     },
     "0191-5886": {
@@ -3893,6 +3997,12 @@
         "2016": {
             "num_journal_oa_articles": 2,
             "num_journal_total_articles": 21
+        }
+    },
+    "0195-928X": {
+        "2017": {
+            "num_journal_oa_articles": 18,
+            "num_journal_total_articles": 181
         }
     },
     "0195-9298": {
@@ -3922,7 +4032,7 @@
         },
         "2018": {
             "num_journal_oa_articles": 1,
-            "num_journal_total_articles": 7
+            "num_journal_total_articles": 9
         }
     },
     "0217-4561": {
@@ -3955,8 +4065,8 @@
             "num_journal_total_articles": 155
         },
         "2018": {
-            "num_journal_oa_articles": 4,
-            "num_journal_total_articles": 103
+            "num_journal_oa_articles": 5,
+            "num_journal_total_articles": 112
         }
     },
     "0232-704X": {
@@ -3979,8 +4089,8 @@
             "num_journal_total_articles": 681
         },
         "2018": {
-            "num_journal_oa_articles": 10,
-            "num_journal_total_articles": 232
+            "num_journal_oa_articles": 11,
+            "num_journal_total_articles": 244
         }
     },
     "0250-541X": {
@@ -3998,7 +4108,7 @@
     "0253-4827": {
         "2018": {
             "num_journal_oa_articles": 4,
-            "num_journal_total_articles": 68
+            "num_journal_total_articles": 71
         }
     },
     "0254-5330": {
@@ -4016,7 +4126,7 @@
         },
         "2018": {
             "num_journal_oa_articles": 13,
-            "num_journal_total_articles": 237
+            "num_journal_total_articles": 242
         }
     },
     "0256-1530": {
@@ -4057,8 +4167,8 @@
             "num_journal_total_articles": 350
         },
         "2018": {
-            "num_journal_oa_articles": 9,
-            "num_journal_total_articles": 210
+            "num_journal_oa_articles": 10,
+            "num_journal_total_articles": 219
         }
     },
     "0257-0130": {
@@ -4114,7 +4224,7 @@
         },
         "2018": {
             "num_journal_oa_articles": 8,
-            "num_journal_total_articles": 111
+            "num_journal_total_articles": 113
         }
     },
     "0262-0898": {
@@ -4155,8 +4265,8 @@
             "num_journal_total_articles": 2032
         },
         "2018": {
-            "num_journal_oa_articles": 42,
-            "num_journal_total_articles": 1183
+            "num_journal_oa_articles": 43,
+            "num_journal_total_articles": 1203
         }
     },
     "0268-8921": {
@@ -4165,8 +4275,8 @@
             "num_journal_total_articles": 240
         },
         "2017": {
-            "num_journal_oa_articles": 12,
-            "num_journal_total_articles": 281
+            "num_journal_oa_articles": 11,
+            "num_journal_total_articles": 264
         }
     },
     "0269-4042": {
@@ -4176,7 +4286,7 @@
         },
         "2018": {
             "num_journal_oa_articles": 9,
-            "num_journal_total_articles": 114
+            "num_journal_total_articles": 119
         }
     },
     "0269-7653": {
@@ -4190,7 +4300,7 @@
         },
         "2018": {
             "num_journal_oa_articles": 1,
-            "num_journal_total_articles": 17
+            "num_journal_total_articles": 18
         }
     },
     "0271-9142": {
@@ -4208,7 +4318,7 @@
         },
         "2018": {
             "num_journal_oa_articles": 6,
-            "num_journal_total_articles": 43
+            "num_journal_total_articles": 45
         }
     },
     "0272-4324": {
@@ -4222,7 +4332,7 @@
         },
         "2018": {
             "num_journal_oa_articles": 3,
-            "num_journal_total_articles": 48
+            "num_journal_total_articles": 52
         }
     },
     "0272-4340": {
@@ -4246,7 +4356,7 @@
         },
         "2018": {
             "num_journal_oa_articles": 6,
-            "num_journal_total_articles": 173
+            "num_journal_total_articles": 177
         }
     },
     "0277-5212": {
@@ -4264,7 +4374,7 @@
         },
         "2018": {
             "num_journal_oa_articles": 6,
-            "num_journal_total_articles": 57
+            "num_journal_total_articles": 62
         }
     },
     "0278-081X": {
@@ -4294,7 +4404,7 @@
         },
         "2018": {
             "num_journal_oa_articles": 3,
-            "num_journal_total_articles": 22
+            "num_journal_total_articles": 23
         }
     },
     "0300-7839": {
@@ -4311,8 +4421,8 @@
             "num_journal_total_articles": 87
         },
         "2018": {
-            "num_journal_oa_articles": 7,
-            "num_journal_total_articles": 41
+            "num_journal_oa_articles": 8,
+            "num_journal_total_articles": 42
         }
     },
     "0300-8126": {
@@ -4330,7 +4440,7 @@
         },
         "2018": {
             "num_journal_oa_articles": 3,
-            "num_journal_total_articles": 71
+            "num_journal_total_articles": 72
         }
     },
     "0300-8177": {
@@ -4343,8 +4453,8 @@
             "num_journal_total_articles": 305
         },
         "2018": {
-            "num_journal_oa_articles": 11,
-            "num_journal_total_articles": 206
+            "num_journal_oa_articles": 12,
+            "num_journal_total_articles": 211
         }
     },
     "0300-8428": {
@@ -4391,12 +4501,12 @@
             "num_journal_total_articles": 161
         },
         "2017": {
-            "num_journal_oa_articles": 27,
-            "num_journal_total_articles": 181
+            "num_journal_oa_articles": 26,
+            "num_journal_total_articles": 174
         },
         "2018": {
-            "num_journal_oa_articles": 13,
-            "num_journal_total_articles": 104
+            "num_journal_oa_articles": 14,
+            "num_journal_total_articles": 111
         }
     },
     "0301-0449": {
@@ -4414,7 +4524,7 @@
         },
         "2018": {
             "num_journal_oa_articles": 11,
-            "num_journal_total_articles": 138
+            "num_journal_total_articles": 140
         }
     },
     "0301-1623": {
@@ -4428,7 +4538,7 @@
         },
         "2018": {
             "num_journal_oa_articles": 14,
-            "num_journal_total_articles": 158
+            "num_journal_total_articles": 159
         }
     },
     "0301-4851": {
@@ -4453,6 +4563,10 @@
         "2017": {
             "num_journal_oa_articles": 11,
             "num_journal_total_articles": 133
+        },
+        "2018": {
+            "num_journal_oa_articles": 6,
+            "num_journal_total_articles": 71
         }
     },
     "0301-634X": {
@@ -4471,12 +4585,12 @@
             "num_journal_total_articles": 240
         },
         "2017": {
-            "num_journal_oa_articles": 35,
-            "num_journal_total_articles": 222
+            "num_journal_oa_articles": 33,
+            "num_journal_total_articles": 215
         },
         "2018": {
-            "num_journal_oa_articles": 17,
-            "num_journal_total_articles": 128
+            "num_journal_oa_articles": 19,
+            "num_journal_total_articles": 138
         }
     },
     "0302-8933": {
@@ -4490,7 +4604,7 @@
         },
         "2018": {
             "num_journal_oa_articles": 5,
-            "num_journal_total_articles": 99
+            "num_journal_total_articles": 101
         }
     },
     "0303-402X": {
@@ -4518,7 +4632,7 @@
         },
         "2018": {
             "num_journal_oa_articles": 18,
-            "num_journal_total_articles": 84
+            "num_journal_total_articles": 88
         }
     },
     "0303-8300": {
@@ -4532,7 +4646,7 @@
         },
         "2018": {
             "num_journal_oa_articles": 22,
-            "num_journal_total_articles": 208
+            "num_journal_total_articles": 211
         }
     },
     "0304-0941": {
@@ -4598,7 +4712,7 @@
         },
         "2018": {
             "num_journal_oa_articles": 2,
-            "num_journal_total_articles": 24
+            "num_journal_total_articles": 25
         }
     },
     "0304-8608": {
@@ -4609,6 +4723,10 @@
         "2017": {
             "num_journal_oa_articles": 32,
             "num_journal_total_articles": 496
+        },
+        "2018": {
+            "num_journal_oa_articles": 19,
+            "num_journal_total_articles": 290
         }
     },
     "0306-8919": {
@@ -4636,7 +4754,7 @@
         },
         "2018": {
             "num_journal_oa_articles": 28,
-            "num_journal_total_articles": 88
+            "num_journal_total_articles": 90
         }
     },
     "0324-4652": {
@@ -4651,8 +4769,8 @@
     },
     "0334-5114": {
         "2017": {
-            "num_journal_oa_articles": 11,
-            "num_journal_total_articles": 89
+            "num_journal_oa_articles": 10,
+            "num_journal_total_articles": 82
         }
     },
     "0334-701X": {
@@ -4676,7 +4794,7 @@
         },
         "2018": {
             "num_journal_oa_articles": 19,
-            "num_journal_total_articles": 56
+            "num_journal_total_articles": 60
         }
     },
     "0340-0727": {
@@ -4689,8 +4807,8 @@
             "num_journal_total_articles": 209
         },
         "2018": {
-            "num_journal_oa_articles": 8,
-            "num_journal_total_articles": 86
+            "num_journal_oa_articles": 9,
+            "num_journal_total_articles": 92
         }
     },
     "0340-1200": {
@@ -4708,7 +4826,7 @@
         },
         "2018": {
             "num_journal_oa_articles": 6,
-            "num_journal_total_articles": 24
+            "num_journal_total_articles": 25
         }
     },
     "0340-1855": {
@@ -4732,7 +4850,7 @@
         },
         "2018": {
             "num_journal_oa_articles": 4,
-            "num_journal_total_articles": 43
+            "num_journal_total_articles": 44
         }
     },
     "0340-4285": {
@@ -4746,7 +4864,7 @@
         },
         "2018": {
             "num_journal_oa_articles": 1,
-            "num_journal_total_articles": 48
+            "num_journal_total_articles": 50
         }
     },
     "0340-5354": {
@@ -4763,8 +4881,8 @@
             "num_journal_total_articles": 358
         },
         "2018": {
-            "num_journal_oa_articles": 44,
-            "num_journal_total_articles": 211
+            "num_journal_oa_articles": 45,
+            "num_journal_total_articles": 223
         }
     },
     "0340-5443": {
@@ -4782,7 +4900,7 @@
         },
         "2018": {
             "num_journal_oa_articles": 8,
-            "num_journal_total_articles": 59
+            "num_journal_total_articles": 61
         }
     },
     "0340-5761": {
@@ -4800,7 +4918,7 @@
         },
         "2018": {
             "num_journal_oa_articles": 39,
-            "num_journal_total_articles": 145
+            "num_journal_total_articles": 146
         }
     },
     "0340-6199": {
@@ -4818,7 +4936,7 @@
         },
         "2018": {
             "num_journal_oa_articles": 24,
-            "num_journal_total_articles": 127
+            "num_journal_total_articles": 132
         }
     },
     "0340-6717": {
@@ -4849,8 +4967,8 @@
             "num_journal_total_articles": 156
         },
         "2018": {
-            "num_journal_oa_articles": 12,
-            "num_journal_total_articles": 99
+            "num_journal_oa_articles": 13,
+            "num_journal_total_articles": 102
         }
     },
     "0340-7594": {
@@ -4864,7 +4982,7 @@
         },
         "2018": {
             "num_journal_oa_articles": 7,
-            "num_journal_total_articles": 47
+            "num_journal_total_articles": 48
         }
     },
     "0340-8744": {
@@ -4910,7 +5028,7 @@
         },
         "2018": {
             "num_journal_oa_articles": 4,
-            "num_journal_total_articles": 54
+            "num_journal_total_articles": 55
         }
     },
     "0341-2687": {
@@ -4934,7 +5052,7 @@
         },
         "2018": {
             "num_journal_oa_articles": 13,
-            "num_journal_total_articles": 307
+            "num_journal_total_articles": 317
         }
     },
     "0342-1791": {
@@ -4943,12 +5061,12 @@
             "num_journal_total_articles": 65
         },
         "2017": {
-            "num_journal_oa_articles": 12,
-            "num_journal_total_articles": 84
+            "num_journal_oa_articles": 11,
+            "num_journal_total_articles": 76
         },
         "2018": {
-            "num_journal_oa_articles": 3,
-            "num_journal_total_articles": 51
+            "num_journal_oa_articles": 4,
+            "num_journal_total_articles": 59
         }
     },
     "0342-2380": {
@@ -4984,13 +5102,17 @@
         },
         "2018": {
             "num_journal_oa_articles": 7,
-            "num_journal_total_articles": 63
+            "num_journal_total_articles": 65
         }
     },
     "0343-5377": {
         "2016": {
             "num_journal_oa_articles": 1,
             "num_journal_total_articles": 22
+        },
+        "2017": {
+            "num_journal_oa_articles": 2,
+            "num_journal_total_articles": 26
         }
     },
     "0343-6993": {
@@ -5000,7 +5122,7 @@
         },
         "2018": {
             "num_journal_oa_articles": 2,
-            "num_journal_total_articles": 23
+            "num_journal_total_articles": 25
         }
     },
     "0343-8651": {
@@ -5014,7 +5136,7 @@
         },
         "2018": {
             "num_journal_oa_articles": 7,
-            "num_journal_total_articles": 150
+            "num_journal_total_articles": 156
         }
     },
     "0344-5607": {
@@ -5025,6 +5147,10 @@
         "2017": {
             "num_journal_oa_articles": 9,
             "num_journal_total_articles": 124
+        },
+        "2018": {
+            "num_journal_oa_articles": 5,
+            "num_journal_total_articles": 119
         }
     },
     "0344-5704": {
@@ -5041,8 +5167,8 @@
             "num_journal_total_articles": 269
         },
         "2018": {
-            "num_journal_oa_articles": 23,
-            "num_journal_total_articles": 121
+            "num_journal_oa_articles": 25,
+            "num_journal_total_articles": 127
         }
     },
     "0353-5150": {
@@ -5070,19 +5196,23 @@
         },
         "2018": {
             "num_journal_oa_articles": 10,
-            "num_journal_total_articles": 102
+            "num_journal_total_articles": 103
         }
     },
     "0360-3997": {
         "2016": {
             "num_journal_oa_articles": 9,
             "num_journal_total_articles": 228
+        },
+        "2017": {
+            "num_journal_oa_articles": 9,
+            "num_journal_total_articles": 210
         }
     },
     "0361-0365": {
         "2017": {
             "num_journal_oa_articles": 2,
-            "num_journal_total_articles": 58
+            "num_journal_total_articles": 52
         }
     },
     "0361-5235": {
@@ -5100,7 +5230,7 @@
         },
         "2018": {
             "num_journal_oa_articles": 11,
-            "num_journal_total_articles": 512
+            "num_journal_total_articles": 524
         }
     },
     "0364-152X": {
@@ -5118,7 +5248,7 @@
         },
         "2018": {
             "num_journal_oa_articles": 16,
-            "num_journal_total_articles": 105
+            "num_journal_total_articles": 108
         }
     },
     "0364-216X": {
@@ -5128,7 +5258,7 @@
         },
         "2018": {
             "num_journal_oa_articles": 9,
-            "num_journal_total_articles": 160
+            "num_journal_total_articles": 161
         }
     },
     "0364-2313": {
@@ -5145,8 +5275,8 @@
             "num_journal_total_articles": 564
         },
         "2018": {
-            "num_journal_oa_articles": 45,
-            "num_journal_total_articles": 392
+            "num_journal_oa_articles": 46,
+            "num_journal_total_articles": 409
         }
     },
     "0364-2348": {
@@ -5159,12 +5289,12 @@
             "num_journal_total_articles": 249
         },
         "2017": {
-            "num_journal_oa_articles": 10,
-            "num_journal_total_articles": 267
+            "num_journal_oa_articles": 9,
+            "num_journal_total_articles": 260
         },
         "2018": {
-            "num_journal_oa_articles": 9,
-            "num_journal_total_articles": 186
+            "num_journal_oa_articles": 10,
+            "num_journal_total_articles": 196
         }
     },
     "0364-3190": {
@@ -5173,8 +5303,8 @@
             "num_journal_total_articles": 348
         },
         "2018": {
-            "num_journal_oa_articles": 8,
-            "num_journal_total_articles": 134
+            "num_journal_oa_articles": 9,
+            "num_journal_total_articles": 138
         }
     },
     "0366-6352": {
@@ -5187,6 +5317,10 @@
         "2017": {
             "num_journal_oa_articles": 12,
             "num_journal_total_articles": 133
+        },
+        "2018": {
+            "num_journal_oa_articles": 2,
+            "num_journal_total_articles": 59
         }
     },
     "0374-3535": {
@@ -5218,7 +5352,7 @@
         },
         "2018": {
             "num_journal_oa_articles": 3,
-            "num_journal_total_articles": 45
+            "num_journal_total_articles": 47
         }
     },
     "0377-7332": {
@@ -5250,7 +5384,7 @@
         },
         "2018": {
             "num_journal_oa_articles": 13,
-            "num_journal_total_articles": 96
+            "num_journal_total_articles": 97
         }
     },
     "0378-1909": {
@@ -5264,7 +5398,7 @@
         },
         "2018": {
             "num_journal_oa_articles": 5,
-            "num_journal_total_articles": 85
+            "num_journal_total_articles": 92
         }
     },
     "0378-2697": {
@@ -5291,8 +5425,8 @@
             "num_journal_total_articles": 79
         },
         "2018": {
-            "num_journal_oa_articles": 5,
-            "num_journal_total_articles": 25
+            "num_journal_oa_articles": 6,
+            "num_journal_total_articles": 26
         }
     },
     "0378-7966": {
@@ -5302,7 +5436,7 @@
         },
         "2018": {
             "num_journal_oa_articles": 12,
-            "num_journal_total_articles": 44
+            "num_journal_total_articles": 45
         }
     },
     "0385-7417": {
@@ -5335,8 +5469,8 @@
             "num_journal_total_articles": 50
         },
         "2018": {
-            "num_journal_oa_articles": 4,
-            "num_journal_total_articles": 16
+            "num_journal_oa_articles": 5,
+            "num_journal_total_articles": 18
         }
     },
     "0393-2990": {
@@ -5353,8 +5487,8 @@
             "num_journal_total_articles": 129
         },
         "2018": {
-            "num_journal_oa_articles": 22,
-            "num_journal_total_articles": 60
+            "num_journal_oa_articles": 24,
+            "num_journal_total_articles": 66
         }
     },
     "0393-5965": {
@@ -5394,9 +5528,13 @@
         }
     },
     "0720-728X": {
+        "2017": {
+            "num_journal_oa_articles": 3,
+            "num_journal_total_articles": 36
+        },
         "2018": {
             "num_journal_oa_articles": 2,
-            "num_journal_total_articles": 14
+            "num_journal_total_articles": 15
         }
     },
     "0721-7595": {
@@ -5426,11 +5564,11 @@
         },
         "2017": {
             "num_journal_oa_articles": 30,
-            "num_journal_total_articles": 344
+            "num_journal_total_articles": 343
         },
         "2018": {
-            "num_journal_oa_articles": 18,
-            "num_journal_total_articles": 174
+            "num_journal_oa_articles": 19,
+            "num_journal_total_articles": 178
         }
     },
     "0722-4028": {
@@ -5444,7 +5582,7 @@
         },
         "2018": {
             "num_journal_oa_articles": 4,
-            "num_journal_total_articles": 58
+            "num_journal_total_articles": 60
         }
     },
     "0722-4060": {
@@ -5472,7 +5610,7 @@
         },
         "2018": {
             "num_journal_oa_articles": 10,
-            "num_journal_total_articles": 163
+            "num_journal_total_articles": 166
         }
     },
     "0723-4864": {
@@ -5489,8 +5627,8 @@
             "num_journal_total_articles": 188
         },
         "2018": {
-            "num_journal_oa_articles": 13,
-            "num_journal_total_articles": 58
+            "num_journal_oa_articles": 15,
+            "num_journal_total_articles": 63
         }
     },
     "0724-4983": {
@@ -5504,11 +5642,11 @@
         },
         "2017": {
             "num_journal_oa_articles": 23,
-            "num_journal_total_articles": 261
+            "num_journal_total_articles": 257
         },
         "2018": {
-            "num_journal_oa_articles": 13,
-            "num_journal_total_articles": 196
+            "num_journal_oa_articles": 16,
+            "num_journal_total_articles": 208
         }
     },
     "0724-8741": {
@@ -5526,7 +5664,7 @@
         },
         "2018": {
             "num_journal_oa_articles": 16,
-            "num_journal_total_articles": 118
+            "num_journal_total_articles": 123
         }
     },
     "0732-8818": {
@@ -5575,8 +5713,8 @@
             "num_journal_total_articles": 80
         },
         "2018": {
-            "num_journal_oa_articles": 3,
-            "num_journal_total_articles": 17
+            "num_journal_oa_articles": 4,
+            "num_journal_total_articles": 18
         }
     },
     "0770-3198": {
@@ -5585,12 +5723,12 @@
             "num_journal_total_articles": 442
         },
         "2017": {
-            "num_journal_oa_articles": 38,
-            "num_journal_total_articles": 429
+            "num_journal_oa_articles": 37,
+            "num_journal_total_articles": 418
         },
         "2018": {
-            "num_journal_oa_articles": 23,
-            "num_journal_total_articles": 270
+            "num_journal_oa_articles": 24,
+            "num_journal_total_articles": 291
         }
     },
     "0814-6039": {
@@ -5623,6 +5761,10 @@
         "2016": {
             "num_journal_oa_articles": 4,
             "num_journal_total_articles": 27
+        },
+        "2017": {
+            "num_journal_oa_articles": 1,
+            "num_journal_total_articles": 21
         }
     },
     "0873-9749": {
@@ -5641,8 +5783,8 @@
             "num_journal_total_articles": 52
         },
         "2018": {
-            "num_journal_oa_articles": 4,
-            "num_journal_total_articles": 27
+            "num_journal_oa_articles": 5,
+            "num_journal_total_articles": 28
         }
     },
     "0882-2689": {
@@ -5680,11 +5822,11 @@
         },
         "2017": {
             "num_journal_oa_articles": 15,
-            "num_journal_total_articles": 340
+            "num_journal_total_articles": 338
         },
         "2018": {
             "num_journal_oa_articles": 17,
-            "num_journal_total_articles": 254
+            "num_journal_total_articles": 265
         }
     },
     "0885-2545": {
@@ -5693,12 +5835,12 @@
             "num_journal_total_articles": 26
         },
         "2017": {
-            "num_journal_oa_articles": 6,
-            "num_journal_total_articles": 39
+            "num_journal_oa_articles": 4,
+            "num_journal_total_articles": 31
         },
         "2018": {
-            "num_journal_oa_articles": 3,
-            "num_journal_total_articles": 16
+            "num_journal_oa_articles": 5,
+            "num_journal_total_articles": 24
         }
     },
     "0885-6125": {
@@ -5711,8 +5853,8 @@
             "num_journal_total_articles": 77
         },
         "2018": {
-            "num_journal_oa_articles": 4,
-            "num_journal_total_articles": 38
+            "num_journal_oa_articles": 5,
+            "num_journal_total_articles": 40
         }
     },
     "0885-7458": {
@@ -5721,8 +5863,8 @@
             "num_journal_total_articles": 121
         },
         "2018": {
-            "num_journal_oa_articles": 4,
-            "num_journal_total_articles": 48
+            "num_journal_oa_articles": 5,
+            "num_journal_total_articles": 50
         }
     },
     "0885-7466": {
@@ -5750,7 +5892,7 @@
         },
         "2018": {
             "num_journal_oa_articles": 12,
-            "num_journal_total_articles": 203
+            "num_journal_total_articles": 211
         }
     },
     "0885-7482": {
@@ -5801,8 +5943,8 @@
             "num_journal_total_articles": 102
         },
         "2018": {
-            "num_journal_oa_articles": 5,
-            "num_journal_total_articles": 60
+            "num_journal_oa_articles": 6,
+            "num_journal_total_articles": 61
         }
     },
     "0889-3047": {
@@ -5856,7 +5998,7 @@
         },
         "2018": {
             "num_journal_oa_articles": 2,
-            "num_journal_total_articles": 25
+            "num_journal_total_articles": 26
         }
     },
     "0892-7537": {
@@ -5894,7 +6036,7 @@
         },
         "2018": {
             "num_journal_oa_articles": 3,
-            "num_journal_total_articles": 26
+            "num_journal_total_articles": 28
         }
     },
     "0892-9912": {
@@ -5912,7 +6054,7 @@
         },
         "2018": {
             "num_journal_oa_articles": 5,
-            "num_journal_total_articles": 39
+            "num_journal_total_articles": 40
         }
     },
     "0893-7648": {
@@ -5925,8 +6067,8 @@
             "num_journal_total_articles": 834
         },
         "2018": {
-            "num_journal_oa_articles": 72,
-            "num_journal_total_articles": 588
+            "num_journal_oa_articles": 74,
+            "num_journal_total_articles": 602
         }
     },
     "0894-587X": {
@@ -5940,7 +6082,7 @@
         },
         "2018": {
             "num_journal_oa_articles": 6,
-            "num_journal_total_articles": 70
+            "num_journal_total_articles": 71
         }
     },
     "0894-9085": {
@@ -6018,7 +6160,7 @@
         },
         "2018": {
             "num_journal_oa_articles": 2,
-            "num_journal_total_articles": 66
+            "num_journal_total_articles": 70
         }
     },
     "0896-0267": {
@@ -6032,7 +6174,7 @@
         },
         "2018": {
             "num_journal_oa_articles": 13,
-            "num_journal_total_articles": 64
+            "num_journal_total_articles": 65
         }
     },
     "0897-1889": {
@@ -6051,12 +6193,12 @@
             "num_journal_total_articles": 271
         },
         "2017": {
-            "num_journal_oa_articles": 12,
-            "num_journal_total_articles": 217
+            "num_journal_oa_articles": 10,
+            "num_journal_total_articles": 203
         },
         "2018": {
-            "num_journal_oa_articles": 14,
-            "num_journal_total_articles": 106
+            "num_journal_oa_articles": 16,
+            "num_journal_total_articles": 127
         }
     },
     "0911-0119": {
@@ -6106,11 +6248,11 @@
         },
         "2017": {
             "num_journal_oa_articles": 6,
-            "num_journal_total_articles": 107
+            "num_journal_total_articles": 103
         },
         "2018": {
             "num_journal_oa_articles": 11,
-            "num_journal_total_articles": 63
+            "num_journal_total_articles": 70
         }
     },
     "0920-1742": {
@@ -6162,7 +6304,7 @@
         },
         "2018": {
             "num_journal_oa_articles": 11,
-            "num_journal_total_articles": 188
+            "num_journal_total_articles": 191
         }
     },
     "0920-5691": {
@@ -6176,7 +6318,7 @@
         },
         "2018": {
             "num_journal_oa_articles": 7,
-            "num_journal_total_articles": 59
+            "num_journal_total_articles": 62
         }
     },
     "0920-654X": {
@@ -6190,7 +6332,7 @@
         },
         "2018": {
             "num_journal_oa_articles": 9,
-            "num_journal_total_articles": 50
+            "num_journal_total_articles": 51
         }
     },
     "0920-8542": {
@@ -6204,7 +6346,7 @@
         },
         "2018": {
             "num_journal_oa_articles": 17,
-            "num_journal_total_articles": 237
+            "num_journal_total_articles": 246
         }
     },
     "0920-8550": {
@@ -6230,7 +6372,7 @@
         },
         "2018": {
             "num_journal_oa_articles": 6,
-            "num_journal_total_articles": 106
+            "num_journal_total_articles": 107
         }
     },
     "0921-0296": {
@@ -6239,8 +6381,8 @@
             "num_journal_total_articles": 265
         },
         "2018": {
-            "num_journal_oa_articles": 9,
-            "num_journal_total_articles": 109
+            "num_journal_oa_articles": 11,
+            "num_journal_total_articles": 124
         }
     },
     "0921-030X": {
@@ -6253,8 +6395,8 @@
             "num_journal_total_articles": 493
         },
         "2018": {
-            "num_journal_oa_articles": 18,
-            "num_journal_total_articles": 276
+            "num_journal_oa_articles": 19,
+            "num_journal_total_articles": 283
         }
     },
     "0921-2728": {
@@ -6285,8 +6427,8 @@
             "num_journal_total_articles": 166
         },
         "2018": {
-            "num_journal_oa_articles": 12,
-            "num_journal_total_articles": 58
+            "num_journal_oa_articles": 14,
+            "num_journal_total_articles": 60
         }
     },
     "0921-8971": {
@@ -6299,8 +6441,8 @@
             "num_journal_total_articles": 398
         },
         "2018": {
-            "num_journal_oa_articles": 7,
-            "num_journal_total_articles": 167
+            "num_journal_oa_articles": 9,
+            "num_journal_total_articles": 174
         }
     },
     "0921-898X": {
@@ -6313,12 +6455,12 @@
             "num_journal_total_articles": 92
         },
         "2017": {
-            "num_journal_oa_articles": 34,
-            "num_journal_total_articles": 153
+            "num_journal_oa_articles": 32,
+            "num_journal_total_articles": 140
         },
         "2018": {
-            "num_journal_oa_articles": 34,
-            "num_journal_total_articles": 126
+            "num_journal_oa_articles": 36,
+            "num_journal_total_articles": 140
         }
     },
     "0921-9668": {
@@ -6342,7 +6484,7 @@
         },
         "2018": {
             "num_journal_oa_articles": 9,
-            "num_journal_total_articles": 63
+            "num_journal_total_articles": 65
         }
     },
     "0922-6168": {
@@ -6411,6 +6553,10 @@
         "2017": {
             "num_journal_oa_articles": 4,
             "num_journal_total_articles": 50
+        },
+        "2018": {
+            "num_journal_oa_articles": 2,
+            "num_journal_total_articles": 14
         }
     },
     "0923-2958": {
@@ -6428,7 +6574,7 @@
         },
         "2018": {
             "num_journal_oa_articles": 2,
-            "num_journal_total_articles": 29
+            "num_journal_total_articles": 30
         }
     },
     "0923-4861": {
@@ -6448,7 +6594,7 @@
     "0923-6082": {
         "2018": {
             "num_journal_oa_articles": 1,
-            "num_journal_total_articles": 89
+            "num_journal_total_articles": 90
         }
     },
     "0923-7992": {
@@ -6466,7 +6612,7 @@
         },
         "2018": {
             "num_journal_oa_articles": 4,
-            "num_journal_total_articles": 38
+            "num_journal_total_articles": 40
         }
     },
     "0923-8174": {
@@ -6491,8 +6637,8 @@
             "num_journal_total_articles": 821
         },
         "2018": {
-            "num_journal_oa_articles": 14,
-            "num_journal_total_articles": 410
+            "num_journal_oa_articles": 15,
+            "num_journal_total_articles": 433
         }
     },
     "0924-1868": {
@@ -6552,7 +6698,7 @@
         },
         "2018": {
             "num_journal_oa_articles": 3,
-            "num_journal_total_articles": 133
+            "num_journal_total_articles": 137
         }
     },
     "0924-6703": {
@@ -6591,8 +6737,8 @@
             "num_journal_total_articles": 85
         },
         "2018": {
-            "num_journal_oa_articles": 11,
-            "num_journal_total_articles": 65
+            "num_journal_oa_articles": 12,
+            "num_journal_total_articles": 68
         }
     },
     "0925-1022": {
@@ -6610,7 +6756,7 @@
         },
         "2018": {
             "num_journal_oa_articles": 5,
-            "num_journal_total_articles": 110
+            "num_journal_total_articles": 112
         }
     },
     "0925-1030": {
@@ -6624,7 +6770,7 @@
         },
         "2018": {
             "num_journal_oa_articles": 4,
-            "num_journal_total_articles": 122
+            "num_journal_total_articles": 126
         }
     },
     "0925-2738": {
@@ -6642,7 +6788,7 @@
         },
         "2018": {
             "num_journal_oa_articles": 2,
-            "num_journal_total_articles": 26
+            "num_journal_total_articles": 28
         }
     },
     "0925-4560": {
@@ -6659,8 +6805,8 @@
             "num_journal_total_articles": 41
         },
         "2018": {
-            "num_journal_oa_articles": 3,
-            "num_journal_total_articles": 36
+            "num_journal_oa_articles": 4,
+            "num_journal_total_articles": 37
         }
     },
     "0925-4692": {
@@ -6674,7 +6820,7 @@
         },
         "2018": {
             "num_journal_oa_articles": 5,
-            "num_journal_total_articles": 103
+            "num_journal_total_articles": 105
         }
     },
     "0925-4994": {
@@ -6702,7 +6848,7 @@
         },
         "2018": {
             "num_journal_oa_articles": 7,
-            "num_journal_total_articles": 103
+            "num_journal_total_articles": 105
         }
     },
     "0925-8531": {
@@ -6734,6 +6880,10 @@
         }
     },
     "0925-9392": {
+        "2017": {
+            "num_journal_oa_articles": 2,
+            "num_journal_total_articles": 27
+        },
         "2018": {
             "num_journal_oa_articles": 2,
             "num_journal_total_articles": 5
@@ -6781,8 +6931,8 @@
             "num_journal_total_articles": 163
         },
         "2018": {
-            "num_journal_oa_articles": 12,
-            "num_journal_total_articles": 110
+            "num_journal_oa_articles": 13,
+            "num_journal_total_articles": 114
         }
     },
     "0925-9899": {
@@ -6800,7 +6950,7 @@
         },
         "2018": {
             "num_journal_oa_articles": 1,
-            "num_journal_total_articles": 27
+            "num_journal_total_articles": 28
         }
     },
     "0925-9902": {
@@ -6814,7 +6964,7 @@
         },
         "2018": {
             "num_journal_oa_articles": 7,
-            "num_journal_total_articles": 28
+            "num_journal_total_articles": 30
         }
     },
     "0926-2601": {
@@ -6824,7 +6974,7 @@
         },
         "2017": {
             "num_journal_oa_articles": 13,
-            "num_journal_total_articles": 91
+            "num_journal_total_articles": 85
         }
     },
     "0926-2644": {
@@ -6906,7 +7056,7 @@
         },
         "2018": {
             "num_journal_oa_articles": 7,
-            "num_journal_total_articles": 74
+            "num_journal_total_articles": 76
         }
     },
     "0928-0707": {
@@ -6924,7 +7074,7 @@
         },
         "2018": {
             "num_journal_oa_articles": 2,
-            "num_journal_total_articles": 142
+            "num_journal_total_articles": 145
         }
     },
     "0928-1371": {
@@ -6972,11 +7122,11 @@
         },
         "2017": {
             "num_journal_oa_articles": 24,
-            "num_journal_total_articles": 302
+            "num_journal_total_articles": 280
         },
         "2018": {
             "num_journal_oa_articles": 17,
-            "num_journal_total_articles": 195
+            "num_journal_total_articles": 218
         }
     },
     "0929-189X": {
@@ -6986,7 +7136,7 @@
         },
         "2018": {
             "num_journal_oa_articles": 4,
-            "num_journal_total_articles": 49
+            "num_journal_total_articles": 54
         }
     },
     "0929-5305": {
@@ -7004,7 +7154,7 @@
         },
         "2018": {
             "num_journal_oa_articles": 12,
-            "num_journal_total_articles": 101
+            "num_journal_total_articles": 104
         }
     },
     "0929-5313": {
@@ -7029,8 +7179,8 @@
             "num_journal_total_articles": 110
         },
         "2018": {
-            "num_journal_oa_articles": 11,
-            "num_journal_total_articles": 93
+            "num_journal_oa_articles": 13,
+            "num_journal_total_articles": 101
         }
     },
     "0929-5607": {
@@ -7057,8 +7207,8 @@
             "num_journal_total_articles": 1408
         },
         "2018": {
-            "num_journal_oa_articles": 8,
-            "num_journal_total_articles": 725
+            "num_journal_oa_articles": 9,
+            "num_journal_total_articles": 740
         }
     },
     "0930-0708": {
@@ -7082,7 +7232,7 @@
         },
         "2018": {
             "num_journal_oa_articles": 11,
-            "num_journal_total_articles": 107
+            "num_journal_total_articles": 111
         }
     },
     "0930-2794": {
@@ -7100,7 +7250,7 @@
         },
         "2018": {
             "num_journal_oa_articles": 46,
-            "num_journal_total_articles": 494
+            "num_journal_total_articles": 499
         }
     },
     "0930-343X": {
@@ -7113,8 +7263,8 @@
             "num_journal_total_articles": 126
         },
         "2018": {
-            "num_journal_oa_articles": 8,
-            "num_journal_total_articles": 67
+            "num_journal_oa_articles": 10,
+            "num_journal_total_articles": 71
         }
     },
     "0930-4282": {
@@ -7125,6 +7275,10 @@
         "2017": {
             "num_journal_oa_articles": 4,
             "num_journal_total_articles": 54
+        },
+        "2018": {
+            "num_journal_oa_articles": 3,
+            "num_journal_total_articles": 24
         }
     },
     "0930-7575": {
@@ -7138,7 +7292,13 @@
         },
         "2018": {
             "num_journal_oa_articles": 83,
-            "num_journal_total_articles": 374
+            "num_journal_total_articles": 379
+        }
+    },
+    "0930-9225": {
+        "2017": {
+            "num_journal_oa_articles": 1,
+            "num_journal_total_articles": 77
         }
     },
     "0931-041X": {
@@ -7156,7 +7316,7 @@
         },
         "2018": {
             "num_journal_oa_articles": 31,
-            "num_journal_total_articles": 196
+            "num_journal_total_articles": 197
         }
     },
     "0931-1890": {
@@ -7170,7 +7330,7 @@
         },
         "2018": {
             "num_journal_oa_articles": 2,
-            "num_journal_total_articles": 95
+            "num_journal_total_articles": 96
         }
     },
     "0931-8658": {
@@ -7194,7 +7354,7 @@
         },
         "2018": {
             "num_journal_oa_articles": 17,
-            "num_journal_total_articles": 214
+            "num_journal_total_articles": 219
         }
     },
     "0932-0113": {
@@ -7208,13 +7368,17 @@
         },
         "2018": {
             "num_journal_oa_articles": 15,
-            "num_journal_total_articles": 203
+            "num_journal_total_articles": 214
         }
     },
     "0932-383X": {
         "2016": {
             "num_journal_oa_articles": 13,
             "num_journal_total_articles": 72
+        },
+        "2017": {
+            "num_journal_oa_articles": 15,
+            "num_journal_total_articles": 105
         }
     },
     "0932-4194": {
@@ -7231,6 +7395,10 @@
         "2016": {
             "num_journal_oa_articles": 2,
             "num_journal_total_articles": 91
+        },
+        "2017": {
+            "num_journal_oa_articles": 6,
+            "num_journal_total_articles": 93
         }
     },
     "0932-5026": {
@@ -7244,7 +7412,7 @@
         },
         "2018": {
             "num_journal_oa_articles": 3,
-            "num_journal_total_articles": 43
+            "num_journal_total_articles": 46
         }
     },
     "0932-8092": {
@@ -7258,7 +7426,7 @@
         },
         "2018": {
             "num_journal_oa_articles": 5,
-            "num_journal_total_articles": 57
+            "num_journal_total_articles": 59
         }
     },
     "0933-1433": {
@@ -7272,11 +7440,11 @@
         },
         "2017": {
             "num_journal_oa_articles": 6,
-            "num_journal_total_articles": 62
+            "num_journal_total_articles": 55
         },
         "2018": {
             "num_journal_oa_articles": 3,
-            "num_journal_total_articles": 36
+            "num_journal_total_articles": 43
         }
     },
     "0933-1875": {
@@ -7314,13 +7482,17 @@
         },
         "2018": {
             "num_journal_oa_articles": 6,
-            "num_journal_total_articles": 40
+            "num_journal_total_articles": 41
         }
     },
     "0933-7946": {
         "2016": {
             "num_journal_oa_articles": 1,
             "num_journal_total_articles": 54
+        },
+        "2017": {
+            "num_journal_oa_articles": 2,
+            "num_journal_total_articles": 67
         }
     },
     "0933-7954": {
@@ -7337,8 +7509,8 @@
             "num_journal_total_articles": 156
         },
         "2018": {
-            "num_journal_oa_articles": 18,
-            "num_journal_total_articles": 70
+            "num_journal_oa_articles": 20,
+            "num_journal_total_articles": 73
         }
     },
     "0934-5043": {
@@ -7352,7 +7524,7 @@
         },
         "2018": {
             "num_journal_oa_articles": 3,
-            "num_journal_total_articles": 14
+            "num_journal_total_articles": 15
         }
     },
     "0934-6694": {
@@ -7376,7 +7548,7 @@
         },
         "2018": {
             "num_journal_oa_articles": 30,
-            "num_journal_total_articles": 158
+            "num_journal_total_articles": 160
         }
     },
     "0934-9839": {
@@ -7404,7 +7576,7 @@
         },
         "2018": {
             "num_journal_oa_articles": 5,
-            "num_journal_total_articles": 73
+            "num_journal_total_articles": 76
         }
     },
     "0935-4956": {
@@ -7432,15 +7604,23 @@
             "num_journal_oa_articles": 1,
             "num_journal_total_articles": 83
         },
+        "2017": {
+            "num_journal_oa_articles": 4,
+            "num_journal_total_articles": 87
+        },
         "2018": {
             "num_journal_oa_articles": 4,
-            "num_journal_total_articles": 35
+            "num_journal_total_articles": 38
         }
     },
     "0936-5931": {
         "2016": {
             "num_journal_oa_articles": 4,
             "num_journal_total_articles": 41
+        },
+        "2017": {
+            "num_journal_oa_articles": 26,
+            "num_journal_total_articles": 44
         }
     },
     "0936-8051": {
@@ -7458,7 +7638,7 @@
         },
         "2018": {
             "num_journal_oa_articles": 11,
-            "num_journal_total_articles": 123
+            "num_journal_total_articles": 127
         }
     },
     "0936-9937": {
@@ -7472,7 +7652,7 @@
         },
         "2018": {
             "num_journal_oa_articles": 7,
-            "num_journal_total_articles": 42
+            "num_journal_total_articles": 43
         }
     },
     "0937-3462": {
@@ -7485,12 +7665,12 @@
             "num_journal_total_articles": 302
         },
         "2017": {
-            "num_journal_oa_articles": 38,
-            "num_journal_total_articles": 360
+            "num_journal_oa_articles": 37,
+            "num_journal_total_articles": 344
         },
         "2018": {
-            "num_journal_oa_articles": 19,
-            "num_journal_total_articles": 199
+            "num_journal_oa_articles": 21,
+            "num_journal_total_articles": 218
         }
     },
     "0937-4477": {
@@ -7508,7 +7688,7 @@
         },
         "2018": {
             "num_journal_oa_articles": 18,
-            "num_journal_total_articles": 220
+            "num_journal_total_articles": 227
         }
     },
     "0937-7409": {
@@ -7536,7 +7716,7 @@
         },
         "2018": {
             "num_journal_oa_articles": 7,
-            "num_journal_total_articles": 56
+            "num_journal_total_articles": 64
         }
     },
     "0937-941X": {
@@ -7569,12 +7749,12 @@
             "num_journal_total_articles": 214
         },
         "2017": {
-            "num_journal_oa_articles": 28,
-            "num_journal_total_articles": 271
+            "num_journal_oa_articles": 21,
+            "num_journal_total_articles": 237
         },
         "2018": {
-            "num_journal_oa_articles": 12,
-            "num_journal_total_articles": 152
+            "num_journal_oa_articles": 20,
+            "num_journal_total_articles": 188
         }
     },
     "0938-1279": {
@@ -7594,7 +7774,7 @@
         },
         "2018": {
             "num_journal_oa_articles": 2,
-            "num_journal_total_articles": 59
+            "num_journal_total_articles": 62
         }
     },
     "0938-2259": {
@@ -7607,12 +7787,12 @@
             "num_journal_total_articles": 67
         },
         "2017": {
-            "num_journal_oa_articles": 17,
-            "num_journal_total_articles": 133
+            "num_journal_oa_articles": 15,
+            "num_journal_total_articles": 123
         },
         "2018": {
-            "num_journal_oa_articles": 7,
-            "num_journal_total_articles": 41
+            "num_journal_oa_articles": 9,
+            "num_journal_total_articles": 53
         }
     },
     "0938-7412": {
@@ -7626,7 +7806,7 @@
         },
         "2018": {
             "num_journal_oa_articles": 2,
-            "num_journal_total_articles": 20
+            "num_journal_total_articles": 23
         }
     },
     "0938-7994": {
@@ -7644,7 +7824,7 @@
         },
         "2018": {
             "num_journal_oa_articles": 70,
-            "num_journal_total_articles": 465
+            "num_journal_total_articles": 472
         }
     },
     "0938-8249": {
@@ -7668,7 +7848,7 @@
         },
         "2018": {
             "num_journal_oa_articles": 10,
-            "num_journal_total_articles": 56
+            "num_journal_total_articles": 58
         }
     },
     "0938-8990": {
@@ -7685,6 +7865,10 @@
         "2017": {
             "num_journal_oa_articles": 8,
             "num_journal_total_articles": 134
+        },
+        "2018": {
+            "num_journal_oa_articles": 10,
+            "num_journal_total_articles": 84
         }
     },
     "0939-4451": {
@@ -7715,8 +7899,8 @@
             "num_journal_total_articles": 314
         },
         "2018": {
-            "num_journal_oa_articles": 15,
-            "num_journal_total_articles": 192
+            "num_journal_oa_articles": 16,
+            "num_journal_total_articles": 196
         }
     },
     "0939-608X": {
@@ -7740,7 +7924,7 @@
         },
         "2018": {
             "num_journal_oa_articles": 12,
-            "num_journal_total_articles": 49
+            "num_journal_total_articles": 50
         }
     },
     "0940-1334": {
@@ -7754,7 +7938,7 @@
         },
         "2018": {
             "num_journal_oa_articles": 7,
-            "num_journal_total_articles": 63
+            "num_journal_total_articles": 65
         }
     },
     "0940-5429": {
@@ -7768,7 +7952,7 @@
         },
         "2018": {
             "num_journal_oa_articles": 11,
-            "num_journal_total_articles": 89
+            "num_journal_total_articles": 91
         }
     },
     "0940-6360": {
@@ -7792,7 +7976,7 @@
         },
         "2018": {
             "num_journal_oa_articles": 19,
-            "num_journal_total_articles": 283
+            "num_journal_total_articles": 290
         }
     },
     "0941-0643": {
@@ -7805,8 +7989,8 @@
             "num_journal_total_articles": 810
         },
         "2018": {
-            "num_journal_oa_articles": 9,
-            "num_journal_total_articles": 413
+            "num_journal_oa_articles": 10,
+            "num_journal_total_articles": 424
         }
     },
     "0941-293X": {
@@ -7820,7 +8004,7 @@
         },
         "2018": {
             "num_journal_oa_articles": 7,
-            "num_journal_total_articles": 110
+            "num_journal_total_articles": 113
         }
     },
     "0941-4355": {
@@ -7833,12 +8017,12 @@
             "num_journal_total_articles": 588
         },
         "2017": {
-            "num_journal_oa_articles": 68,
-            "num_journal_total_articles": 474
+            "num_journal_oa_articles": 66,
+            "num_journal_total_articles": 450
         },
         "2018": {
-            "num_journal_oa_articles": 49,
-            "num_journal_total_articles": 345
+            "num_journal_oa_articles": 51,
+            "num_journal_total_articles": 382
         }
     },
     "0942-2056": {
@@ -7851,8 +8035,8 @@
             "num_journal_total_articles": 685
         },
         "2018": {
-            "num_journal_oa_articles": 42,
-            "num_journal_total_articles": 313
+            "num_journal_oa_articles": 45,
+            "num_journal_total_articles": 324
         }
     },
     "0942-4962": {
@@ -7903,12 +8087,12 @@
             "num_journal_total_articles": 126
         },
         "2017": {
-            "num_journal_oa_articles": 21,
-            "num_journal_total_articles": 158
+            "num_journal_oa_articles": 17,
+            "num_journal_total_articles": 150
         },
         "2018": {
-            "num_journal_oa_articles": 26,
-            "num_journal_total_articles": 95
+            "num_journal_oa_articles": 30,
+            "num_journal_total_articles": 105
         }
     },
     "0944-1344": {
@@ -7925,8 +8109,8 @@
             "num_journal_total_articles": 2822
         },
         "2018": {
-            "num_journal_oa_articles": 79,
-            "num_journal_total_articles": 1613
+            "num_journal_oa_articles": 84,
+            "num_journal_total_articles": 1661
         }
     },
     "0944-2669": {
@@ -7957,6 +8141,10 @@
         "2017": {
             "num_journal_oa_articles": 26,
             "num_journal_total_articles": 84
+        },
+        "2018": {
+            "num_journal_oa_articles": 17,
+            "num_journal_total_articles": 41
         }
     },
     "0945-6317": {
@@ -7992,7 +8180,7 @@
         },
         "2018": {
             "num_journal_oa_articles": 9,
-            "num_journal_total_articles": 65
+            "num_journal_total_articles": 67
         }
     },
     "0946-2716": {
@@ -8005,8 +8193,8 @@
             "num_journal_total_articles": 130
         },
         "2018": {
-            "num_journal_oa_articles": 6,
-            "num_journal_total_articles": 39
+            "num_journal_oa_articles": 7,
+            "num_journal_total_articles": 40
         }
     },
     "0946-7076": {
@@ -8020,10 +8208,14 @@
         },
         "2018": {
             "num_journal_oa_articles": 6,
-            "num_journal_total_articles": 434
+            "num_journal_total_articles": 448
         }
     },
     "0947-0867": {
+        "2017": {
+            "num_journal_oa_articles": 3,
+            "num_journal_total_articles": 121
+        },
         "2018": {
             "num_journal_oa_articles": 3,
             "num_journal_total_articles": 29
@@ -8064,7 +8256,7 @@
         },
         "2018": {
             "num_journal_oa_articles": 14,
-            "num_journal_total_articles": 210
+            "num_journal_total_articles": 214
         }
     },
     "0947-8396": {
@@ -8081,8 +8273,8 @@
             "num_journal_total_articles": 772
         },
         "2018": {
-            "num_journal_oa_articles": 11,
-            "num_journal_total_articles": 308
+            "num_journal_oa_articles": 12,
+            "num_journal_total_articles": 319
         }
     },
     "0947-8965": {
@@ -8120,7 +8312,7 @@
         },
         "2018": {
             "num_journal_oa_articles": 9,
-            "num_journal_total_articles": 49
+            "num_journal_total_articles": 51
         }
     },
     "0948-6143": {
@@ -8135,6 +8327,10 @@
         "2017": {
             "num_journal_oa_articles": 18,
             "num_journal_total_articles": 118
+        },
+        "2018": {
+            "num_journal_oa_articles": 6,
+            "num_journal_total_articles": 64
         }
     },
     "0948-6259": {
@@ -8145,6 +8341,10 @@
         "2017": {
             "num_journal_oa_articles": 11,
             "num_journal_total_articles": 37
+        },
+        "2018": {
+            "num_journal_oa_articles": 8,
+            "num_journal_total_articles": 17
         }
     },
     "0948-6704": {
@@ -8155,6 +8355,10 @@
         "2017": {
             "num_journal_oa_articles": 13,
             "num_journal_total_articles": 202
+        },
+        "2018": {
+            "num_journal_oa_articles": 6,
+            "num_journal_total_articles": 78
         }
     },
     "0948-7034": {
@@ -8208,7 +8412,7 @@
         },
         "2018": {
             "num_journal_oa_articles": 19,
-            "num_journal_total_articles": 75
+            "num_journal_total_articles": 76
         }
     },
     "0949-8257": {
@@ -8246,11 +8450,11 @@
         },
         "2017": {
             "num_journal_oa_articles": 11,
-            "num_journal_total_articles": 143
+            "num_journal_total_articles": 141
         },
         "2018": {
-            "num_journal_oa_articles": 17,
-            "num_journal_total_articles": 64
+            "num_journal_oa_articles": 18,
+            "num_journal_total_articles": 68
         }
     },
     "0952-8059": {
@@ -8264,7 +8468,7 @@
         },
         "2018": {
             "num_journal_oa_articles": 6,
-            "num_journal_total_articles": 29
+            "num_journal_total_articles": 32
         }
     },
     "0956-2737": {
@@ -8290,7 +8494,7 @@
         },
         "2018": {
             "num_journal_oa_articles": 11,
-            "num_journal_total_articles": 1213
+            "num_journal_total_articles": 1254
         }
     },
     "0957-4530": {
@@ -8308,7 +8512,7 @@
         },
         "2018": {
             "num_journal_oa_articles": 5,
-            "num_journal_total_articles": 34
+            "num_journal_total_articles": 36
         }
     },
     "0957-5243": {
@@ -8322,7 +8526,7 @@
         },
         "2018": {
             "num_journal_oa_articles": 5,
-            "num_journal_total_articles": 62
+            "num_journal_total_articles": 63
         }
     },
     "0957-7572": {
@@ -8336,7 +8540,7 @@
         },
         "2018": {
             "num_journal_oa_articles": 7,
-            "num_journal_total_articles": 33
+            "num_journal_total_articles": 34
         }
     },
     "0957-8536": {
@@ -8359,12 +8563,12 @@
             "num_journal_total_articles": 153
         },
         "2017": {
-            "num_journal_oa_articles": 20,
-            "num_journal_total_articles": 205
+            "num_journal_oa_articles": 17,
+            "num_journal_total_articles": 187
         },
         "2018": {
-            "num_journal_oa_articles": 8,
-            "num_journal_total_articles": 58
+            "num_journal_oa_articles": 11,
+            "num_journal_total_articles": 78
         }
     },
     "0959-3993": {
@@ -8378,7 +8582,7 @@
         },
         "2018": {
             "num_journal_oa_articles": 4,
-            "num_journal_total_articles": 47
+            "num_journal_total_articles": 50
         }
     },
     "0959-9851": {
@@ -8396,7 +8600,7 @@
         },
         "2018": {
             "num_journal_oa_articles": 6,
-            "num_journal_total_articles": 53
+            "num_journal_total_articles": 55
         }
     },
     "0960-3115": {
@@ -8442,7 +8646,7 @@
         },
         "2018": {
             "num_journal_oa_articles": 20,
-            "num_journal_total_articles": 77
+            "num_journal_total_articles": 78
         }
     },
     "0960-3182": {
@@ -8453,6 +8657,10 @@
         "2017": {
             "num_journal_oa_articles": 4,
             "num_journal_total_articles": 256
+        },
+        "2018": {
+            "num_journal_oa_articles": 3,
+            "num_journal_total_articles": 217
         }
     },
     "0960-8923": {
@@ -8469,8 +8677,8 @@
             "num_journal_total_articles": 602
         },
         "2018": {
-            "num_journal_oa_articles": 28,
-            "num_journal_total_articles": 325
+            "num_journal_oa_articles": 31,
+            "num_journal_total_articles": 342
         }
     },
     "0962-8819": {
@@ -8502,7 +8710,7 @@
         },
         "2018": {
             "num_journal_oa_articles": 48,
-            "num_journal_total_articles": 185
+            "num_journal_total_articles": 187
         }
     },
     "0963-9292": {
@@ -8520,7 +8728,7 @@
         },
         "2018": {
             "num_journal_oa_articles": 9,
-            "num_journal_total_articles": 69
+            "num_journal_total_articles": 73
         }
     },
     "0963-9314": {
@@ -8533,8 +8741,8 @@
             "num_journal_total_articles": 82
         },
         "2018": {
-            "num_journal_oa_articles": 3,
-            "num_journal_total_articles": 16
+            "num_journal_oa_articles": 4,
+            "num_journal_total_articles": 17
         }
     },
     "0966-0844": {
@@ -8613,8 +8821,8 @@
             "num_journal_total_articles": 442
         },
         "2018": {
-            "num_journal_oa_articles": 25,
-            "num_journal_total_articles": 258
+            "num_journal_oa_articles": 28,
+            "num_journal_total_articles": 271
         }
     },
     "0969-6970": {
@@ -8632,7 +8840,7 @@
         },
         "2018": {
             "num_journal_oa_articles": 8,
-            "num_journal_total_articles": 36
+            "num_journal_total_articles": 37
         }
     },
     "0970-4140": {
@@ -8650,7 +8858,7 @@
     "0970-9134": {
         "2018": {
             "num_journal_oa_articles": 3,
-            "num_journal_total_articles": 77
+            "num_journal_total_articles": 78
         }
     },
     "0971-1554": {
@@ -8674,7 +8882,7 @@
     "1001-6058": {
         "2018": {
             "num_journal_oa_articles": 1,
-            "num_journal_total_articles": 26
+            "num_journal_total_articles": 27
         }
     },
     "1007-662X": {
@@ -8684,7 +8892,7 @@
         },
         "2018": {
             "num_journal_oa_articles": 9,
-            "num_journal_total_articles": 167
+            "num_journal_total_articles": 171
         }
     },
     "1010-4283": {
@@ -8697,6 +8905,10 @@
         "2016": {
             "num_journal_oa_articles": 17,
             "num_journal_total_articles": 64
+        },
+        "2017": {
+            "num_journal_oa_articles": 7,
+            "num_journal_total_articles": 32
         }
     },
     "1011-372X": {
@@ -8706,11 +8918,11 @@
         },
         "2017": {
             "num_journal_oa_articles": 13,
-            "num_journal_total_articles": 312
+            "num_journal_total_articles": 311
         },
         "2018": {
-            "num_journal_oa_articles": 8,
-            "num_journal_total_articles": 173
+            "num_journal_oa_articles": 9,
+            "num_journal_total_articles": 176
         }
     },
     "1012-2443": {
@@ -8738,7 +8950,7 @@
         },
         "2018": {
             "num_journal_oa_articles": 3,
-            "num_journal_total_articles": 15
+            "num_journal_total_articles": 18
         }
     },
     "1015-3802": {
@@ -8765,8 +8977,8 @@
             "num_journal_total_articles": 39
         },
         "2018": {
-            "num_journal_oa_articles": 2,
-            "num_journal_total_articles": 15
+            "num_journal_oa_articles": 3,
+            "num_journal_total_articles": 19
         }
     },
     "1017-1398": {
@@ -8780,17 +8992,17 @@
         },
         "2018": {
             "num_journal_oa_articles": 5,
-            "num_journal_total_articles": 136
+            "num_journal_total_articles": 140
         }
     },
     "1018-4864": {
         "2017": {
-            "num_journal_oa_articles": 12,
-            "num_journal_total_articles": 201
+            "num_journal_oa_articles": 11,
+            "num_journal_total_articles": 185
         },
         "2018": {
-            "num_journal_oa_articles": 4,
-            "num_journal_total_articles": 98
+            "num_journal_oa_articles": 5,
+            "num_journal_total_articles": 118
         }
     },
     "1018-8827": {
@@ -8808,7 +9020,7 @@
         },
         "2018": {
             "num_journal_oa_articles": 26,
-            "num_journal_total_articles": 98
+            "num_journal_total_articles": 99
         }
     },
     "1019-6781": {
@@ -8827,12 +9039,12 @@
             "num_journal_total_articles": 60
         },
         "2017": {
-            "num_journal_oa_articles": 7,
-            "num_journal_total_articles": 96
+            "num_journal_oa_articles": 6,
+            "num_journal_total_articles": 87
         },
         "2018": {
-            "num_journal_oa_articles": 1,
-            "num_journal_total_articles": 36
+            "num_journal_oa_articles": 2,
+            "num_journal_total_articles": 47
         }
     },
     "1021-9722": {
@@ -8852,7 +9064,7 @@
         },
         "2018": {
             "num_journal_oa_articles": 2,
-            "num_journal_total_articles": 174
+            "num_journal_total_articles": 175
         }
     },
     "1022-1824": {
@@ -8866,7 +9078,7 @@
         },
         "2018": {
             "num_journal_oa_articles": 6,
-            "num_journal_total_articles": 66
+            "num_journal_total_articles": 67
         }
     },
     "1022-4556": {
@@ -8885,12 +9097,12 @@
             "num_journal_total_articles": 196
         },
         "2017": {
-            "num_journal_oa_articles": 25,
-            "num_journal_total_articles": 195
+            "num_journal_oa_articles": 23,
+            "num_journal_total_articles": 184
         },
         "2018": {
-            "num_journal_oa_articles": 19,
-            "num_journal_total_articles": 74
+            "num_journal_oa_articles": 23,
+            "num_journal_total_articles": 100
         }
     },
     "1023-3830": {
@@ -8904,7 +9116,7 @@
         },
         "2018": {
             "num_journal_oa_articles": 3,
-            "num_journal_total_articles": 59
+            "num_journal_total_articles": 61
         }
     },
     "1023-8883": {
@@ -8922,7 +9134,7 @@
         },
         "2018": {
             "num_journal_oa_articles": 4,
-            "num_journal_total_articles": 42
+            "num_journal_total_articles": 43
         }
     },
     "1025-9112": {
@@ -8949,8 +9161,8 @@
             "num_journal_total_articles": 28
         },
         "2017": {
-            "num_journal_oa_articles": 7,
-            "num_journal_total_articles": 42
+            "num_journal_oa_articles": 6,
+            "num_journal_total_articles": 37
         }
     },
     "1040-0400": {
@@ -8984,7 +9196,7 @@
         },
         "2018": {
             "num_journal_oa_articles": 2,
-            "num_journal_total_articles": 74
+            "num_journal_total_articles": 76
         }
     },
     "1040-7294": {
@@ -9025,8 +9237,8 @@
             "num_journal_total_articles": 93
         },
         "2018": {
-            "num_journal_oa_articles": 1,
-            "num_journal_total_articles": 26
+            "num_journal_oa_articles": 2,
+            "num_journal_total_articles": 28
         }
     },
     "1042-1629": {
@@ -9040,7 +9252,7 @@
         },
         "2018": {
             "num_journal_oa_articles": 6,
-            "num_journal_total_articles": 43
+            "num_journal_total_articles": 45
         }
     },
     "1042-1726": {
@@ -9084,7 +9296,7 @@
         },
         "2018": {
             "num_journal_oa_articles": 12,
-            "num_journal_total_articles": 147
+            "num_journal_total_articles": 152
         }
     },
     "1045-6767": {
@@ -9111,8 +9323,8 @@
             "num_journal_total_articles": 315
         },
         "2018": {
-            "num_journal_oa_articles": 7,
-            "num_journal_total_articles": 125
+            "num_journal_oa_articles": 8,
+            "num_journal_total_articles": 127
         }
     },
     "1046-3976": {
@@ -9156,17 +9368,17 @@
         },
         "2018": {
             "num_journal_oa_articles": 9,
-            "num_journal_total_articles": 217
+            "num_journal_total_articles": 221
         }
     },
     "1050-6926": {
         "2017": {
-            "num_journal_oa_articles": 19,
-            "num_journal_total_articles": 266
+            "num_journal_oa_articles": 16,
+            "num_journal_total_articles": 223
         },
         "2018": {
-            "num_journal_oa_articles": 4,
-            "num_journal_total_articles": 83
+            "num_journal_oa_articles": 7,
+            "num_journal_total_articles": 130
         }
     },
     "1053-0487": {
@@ -9184,7 +9396,7 @@
         },
         "2018": {
             "num_journal_oa_articles": 14,
-            "num_journal_total_articles": 40
+            "num_journal_total_articles": 42
         }
     },
     "1053-0509": {
@@ -9232,13 +9444,13 @@
         },
         "2018": {
             "num_journal_oa_articles": 2,
-            "num_journal_total_articles": 23
+            "num_journal_total_articles": 25
         }
     },
     "1054-2523": {
         "2018": {
             "num_journal_oa_articles": 4,
-            "num_journal_total_articles": 147
+            "num_journal_total_articles": 149
         }
     },
     "1054-5476": {
@@ -9278,7 +9490,7 @@
         },
         "2018": {
             "num_journal_oa_articles": 1,
-            "num_journal_total_articles": 22
+            "num_journal_total_articles": 24
         }
     },
     "1059-0145": {
@@ -9315,8 +9527,8 @@
             "num_journal_total_articles": 170
         },
         "2018": {
-            "num_journal_oa_articles": 12,
-            "num_journal_total_articles": 100
+            "num_journal_oa_articles": 13,
+            "num_journal_total_articles": 102
         }
     },
     "1059-9495": {
@@ -9330,7 +9542,7 @@
         },
         "2018": {
             "num_journal_oa_articles": 8,
-            "num_journal_total_articles": 300
+            "num_journal_total_articles": 310
         }
     },
     "1059-9630": {
@@ -9340,7 +9552,7 @@
         },
         "2018": {
             "num_journal_oa_articles": 6,
-            "num_journal_total_articles": 69
+            "num_journal_total_articles": 71
         }
     },
     "1062-1024": {
@@ -9368,7 +9580,7 @@
         },
         "2018": {
             "num_journal_oa_articles": 1,
-            "num_journal_total_articles": 24
+            "num_journal_total_articles": 25
         }
     },
     "1064-7570": {
@@ -9394,7 +9606,7 @@
     "1066-8888": {
         "2018": {
             "num_journal_oa_articles": 1,
-            "num_journal_total_articles": 19
+            "num_journal_total_articles": 20
         }
     },
     "1068-0667": {
@@ -9425,8 +9637,8 @@
             "num_journal_total_articles": 668
         },
         "2018": {
-            "num_journal_oa_articles": 19,
-            "num_journal_total_articles": 282
+            "num_journal_oa_articles": 20,
+            "num_journal_total_articles": 291
         }
     },
     "1068-9583": {
@@ -9456,7 +9668,7 @@
         },
         "2018": {
             "num_journal_oa_articles": 6,
-            "num_journal_total_articles": 41
+            "num_journal_total_articles": 42
         }
     },
     "1069-9384": {
@@ -9473,8 +9685,8 @@
             "num_journal_total_articles": 290
         },
         "2018": {
-            "num_journal_oa_articles": 19,
-            "num_journal_total_articles": 104
+            "num_journal_oa_articles": 20,
+            "num_journal_total_articles": 109
         }
     },
     "1070-3004": {
@@ -9488,7 +9700,7 @@
         },
         "2018": {
             "num_journal_oa_articles": 3,
-            "num_journal_total_articles": 59
+            "num_journal_total_articles": 60
         }
     },
     "1070-5503": {
@@ -9529,8 +9741,8 @@
             "num_journal_total_articles": 577
         },
         "2018": {
-            "num_journal_oa_articles": 12,
-            "num_journal_total_articles": 228
+            "num_journal_oa_articles": 13,
+            "num_journal_total_articles": 234
         }
     },
     "1072-5369": {
@@ -9554,7 +9766,7 @@
         },
         "2018": {
             "num_journal_oa_articles": 2,
-            "num_journal_total_articles": 17
+            "num_journal_total_articles": 18
         }
     },
     "1073-5615": {
@@ -9568,7 +9780,7 @@
         },
         "2018": {
             "num_journal_oa_articles": 11,
-            "num_journal_total_articles": 155
+            "num_journal_total_articles": 157
         }
     },
     "1073-5623": {
@@ -9585,8 +9797,14 @@
             "num_journal_total_articles": 571
         },
         "2018": {
-            "num_journal_oa_articles": 28,
-            "num_journal_total_articles": 248
+            "num_journal_oa_articles": 29,
+            "num_journal_total_articles": 256
+        }
+    },
+    "1073-6085": {
+        "2017": {
+            "num_journal_oa_articles": 2,
+            "num_journal_total_articles": 52
         }
     },
     "1074-1542": {
@@ -9622,7 +9840,7 @@
         },
         "2018": {
             "num_journal_oa_articles": 4,
-            "num_journal_total_articles": 36
+            "num_journal_total_articles": 40
         }
     },
     "1080-6954": {
@@ -9693,8 +9911,8 @@
             "num_journal_total_articles": 119
         },
         "2018": {
-            "num_journal_oa_articles": 10,
-            "num_journal_total_articles": 71
+            "num_journal_oa_articles": 11,
+            "num_journal_total_articles": 73
         }
     },
     "1084-4791": {
@@ -9708,7 +9926,7 @@
         },
         "2018": {
             "num_journal_oa_articles": 3,
-            "num_journal_total_articles": 18
+            "num_journal_total_articles": 19
         }
     },
     "1085-7117": {
@@ -9722,17 +9940,17 @@
         },
         "2018": {
             "num_journal_oa_articles": 1,
-            "num_journal_total_articles": 17
+            "num_journal_total_articles": 18
         }
     },
     "1085-9195": {
         "2016": {
             "num_journal_oa_articles": 2,
-            "num_journal_total_articles": 58
+            "num_journal_total_articles": 57
         },
         "2017": {
-            "num_journal_oa_articles": 10,
-            "num_journal_total_articles": 73
+            "num_journal_oa_articles": 8,
+            "num_journal_total_articles": 46
         }
     },
     "1090-0586": {
@@ -9743,6 +9961,10 @@
         "2016": {
             "num_journal_oa_articles": 4,
             "num_journal_total_articles": 41
+        },
+        "2017": {
+            "num_journal_oa_articles": 4,
+            "num_journal_total_articles": 33
         }
     },
     "1090-7165": {
@@ -9756,7 +9978,7 @@
         },
         "2018": {
             "num_journal_oa_articles": 26,
-            "num_journal_total_articles": 259
+            "num_journal_total_articles": 267
         }
     },
     "1091-255X": {
@@ -9774,7 +9996,7 @@
         },
         "2018": {
             "num_journal_oa_articles": 8,
-            "num_journal_total_articles": 205
+            "num_journal_total_articles": 216
         }
     },
     "1092-7697": {
@@ -9828,7 +10050,7 @@
         },
         "2018": {
             "num_journal_oa_articles": 1,
-            "num_journal_total_articles": 18
+            "num_journal_total_articles": 19
         }
     },
     "1094-3412": {
@@ -9844,7 +10066,7 @@
         },
         "2018": {
             "num_journal_oa_articles": 2,
-            "num_journal_total_articles": 25
+            "num_journal_total_articles": 26
         }
     },
     "1094-6136": {
@@ -9911,8 +10133,8 @@
     },
     "1098-092X": {
         "2017": {
-            "num_journal_oa_articles": 2,
-            "num_journal_total_articles": 38
+            "num_journal_oa_articles": 1,
+            "num_journal_total_articles": 33
         }
     },
     "1098-3058": {
@@ -9986,7 +10208,7 @@
         },
         "2018": {
             "num_journal_oa_articles": 5,
-            "num_journal_total_articles": 53
+            "num_journal_total_articles": 55
         }
     },
     "1122-1151": {
@@ -10010,7 +10232,7 @@
         },
         "2018": {
             "num_journal_oa_articles": 7,
-            "num_journal_total_articles": 59
+            "num_journal_total_articles": 60
         }
     },
     "1124-4909": {
@@ -10024,7 +10246,7 @@
         },
         "2018": {
             "num_journal_oa_articles": 5,
-            "num_journal_total_articles": 56
+            "num_journal_total_articles": 58
         }
     },
     "1133-0686": {
@@ -10054,7 +10276,7 @@
         },
         "2018": {
             "num_journal_oa_articles": 4,
-            "num_journal_total_articles": 19
+            "num_journal_total_articles": 20
         }
     },
     "1138-7548": {
@@ -10105,8 +10327,8 @@
             "num_journal_total_articles": 118
         },
         "2018": {
-            "num_journal_oa_articles": 33,
-            "num_journal_total_articles": 83
+            "num_journal_oa_articles": 34,
+            "num_journal_total_articles": 86
         }
     },
     "1172-7047": {
@@ -10172,7 +10394,7 @@
         },
         "2018": {
             "num_journal_oa_articles": 8,
-            "num_journal_total_articles": 41
+            "num_journal_total_articles": 43
         }
     },
     "1175-5652": {
@@ -10186,7 +10408,7 @@
         },
         "2018": {
             "num_journal_oa_articles": 12,
-            "num_journal_total_articles": 45
+            "num_journal_total_articles": 46
         }
     },
     "1176-7529": {
@@ -10224,7 +10446,7 @@
         },
         "2018": {
             "num_journal_oa_articles": 11,
-            "num_journal_total_articles": 39
+            "num_journal_total_articles": 40
         }
     },
     "1187-7863": {
@@ -10256,7 +10478,7 @@
         },
         "2018": {
             "num_journal_oa_articles": 2,
-            "num_journal_total_articles": 19
+            "num_journal_total_articles": 20
         }
     },
     "1211-9520": {
@@ -10305,8 +10527,8 @@
             "num_journal_total_articles": 160
         },
         "2018": {
-            "num_journal_oa_articles": 9,
-            "num_journal_total_articles": 75
+            "num_journal_oa_articles": 10,
+            "num_journal_total_articles": 79
         }
     },
     "1279-7707": {
@@ -10343,8 +10565,8 @@
             "num_journal_total_articles": 117
         },
         "2018": {
-            "num_journal_oa_articles": 9,
-            "num_journal_total_articles": 53
+            "num_journal_oa_articles": 10,
+            "num_journal_total_articles": 56
         }
     },
     "1309-4297": {
@@ -10390,7 +10612,7 @@
         },
         "2018": {
             "num_journal_oa_articles": 5,
-            "num_journal_total_articles": 50
+            "num_journal_total_articles": 51
         }
     },
     "1349-0222": {
@@ -10455,8 +10677,8 @@
             "num_journal_total_articles": 373
         },
         "2018": {
-            "num_journal_oa_articles": 18,
-            "num_journal_total_articles": 180
+            "num_journal_oa_articles": 20,
+            "num_journal_total_articles": 188
         }
     },
     "1355-0284": {
@@ -10469,12 +10691,12 @@
             "num_journal_total_articles": 106
         },
         "2017": {
-            "num_journal_oa_articles": 15,
-            "num_journal_total_articles": 122
+            "num_journal_oa_articles": 13,
+            "num_journal_total_articles": 112
         },
         "2018": {
-            "num_journal_oa_articles": 4,
-            "num_journal_total_articles": 41
+            "num_journal_oa_articles": 6,
+            "num_journal_total_articles": 60
         }
     },
     "1355-8145": {
@@ -10484,7 +10706,7 @@
         },
         "2018": {
             "num_journal_oa_articles": 2,
-            "num_journal_total_articles": 64
+            "num_journal_total_articles": 66
         }
     },
     "1356-4765": {
@@ -10497,12 +10719,12 @@
             "num_journal_total_articles": 33
         },
         "2017": {
-            "num_journal_oa_articles": 14,
-            "num_journal_total_articles": 62
+            "num_journal_oa_articles": 11,
+            "num_journal_total_articles": 56
         },
         "2018": {
-            "num_journal_oa_articles": 7,
-            "num_journal_total_articles": 16
+            "num_journal_oa_articles": 10,
+            "num_journal_total_articles": 23
         }
     },
     "1357-0560": {
@@ -10519,8 +10741,8 @@
             "num_journal_total_articles": 199
         },
         "2018": {
-            "num_journal_oa_articles": 13,
-            "num_journal_total_articles": 62
+            "num_journal_oa_articles": 14,
+            "num_journal_total_articles": 66
         }
     },
     "1359-4338": {
@@ -10540,7 +10762,7 @@
         },
         "2018": {
             "num_journal_oa_articles": 6,
-            "num_journal_total_articles": 55
+            "num_journal_total_articles": 59
         }
     },
     "1360-2357": {
@@ -10558,7 +10780,7 @@
         },
         "2018": {
             "num_journal_oa_articles": 11,
-            "num_journal_total_articles": 110
+            "num_journal_total_articles": 114
         }
     },
     "1360-8185": {
@@ -10616,13 +10838,13 @@
         },
         "2018": {
             "num_journal_oa_articles": 1,
-            "num_journal_total_articles": 15
+            "num_journal_total_articles": 16
         }
     },
     "1370-4621": {
         "2018": {
             "num_journal_oa_articles": 2,
-            "num_journal_total_articles": 99
+            "num_journal_total_articles": 103
         }
     },
     "1380-2224": {
@@ -10650,7 +10872,7 @@
         },
         "2018": {
             "num_journal_oa_articles": 7,
-            "num_journal_total_articles": 45
+            "num_journal_total_articles": 46
         }
     },
     "1380-6165": {
@@ -10672,11 +10894,11 @@
         },
         "2017": {
             "num_journal_oa_articles": 3,
-            "num_journal_total_articles": 54
+            "num_journal_total_articles": 51
         },
         "2018": {
             "num_journal_oa_articles": 2,
-            "num_journal_total_articles": 20
+            "num_journal_total_articles": 23
         }
     },
     "1380-7501": {
@@ -10685,12 +10907,12 @@
             "num_journal_total_articles": 893
         },
         "2017": {
-            "num_journal_oa_articles": 55,
-            "num_journal_total_articles": 1919
+            "num_journal_oa_articles": 53,
+            "num_journal_total_articles": 1871
         },
         "2018": {
-            "num_journal_oa_articles": 22,
-            "num_journal_total_articles": 842
+            "num_journal_oa_articles": 24,
+            "num_journal_total_articles": 915
         }
     },
     "1381-1231": {
@@ -10719,6 +10941,12 @@
             "num_journal_total_articles": 61
         }
     },
+    "1381-2416": {
+        "2017": {
+            "num_journal_oa_articles": 2,
+            "num_journal_total_articles": 98
+        }
+    },
     "1381-2890": {
         "2015": {
             "num_journal_oa_articles": 3,
@@ -10734,7 +10962,7 @@
         },
         "2018": {
             "num_journal_oa_articles": 2,
-            "num_journal_total_articles": 32
+            "num_journal_total_articles": 33
         }
     },
     "1381-298X": {
@@ -10748,7 +10976,7 @@
         },
         "2017": {
             "num_journal_oa_articles": 3,
-            "num_journal_total_articles": 41
+            "num_journal_total_articles": 34
         }
     },
     "1381-4338": {
@@ -10758,7 +10986,7 @@
         },
         "2018": {
             "num_journal_oa_articles": 2,
-            "num_journal_total_articles": 7
+            "num_journal_total_articles": 8
         }
     },
     "1382-3256": {
@@ -10772,7 +11000,7 @@
         },
         "2018": {
             "num_journal_oa_articles": 8,
-            "num_journal_total_articles": 63
+            "num_journal_total_articles": 64
         }
     },
     "1382-4090": {
@@ -10783,6 +11011,10 @@
         "2017": {
             "num_journal_oa_articles": 5,
             "num_journal_total_articles": 155
+        },
+        "2018": {
+            "num_journal_oa_articles": 3,
+            "num_journal_total_articles": 100
         }
     },
     "1382-4147": {
@@ -10824,7 +11056,7 @@
         },
         "2018": {
             "num_journal_oa_articles": 11,
-            "num_journal_total_articles": 45
+            "num_journal_total_articles": 46
         }
     },
     "1382-6905": {
@@ -10834,7 +11066,7 @@
         },
         "2018": {
             "num_journal_oa_articles": 5,
-            "num_journal_total_articles": 109
+            "num_journal_total_articles": 110
         }
     },
     "1383-4649": {
@@ -10848,17 +11080,17 @@
         },
         "2018": {
             "num_journal_oa_articles": 2,
-            "num_journal_total_articles": 51
+            "num_journal_total_articles": 52
         }
     },
     "1383-469X": {
         "2017": {
             "num_journal_oa_articles": 3,
-            "num_journal_total_articles": 213
+            "num_journal_total_articles": 192
         },
         "2018": {
             "num_journal_oa_articles": 2,
-            "num_journal_total_articles": 82
+            "num_journal_total_articles": 105
         }
     },
     "1383-4924": {
@@ -10878,7 +11110,7 @@
     "1383-7133": {
         "2017": {
             "num_journal_oa_articles": 4,
-            "num_journal_total_articles": 33
+            "num_journal_total_articles": 31
         }
     },
     "1383-875X": {
@@ -10906,7 +11138,7 @@
         },
         "2018": {
             "num_journal_oa_articles": 5,
-            "num_journal_total_articles": 41
+            "num_journal_total_articles": 42
         }
     },
     "1384-5810": {
@@ -10916,7 +11148,7 @@
         },
         "2018": {
             "num_journal_oa_articles": 5,
-            "num_journal_total_articles": 34
+            "num_journal_total_articles": 35
         }
     },
     "1385-0172": {
@@ -10940,7 +11172,7 @@
         },
         "2018": {
             "num_journal_oa_articles": 2,
-            "num_journal_total_articles": 57
+            "num_journal_total_articles": 59
         }
     },
     "1385-1292": {
@@ -11004,7 +11236,7 @@
         },
         "2018": {
             "num_journal_oa_articles": 3,
-            "num_journal_total_articles": 42
+            "num_journal_total_articles": 44
         }
     },
     "1385-3449": {
@@ -11075,8 +11307,8 @@
             "num_journal_total_articles": 109
         },
         "2018": {
-            "num_journal_oa_articles": 9,
-            "num_journal_total_articles": 39
+            "num_journal_oa_articles": 10,
+            "num_journal_total_articles": 41
         }
     },
     "1386-341X": {
@@ -11094,7 +11326,7 @@
         },
         "2018": {
             "num_journal_oa_articles": 11,
-            "num_journal_total_articles": 50
+            "num_journal_total_articles": 52
         }
     },
     "1386-4157": {
@@ -11103,12 +11335,12 @@
             "num_journal_total_articles": 44
         },
         "2017": {
-            "num_journal_oa_articles": 15,
-            "num_journal_total_articles": 72
+            "num_journal_oa_articles": 12,
+            "num_journal_total_articles": 63
         },
         "2018": {
-            "num_journal_oa_articles": 4,
-            "num_journal_total_articles": 23
+            "num_journal_oa_articles": 7,
+            "num_journal_total_articles": 33
         }
     },
     "1386-4238": {
@@ -11122,7 +11354,7 @@
         },
         "2018": {
             "num_journal_oa_articles": 2,
-            "num_journal_total_articles": 17
+            "num_journal_total_articles": 18
         }
     },
     "1386-4416": {
@@ -11156,7 +11388,7 @@
         },
         "2018": {
             "num_journal_oa_articles": 9,
-            "num_journal_total_articles": 40
+            "num_journal_total_articles": 42
         }
     },
     "1386-6184": {
@@ -11169,8 +11401,8 @@
             "num_journal_total_articles": 96
         },
         "2018": {
-            "num_journal_oa_articles": 10,
-            "num_journal_total_articles": 59
+            "num_journal_oa_articles": 13,
+            "num_journal_total_articles": 65
         }
     },
     "1386-7415": {
@@ -11260,7 +11492,7 @@
         },
         "2018": {
             "num_journal_oa_articles": 13,
-            "num_journal_total_articles": 88
+            "num_journal_total_articles": 90
         }
     },
     "1387-1579": {
@@ -11309,8 +11541,8 @@
             "num_journal_total_articles": 50
         },
         "2018": {
-            "num_journal_oa_articles": 3,
-            "num_journal_total_articles": 14
+            "num_journal_oa_articles": 4,
+            "num_journal_total_articles": 15
         }
     },
     "1387-2834": {
@@ -11344,7 +11576,7 @@
         },
         "2018": {
             "num_journal_oa_articles": 6,
-            "num_journal_total_articles": 57
+            "num_journal_total_articles": 60
         }
     },
     "1387-3547": {
@@ -11361,8 +11593,8 @@
             "num_journal_total_articles": 314
         },
         "2018": {
-            "num_journal_oa_articles": 17,
-            "num_journal_total_articles": 155
+            "num_journal_oa_articles": 18,
+            "num_journal_total_articles": 163
         }
     },
     "1387-3741": {
@@ -11378,7 +11610,7 @@
         },
         "2018": {
             "num_journal_oa_articles": 8,
-            "num_journal_total_articles": 43
+            "num_journal_total_articles": 45
         }
     },
     "1387-585X": {
@@ -11392,7 +11624,7 @@
         },
         "2018": {
             "num_journal_oa_articles": 9,
-            "num_journal_total_articles": 136
+            "num_journal_total_articles": 140
         }
     },
     "1387-6996": {
@@ -11449,8 +11681,8 @@
             "num_journal_total_articles": 921
         },
         "2018": {
-            "num_journal_oa_articles": 37,
-            "num_journal_total_articles": 703
+            "num_journal_oa_articles": 41,
+            "num_journal_total_articles": 733
         }
     },
     "1389-0166": {
@@ -11500,7 +11732,7 @@
         },
         "2018": {
             "num_journal_oa_articles": 10,
-            "num_journal_total_articles": 81
+            "num_journal_total_articles": 83
         }
     },
     "1389-4986": {
@@ -11596,7 +11828,7 @@
         },
         "2018": {
             "num_journal_oa_articles": 9,
-            "num_journal_total_articles": 61
+            "num_journal_total_articles": 64
         }
     },
     "1420-2026": {
@@ -11619,12 +11851,12 @@
             "num_journal_total_articles": 299
         },
         "2017": {
-            "num_journal_oa_articles": 60,
-            "num_journal_total_articles": 311
+            "num_journal_oa_articles": 59,
+            "num_journal_total_articles": 302
         },
         "2018": {
-            "num_journal_oa_articles": 53,
-            "num_journal_total_articles": 180
+            "num_journal_oa_articles": 56,
+            "num_journal_total_articles": 196
         }
     },
     "1422-6383": {
@@ -11640,7 +11872,7 @@
         },
         "2018": {
             "num_journal_oa_articles": 3,
-            "num_journal_total_articles": 30
+            "num_journal_total_articles": 31
         }
     },
     "1424-0637": {
@@ -11654,7 +11886,7 @@
         },
         "2018": {
             "num_journal_oa_articles": 7,
-            "num_journal_total_articles": 58
+            "num_journal_total_articles": 62
         }
     },
     "1424-3199": {
@@ -11708,7 +11940,7 @@
         },
         "2018": {
             "num_journal_oa_articles": 7,
-            "num_journal_total_articles": 55
+            "num_journal_total_articles": 58
         }
     },
     "1431-2174": {
@@ -11726,7 +11958,7 @@
         },
         "2018": {
             "num_journal_oa_articles": 15,
-            "num_journal_total_articles": 130
+            "num_journal_total_articles": 132
         }
     },
     "1431-7613": {
@@ -11768,7 +12000,7 @@
         },
         "2018": {
             "num_journal_oa_articles": 10,
-            "num_journal_total_articles": 64
+            "num_journal_total_articles": 65
         }
     },
     "1432-5012": {
@@ -11786,7 +12018,7 @@
         },
         "2018": {
             "num_journal_oa_articles": 2,
-            "num_journal_total_articles": 14
+            "num_journal_total_articles": 15
         }
     },
     "1432-6981": {
@@ -11803,8 +12035,8 @@
             "num_journal_total_articles": 343
         },
         "2018": {
-            "num_journal_oa_articles": 26,
-            "num_journal_total_articles": 314
+            "num_journal_oa_articles": 27,
+            "num_journal_total_articles": 323
         }
     },
     "1432-7643": {
@@ -11818,7 +12050,7 @@
         },
         "2018": {
             "num_journal_oa_articles": 9,
-            "num_journal_total_articles": 417
+            "num_journal_total_articles": 428
         }
     },
     "1432-847X": {
@@ -11828,7 +12060,7 @@
         },
         "2018": {
             "num_journal_oa_articles": 3,
-            "num_journal_total_articles": 31
+            "num_journal_total_articles": 32
         }
     },
     "1432-8488": {
@@ -11842,7 +12074,7 @@
         },
         "2018": {
             "num_journal_oa_articles": 11,
-            "num_journal_total_articles": 249
+            "num_journal_total_articles": 254
         }
     },
     "1432-881X": {
@@ -11890,7 +12122,7 @@
         },
         "2018": {
             "num_journal_oa_articles": 18,
-            "num_journal_total_articles": 78
+            "num_journal_total_articles": 83
         }
     },
     "1433-2779": {
@@ -11910,21 +12142,21 @@
     "1433-2833": {
         "2018": {
             "num_journal_oa_articles": 1,
-            "num_journal_total_articles": 8
+            "num_journal_total_articles": 9
         }
     },
     "1433-7541": {
         "2016": {
-            "num_journal_oa_articles": 4,
-            "num_journal_total_articles": 93
+            "num_journal_oa_articles": 3,
+            "num_journal_total_articles": 82
         },
         "2017": {
             "num_journal_oa_articles": 12,
-            "num_journal_total_articles": 147
+            "num_journal_total_articles": 138
         },
         "2018": {
-            "num_journal_oa_articles": 5,
-            "num_journal_total_articles": 49
+            "num_journal_oa_articles": 6,
+            "num_journal_total_articles": 69
         }
     },
     "1434-1816": {
@@ -11938,7 +12170,7 @@
         },
         "2018": {
             "num_journal_oa_articles": 6,
-            "num_journal_total_articles": 62
+            "num_journal_total_articles": 63
         }
     },
     "1434-4742": {
@@ -11985,8 +12217,8 @@
             "num_journal_total_articles": 247
         },
         "2018": {
-            "num_journal_oa_articles": 5,
-            "num_journal_total_articles": 61
+            "num_journal_oa_articles": 6,
+            "num_journal_total_articles": 68
         }
     },
     "1434-6028": {
@@ -12066,7 +12298,7 @@
         },
         "2018": {
             "num_journal_oa_articles": 3,
-            "num_journal_total_articles": 45
+            "num_journal_total_articles": 46
         }
     },
     "1435-246X": {
@@ -12076,7 +12308,7 @@
         },
         "2018": {
             "num_journal_oa_articles": 10,
-            "num_journal_total_articles": 35
+            "num_journal_total_articles": 36
         }
     },
     "1435-5558": {
@@ -12093,8 +12325,8 @@
             "num_journal_total_articles": 54
         },
         "2018": {
-            "num_journal_oa_articles": 10,
-            "num_journal_total_articles": 34
+            "num_journal_oa_articles": 12,
+            "num_journal_total_articles": 37
         }
     },
     "1435-5930": {
@@ -12128,7 +12360,7 @@
         },
         "2018": {
             "num_journal_oa_articles": 10,
-            "num_journal_total_articles": 44
+            "num_journal_total_articles": 45
         }
     },
     "1435-9529": {
@@ -12148,7 +12380,7 @@
         },
         "2018": {
             "num_journal_oa_articles": 1,
-            "num_journal_total_articles": 41
+            "num_journal_total_articles": 43
         }
     },
     "1436-3240": {
@@ -12161,8 +12393,8 @@
             "num_journal_total_articles": 210
         },
         "2018": {
-            "num_journal_oa_articles": 7,
-            "num_journal_total_articles": 123
+            "num_journal_oa_articles": 8,
+            "num_journal_total_articles": 124
         }
     },
     "1436-3291": {
@@ -12176,7 +12408,7 @@
         },
         "2018": {
             "num_journal_oa_articles": 16,
-            "num_journal_total_articles": 94
+            "num_journal_total_articles": 98
         }
     },
     "1436-3798": {
@@ -12207,8 +12439,8 @@
             "num_journal_total_articles": 401
         },
         "2018": {
-            "num_journal_oa_articles": 42,
-            "num_journal_total_articles": 195
+            "num_journal_oa_articles": 43,
+            "num_journal_total_articles": 201
         }
     },
     "1436-6274": {
@@ -12219,6 +12451,10 @@
         "2017": {
             "num_journal_oa_articles": 1,
             "num_journal_total_articles": 105
+        },
+        "2018": {
+            "num_journal_oa_articles": 2,
+            "num_journal_total_articles": 55
         }
     },
     "1436-9990": {
@@ -12245,6 +12481,10 @@
         "2017": {
             "num_journal_oa_articles": 27,
             "num_journal_total_articles": 220
+        },
+        "2018": {
+            "num_journal_oa_articles": 19,
+            "num_journal_total_articles": 144
         }
     },
     "1438-387X": {
@@ -12268,9 +12508,13 @@
         }
     },
     "1438-4957": {
+        "2017": {
+            "num_journal_oa_articles": 4,
+            "num_journal_total_articles": 155
+        },
         "2018": {
             "num_journal_oa_articles": 9,
-            "num_journal_total_articles": 170
+            "num_journal_total_articles": 173
         }
     },
     "1438-793X": {
@@ -12290,12 +12534,16 @@
         },
         "2018": {
             "num_journal_oa_articles": 20,
-            "num_journal_total_articles": 259
+            "num_journal_total_articles": 260
         }
     },
     "1439-2917": {
         "2016": {
             "num_journal_oa_articles": 2,
+            "num_journal_total_articles": 20
+        },
+        "2017": {
+            "num_journal_oa_articles": 3,
             "num_journal_total_articles": 20
         }
     },
@@ -12323,8 +12571,8 @@
             "num_journal_total_articles": 248
         },
         "2018": {
-            "num_journal_oa_articles": 24,
-            "num_journal_total_articles": 126
+            "num_journal_oa_articles": 25,
+            "num_journal_total_articles": 129
         }
     },
     "1439-8621": {
@@ -12368,13 +12616,13 @@
         },
         "2018": {
             "num_journal_oa_articles": 2,
-            "num_journal_total_articles": 42
+            "num_journal_total_articles": 43
         }
     },
     "1447-6959": {
         "2018": {
             "num_journal_oa_articles": 5,
-            "num_journal_total_articles": 52
+            "num_journal_total_articles": 54
         }
     },
     "1473-4222": {
@@ -12392,13 +12640,13 @@
         },
         "2018": {
             "num_journal_oa_articles": 10,
-            "num_journal_total_articles": 52
+            "num_journal_total_articles": 53
         }
     },
     "1476-8186": {
         "2018": {
             "num_journal_oa_articles": 1,
-            "num_journal_total_articles": 30
+            "num_journal_total_articles": 32
         }
     },
     "1488-3473": {
@@ -12422,7 +12670,7 @@
         },
         "2018": {
             "num_journal_oa_articles": 1,
-            "num_journal_total_articles": 39
+            "num_journal_total_articles": 40
         }
     },
     "1520-9512": {
@@ -12435,12 +12683,12 @@
             "num_journal_total_articles": 188
         },
         "2017": {
-            "num_journal_oa_articles": 18,
-            "num_journal_total_articles": 195
+            "num_journal_oa_articles": 15,
+            "num_journal_total_articles": 161
         },
         "2018": {
-            "num_journal_oa_articles": 3,
-            "num_journal_total_articles": 87
+            "num_journal_oa_articles": 6,
+            "num_journal_total_articles": 125
         }
     },
     "1522-6417": {
@@ -12504,7 +12752,7 @@
         },
         "2018": {
             "num_journal_oa_articles": 5,
-            "num_journal_total_articles": 42
+            "num_journal_total_articles": 44
         }
     },
     "1523-3790": {
@@ -12608,7 +12856,7 @@
         },
         "2018": {
             "num_journal_oa_articles": 3,
-            "num_journal_total_articles": 44
+            "num_journal_total_articles": 45
         }
     },
     "1528-4042": {
@@ -12654,7 +12902,7 @@
         },
         "2018": {
             "num_journal_oa_articles": 11,
-            "num_journal_total_articles": 48
+            "num_journal_total_articles": 51
         }
     },
     "1530-7905": {
@@ -12687,8 +12935,8 @@
             "num_journal_total_articles": 139
         },
         "2018": {
-            "num_journal_oa_articles": 5,
-            "num_journal_total_articles": 35
+            "num_journal_oa_articles": 6,
+            "num_journal_total_articles": 36
         }
     },
     "1534-6250": {
@@ -12732,7 +12980,7 @@
         },
         "2018": {
             "num_journal_oa_articles": 17,
-            "num_journal_total_articles": 78
+            "num_journal_total_articles": 82
         }
     },
     "1539-2791": {
@@ -12750,7 +12998,7 @@
         },
         "2018": {
             "num_journal_oa_articles": 6,
-            "num_journal_total_articles": 33
+            "num_journal_total_articles": 34
         }
     },
     "1541-6933": {
@@ -12806,7 +13054,7 @@
         },
         "2018": {
             "num_journal_oa_articles": 2,
-            "num_journal_total_articles": 21
+            "num_journal_total_articles": 22
         }
     },
     "1547-0091": {
@@ -12820,7 +13068,7 @@
         },
         "2018": {
             "num_journal_oa_articles": 3,
-            "num_journal_total_articles": 93
+            "num_journal_total_articles": 98
         }
     },
     "1547-7029": {
@@ -12837,6 +13085,10 @@
         "2017": {
             "num_journal_oa_articles": 4,
             "num_journal_total_articles": 97
+        },
+        "2018": {
+            "num_journal_oa_articles": 1,
+            "num_journal_total_articles": 32
         }
     },
     "1547-769X": {
@@ -12854,7 +13106,7 @@
         },
         "2018": {
             "num_journal_oa_articles": 3,
-            "num_journal_total_articles": 48
+            "num_journal_total_articles": 52
         }
     },
     "1548-3568": {
@@ -12874,7 +13126,7 @@
         },
         "2018": {
             "num_journal_oa_articles": 2,
-            "num_journal_total_articles": 9
+            "num_journal_total_articles": 10
         }
     },
     "1550-8943": {
@@ -12898,7 +13150,7 @@
         },
         "2018": {
             "num_journal_oa_articles": 22,
-            "num_journal_total_articles": 91
+            "num_journal_total_articles": 93
         }
     },
     "1554-7191": {
@@ -13004,7 +13256,7 @@
         },
         "2018": {
             "num_journal_oa_articles": 27,
-            "num_journal_total_articles": 89
+            "num_journal_total_articles": 90
         }
     },
     "1557-1890": {
@@ -13041,8 +13293,8 @@
             "num_journal_total_articles": 616
         },
         "2018": {
-            "num_journal_oa_articles": 10,
-            "num_journal_total_articles": 367
+            "num_journal_oa_articles": 12,
+            "num_journal_total_articles": 374
         }
     },
     "1557-1955": {
@@ -13093,12 +13345,12 @@
             "num_journal_total_articles": 143
         },
         "2017": {
-            "num_journal_oa_articles": 13,
-            "num_journal_total_articles": 180
+            "num_journal_oa_articles": 11,
+            "num_journal_total_articles": 159
         },
         "2018": {
-            "num_journal_oa_articles": 12,
-            "num_journal_total_articles": 108
+            "num_journal_oa_articles": 15,
+            "num_journal_total_articles": 131
         }
     },
     "1559-7431": {
@@ -13156,17 +13408,17 @@
         },
         "2018": {
             "num_journal_oa_articles": 6,
-            "num_journal_total_articles": 62
+            "num_journal_total_articles": 64
         }
     },
     "1566-113X": {
         "2017": {
             "num_journal_oa_articles": 4,
-            "num_journal_total_articles": 62
+            "num_journal_total_articles": 57
         },
         "2018": {
             "num_journal_oa_articles": 2,
-            "num_journal_total_articles": 21
+            "num_journal_total_articles": 26
         }
     },
     "1566-1679": {
@@ -13176,7 +13428,7 @@
         },
         "2018": {
             "num_journal_oa_articles": 2,
-            "num_journal_total_articles": 17
+            "num_journal_total_articles": 18
         }
     },
     "1566-2543": {
@@ -13186,7 +13438,7 @@
         },
         "2018": {
             "num_journal_oa_articles": 15,
-            "num_journal_total_articles": 269
+            "num_journal_total_articles": 272
         }
     },
     "1566-4910": {
@@ -13200,7 +13452,7 @@
         },
         "2018": {
             "num_journal_oa_articles": 6,
-            "num_journal_total_articles": 37
+            "num_journal_total_articles": 38
         }
     },
     "1566-7170": {
@@ -13251,8 +13503,8 @@
             "num_journal_total_articles": 55
         },
         "2018": {
-            "num_journal_oa_articles": 11,
-            "num_journal_total_articles": 37
+            "num_journal_oa_articles": 12,
+            "num_journal_total_articles": 38
         }
     },
     "1567-7419": {
@@ -13290,7 +13542,7 @@
         },
         "2018": {
             "num_journal_oa_articles": 4,
-            "num_journal_total_articles": 26
+            "num_journal_total_articles": 27
         }
     },
     "1567-9764": {
@@ -13351,6 +13603,10 @@
         "2017": {
             "num_journal_oa_articles": 2,
             "num_journal_total_articles": 69
+        },
+        "2018": {
+            "num_journal_oa_articles": 1,
+            "num_journal_total_articles": 15
         }
     },
     "1569-1721": {
@@ -13364,7 +13620,7 @@
         },
         "2018": {
             "num_journal_oa_articles": 3,
-            "num_journal_total_articles": 13
+            "num_journal_total_articles": 14
         }
     },
     "1569-5239": {
@@ -13396,7 +13652,7 @@
         },
         "2018": {
             "num_journal_oa_articles": 27,
-            "num_journal_total_articles": 151
+            "num_journal_total_articles": 154
         }
     },
     "1569-8025": {
@@ -13444,7 +13700,7 @@
         },
         "2018": {
             "num_journal_oa_articles": 20,
-            "num_journal_total_articles": 98
+            "num_journal_total_articles": 103
         }
     },
     "1570-7385": {
@@ -13460,11 +13716,11 @@
         },
         "2017": {
             "num_journal_oa_articles": 23,
-            "num_journal_total_articles": 285
+            "num_journal_total_articles": 264
         },
         "2018": {
             "num_journal_oa_articles": 10,
-            "num_journal_total_articles": 131
+            "num_journal_total_articles": 160
         }
     },
     "1570-7873": {
@@ -13508,7 +13764,7 @@
         },
         "2018": {
             "num_journal_oa_articles": 9,
-            "num_journal_total_articles": 54
+            "num_journal_total_articles": 55
         }
     },
     "1573-3750": {
@@ -13526,7 +13782,7 @@
         },
         "2018": {
             "num_journal_oa_articles": 2,
-            "num_journal_total_articles": 15
+            "num_journal_total_articles": 16
         }
     },
     "1573-3882": {
@@ -13543,8 +13799,8 @@
             "num_journal_total_articles": 162
         },
         "2018": {
-            "num_journal_oa_articles": 15,
-            "num_journal_total_articles": 46
+            "num_journal_oa_articles": 17,
+            "num_journal_total_articles": 49
         }
     },
     "1573-9414": {
@@ -13568,7 +13824,7 @@
         },
         "2018": {
             "num_journal_oa_articles": 2,
-            "num_journal_total_articles": 18
+            "num_journal_total_articles": 19
         }
     },
     "1574-020X": {
@@ -13587,8 +13843,14 @@
     },
     "1574-1443": {
         "2018": {
-            "num_journal_oa_articles": 5,
-            "num_journal_total_articles": 179
+            "num_journal_oa_articles": 6,
+            "num_journal_total_articles": 183
+        }
+    },
+    "1575-5460": {
+        "2017": {
+            "num_journal_oa_articles": 2,
+            "num_journal_total_articles": 67
         }
     },
     "1590-170X": {
@@ -13616,7 +13878,7 @@
     "1591-8890": {
         "2017": {
             "num_journal_oa_articles": 5,
-            "num_journal_total_articles": 72
+            "num_journal_total_articles": 60
         }
     },
     "1598-1037": {
@@ -13632,13 +13894,13 @@
     "1598-5865": {
         "2017": {
             "num_journal_oa_articles": 1,
-            "num_journal_total_articles": 173
+            "num_journal_total_articles": 137
         }
     },
     "1598-9623": {
         "2018": {
             "num_journal_oa_articles": 2,
-            "num_journal_total_articles": 129
+            "num_journal_total_articles": 130
         }
     },
     "1609-0985": {
@@ -13665,6 +13927,10 @@
         "2016": {
             "num_journal_oa_articles": 1,
             "num_journal_total_articles": 58
+        },
+        "2017": {
+            "num_journal_oa_articles": 5,
+            "num_journal_total_articles": 64
         }
     },
     "1610-2932": {
@@ -13691,8 +13957,8 @@
             "num_journal_total_articles": 380
         },
         "2018": {
-            "num_journal_oa_articles": 3,
-            "num_journal_total_articles": 79
+            "num_journal_oa_articles": 5,
+            "num_journal_total_articles": 89
         }
     },
     "1612-3093": {
@@ -13710,7 +13976,7 @@
         },
         "2018": {
             "num_journal_oa_articles": 2,
-            "num_journal_total_articles": 16
+            "num_journal_total_articles": 17
         }
     },
     "1612-4642": {
@@ -13728,7 +13994,7 @@
         },
         "2018": {
             "num_journal_oa_articles": 4,
-            "num_journal_total_articles": 22
+            "num_journal_total_articles": 24
         }
     },
     "1612-4669": {
@@ -13752,7 +14018,7 @@
         },
         "2018": {
             "num_journal_oa_articles": 10,
-            "num_journal_total_articles": 104
+            "num_journal_total_articles": 106
         }
     },
     "1612-4782": {
@@ -13790,7 +14056,7 @@
         },
         "2018": {
             "num_journal_oa_articles": 16,
-            "num_journal_total_articles": 107
+            "num_journal_total_articles": 108
         }
     },
     "1612-9202": {
@@ -13804,7 +14070,7 @@
         },
         "2018": {
             "num_journal_oa_articles": 7,
-            "num_journal_total_articles": 28
+            "num_journal_total_articles": 29
         }
     },
     "1613-2076": {
@@ -13835,8 +14101,8 @@
             "num_journal_total_articles": 189
         },
         "2018": {
-            "num_journal_oa_articles": 4,
-            "num_journal_total_articles": 39
+            "num_journal_oa_articles": 5,
+            "num_journal_total_articles": 42
         }
     },
     "1613-5636": {
@@ -13884,7 +14150,7 @@
         },
         "2018": {
             "num_journal_oa_articles": 2,
-            "num_journal_total_articles": 30
+            "num_journal_total_articles": 31
         }
     },
     "1615-147X": {
@@ -13902,7 +14168,7 @@
         },
         "2018": {
             "num_journal_oa_articles": 16,
-            "num_journal_total_articles": 198
+            "num_journal_total_articles": 204
         }
     },
     "1615-3375": {
@@ -13915,8 +14181,8 @@
             "num_journal_total_articles": 67
         },
         "2018": {
-            "num_journal_oa_articles": 2,
-            "num_journal_total_articles": 30
+            "num_journal_oa_articles": 3,
+            "num_journal_total_articles": 32
         }
     },
     "1615-5262": {
@@ -13950,7 +14216,7 @@
         },
         "2018": {
             "num_journal_oa_articles": 6,
-            "num_journal_total_articles": 100
+            "num_journal_total_articles": 106
         }
     },
     "1616-7341": {
@@ -13982,13 +14248,13 @@
         },
         "2018": {
             "num_journal_oa_articles": 5,
-            "num_journal_total_articles": 59
+            "num_journal_total_articles": 60
         }
     },
     "1617-4615": {
         "2018": {
             "num_journal_oa_articles": 11,
-            "num_journal_total_articles": 72
+            "num_journal_total_articles": 74
         }
     },
     "1617-4909": {
@@ -14006,13 +14272,13 @@
         },
         "2018": {
             "num_journal_oa_articles": 5,
-            "num_journal_total_articles": 62
+            "num_journal_total_articles": 66
         }
     },
     "1617-6782": {
         "2018": {
             "num_journal_oa_articles": 2,
-            "num_journal_total_articles": 38
+            "num_journal_total_articles": 39
         }
     },
     "1617-7959": {
@@ -14030,7 +14296,7 @@
         },
         "2018": {
             "num_journal_oa_articles": 11,
-            "num_journal_total_articles": 64
+            "num_journal_total_articles": 65
         }
     },
     "1617-9447": {
@@ -14066,13 +14332,17 @@
         },
         "2018": {
             "num_journal_oa_articles": 8,
-            "num_journal_total_articles": 56
+            "num_journal_total_articles": 57
         }
     },
     "1618-2162": {
         "2016": {
             "num_journal_oa_articles": 2,
             "num_journal_total_articles": 34
+        },
+        "2017": {
+            "num_journal_oa_articles": 4,
+            "num_journal_total_articles": 36
         }
     },
     "1618-2510": {
@@ -14096,7 +14366,7 @@
         },
         "2018": {
             "num_journal_oa_articles": 40,
-            "num_journal_total_articles": 391
+            "num_journal_total_articles": 401
         }
     },
     "1618-7598": {
@@ -14105,18 +14375,22 @@
             "num_journal_total_articles": 109
         },
         "2017": {
-            "num_journal_oa_articles": 49,
-            "num_journal_total_articles": 141
+            "num_journal_oa_articles": 45,
+            "num_journal_total_articles": 129
         },
         "2018": {
-            "num_journal_oa_articles": 22,
-            "num_journal_total_articles": 60
+            "num_journal_oa_articles": 27,
+            "num_journal_total_articles": 78
         }
     },
     "1618-808X": {
         "2016": {
             "num_journal_oa_articles": 2,
             "num_journal_total_articles": 44
+        },
+        "2017": {
+            "num_journal_oa_articles": 1,
+            "num_journal_total_articles": 46
         }
     },
     "1618-954X": {
@@ -14126,11 +14400,11 @@
         },
         "2017": {
             "num_journal_oa_articles": 3,
-            "num_journal_total_articles": 223
+            "num_journal_total_articles": 215
         },
         "2018": {
             "num_journal_oa_articles": 3,
-            "num_journal_total_articles": 83
+            "num_journal_total_articles": 96
         }
     },
     "1619-1366": {
@@ -14143,20 +14417,32 @@
             "num_journal_total_articles": 119
         },
         "2018": {
-            "num_journal_oa_articles": 10,
-            "num_journal_total_articles": 52
+            "num_journal_oa_articles": 13,
+            "num_journal_total_articles": 58
         }
     },
     "1619-4500": {
         "2017": {
             "num_journal_oa_articles": 1,
             "num_journal_total_articles": 40
+        },
+        "2018": {
+            "num_journal_oa_articles": 1,
+            "num_journal_total_articles": 15
         }
     },
     "1619-5507": {
         "2016": {
             "num_journal_oa_articles": 3,
             "num_journal_total_articles": 76
+        },
+        "2017": {
+            "num_journal_oa_articles": 2,
+            "num_journal_total_articles": 49
+        },
+        "2018": {
+            "num_journal_oa_articles": 3,
+            "num_journal_total_articles": 18
         }
     },
     "1619-697X": {
@@ -14166,7 +14452,7 @@
         },
         "2018": {
             "num_journal_oa_articles": 1,
-            "num_journal_total_articles": 12
+            "num_journal_total_articles": 14
         }
     },
     "1619-7070": {
@@ -14179,12 +14465,12 @@
             "num_journal_total_articles": 329
         },
         "2017": {
-            "num_journal_oa_articles": 61,
-            "num_journal_total_articles": 329
+            "num_journal_oa_articles": 60,
+            "num_journal_total_articles": 326
         },
         "2018": {
-            "num_journal_oa_articles": 41,
-            "num_journal_total_articles": 194
+            "num_journal_oa_articles": 44,
+            "num_journal_total_articles": 205
         }
     },
     "1633-8065": {
@@ -14197,8 +14483,8 @@
             "num_journal_total_articles": 188
         },
         "2018": {
-            "num_journal_oa_articles": 15,
-            "num_journal_total_articles": 173
+            "num_journal_oa_articles": 16,
+            "num_journal_total_articles": 182
         }
     },
     "1651-436X": {
@@ -14208,7 +14494,7 @@
         },
         "2018": {
             "num_journal_oa_articles": 2,
-            "num_journal_total_articles": 14
+            "num_journal_total_articles": 15
         }
     },
     "1660-5446": {
@@ -14282,13 +14568,13 @@
         },
         "2018": {
             "num_journal_oa_articles": 14,
-            "num_journal_total_articles": 73
+            "num_journal_total_articles": 76
         }
     },
     "1661-8726": {
         "2017": {
-            "num_journal_oa_articles": 17,
-            "num_journal_total_articles": 58
+            "num_journal_oa_articles": 16,
+            "num_journal_total_articles": 49
         }
     },
     "1662-9981": {
@@ -14314,7 +14600,7 @@
         },
         "2018": {
             "num_journal_oa_articles": 4,
-            "num_journal_total_articles": 36
+            "num_journal_total_articles": 37
         }
     },
     "1664-2376": {
@@ -14350,7 +14636,7 @@
         },
         "2018": {
             "num_journal_oa_articles": 3,
-            "num_journal_total_articles": 243
+            "num_journal_total_articles": 258
         }
     },
     "1682-8631": {
@@ -14361,6 +14647,10 @@
         "2017": {
             "num_journal_oa_articles": 9,
             "num_journal_total_articles": 54
+        },
+        "2018": {
+            "num_journal_oa_articles": 6,
+            "num_journal_total_articles": 26
         }
     },
     "1698-6180": {
@@ -14370,7 +14660,13 @@
         },
         "2018": {
             "num_journal_oa_articles": 2,
-            "num_journal_total_articles": 22
+            "num_journal_total_articles": 23
+        }
+    },
+    "1699-048X": {
+        "2017": {
+            "num_journal_oa_articles": 24,
+            "num_journal_total_articles": 222
         }
     },
     "1720-8319": {
@@ -14379,12 +14675,12 @@
             "num_journal_total_articles": 170
         },
         "2017": {
-            "num_journal_oa_articles": 27,
-            "num_journal_total_articles": 280
+            "num_journal_oa_articles": 24,
+            "num_journal_total_articles": 264
         },
         "2018": {
-            "num_journal_oa_articles": 12,
-            "num_journal_total_articles": 117
+            "num_journal_oa_articles": 16,
+            "num_journal_total_articles": 136
         }
     },
     "1720-8386": {
@@ -14398,7 +14694,7 @@
         },
         "2018": {
             "num_journal_oa_articles": 14,
-            "num_journal_total_articles": 143
+            "num_journal_total_articles": 148
         }
     },
     "1735-1472": {
@@ -14418,7 +14714,7 @@
         },
         "2018": {
             "num_journal_oa_articles": 4,
-            "num_journal_total_articles": 30
+            "num_journal_total_articles": 32
         }
     },
     "1738-8090": {
@@ -14496,7 +14792,7 @@
         },
         "2018": {
             "num_journal_oa_articles": 3,
-            "num_journal_total_articles": 18
+            "num_journal_total_articles": 19
         }
     },
     "1824-7490": {
@@ -14506,7 +14802,7 @@
         },
         "2018": {
             "num_journal_oa_articles": 2,
-            "num_journal_total_articles": 54
+            "num_journal_total_articles": 56
         }
     },
     "1828-0447": {
@@ -14526,7 +14822,7 @@
         },
         "2018": {
             "num_journal_oa_articles": 2,
-            "num_journal_total_articles": 16
+            "num_journal_total_articles": 17
         }
     },
     "1860-8965": {
@@ -14545,12 +14841,12 @@
             "num_journal_total_articles": 133
         },
         "2017": {
-            "num_journal_oa_articles": 23,
-            "num_journal_total_articles": 135
+            "num_journal_oa_articles": 22,
+            "num_journal_total_articles": 131
         },
         "2018": {
-            "num_journal_oa_articles": 14,
-            "num_journal_total_articles": 97
+            "num_journal_oa_articles": 15,
+            "num_journal_total_articles": 104
         }
     },
     "1861-1125": {
@@ -14564,7 +14860,7 @@
         },
         "2018": {
             "num_journal_oa_articles": 5,
-            "num_journal_total_articles": 64
+            "num_journal_total_articles": 66
         }
     },
     "1861-2776": {
@@ -14601,8 +14897,14 @@
             "num_journal_total_articles": 203
         },
         "2018": {
-            "num_journal_oa_articles": 17,
-            "num_journal_total_articles": 108
+            "num_journal_oa_articles": 18,
+            "num_journal_total_articles": 111
+        }
+    },
+    "1861-6755": {
+        "2017": {
+            "num_journal_oa_articles": 2,
+            "num_journal_total_articles": 60
         }
     },
     "1861-8200": {
@@ -14643,8 +14945,8 @@
             "num_journal_total_articles": 109
         },
         "2018": {
-            "num_journal_oa_articles": 9,
-            "num_journal_total_articles": 41
+            "num_journal_oa_articles": 11,
+            "num_journal_total_articles": 44
         }
     },
     "1862-4065": {
@@ -14657,8 +14959,8 @@
             "num_journal_total_articles": 103
         },
         "2018": {
-            "num_journal_oa_articles": 29,
-            "num_journal_total_articles": 72
+            "num_journal_oa_articles": 30,
+            "num_journal_total_articles": 76
         }
     },
     "1862-4472": {
@@ -14672,7 +14974,7 @@
         },
         "2018": {
             "num_journal_oa_articles": 3,
-            "num_journal_total_articles": 80
+            "num_journal_total_articles": 84
         }
     },
     "1862-5347": {
@@ -14680,25 +14982,35 @@
             "num_journal_oa_articles": 4,
             "num_journal_total_articles": 43
         },
+        "2017": {
+            "num_journal_oa_articles": 2,
+            "num_journal_total_articles": 58
+        },
         "2018": {
             "num_journal_oa_articles": 3,
             "num_journal_total_articles": 23
         }
     },
+    "1862-6599": {
+        "2017": {
+            "num_journal_oa_articles": 9,
+            "num_journal_total_articles": 49
+        }
+    },
     "1862-7072": {
         "2017": {
             "num_journal_oa_articles": 2,
-            "num_journal_total_articles": 57
+            "num_journal_total_articles": 56
         }
     },
     "1862-8516": {
         "2017": {
             "num_journal_oa_articles": 1,
-            "num_journal_total_articles": 54
+            "num_journal_total_articles": 45
         },
         "2018": {
             "num_journal_oa_articles": 4,
-            "num_journal_total_articles": 23
+            "num_journal_total_articles": 34
         }
     },
     "1862-9679": {
@@ -14714,11 +15026,11 @@
     "1863-1703": {
         "2017": {
             "num_journal_oa_articles": 5,
-            "num_journal_total_articles": 225
+            "num_journal_total_articles": 202
         },
         "2018": {
             "num_journal_oa_articles": 2,
-            "num_journal_total_articles": 132
+            "num_journal_total_articles": 156
         }
     },
     "1863-2297": {
@@ -14768,7 +15080,7 @@
         },
         "2018": {
             "num_journal_oa_articles": 2,
-            "num_journal_total_articles": 64
+            "num_journal_total_articles": 66
         }
     },
     "1863-2505": {
@@ -14800,13 +15112,17 @@
         },
         "2018": {
             "num_journal_oa_articles": 46,
-            "num_journal_total_articles": 190
+            "num_journal_total_articles": 192
         }
     },
     "1863-3579": {
         "2016": {
             "num_journal_oa_articles": 2,
             "num_journal_total_articles": 6
+        },
+        "2017": {
+            "num_journal_oa_articles": 5,
+            "num_journal_total_articles": 9
         }
     },
     "1863-5466": {
@@ -14816,9 +15132,13 @@
         }
     },
     "1863-6683": {
+        "2017": {
+            "num_journal_oa_articles": 4,
+            "num_journal_total_articles": 75
+        },
         "2018": {
             "num_journal_oa_articles": 5,
-            "num_journal_total_articles": 28
+            "num_journal_total_articles": 29
         }
     },
     "1863-6705": {
@@ -14838,7 +15158,7 @@
         },
         "2018": {
             "num_journal_oa_articles": 3,
-            "num_journal_total_articles": 22
+            "num_journal_total_articles": 23
         }
     },
     "1863-9690": {
@@ -14851,12 +15171,12 @@
             "num_journal_total_articles": 78
         },
         "2017": {
-            "num_journal_oa_articles": 9,
-            "num_journal_total_articles": 95
+            "num_journal_oa_articles": 7,
+            "num_journal_total_articles": 83
         },
         "2018": {
-            "num_journal_oa_articles": 3,
-            "num_journal_total_articles": 30
+            "num_journal_oa_articles": 5,
+            "num_journal_total_articles": 44
         }
     },
     "1863-9933": {
@@ -14870,7 +15190,7 @@
         },
         "2018": {
             "num_journal_oa_articles": 13,
-            "num_journal_total_articles": 103
+            "num_journal_total_articles": 105
         }
     },
     "1864-4031": {
@@ -14943,6 +15263,10 @@
         "2017": {
             "num_journal_oa_articles": 3,
             "num_journal_total_articles": 40
+        },
+        "2018": {
+            "num_journal_oa_articles": 3,
+            "num_journal_total_articles": 44
         }
     },
     "1865-2646": {
@@ -14989,12 +15313,20 @@
         "2016": {
             "num_journal_oa_articles": 1,
             "num_journal_total_articles": 56
+        },
+        "2017": {
+            "num_journal_oa_articles": 2,
+            "num_journal_total_articles": 82
         }
     },
     "1866-2250": {
         "2016": {
             "num_journal_oa_articles": 1,
             "num_journal_total_articles": 47
+        },
+        "2017": {
+            "num_journal_oa_articles": 2,
+            "num_journal_total_articles": 36
         }
     },
     "1866-2625": {
@@ -15008,7 +15340,7 @@
         },
         "2018": {
             "num_journal_oa_articles": 3,
-            "num_journal_total_articles": 32
+            "num_journal_total_articles": 33
         }
     },
     "1866-6116": {
@@ -15032,7 +15364,7 @@
         },
         "2018": {
             "num_journal_oa_articles": 10,
-            "num_journal_total_articles": 304
+            "num_journal_total_articles": 310
         }
     },
     "1866-6892": {
@@ -15050,7 +15382,7 @@
         },
         "2018": {
             "num_journal_oa_articles": 4,
-            "num_journal_total_articles": 54
+            "num_journal_total_articles": 55
         }
     },
     "1866-749X": {
@@ -15078,7 +15410,7 @@
         },
         "2018": {
             "num_journal_oa_articles": 2,
-            "num_journal_total_articles": 177
+            "num_journal_total_articles": 185
         }
     },
     "1866-7910": {
@@ -15107,8 +15439,8 @@
             "num_journal_total_articles": 238
         },
         "2018": {
-            "num_journal_oa_articles": 13,
-            "num_journal_total_articles": 97
+            "num_journal_oa_articles": 14,
+            "num_journal_total_articles": 100
         }
     },
     "1866-9956": {
@@ -15126,7 +15458,7 @@
         },
         "2018": {
             "num_journal_oa_articles": 4,
-            "num_journal_total_articles": 48
+            "num_journal_total_articles": 49
         }
     },
     "1867-0334": {
@@ -15140,7 +15472,7 @@
         },
         "2018": {
             "num_journal_oa_articles": 3,
-            "num_journal_total_articles": 23
+            "num_journal_total_articles": 25
         }
     },
     "1867-1594": {
@@ -15168,7 +15500,7 @@
         },
         "2018": {
             "num_journal_oa_articles": 6,
-            "num_journal_total_articles": 95
+            "num_journal_total_articles": 99
         }
     },
     "1867-1748": {
@@ -15201,8 +15533,8 @@
             "num_journal_total_articles": 90
         },
         "2018": {
-            "num_journal_oa_articles": 8,
-            "num_journal_total_articles": 85
+            "num_journal_oa_articles": 10,
+            "num_journal_total_articles": 92
         }
     },
     "1867-2477": {
@@ -15244,7 +15576,7 @@
         },
         "2018": {
             "num_journal_oa_articles": 1,
-            "num_journal_total_articles": 24
+            "num_journal_total_articles": 27
         }
     },
     "1868-2529": {
@@ -15289,8 +15621,8 @@
     },
     "1868-4300": {
         "2018": {
-            "num_journal_oa_articles": 8,
-            "num_journal_total_articles": 41
+            "num_journal_oa_articles": 9,
+            "num_journal_total_articles": 44
         }
     },
     "1868-4483": {
@@ -15303,8 +15635,8 @@
             "num_journal_total_articles": 93
         },
         "2018": {
-            "num_journal_oa_articles": 7,
-            "num_journal_total_articles": 48
+            "num_journal_oa_articles": 8,
+            "num_journal_total_articles": 51
         }
     },
     "1868-5137": {
@@ -15314,7 +15646,7 @@
         },
         "2018": {
             "num_journal_oa_articles": 3,
-            "num_journal_total_articles": 159
+            "num_journal_total_articles": 167
         }
     },
     "1868-5153": {
@@ -15348,7 +15680,7 @@
         },
         "2018": {
             "num_journal_oa_articles": 5,
-            "num_journal_total_articles": 41
+            "num_journal_total_articles": 42
         }
     },
     "1868-8071": {
@@ -15358,7 +15690,7 @@
         },
         "2018": {
             "num_journal_oa_articles": 3,
-            "num_journal_total_articles": 112
+            "num_journal_total_articles": 117
         }
     },
     "1868-8497": {
@@ -15378,7 +15710,7 @@
         },
         "2018": {
             "num_journal_oa_articles": 25,
-            "num_journal_total_articles": 134
+            "num_journal_total_articles": 139
         }
     },
     "1868-856X": {
@@ -15389,15 +15721,15 @@
     },
     "1868-9256": {
         "2015": {
-            "num_journal_oa_articles": 3,
+            "num_journal_oa_articles": 0,
             "num_journal_total_articles": 32
         },
         "2016": {
-            "num_journal_oa_articles": 6,
+            "num_journal_oa_articles": 1,
             "num_journal_total_articles": 31
         },
         "2017": {
-            "num_journal_oa_articles": 4,
+            "num_journal_oa_articles": 5,
             "num_journal_total_articles": 22
         }
     },
@@ -15430,13 +15762,27 @@
         },
         "2018": {
             "num_journal_oa_articles": 5,
-            "num_journal_total_articles": 53
+            "num_journal_total_articles": 55
         }
     },
     "1869-1757": {
         "2016": {
             "num_journal_oa_articles": 9,
             "num_journal_total_articles": 64
+        },
+        "2017": {
+            "num_journal_oa_articles": 2,
+            "num_journal_total_articles": 53
+        }
+    },
+    "1869-2672": {
+        "2017": {
+            "num_journal_oa_articles": 2,
+            "num_journal_total_articles": 13
+        },
+        "2018": {
+            "num_journal_oa_articles": 1,
+            "num_journal_total_articles": 4
         }
     },
     "1869-3474": {
@@ -15478,7 +15824,7 @@
         },
         "2018": {
             "num_journal_oa_articles": 1,
-            "num_journal_total_articles": 30
+            "num_journal_total_articles": 32
         }
     },
     "1869-5582": {
@@ -15491,8 +15837,8 @@
             "num_journal_total_articles": 54
         },
         "2018": {
-            "num_journal_oa_articles": 5,
-            "num_journal_total_articles": 29
+            "num_journal_oa_articles": 6,
+            "num_journal_total_articles": 34
         }
     },
     "1869-6716": {
@@ -15589,8 +15935,8 @@
             "num_journal_total_articles": 81
         },
         "2018": {
-            "num_journal_oa_articles": 5,
-            "num_journal_total_articles": 23
+            "num_journal_oa_articles": 6,
+            "num_journal_total_articles": 25
         }
     },
     "1872-0218": {
@@ -15603,8 +15949,8 @@
             "num_journal_total_articles": 34
         },
         "2018": {
-            "num_journal_oa_articles": 4,
-            "num_journal_total_articles": 13
+            "num_journal_oa_articles": 5,
+            "num_journal_total_articles": 15
         }
     },
     "1872-5120": {
@@ -15614,7 +15960,7 @@
         },
         "2018": {
             "num_journal_oa_articles": 2,
-            "num_journal_total_articles": 21
+            "num_journal_total_articles": 22
         }
     },
     "1872-8855": {
@@ -15644,7 +15990,7 @@
         },
         "2017": {
             "num_journal_oa_articles": 12,
-            "num_journal_total_articles": 115
+            "num_journal_total_articles": 109
         }
     },
     "1873-9601": {
@@ -15672,7 +16018,7 @@
         },
         "2018": {
             "num_journal_oa_articles": 5,
-            "num_journal_total_articles": 22
+            "num_journal_total_articles": 24
         }
     },
     "1874-2718": {
@@ -15722,7 +16068,7 @@
         },
         "2018": {
             "num_journal_oa_articles": 4,
-            "num_journal_total_articles": 21
+            "num_journal_total_articles": 22
         }
     },
     "1874-785X": {
@@ -15778,11 +16124,11 @@
         },
         "2017": {
             "num_journal_oa_articles": 5,
-            "num_journal_total_articles": 56
+            "num_journal_total_articles": 55
         },
         "2018": {
             "num_journal_oa_articles": 5,
-            "num_journal_total_articles": 35
+            "num_journal_total_articles": 37
         }
     },
     "1874-897X": {
@@ -15834,7 +16180,7 @@
         },
         "2018": {
             "num_journal_oa_articles": 7,
-            "num_journal_total_articles": 40
+            "num_journal_total_articles": 41
         }
     },
     "1876-4045": {
@@ -15866,7 +16212,7 @@
         },
         "2018": {
             "num_journal_oa_articles": 10,
-            "num_journal_total_articles": 43
+            "num_journal_total_articles": 44
         }
     },
     "1877-0533": {
@@ -15886,7 +16232,7 @@
         },
         "2018": {
             "num_journal_oa_articles": 10,
-            "num_journal_total_articles": 200
+            "num_journal_total_articles": 206
         }
     },
     "1877-7236": {
@@ -15931,8 +16277,8 @@
             "num_journal_total_articles": 70
         },
         "2018": {
-            "num_journal_oa_articles": 6,
-            "num_journal_total_articles": 30
+            "num_journal_oa_articles": 7,
+            "num_journal_total_articles": 31
         }
     },
     "1878-5190": {
@@ -15941,14 +16287,14 @@
             "num_journal_total_articles": 163
         },
         "2018": {
-            "num_journal_oa_articles": 11,
-            "num_journal_total_articles": 112
+            "num_journal_oa_articles": 13,
+            "num_journal_total_articles": 128
         }
     },
     "1878-7657": {
         "2018": {
-            "num_journal_oa_articles": 7,
-            "num_journal_total_articles": 53
+            "num_journal_oa_articles": 8,
+            "num_journal_total_articles": 55
         }
     },
     "1879-4238": {
@@ -15972,7 +16318,7 @@
         },
         "2018": {
             "num_journal_oa_articles": 5,
-            "num_journal_total_articles": 23
+            "num_journal_total_articles": 24
         }
     },
     "1880-6546": {
@@ -15985,7 +16331,7 @@
             "num_journal_total_articles": 51
         },
         "2017": {
-            "num_journal_oa_articles": 13,
+            "num_journal_oa_articles": 15,
             "num_journal_total_articles": 112
         }
     },
@@ -16030,7 +16376,7 @@
         },
         "2018": {
             "num_journal_oa_articles": 2,
-            "num_journal_total_articles": 22
+            "num_journal_total_articles": 23
         }
     },
     "1932-9520": {
@@ -16106,7 +16452,7 @@
         },
         "2018": {
             "num_journal_oa_articles": 4,
-            "num_journal_total_articles": 46
+            "num_journal_total_articles": 47
         }
     },
     "1936-055X": {
@@ -16120,7 +16466,7 @@
         },
         "2018": {
             "num_journal_oa_articles": 3,
-            "num_journal_total_articles": 51
+            "num_journal_total_articles": 54
         }
     },
     "1936-1521": {
@@ -16144,7 +16490,7 @@
         },
         "2018": {
             "num_journal_oa_articles": 4,
-            "num_journal_total_articles": 70
+            "num_journal_total_articles": 72
         }
     },
     "1936-3761": {
@@ -16165,6 +16511,10 @@
         "2016": {
             "num_journal_oa_articles": 1,
             "num_journal_total_articles": 18
+        },
+        "2017": {
+            "num_journal_oa_articles": 2,
+            "num_journal_total_articles": 22
         }
     },
     "1936-6442": {
@@ -16174,7 +16524,7 @@
         },
         "2018": {
             "num_journal_oa_articles": 2,
-            "num_journal_total_articles": 88
+            "num_journal_total_articles": 89
         }
     },
     "1936-6582": {
@@ -16204,7 +16554,7 @@
         },
         "2018": {
             "num_journal_oa_articles": 17,
-            "num_journal_total_articles": 272
+            "num_journal_total_articles": 275
         }
     },
     "1937-5387": {
@@ -16222,7 +16572,7 @@
         },
         "2018": {
             "num_journal_oa_articles": 8,
-            "num_journal_total_articles": 34
+            "num_journal_total_articles": 35
         }
     },
     "1938-7741": {
@@ -16260,7 +16610,7 @@
         },
         "2018": {
             "num_journal_oa_articles": 5,
-            "num_journal_total_articles": 38
+            "num_journal_total_articles": 40
         }
     },
     "1939-5981": {
@@ -16279,8 +16629,8 @@
             "num_journal_total_articles": 177
         },
         "2018": {
-            "num_journal_oa_articles": 3,
-            "num_journal_total_articles": 82
+            "num_journal_oa_articles": 4,
+            "num_journal_total_articles": 85
         }
     },
     "1941-6628": {
@@ -16290,7 +16640,7 @@
         },
         "2018": {
             "num_journal_oa_articles": 4,
-            "num_journal_total_articles": 76
+            "num_journal_total_articles": 80
         }
     },
     "1941-9066": {
@@ -16308,7 +16658,7 @@
         },
         "2018": {
             "num_journal_oa_articles": 2,
-            "num_journal_total_articles": 13
+            "num_journal_total_articles": 14
         }
     },
     "1943-3921": {
@@ -16326,7 +16676,7 @@
         },
         "2018": {
             "num_journal_oa_articles": 9,
-            "num_journal_total_articles": 105
+            "num_journal_total_articles": 114
         }
     },
     "1943-4588": {
@@ -16424,7 +16774,7 @@
         },
         "2018": {
             "num_journal_oa_articles": 7,
-            "num_journal_total_articles": 309
+            "num_journal_total_articles": 314
         }
     },
     "2035-5106": {
@@ -16454,7 +16804,7 @@
         },
         "2018": {
             "num_journal_oa_articles": 2,
-            "num_journal_total_articles": 37
+            "num_journal_total_articles": 38
         }
     },
     "2052-773X": {
@@ -16521,8 +16871,8 @@
             "num_journal_total_articles": 46
         },
         "2018": {
-            "num_journal_oa_articles": 6,
-            "num_journal_total_articles": 43
+            "num_journal_oa_articles": 7,
+            "num_journal_total_articles": 45
         }
     },
     "2156-8650": {
@@ -16578,7 +16928,7 @@
         },
         "2018": {
             "num_journal_oa_articles": 4,
-            "num_journal_total_articles": 19
+            "num_journal_total_articles": 21
         }
     },
     "2167-4817": {
@@ -16650,7 +17000,7 @@
         },
         "2018": {
             "num_journal_oa_articles": 2,
-            "num_journal_total_articles": 17
+            "num_journal_total_articles": 19
         }
     },
     "2167-6275": {
@@ -16664,7 +17014,13 @@
         },
         "2018": {
             "num_journal_oa_articles": 4,
-            "num_journal_total_articles": 27
+            "num_journal_total_articles": 30
+        }
+    },
+    "2190-2100": {
+        "2017": {
+            "num_journal_oa_articles": 1,
+            "num_journal_total_articles": 24
         }
     },
     "2190-393X": {
@@ -16677,8 +17033,8 @@
             "num_journal_total_articles": 104
         },
         "2018": {
-            "num_journal_oa_articles": 9,
-            "num_journal_total_articles": 94
+            "num_journal_oa_articles": 10,
+            "num_journal_total_articles": 97
         }
     },
     "2190-5444": {
@@ -16692,7 +17048,7 @@
         },
         "2018": {
             "num_journal_oa_articles": 5,
-            "num_journal_total_articles": 161
+            "num_journal_total_articles": 168
         }
     },
     "2190-5452": {
@@ -16706,13 +17062,13 @@
         },
         "2018": {
             "num_journal_oa_articles": 1,
-            "num_journal_total_articles": 26
+            "num_journal_total_articles": 29
         }
     },
     "2190-572X": {
         "2018": {
             "num_journal_oa_articles": 7,
-            "num_journal_total_articles": 183
+            "num_journal_total_articles": 186
         }
     },
     "2190-6815": {
@@ -16729,6 +17085,10 @@
         "2016": {
             "num_journal_oa_articles": 3,
             "num_journal_total_articles": 33
+        },
+        "2017": {
+            "num_journal_oa_articles": 4,
+            "num_journal_total_articles": 27
         }
     },
     "2190-7188": {
@@ -16761,8 +17121,8 @@
             "num_journal_total_articles": 23
         },
         "2018": {
-            "num_journal_oa_articles": 1,
-            "num_journal_total_articles": 8
+            "num_journal_oa_articles": 2,
+            "num_journal_total_articles": 9
         }
     },
     "2191-1630": {
@@ -16798,7 +17158,7 @@
     "2192-4376": {
         "2018": {
             "num_journal_oa_articles": 1,
-            "num_journal_total_articles": 14
+            "num_journal_total_articles": 15
         }
     },
     "2192-6352": {
@@ -16834,13 +17194,17 @@
         },
         "2018": {
             "num_journal_oa_articles": 3,
-            "num_journal_total_articles": 37
+            "num_journal_total_articles": 40
         }
     },
     "2193-6218": {
         "2016": {
             "num_journal_oa_articles": 6,
             "num_journal_total_articles": 129
+        },
+        "2017": {
+            "num_journal_oa_articles": 6,
+            "num_journal_total_articles": 158
         }
     },
     "2193-7192": {
@@ -16858,7 +17222,7 @@
         },
         "2018": {
             "num_journal_oa_articles": 14,
-            "num_journal_total_articles": 78
+            "num_journal_total_articles": 79
         }
     },
     "2193-8407": {
@@ -16904,7 +17268,7 @@
         },
         "2018": {
             "num_journal_oa_articles": 4,
-            "num_journal_total_articles": 11
+            "num_journal_total_articles": 12
         }
     },
     "2194-5403": {
@@ -16937,8 +17301,8 @@
             "num_journal_total_articles": 114
         },
         "2018": {
-            "num_journal_oa_articles": 4,
-            "num_journal_total_articles": 51
+            "num_journal_oa_articles": 5,
+            "num_journal_total_articles": 53
         }
     },
     "2194-7953": {
@@ -16972,7 +17336,7 @@
         },
         "2018": {
             "num_journal_oa_articles": 1,
-            "num_journal_total_articles": 14
+            "num_journal_total_articles": 15
         }
     },
     "2195-7177": {
@@ -17031,8 +17395,8 @@
             "num_journal_total_articles": 35
         },
         "2018": {
-            "num_journal_oa_articles": 3,
-            "num_journal_total_articles": 13
+            "num_journal_oa_articles": 4,
+            "num_journal_total_articles": 17
         }
     },
     "2196-2987": {
@@ -17084,9 +17448,13 @@
             "num_journal_oa_articles": 4,
             "num_journal_total_articles": 52
         },
+        "2017": {
+            "num_journal_oa_articles": 6,
+            "num_journal_total_articles": 40
+        },
         "2018": {
             "num_journal_oa_articles": 8,
-            "num_journal_total_articles": 22
+            "num_journal_total_articles": 23
         }
     },
     "2196-3053": {
@@ -17126,7 +17494,7 @@
         },
         "2018": {
             "num_journal_oa_articles": 4,
-            "num_journal_total_articles": 23
+            "num_journal_total_articles": 24
         }
     },
     "2196-5471": {
@@ -17168,7 +17536,7 @@
         },
         "2018": {
             "num_journal_oa_articles": 1,
-            "num_journal_total_articles": 11
+            "num_journal_total_articles": 12
         }
     },
     "2197-3792": {
@@ -17177,20 +17545,34 @@
             "num_journal_total_articles": 208
         },
         "2018": {
-            "num_journal_oa_articles": 2,
-            "num_journal_total_articles": 84
+            "num_journal_oa_articles": 4,
+            "num_journal_total_articles": 86
         }
     },
     "2197-9707": {
         "2016": {
             "num_journal_oa_articles": 10,
             "num_journal_total_articles": 70
+        },
+        "2017": {
+            "num_journal_oa_articles": 9,
+            "num_journal_total_articles": 72
         }
     },
     "2197-9987": {
         "2017": {
             "num_journal_oa_articles": 4,
             "num_journal_total_articles": 25
+        }
+    },
+    "2198-1620": {
+        "2016": {
+            "num_journal_oa_articles": 1,
+            "num_journal_total_articles": 9
+        },
+        "2017": {
+            "num_journal_oa_articles": 2,
+            "num_journal_total_articles": 11
         }
     },
     "2198-1833": {
@@ -17207,8 +17589,8 @@
             "num_journal_total_articles": 99
         },
         "2018": {
-            "num_journal_oa_articles": 9,
-            "num_journal_total_articles": 66
+            "num_journal_oa_articles": 10,
+            "num_journal_total_articles": 69
         }
     },
     "2198-4220": {
@@ -17238,13 +17620,13 @@
         },
         "2018": {
             "num_journal_oa_articles": 4,
-            "num_journal_total_articles": 11
+            "num_journal_total_articles": 14
         }
     },
     "2198-6088": {
         "2018": {
             "num_journal_oa_articles": 1,
-            "num_journal_total_articles": 14
+            "num_journal_total_articles": 20
         }
     },
     "2198-6096": {
@@ -17254,7 +17636,7 @@
         },
         "2018": {
             "num_journal_oa_articles": 2,
-            "num_journal_total_articles": 19
+            "num_journal_total_articles": 20
         }
     },
     "2198-6401": {
@@ -17314,7 +17696,7 @@
         },
         "2018": {
             "num_journal_oa_articles": 2,
-            "num_journal_total_articles": 13
+            "num_journal_total_articles": 14
         }
     },
     "2198-7491": {
@@ -17338,7 +17720,7 @@
         },
         "2018": {
             "num_journal_oa_articles": 5,
-            "num_journal_total_articles": 16
+            "num_journal_total_articles": 18
         }
     },
     "2198-9745": {
@@ -17378,7 +17760,7 @@
         },
         "2018": {
             "num_journal_oa_articles": 5,
-            "num_journal_total_articles": 36
+            "num_journal_total_articles": 41
         }
     },
     "2199-2428": {
@@ -17469,8 +17851,8 @@
             "num_journal_total_articles": 64
         },
         "2018": {
-            "num_journal_oa_articles": 15,
-            "num_journal_total_articles": 58
+            "num_journal_oa_articles": 16,
+            "num_journal_total_articles": 61
         }
     },
     "2199-6776": {
@@ -17548,7 +17930,7 @@
         },
         "2018": {
             "num_journal_oa_articles": 9,
-            "num_journal_total_articles": 19
+            "num_journal_total_articles": 21
         }
     },
     "2210-7703": {
@@ -17576,7 +17958,7 @@
         },
         "2018": {
             "num_journal_oa_articles": 2,
-            "num_journal_total_articles": 22
+            "num_journal_total_articles": 24
         }
     },
     "2211-3037": {
@@ -17667,12 +18049,16 @@
         "2017": {
             "num_journal_oa_articles": 1,
             "num_journal_total_articles": 56
+        },
+        "2018": {
+            "num_journal_oa_articles": 2,
+            "num_journal_total_articles": 40
         }
     },
     "2348-1153": {
         "2017": {
-            "num_journal_oa_articles": 5,
-            "num_journal_total_articles": 44
+            "num_journal_oa_articles": 4,
+            "num_journal_total_articles": 37
         }
     },
     "2349-5103": {
@@ -17682,7 +18068,7 @@
         },
         "2018": {
             "num_journal_oa_articles": 1,
-            "num_journal_total_articles": 42
+            "num_journal_total_articles": 43
         }
     },
     "2363-5037": {
@@ -17701,14 +18087,18 @@
             "num_journal_total_articles": 15
         },
         "2018": {
-            "num_journal_oa_articles": 5,
-            "num_journal_total_articles": 24
+            "num_journal_oa_articles": 6,
+            "num_journal_total_articles": 26
         }
     },
     "2363-6203": {
         "2016": {
             "num_journal_oa_articles": 2,
             "num_journal_total_articles": 198
+        },
+        "2017": {
+            "num_journal_oa_articles": 7,
+            "num_journal_total_articles": 130
         }
     },
     "2363-7005": {
@@ -17738,7 +18128,7 @@
         },
         "2018": {
             "num_journal_oa_articles": 4,
-            "num_journal_total_articles": 19
+            "num_journal_total_articles": 20
         }
     },
     "2363-8419": {
@@ -17784,7 +18174,7 @@
         },
         "2018": {
             "num_journal_oa_articles": 8,
-            "num_journal_total_articles": 41
+            "num_journal_total_articles": 43
         }
     },
     "2364-4176": {
@@ -17814,7 +18204,7 @@
         },
         "2018": {
             "num_journal_oa_articles": 2,
-            "num_journal_total_articles": 27
+            "num_journal_total_articles": 28
         }
     },
     "2364-6853": {
@@ -17848,7 +18238,7 @@
         },
         "2018": {
             "num_journal_oa_articles": 1,
-            "num_journal_total_articles": 8
+            "num_journal_total_articles": 9
         }
     },
     "2365-0869": {
@@ -17861,8 +18251,8 @@
             "num_journal_total_articles": 85
         },
         "2018": {
-            "num_journal_oa_articles": 3,
-            "num_journal_total_articles": 16
+            "num_journal_oa_articles": 4,
+            "num_journal_total_articles": 19
         }
     },
     "2365-0931": {
@@ -17882,7 +18272,7 @@
         },
         "2018": {
             "num_journal_oa_articles": 1,
-            "num_journal_total_articles": 19
+            "num_journal_total_articles": 20
         }
     },
     "2365-4317": {
@@ -17934,7 +18324,7 @@
         },
         "2018": {
             "num_journal_oa_articles": 7,
-            "num_journal_total_articles": 276
+            "num_journal_total_articles": 285
         }
     },
     "2366-0112": {
@@ -17966,7 +18356,7 @@
         },
         "2018": {
             "num_journal_oa_articles": 2,
-            "num_journal_total_articles": 20
+            "num_journal_total_articles": 22
         }
     },
     "2366-5971": {
@@ -17976,13 +18366,23 @@
         },
         "2018": {
             "num_journal_oa_articles": 3,
-            "num_journal_total_articles": 18
+            "num_journal_total_articles": 19
+        }
+    },
+    "2366-603X": {
+        "2017": {
+            "num_journal_oa_articles": 2,
+            "num_journal_total_articles": 13
         }
     },
     "2366-6145": {
         "2016": {
             "num_journal_oa_articles": 3,
             "num_journal_total_articles": 53
+        },
+        "2017": {
+            "num_journal_oa_articles": 2,
+            "num_journal_total_articles": 47
         }
     },
     "2366-7532": {
@@ -18018,16 +18418,22 @@
     "2451-9766": {
         "2017": {
             "num_journal_oa_articles": 2,
-            "num_journal_total_articles": 47
+            "num_journal_total_articles": 43
         },
         "2018": {
             "num_journal_oa_articles": 1,
-            "num_journal_total_articles": 16
+            "num_journal_total_articles": 21
         }
     },
     "2509-2715": {
         "2017": {
             "num_journal_oa_articles": 6,
+            "num_journal_total_articles": 49
+        }
+    },
+    "2509-3142": {
+        "2017": {
+            "num_journal_oa_articles": 4,
             "num_journal_total_articles": 49
         }
     },
@@ -18103,6 +18509,12 @@
             "num_journal_total_articles": 32
         }
     },
+    "2511-1280": {
+        "2018": {
+            "num_journal_oa_articles": 1,
+            "num_journal_total_articles": 15
+        }
+    },
     "2511-1965": {
         "2017": {
             "num_journal_oa_articles": 1,
@@ -18129,8 +18541,8 @@
     },
     "2520-811X": {
         "2018": {
-            "num_journal_oa_articles": 2,
-            "num_journal_total_articles": 15
+            "num_journal_oa_articles": 3,
+            "num_journal_total_articles": 16
         }
     },
     "2520-8217": {
@@ -18142,7 +18554,7 @@
     "2520-8683": {
         "2018": {
             "num_journal_oa_articles": 2,
-            "num_journal_total_articles": 14
+            "num_journal_total_articles": 15
         }
     },
     "2522-0144": {
