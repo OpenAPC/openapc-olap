@@ -216,6 +216,7 @@ def create_cubes_tables(connectable, apc_file_name, offsetting_file_name, schema
     issn_title_map = {}
     
     reader = UnicodeReader(open(offsetting_file_name, "rb"))
+    institution_key_errors = []
     for row in reader:
         institution = row["institution"]
         publisher = row["publisher"]
@@ -229,9 +230,8 @@ def create_cubes_tables(connectable, apc_file_name, offsetting_file_name, schema
         try:
             row["country"] = offsetting_institution_countries[institution]
         except KeyError as ke:
-            msg = (u"KeyError: The institution '{}' was not found in the institutions_offsetting file!")
-            print msg.format(institution)
-            sys.exit()
+            if institution not in institution_key_errors:
+                institution_key_errors.append(institution)
         tables_insert_commands["offsetting"].execute(row)
         if row["euro"] != "NA":
             tables_insert_commands["combined"].execute(row)
@@ -259,7 +259,11 @@ def create_cubes_tables(connectable, apc_file_name, offsetting_file_name, schema
             summarised_offsetting[publisher][issn][pub_year] = 1
         else:
             summarised_offsetting[publisher][issn][pub_year] += 1
-    
+    if institution_key_errors:
+        print "KeyError: The following institutions were not found in the institutions_offsetting file:"
+        for institution in institution_key_errors:
+            print institution
+        sys.exit()
     for publisher, issns in summarised_offsetting.iteritems():
         for issn, pub_years in issns.iteritems():
             for pub_year, count in pub_years.iteritems():
