@@ -244,7 +244,7 @@ def create_cubes_tables(connectable, apc_file_name, offsetting_file_name, schema
         try:
             pub_year = article_pubyears[issn][doi]
         except KeyError:
-            msg = ("Publication year entry not found in article cache for {}. " +
+            msg = (u"Publication year entry not found in article cache for {}. " +
                    "You might have to update the article cache with 'python " +
                    "assets_generator.py coverage_stats'. Using the 'period' " +
                    "column for now.")
@@ -279,7 +279,7 @@ def create_cubes_tables(connectable, apc_file_name, offsetting_file_name, schema
                         row["num_journal_total_articles"] = stats["num_journal_total_articles"]
                         row["num_journal_oa_articles"] = stats["num_journal_oa_articles"]
                     except KeyError as ke:
-                        msg = ("KeyError: No coverage stats found for journal '{}' " +
+                        msg = (u"KeyError: No coverage stats found for journal '{}' " +
                                "({}) in the {} period. Update the crossref cache with " +
                                "'python assets_generator.py crossref_stats'.")
                         print colorise(msg.format(issn_title_map[issn], issn, pub_year), "red")
