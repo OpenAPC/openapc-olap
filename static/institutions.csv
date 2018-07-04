@@ -110,7 +110,7 @@ KTH Royal Institute of Technology,kth,KTH Royal Institute of Technology,EUROPE,S
 Linköping University,linkoping_u,Linköping University,EUROPE,SWE,SE-E
 Luleå University of Technology,lulea_tu,Luleå University of Technology,EUROPE,SWE,SE-BD
 Lund University,lund_u,Lund University,EUROPE,SWE,SE-M
-Malmö University College,malmo_u,Malmö University College,EUROPE,SWE,SE-M
+Malmö University,malmo_u,Malmö University,EUROPE,SWE,SE-M
 Stockholm University,stockholm_u,Stockholm University,EUROPE,SWE,SE-AB
 Swedish University of Agricultural Sciences,swedish_agricultural_u,Swedish University of Agricultural Sciences,EUROPE,SWE,SE-C
 Umeå University,umea_u,Umeå University,EUROPE,SWE,SE-AC
@@ -175,3 +175,7 @@ Université Grenoble Alpes,grenoble_u,Université Grenoble Alpes,EUROPE,FRA,FR-A
 Institut national polytechnique de Toulouse,inpt,Institut national polytechnique de Toulouse(INPT),EUROPE,FRA,FR-OCC
 Université Nice-Sophia-Antipolis,nice_u,Université Nice-Sophia-Antipolis,EUROPE,FRA,FR-PAC
 Université de Poitiers,poitiers_u,Université de Poitiers,EUROPE,FRA,FR-NAQ
+Borås University College,boras_uc,Borås University College,EUROPE,SWE,SE-O
+University College West,west_uc,University College West,EUROPE,SWE,SE-O
+Linnaeus University,linnaeus_u,Linnaeus University,EUROPE,SWE,SE-G
+Örebro University,orebro_u,Örebro University,EUROPE,SWE,SE-T
