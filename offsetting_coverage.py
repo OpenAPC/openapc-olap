@@ -25,7 +25,7 @@ PERSISTENT_PUBDATES_CACHE = {} # Persistent cache, loaded from PUBDATES_CACHE_FI
 
 TEMP_JOURNAL_CACHE = {} # keeps cached journal statistics imported from CSV files. Intended to reduce I/O workload when multiple articles from the same journal have to be looked up. 
 
-JOURNAL_ID_CACHE = {} # keeps journal IDs cached which had to be retreived from SpringerLink to avoid multiple lookups.
+JOURNAL_ID_CACHE = None # keeps journal IDs cached which had to be retreived from SpringerLink to avoid multiple lookups.
 
 COVERAGE_CACHE_FILE = "coverage_stats.json"
 PUBDATES_CACHE_FILE = "article_pubdates.json"
@@ -96,8 +96,8 @@ def _process_springer_catalogue(max_lookups=None):
             journal_id = line["product_id"]
             already_cached = True
             try:
-                _ = COVERAGE_CACHE[journal_id][year]["num_journal_total_articles"]
-                _ = COVERAGE_CACHE[journal_id][year]["num_journal_oa_articles"]
+                _ = COVERAGE_CACHE[journal_id]['years'][year]["num_journal_total_articles"]
+                _ = COVERAGE_CACHE[journal_id]['years'][year]["num_journal_oa_articles"]
             except KeyError:
                 try:
                     _update_journal_stats(title, journal_id, year)
@@ -121,11 +121,11 @@ def _update_journal_stats(title, journal_id, year, verbose=True):
         msg = u'Obtained stats for journal "{}" in {}: {} OA, {} Total'
         print colorise(msg.format(title, year, oa["count"], total["count"]), "green")
     if journal_id not in COVERAGE_CACHE:
-        COVERAGE_CACHE[journal_id] = {}
-    if year not in COVERAGE_CACHE[journal_id]:
-        COVERAGE_CACHE[journal_id][year] = {}
-    COVERAGE_CACHE[journal_id][year]["num_journal_total_articles"] = total["count"]
-    COVERAGE_CACHE[journal_id][year]["num_journal_oa_articles"] = oa["count"]
+        COVERAGE_CACHE[journal_id] = {'title': title, 'years': {}}
+    if year not in COVERAGE_CACHE[journal_id]['years']:
+        COVERAGE_CACHE[journal_id]['years'][year] = {}
+    COVERAGE_CACHE[journal_id]['years'][year]["num_journal_total_articles"] = total["count"]
+    COVERAGE_CACHE[journal_id]['years'][year]["num_journal_oa_articles"] = oa["count"]
     
 def update_coverage_stats(offsetting_file, max_lookups):
     global COVERAGE_CACHE, JOURNAL_ID_CACHE, PERSISTENT_PUBDATES_CACHE, LOOKUPS_PERFORMED
@@ -148,15 +148,6 @@ def update_coverage_stats(offsetting_file, max_lookups):
                 print "Could not decode a cache structure from " + PUBDATES_CACHE_FILE + ", starting with an empty pub date cache."
     else:
         print "No cache file (" + PUBDATES_CACHE_FILE + ") found, starting with an empty pub date cache."
-    if os.path.isfile(JOURNAL_ID_CACHE_FILE):
-        with open(JOURNAL_ID_CACHE_FILE, "r") as f:
-            try:
-               JOURNAL_ID_CACHE  = json.loads(f.read())
-               print "journal_id cache file sucessfully loaded."
-            except ValueError:
-                print "Could not decode a cache structure from " + JOURNAL_ID_CACHE_FILE + ", starting with an empty journal_id cache."
-    else:
-        print "No cache file (" + JOURNAL_ID_CACHE_FILE + ") found, starting with an empty journal_id cache."
         
     if not os.path.isdir(JOURNAL_CSV_DIR):
         raise IOError("Journal CSV directory " + JOURNAL_CSV_DIR + " not found!")
@@ -223,8 +214,8 @@ def update_coverage_stats(offsetting_file, max_lookups):
             pub_year = period
         # Test if journal stats are present
         try:
-            _ = COVERAGE_CACHE[journal_id][pub_year]["num_journal_total_articles"]
-            _ = COVERAGE_CACHE[journal_id][pub_year]["num_journal_oa_articles"]
+            _ = COVERAGE_CACHE[journal_id]['years'][pub_year]["num_journal_total_articles"]
+            _ = COVERAGE_CACHE[journal_id]['years'][pub_year]["num_journal_oa_articles"]
         except KeyError:
             try:
                 _update_journal_stats(title, journal_id, pub_year)
@@ -315,7 +306,21 @@ def _fetch_springer_journal_csv(path, journal_id):
     
 def _get_springer_journal_id_from_doi(doi, issn=None):
     global JOURNAL_ID_CACHE
-    if doi.startswith(("10.1007/s", "10.3758/s", "10.1245/s", "10.1617/s", "10.1186/s")):
+    if JOURNAL_ID_CACHE is None:
+        if os.path.isfile(JOURNAL_ID_CACHE_FILE):
+            with open(JOURNAL_ID_CACHE_FILE, "r") as f:
+                try:
+                    JOURNAL_ID_CACHE  = json.loads(f.read())
+                    print "journal_id cache file sucessfully loaded."
+                    if JOURNAL_ID_CACHE is None:
+                        JOURNAL_ID_CACHE = {}
+                except ValueError:
+                    print "Could not decode a cache structure from " + JOURNAL_ID_CACHE_FILE + ", starting with an empty journal_id cache."
+                    JOURNAL_ID_CACHE = {}
+        else:
+            print "No cache file (" + JOURNAL_ID_CACHE_FILE + ") found, starting with an empty journal_id cache."
+            JOURNAL_ID_CACHE = {}
+    if doi.startswith(("10.1007/s", "10.3758/s", "10.1245/s", "10.1617/s", "10.1186/s", "10.1208/s", "10.1365/s")):
         return doi[9:14].lstrip("0")
     elif doi.startswith("10.1140"):
     # In case of the "European Physical journal" family, the journal id cannot be extracted directly from the DOI.
