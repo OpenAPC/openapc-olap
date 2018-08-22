@@ -25,6 +25,7 @@ ARG_HELP_STRINGS = {
 
 APC_DE_FILE = "apc_de.csv"
 OFFSETTING_FILE = "offsetting.csv"
+SIMULATED_OFFSETTING_FILE = "simulated_data/offsetting_germany/springer_pub_non_oa_enriched.csv"
 
 def main():
     parser = argparse.ArgumentParser()
@@ -54,7 +55,7 @@ def main():
             sys.exit()
         psql_uri = "postgresql://" + db_user + ":" + db_pass + "@localhost/openapc_db"
         engine = sqlalchemy.create_engine(psql_uri)
-        create_cubes_tables(engine, APC_DE_FILE, OFFSETTING_FILE)
+        create_cubes_tables(engine, APC_DE_FILE, OFFSETTING_FILE, SIMULATED_OFFSETTING_FILE)
         with engine.begin() as connection:
             connection.execute("GRANT SELECT ON ALL TABLES IN SCHEMA openapc_schema TO cubes_user")
         
@@ -97,7 +98,7 @@ def init_table(table, fields, create_id=False):
 
     table.create()
 
-def create_cubes_tables(connectable, apc_file_name, offsetting_file_name, schema="openapc_schema"):
+def create_cubes_tables(connectable, apc_file_name, offsetting_file_name, simulated_offsetting_file_name, schema="openapc_schema"):
     
     apc_fields = [
         ("institution", "string"),
@@ -166,6 +167,12 @@ def create_cubes_tables(connectable, apc_file_name, offsetting_file_name, schema
     init_table(offsetting_table, offsetting_fields)
     offsetting_insert_command = offsetting_table.insert()
     
+    simulated_offsetting_table = sqlalchemy.Table("simulated_offsetting", metadata, autoload=False, schema=schema)
+    if simulated_offsetting_table.exists():
+        simulated_offsetting_table.drop(checkfirst=False)
+    init_table(simulated_offsetting_table, offsetting_fields)
+    simulated_offsetting_insert_command = simulated_offsetting_table.insert()
+    
     combined_table = sqlalchemy.Table("combined", metadata, autoload=False, schema=schema)
     if combined_table.exists():
         combined_table.drop(checkfirst=False)
@@ -178,12 +185,20 @@ def create_cubes_tables(connectable, apc_file_name, offsetting_file_name, schema
     init_table(offsetting_coverage_table, offsetting_coverage_fields)
     offsetting_coverage_insert_command = offsetting_coverage_table.insert()
     
+    simulated_offsetting_coverage_table = sqlalchemy.Table("simulated_offsetting_coverage", metadata, autoload=False, schema=schema)
+    if simulated_offsetting_coverage_table.exists():
+        simulated_offsetting_coverage_table.drop(checkfirst=False)
+    init_table(simulated_offsetting_coverage_table, offsetting_coverage_fields)
+    simulated_offsetting_coverage_insert_command = simulated_offsetting_coverage_table.insert()
+    
     # a dict to store individual insert commands for every table
     tables_insert_commands = {
         "openapc": openapc_insert_command,
         "offsetting": offsetting_insert_command,
+        "offsetting_simulated": simulated_offsetting_insert_command,
         "combined": combined_insert_command,
-        "offsetting_coverage": offsetting_coverage_insert_command
+        "offsetting_coverage": offsetting_coverage_insert_command,
+        "offsetting_simulated_coverage": simulated_offsetting_coverage_insert_command
     }
     
     offsetting_institution_countries = {}
@@ -211,53 +226,66 @@ def create_cubes_tables(connectable, apc_file_name, offsetting_file_name, schema
         msg = "Error while trying to decode cache structure in: {}"
         print msg.format(ve.message)
         sys.exit()
-    
+        
+
     summarised_offsetting = {}
+    summarised_simulated_offsetting = {}
     
     journal_id_title_map = {}
     
-    reader = UnicodeReader(open(offsetting_file_name, "rb"))
-    institution_key_errors = []
-    for row in reader:
-        institution = row["institution"]
-        publisher = row["publisher"]
-        is_hybrid = row["is_hybrid"]
-        issn = row["issn"]
-        doi = row["doi"]
-        # colons cannot be escaped in URL queries to the cubes server, so we have
-        # to remove them here
-        row["journal_full_title"] = row["journal_full_title"].replace(":", "")
-        title = row["journal_full_title"]
-        try:
-            row["country"] = offsetting_institution_countries[institution]
-        except KeyError as ke:
-            if institution not in institution_key_errors:
-                institution_key_errors.append(institution)
-        tables_insert_commands["offsetting"].execute(row)
-        if row["euro"] != "NA":
-            tables_insert_commands["combined"].execute(row)
-        
-        if publisher != "Springer Nature":
-            continue
-        
-        journal_id = oc._get_springer_journal_id_from_doi(doi, issn)
-        journal_id_title_map[journal_id] = title
-        try:
-            pub_year = article_pubyears[journal_id][doi]
-        except KeyError:
-            msg = (u"Publication year entry not found in article cache for {}. " +
-                   "You might have to update the article cache with 'python " +
-                   "assets_generator.py coverage_stats'. Using the 'period' " +
-                   "column for now.")
-            print colorise(msg.format(doi), "yellow")
-            pub_year = row["period"]
-        
-        if journal_id not in summarised_offsetting:
-            summarised_offsetting[journal_id] = {}
-        if pub_year not in summarised_offsetting[journal_id]:
-            summarised_offsetting[journal_id][pub_year] = 1
-        else:
-            summarised_offsetting[journal_id][pub_year] += 1
+    for file_name in [offsetting_file_name, simulated_offsetting_file_name]:
+        reader = UnicodeReader(open(file_name, "rb"))
+        institution_key_errors = []
+        for row in reader:
+            institution = row["institution"]
+            publisher = row["publisher"]
+            is_hybrid = row["is_hybrid"]
+            issn = row["issn"]
+            doi = row["doi"]
+            # colons cannot be escaped in URL queries to the cubes server, so we have
+            # to remove them here
+            row["journal_full_title"] = row["journal_full_title"].replace(":", "")
+            title = row["journal_full_title"]
+            try:
+                row["country"] = offsetting_institution_countries[institution]
+            except KeyError as ke:
+                if institution not in institution_key_errors:
+                    institution_key_errors.append(institution)
+            if file_name == offsetting_file_name:
+                tables_insert_commands["offsetting"].execute(row)
+                if row["euro"] != "NA":
+                    tables_insert_commands["combined"].execute(row)
+            tables_insert_commands["simulated_offsetting"].execute(row)
+            
+            if publisher != "Springer Nature":
+                continue
+            
+            journal_id = oc._get_springer_journal_id_from_doi(doi, issn)
+            journal_id_title_map[journal_id] = title
+            try:
+                pub_year = article_pubyears[journal_id][doi]
+            except KeyError:
+                msg = (u"Publication year entry not found in article cache for {}. " +
+                       "You might have to update the article cache with 'python " +
+                       "assets_generator.py coverage_stats'. Using the 'period' " +
+                       "column for now.")
+                print colorise(msg.format(doi), "yellow")
+                pub_year = row["period"]
+                
+            if journal_id not in summarised_simulated_offsetting:
+                summarised_simulated_offsetting[journal_id] = {}
+            if pub_year not in summarised_simulated_offsetting[journal_id]:
+                summarised_simulated_offsetting[journal_id][pub_year] = 1
+            else:
+                summarised_simulated_offsetting[journal_id][pub_year] += 1
+            
+            if file_name == offsetting_file_name:
+                if journal_id not in summarised_offsetting:
+                    summarised_offsetting[journal_id] = {}
+                if pub_year not in summarised_offsetting[journal_id]:
+                    summarised_offsetting[journal_id][pub_year] = 1
+                else:
+                    summarised_offsetting[journal_id][pub_year] += 1
     if institution_key_errors:
         print "KeyError: The following institutions were not found in the institutions_offsetting file:"
         for institution in institution_key_errors:
@@ -278,6 +306,11 @@ def create_cubes_tables(connectable, apc_file_name, offsetting_file_name, schema
                 except KeyError:
                     row["num_offsetting_articles"] = 0
                 tables_insert_commands["offsetting_coverage"].execute(row)
+                 try:
+                    row["num_offsetting_articles"] = summarised_simulated_offsetting[journal_id][year]
+                except KeyError:
+                    row["num_offsetting_articles"] = 0
+                tables_insert_commands["offsetting_simulated_coverage"].execute(row)
     
     institution_countries = {}
     

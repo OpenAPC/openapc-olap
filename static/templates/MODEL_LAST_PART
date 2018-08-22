@@ -14,8 +14,50 @@
         }
         ,
         {
+            "name": "simulated_offsetting",
+            "label": "Simulated Offsetting data cube (No monetary values!)",
+            "aggregates": [
+                {
+                    "name": "num_items",
+                    "label": "Number of Articles",
+                    "measure": "journal_full_title",
+                    "function": "count"
+                }
+            ],
+            "dimensions": ["institution", "period", "publisher", "journal_full_title", "doi", "is_hybrid", "country"]
+        }
+        ,
+        {
             "name": "offsetting_coverage",
             "label": "Number of offsetting articles compared to number of journal total and oa articles",
+            "aggregates": [
+                {
+                    "name": "num_offsetting_articles",
+                    "label": "Offsetting articles",
+                    "measure": "num_offsetting_articles",
+                    "function": "sum",
+                    "info": "primary"
+                },
+                {
+                    "name": "num_journal_total_articles",
+                    "label": "Journal total articles",
+                    "measure": "num_journal_total_articles",
+                    "function": "sum"
+                },
+                {
+                    "name": "num_journal_oa_articles",
+                    "label": "Journal OA articles",
+                    "measure": "num_journal_oa_articles",
+                    "function": "sum"
+                }
+
+            ],
+            "dimensions": ["period", "publisher", "journal_full_title", "is_hybrid", "num_offsetting_articles", "num_journal_total_articles", "num_journal_oa_articles"]
+        }
+        ,
+        {
+            "name": "simulated_offsetting_coverage",
+            "label": "Number of offsetting articles (simulated data) compared to number of journal total and oa articles",
             "aggregates": [
                 {
                     "name": "num_offsetting_articles",
