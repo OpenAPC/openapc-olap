@@ -197,10 +197,10 @@ def create_cubes_tables(connectable, apc_file_name, offsetting_file_name, simula
     tables_insert_commands = {
         "openapc": openapc_insert_command,
         "offsetting": offsetting_insert_command,
-        "offsetting_simulated": simulated_offsetting_insert_command,
+        "simulated_offsetting": simulated_offsetting_insert_command,
         "combined": combined_insert_command,
         "offsetting_coverage": offsetting_coverage_insert_command,
-        "offsetting_simulated_coverage": simulated_offsetting_coverage_insert_command
+        "simulated_offsetting_coverage": simulated_offsetting_coverage_insert_command
     }
     
     offsetting_institution_countries = {}
@@ -312,7 +312,7 @@ def create_cubes_tables(connectable, apc_file_name, offsetting_file_name, simula
                     row["num_offsetting_articles"] = summarised_simulated_offsetting[journal_id][year]
                 except KeyError:
                     row["num_offsetting_articles"] = 0
-                tables_insert_commands["offsetting_simulated_coverage"].execute(row)
+                tables_insert_commands["simulated_offsetting_coverage"].execute(row)
     
     institution_countries = {}
     

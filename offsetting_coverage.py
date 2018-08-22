@@ -225,11 +225,10 @@ def update_coverage_stats(offsetting_file, max_lookups):
                 print error_msg
                 ERROR_MSGS.append(error_msg)
             except ValueError as ve:
-                error_msg = u'Critical Error while processing DOI {}: No stats found for journal "{}" ({}) in {} albeit having downloaded the full Open Choice catalogue and stats could not be obtained retroactively.'
+                error_msg = u'Error while processing DOI {}: No stats found for journal "{}" ({}) in {} albeit having downloaded the full Open Choice catalogue and stats could not be obtained retroactively.'
                 error_msg = colorise(error_msg.format(doi, title, journal_id, pub_year), "red")
                 print error_msg
                 ERROR_MSGS.append(error_msg)
-                _shutdown()
         if lookup_performed:
             LOOKUPS_PERFORMED += 1
     _shutdown()
@@ -278,7 +277,6 @@ def _fetch_springer_journal_csv(path, journal_id):
             if not line.endswith("\n"):
                 line += "\n"
             joint_lines.append(line)
-    print joint_lines
     with open(path, "wb") as f:
         f.write("".join(joint_lines))
     
@@ -298,8 +296,10 @@ def _get_springer_journal_id_from_doi(doi, issn=None):
         else:
             print "No cache file (" + JOURNAL_ID_CACHE_FILE + ") found, starting with an empty journal_id cache."
             JOURNAL_ID_CACHE = {}
-    if doi.startswith(("10.1007/s", "10.3758/s", "10.1245/s", "10.1617/s", "10.1186/s", "10.1208/s", "10.1365/s")):
+    if doi.startswith(("10.1007/s", "10.1007/5", "10.3758/s", "10.1245/s", "10.1617/s", "10.1186/s", "10.1208/s", "10.1365/s")):
         return doi[9:14].lstrip("0")
+    elif doi.startswith(("10.1038")): # Nature journals are not listed on SpringerLink
+        return "00000"
     elif doi.startswith("10.1140"):
     # In case of the "European Physical journal" family, the journal id cannot be extracted directly from the DOI.
         if issn is None or issn not in JOURNAL_ID_CACHE:
