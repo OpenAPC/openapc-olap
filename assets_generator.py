@@ -29,7 +29,7 @@ SIMULATED_OFFSETTING_FILE = "simulated_data/offsetting_germany/springer_pub_non_
 
 def main():
     parser = argparse.ArgumentParser()
-    parser.add_argument("job", choices=["tables", "model", "yamls", "db_settings", "coverage_stats"])
+    parser.add_argument("job", choices=["tables", "model", "yamls", "db_settings", "coverage_stats", "simulated_coverage_stats"])
     parser.add_argument("-d", "--dir", help=ARG_HELP_STRINGS["dir"])
     parser.add_argument("-n", "--num_api_lookups", type=int, help=ARG_HELP_STRINGS["num_api_lookups"])
     args = parser.parse_args()
@@ -76,6 +76,8 @@ def main():
             scp.write(config_file)
     elif args.job == "coverage_stats":
         oc.update_coverage_stats(OFFSETTING_FILE, args.num_api_lookups)
+    elif args.job == "simulated_coverage_stats":
+        oc.update_coverage_stats(SIMULATED_OFFSETTING_FILE, args.num_api_lookups)
         
         
         
@@ -306,7 +308,7 @@ def create_cubes_tables(connectable, apc_file_name, offsetting_file_name, simula
                 except KeyError:
                     row["num_offsetting_articles"] = 0
                 tables_insert_commands["offsetting_coverage"].execute(row)
-                 try:
+                try:
                     row["num_offsetting_articles"] = summarised_simulated_offsetting[journal_id][year]
                 except KeyError:
                     row["num_offsetting_articles"] = 0
