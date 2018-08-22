@@ -18,7 +18,7 @@ ISSN_RE = re.compile("^(?P<first_part>\d{4})-?(?P<second_part>\d{3})(?P<check_di
 
 SPRINGER_OA_SEARCH = "https://link.springer.com/search?facet-journal-id={}&package=openaccessarticles&search-within=Journal&query=&date-facet-mode=in&facet-start-year={}&facet-end-year={}"
 SPRINGER_FULL_SEARCH = "https://link.springer.com/search?facet-journal-id={}&query=&date-facet-mode=in&facet-start-year={}&facet-end-year={}"
-SPRINGER_GET_CSV = "https://link.springer.com/search/csv?date-facet-mode=between&search-within=Journal&facet-journal-id={}&facet-end-year={}&query=&facet-start-year=2015"
+SPRINGER_GET_CSV = "https://link.springer.com/search/csv?date-facet-mode=between&search-within=Journal&facet-journal-id={}&facet-start-year={}&facet-end-year={}&query="
 
 COVERAGE_CACHE = {}
 PERSISTENT_PUBDATES_CACHE = {} # Persistent cache, loaded from PUBDATES_CACHE_FILE on startup
@@ -230,35 +230,6 @@ def update_coverage_stats(offsetting_file, max_lookups):
                 print error_msg
                 ERROR_MSGS.append(error_msg)
                 _shutdown()
-        #if journal_id not in COVERAGE_CACHE:
-            #COVERAGE_CACHE[journal_id] = {}
-        #if pub_year not in COVERAGE_CACHE[journal_id]:
-            #COVERAGE_CACHE[journal_id][pub_year] = {}
-        ## If coverage stats are missing, we have to scrap them from the SpringerLink search site HTML
-        #try:
-            #_ = COVERAGE_CACHE[journal_id][pub_year]["num_journal_total_articles"]
-        #except KeyError:
-            #msg = u'No cached entry found for total article numbers in journal "{}" ({}) in the {} publication period, querying SpringerLink...'
-            #print msg.format(title, journal_id, pub_year)
-            #if journal_id not in COVERAGE_CACHE:
-                #COVERAGE_CACHE[journal_id] = {}
-            #if journal_id is None:
-                #journal_id = _get_springer_journal_id_from_doi(doi, issn)
-            #total = _get_springer_journal_stats(journal_id, pub_year, oa=False)
-            #COVERAGE_CACHE[issn][pub_year]["num_journal_total_articles"] = total["count"]
-            #lookup_performed = True
-        #try:
-            #_ = COVERAGE_CACHE[issn][pub_year]["num_journal_oa_articles"]
-        #except KeyError:
-            #msg = u'No cached entry found for OA article numbers in journal "{}" ({}) in the {} publication period, querying SpringerLink...'
-            #print msg.format(title, issn, pub_year)
-            #if issn not in COVERAGE_CACHE:
-                #COVERAGE_CACHE[issn] = {}
-            #if journal_id is None:
-                #journal_id = _get_springer_journal_id_from_doi(doi, issn)
-            #oa = _get_springer_journal_stats(journal_id, pub_year, oa=True)
-            #COVERAGE_CACHE[issn][pub_year]["num_journal_oa_articles"] = oa["count"]
-            #lookup_performed = True
         if lookup_performed:
             LOOKUPS_PERFORMED += 1
     _shutdown()
@@ -295,14 +266,21 @@ def _get_journal_cache_from_csv(journal_id, refetch):
         return cache
         
 def _fetch_springer_journal_csv(path, journal_id):
-    # WARNING: SpringerLink caps CSV size at 1000 lines. This will become a problem
-    # when a single journal reaches a total number of more than 1000 OA articles.
-    year = datetime.datetime.now().year
-    url = SPRINGER_GET_CSV.format(journal_id, year)
-    handle = urllib2.urlopen(url)
-    content = handle.read()
+    current_year = datetime.datetime.now().year
+    years = range(2015, current_year + 1)
+    joint_lines = []
+    for year in years:
+        url = SPRINGER_GET_CSV.format(journal_id, year, year)
+        handle = urllib2.urlopen(url)
+        if year > 2015:
+            handle.readline() # read the CSV header only once
+        for line in handle:
+            if not line.endswith("\n"):
+                line += "\n"
+            joint_lines.append(line)
+    print joint_lines
     with open(path, "wb") as f:
-        f.write(content)
+        f.write("".join(joint_lines))
     
 def _get_springer_journal_id_from_doi(doi, issn=None):
     global JOURNAL_ID_CACHE
@@ -343,7 +321,7 @@ def _get_springer_journal_id_from_doi(doi, issn=None):
     else:
         raise ValueError(doi + " does not seem to be a Springer DOI (prefix not in list)!") 
     
-def _get_springer_journal_stats(journal_id, period, oa=False, pause=0.5):
+def _get_springer_journal_stats(journal_id, period, oa=False):
     if not journal_id.isdigit():
         raise ValueError("Invalid journal id " + journal_id + " (not a number)")
     url = SPRINGER_FULL_SEARCH.format(journal_id, period, period)
