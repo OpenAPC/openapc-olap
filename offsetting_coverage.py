@@ -268,16 +268,19 @@ def _get_journal_cache_from_csv(journal_id, refetch):
 def _fetch_springer_journal_csv(path, journal_id):
     current_year = datetime.datetime.now().year
     years = range(2015, current_year + 1)
-    joined_lines = []
+    joint_lines = []
     for year in years:
         url = SPRINGER_GET_CSV.format(journal_id, year, year)
         handle = urllib2.urlopen(url)
         if year > 2015:
             handle.readline() # read the CSV header only once
         for line in handle:
-            joined_lines.append(line)
+            if not line.endswith("\n"):
+                line += "\n"
+            joint_lines.append(line)
+    print joint_lines
     with open(path, "wb") as f:
-        f.write("".join(joined_lines))
+        f.write("".join(joint_lines))
     
 def _get_springer_journal_id_from_doi(doi, issn=None):
     global JOURNAL_ID_CACHE
