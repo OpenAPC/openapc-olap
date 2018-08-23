@@ -336,4 +336,4 @@ University of Cambridge: 1   (example DOI: https://doi.org/10.3758/s13414-016-12
 King's College London: 1   (example DOI: https://doi.org/10.1007/s12529-016-9562-y)
 Entries from 22 distinct institution(s) removed (DOI duplicates with offsetting data)
 
-out file created, deleted 5205 lines (602 without DOI, 4445 no Open Choice ISSN, 158 duplicates with existing offsetting data)
+out file created, deleted 5319 lines (602 without DOI, 114 lines with a Nature DOI, 4445 no Open Choice ISSN, 158 duplicates with existing offsetting data)
