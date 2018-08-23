@@ -60,6 +60,7 @@ def main():
                 continue
             if doi.startswith("10.1038"):
                 delete_stats["nature_doi"] += 1
+                continue
             if doi in OFFSETTING_DOIS:
                 delete_stats["duplicate"] += 1
                 institution = OFFSETTING_DOIS[doi]
