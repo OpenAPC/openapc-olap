@@ -36,7 +36,8 @@ def main():
     delete_stats = {
         "no_doi": 0,
         "no_oc_issn": 0,
-        "duplicate": 0
+        "duplicate": 0,
+        "nature_doi": 0
     }
     deleted_issns = {}
     deleted_duplicates = {}
@@ -57,6 +58,8 @@ def main():
                 else:
                     deleted_issns[issn]["count"] += 1
                 continue
+            if doi.startswith("10.1038"):
+                delete_stats["nature_doi"] += 1
             if doi in OFFSETTING_DOIS:
                 delete_stats["duplicate"] += 1
                 institution = OFFSETTING_DOIS[doi]
@@ -86,8 +89,9 @@ def main():
             print "{}: {}   (example DOI: {})".format(key, deleted_duplicates[key]["count"], deleted_duplicates[key]["example_doi"])
         print "Entries from {} distinct institution(s) removed (DOI duplicates with offsetting data)".format(len(deleted_duplicates.keys()))
 
-        msg = "\nout file created, deleted {} lines ({} without DOI, {} no Open Choice ISSN, {} duplicates with existing offsetting data)"
-        msg = msg.format(delete_stats["no_doi"] + delete_stats["no_oc_issn"] + delete_stats["duplicate"], delete_stats["no_doi"], delete_stats["no_oc_issn"], delete_stats["duplicate"])
+        deleted_total = reduce(lambda x, y: x + y, delete_stats.values())
+        msg = "\nout file created, deleted {} lines ({} without DOI, {} lines with a Nature DOI, {} no Open Choice ISSN, {} duplicates with existing offsetting data)"
+        msg = msg.format(deleted_total, delete_stats["no_doi"], delete_stats["nature_doi"], delete_stats["no_oc_issn"], delete_stats["duplicate"])
         print colorise(msg, "green")
 
 if __name__ == '__main__' and __package__ is None:
