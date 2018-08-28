@@ -18,7 +18,9 @@ ISSN_RE = re.compile("^(?P<first_part>\d{4})-?(?P<second_part>\d{3})(?P<check_di
 
 SPRINGER_OA_SEARCH = "https://link.springer.com/search?facet-journal-id={}&package=openaccessarticles&search-within=Journal&query=&date-facet-mode=in&facet-start-year={}&facet-end-year={}"
 SPRINGER_FULL_SEARCH = "https://link.springer.com/search?facet-journal-id={}&query=&date-facet-mode=in&facet-start-year={}&facet-end-year={}"
-SPRINGER_GET_CSV = "https://link.springer.com/search/csv?date-facet-mode=between&search-within=Journal&facet-journal-id={}&facet-start-year={}&facet-end-year={}&query="
+
+JOURNAL_ALL_CSV_URL = "https://link.springer.com/search/csv?date-facet-mode=between&search-within=Journal&facet-journal-id={}&facet-start-year={}&facet-end-year={}&query="
+JOURNAL_OA_CSV_URL = "https://link.springer.com/search/csv?search-within=Journal&package=openaccessarticles&date-facet-mode=in&query=&facet-journal-id={}&facet-start-year={}&facet-end-year={}"
 
 COVERAGE_CACHE = {}
 PERSISTENT_PUBDATES_CACHE = {} # Persistent cache, loaded from PUBDATES_CACHE_FILE on startup
@@ -168,7 +170,7 @@ def update_coverage_stats(offsetting_file, max_lookups):
         period = line["period"]
         title = line["journal_full_title"]
         doi = line["doi"]
-        journal_id = _get_springer_journal_id_from_doi(doi, issn)
+        journal_id = get_springer_journal_id_from_doi(doi, issn)
         # Retreive publication dates for articles from CSV summaries on SpringerLink.
         # Employ a multi-level cache structure to minimize IO:
         #  1. try to look up the doi in the persistent publication dates cache
@@ -243,7 +245,7 @@ def _get_journal_cache_from_csv(journal_id, refetch):
     
     Args:
         journal_id: The SpringerLink internal journal ID. Can be obtained
-                    using _get_springer_journal_id_from_doi()
+                    using get_springer_journal_id_from_doi()
         refetch: Bool. If True, the CSV file will always be re-downloaded, otherwise
                  a local copy will be tried first.
     
@@ -252,7 +254,7 @@ def _get_journal_cache_from_csv(journal_id, refetch):
     """
     path = os.path.join(JOURNAL_CSV_DIR, journal_id + ".csv")
     if not os.path.isfile(path) or refetch:
-        _fetch_springer_journal_csv(path, journal_id)
+        fetch_springer_journal_csv(path, journal_id)
         msg = u"Journal {}: Fetching article CSV table from SpringerLink..."
         print msg.format(journal_id)
     with open(path) as p:
@@ -264,12 +266,15 @@ def _get_journal_cache_from_csv(journal_id, refetch):
             cache[doi] = year
         return cache
         
-def _fetch_springer_journal_csv(path, journal_id):
+def fetch_springer_journal_csv(path, journal_id, oa_only=False):
     current_year = datetime.datetime.now().year
     years = range(2015, current_year + 1)
     joint_lines = []
     for year in years:
-        url = SPRINGER_GET_CSV.format(journal_id, year, year)
+        if oa_only:
+            url = JOURNAL_OA_CSV_URL.format(journal_id, year, year)
+        else:
+            url = JOURNAL_ALL_CSV_URL.format(journal_id, year, year)
         handle = urllib2.urlopen(url)
         if year > 2015:
             handle.readline() # read the CSV header only once
@@ -280,7 +285,7 @@ def _fetch_springer_journal_csv(path, journal_id):
     with open(path, "wb") as f:
         f.write("".join(joint_lines))
     
-def _get_springer_journal_id_from_doi(doi, issn=None):
+def get_springer_journal_id_from_doi(doi, issn=None):
     global JOURNAL_ID_CACHE
     if JOURNAL_ID_CACHE is None:
         if os.path.isfile(JOURNAL_ID_CACHE_FILE):
