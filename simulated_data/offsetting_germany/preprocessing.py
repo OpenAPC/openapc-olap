@@ -11,11 +11,28 @@ SPRINGER_CATALOGUE_FILES = {
 
 OFFSETTING_FILE = "../../offsetting.csv"
 
+JOURNAL_CSV_DIR = "journal_oa_article_lists"
+
 OPEN_CHOICE_ISSNS = {}
 OFFSETTING_DOIS = {}
 
+def article_is_oa(doi, issn):
+    journal_id = get_springer_journal_id_from_doi(doi, issn)
+    csv_file = path.join(JOURNAL_CSV_DIR, journal_id + ".csv")
+    if not path.isfile(csv_file):
+        msg = "Downloading OA article list for journal {}..."
+        print colorise(msg.format(journal_id), "yellow")
+        fetch_springer_journal_csv(csv_file, journal_id, oa_only=True)
+    with open(csv_file) as csv:
+        reader = UnicodeReader(csv)
+        for line in reader:
+            if line["Item DOI"].strip().lower() == doi.strip().lower():
+                print "Article {} is OA".format(doi)
+                return True
+        print "Article {} is not OA".format(doi)
+        return False
+
 def main():
-    
     for year, catalogue_file in SPRINGER_CATALOGUE_FILES.items():
         OPEN_CHOICE_ISSNS[year] = []
         with open(catalogue_file) as f:
@@ -32,7 +49,10 @@ def main():
             OFFSETTING_DOIS[line["doi"]] = line["institution"]
     
     
-    modified_content = [] 
+    modified_content = {
+        "oa": [],
+        "non_oa": []
+    }
     delete_stats = {
         "no_doi": 0,
         "no_oc_issn": 0,
@@ -69,13 +89,17 @@ def main():
                 else:
                     deleted_duplicates[institution]["count"] += 1
                 continue
-            modified_content.append(line)
+            if article_is_oa(doi, issn):
+                modified_content["oa"].append(line)
+            else:
+                modified_content["non_oa"].append(line)
     
-        with open("out.csv", "w") as out_file:
-            writer = csv.DictWriter(out_file, fieldnames=reader.reader.fieldnames, quoting=csv.QUOTE_NONNUMERIC)
-            writer.writeheader()
-            for line in modified_content:
-                writer.writerow(line)
+        for access_type in modified_content.keys():
+            with open("out_" + access_type, "w") as out_file:
+                writer = csv.DictWriter(out_file, fieldnames=reader.reader.fieldnames, quoting=csv.QUOTE_NONNUMERIC)
+                writer.writeheader()
+                for line in modified_content[access_type]:
+                    writer.writerow(line)
         
         print "\n----- Deleted entries based on ISSN not belonging to an Open Choice journal-----\n"
         keys = deleted_issns.keys()
@@ -91,11 +115,16 @@ def main():
         print "Entries from {} distinct institution(s) removed (DOI duplicates with offsetting data)".format(len(deleted_duplicates.keys()))
 
         deleted_total = reduce(lambda x, y: x + y, delete_stats.values())
-        msg = "\nout file created, deleted {} lines ({} without DOI, {} lines with a Nature DOI, {} no Open Choice ISSN, {} duplicates with existing offsetting data)"
+        msg = "\nout files created, deleted {} lines ({} without DOI, {} lines with a Nature DOI, {} no Open Choice ISSN, {} duplicates with existing offsetting data)"
         msg = msg.format(deleted_total, delete_stats["no_doi"], delete_stats["nature_doi"], delete_stats["no_oc_issn"], delete_stats["duplicate"])
-        print colorise(msg, "green")
+        print msg
+        
+        msg = "\nOA out file contains {} articles, non-OA out file contains {} articles"
+        msg = msg.format(len(modified_content["oa"]), len(modified_content["non_oa"]))
+        print msg
 
 if __name__ == '__main__' and __package__ is None:
     sys.path.append(path.dirname(path.dirname(path.dirname(path.abspath(__file__)))))
     from util import UnicodeReader, colorise
+    from offsetting_coverage import get_springer_journal_id_from_doi, fetch_springer_journal_csv
     main()
