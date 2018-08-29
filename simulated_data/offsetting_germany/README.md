@@ -12,9 +12,10 @@ To do this, our colleagues at the OA analytics group performed a bibliometrical 
 
 ## Preprocessing:
 
-To make the data compatible with our exisiting offsetting data, the following preprocessing steps are taken out:
+To make the data compatible with our exisiting offsetting data, the following preprocessing steps were taken out:
 
 - Remove all articles lacking a DOI. This leads to some inaccuracies, but we cannot process such articles using our OpenAPC enrichment tools.
+- Remove all internal duplicates inside the raw data (Every DOI may occur only once).
 - Remove all articles where the journal ISSN does not belong to a Springer Open Choice journal in the according year.
 - Remove all articles where the DOI is already present in our offsetting data set.
 - Remove all articles where the DOI has a Nature prefix (10.1038). This also leads to slight inaccuracies, but unfortunately Nature journals are not hosted on SpringerLink, which means that we cannot obtain metrics (Number of OA/total articles) for them.
