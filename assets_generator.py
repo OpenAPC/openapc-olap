@@ -25,7 +25,8 @@ ARG_HELP_STRINGS = {
 
 APC_DE_FILE = "apc_de.csv"
 OFFSETTING_FILE = "offsetting.csv"
-SIMULATED_OFFSETTING_FILE = "simulated_data/offsetting_germany/springer_pub_non_oa_enriched.csv"
+SIMULATED_OFFSETTING_FILE_NON_OA = "simulated_data/offsetting_germany/springer_pub_non_oa_enriched.csv"
+SIMULATED_OFFSETTING_FILE_OA = "simulated_data/offsetting_germany/springer_pub_oa_enriched.csv"
 
 def main():
     parser = argparse.ArgumentParser()
@@ -55,7 +56,7 @@ def main():
             sys.exit()
         psql_uri = "postgresql://" + db_user + ":" + db_pass + "@localhost/openapc_db"
         engine = sqlalchemy.create_engine(psql_uri)
-        create_cubes_tables(engine, APC_DE_FILE, OFFSETTING_FILE, SIMULATED_OFFSETTING_FILE)
+        create_cubes_tables(engine)
         with engine.begin() as connection:
             connection.execute("GRANT SELECT ON ALL TABLES IN SCHEMA openapc_schema TO cubes_user")
         
@@ -75,9 +76,9 @@ def main():
         with open('db_settings.ini', 'w') as config_file:
             scp.write(config_file)
     elif args.job == "coverage_stats":
-        oc.update_coverage_stats(OFFSETTING_FILE, args.num_api_lookups)
+        oc.update_coverage_stats([OFFSETTING_FILE], args.num_api_lookups)
     elif args.job == "simulated_coverage_stats":
-        oc.update_coverage_stats(SIMULATED_OFFSETTING_FILE, args.num_api_lookups)
+        oc.update_coverage_stats([SIMULATED_OFFSETTING_FILE_NON_OA, SIMULATED_OFFSETTING_FILE_OA], args.num_api_lookups)
         
         
         
@@ -100,7 +101,7 @@ def init_table(table, fields, create_id=False):
 
     table.create()
 
-def create_cubes_tables(connectable, apc_file_name, offsetting_file_name, simulated_offsetting_file_name, schema="openapc_schema"):
+def create_cubes_tables(connectable, schema="openapc_schema"):
     
     apc_fields = [
         ("institution", "string"),
@@ -235,7 +236,7 @@ def create_cubes_tables(connectable, apc_file_name, offsetting_file_name, simula
     
     journal_id_title_map = {}
     
-    for file_name in [offsetting_file_name, simulated_offsetting_file_name]:
+    for file_name in [OFFSETTING_FILE, SIMULATED_OFFSETTING_FILE_NON_OA, SIMULATED_OFFSETTING_FILE_OA]:
         reader = UnicodeReader(open(file_name, "rb"))
         institution_key_errors = []
         for row in reader:
@@ -253,7 +254,7 @@ def create_cubes_tables(connectable, apc_file_name, offsetting_file_name, simula
             except KeyError as ke:
                 if institution not in institution_key_errors:
                     institution_key_errors.append(institution)
-            if file_name == offsetting_file_name:
+            if file_name == OFFSETTING_FILE:
                 tables_insert_commands["offsetting"].execute(row)
                 if row["euro"] != "NA":
                     tables_insert_commands["combined"].execute(row)
@@ -277,11 +278,15 @@ def create_cubes_tables(connectable, apc_file_name, offsetting_file_name, simula
             if journal_id not in summarised_simulated_offsetting:
                 summarised_simulated_offsetting[journal_id] = {}
             if pub_year not in summarised_simulated_offsetting[journal_id]:
-                summarised_simulated_offsetting[journal_id][pub_year] = 1
+                summarised_simulated_offsetting[journal_id][pub_year] = {"num_offsetting": 1, "additional_oa": 0}
             else:
-                summarised_simulated_offsetting[journal_id][pub_year] += 1
+                summarised_simulated_offsetting[journal_id][pub_year]["num_offsetting"] += 1
+            if file_name == SIMULATED_OFFSETTING_FILE_NON_OA:
+                # articles from SIMULATED_OFFSETTING_FILE_OA are already OA by now, so they would not increase the simulated OA count.
+                summarised_simulated_offsetting[journal_id][pub_year]["additional_oa"] += 1
             
-            if file_name == offsetting_file_name:
+            
+            if file_name == OFFSETTING_FILE:
                 if journal_id not in summarised_offsetting:
                     summarised_offsetting[journal_id] = {}
                 if pub_year not in summarised_offsetting[journal_id]:
@@ -309,9 +314,13 @@ def create_cubes_tables(connectable, apc_file_name, offsetting_file_name, simula
                     row["num_offsetting_articles"] = 0
                 tables_insert_commands["offsetting_coverage"].execute(row)
                 try:
-                    row["num_offsetting_articles"] = summarised_simulated_offsetting[journal_id][year]
+                    row["num_offsetting_articles"] = summarised_simulated_offsetting[journal_id][year]["num_offsetting"]
                 except KeyError:
                     row["num_offsetting_articles"] = 0
+                try:
+                    row["num_journal_oa_articles"] += summarised_simulated_offsetting[journal_id][year]["additional_oa"]
+                except KeyError:
+                    pass
                 tables_insert_commands["simulated_offsetting_coverage"].execute(row)
     
     institution_countries = {}
@@ -330,7 +339,7 @@ def create_cubes_tables(connectable, apc_file_name, offsetting_file_name, simula
             insert_command = table.insert()
             tables_insert_commands[institution_name] = insert_command
     
-    reader = UnicodeReader(open(apc_file_name, "rb"))
+    reader = UnicodeReader(open(APC_DE_FILE, "rb"))
     for row in reader:
         institution = row["institution"]
         # colons cannot be escaped in URL queries to the cubes server, so we have

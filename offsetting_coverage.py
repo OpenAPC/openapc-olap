@@ -129,7 +129,7 @@ def _update_journal_stats(title, journal_id, year, verbose=True):
     COVERAGE_CACHE[journal_id]['years'][year]["num_journal_total_articles"] = total["count"]
     COVERAGE_CACHE[journal_id]['years'][year]["num_journal_oa_articles"] = oa["count"]
     
-def update_coverage_stats(offsetting_file, max_lookups):
+def update_coverage_stats(file_list, max_lookups):
     global COVERAGE_CACHE, JOURNAL_ID_CACHE, PERSISTENT_PUBDATES_CACHE, LOOKUPS_PERFORMED
     LOOKUPS_PERFORMED = 0
     if os.path.isfile(COVERAGE_CACHE_FILE):
@@ -156,83 +156,84 @@ def update_coverage_stats(offsetting_file, max_lookups):
         
     _process_springer_catalogue(max_lookups)
     
-    reader = UnicodeReader(open(offsetting_file, "r"))
-    for line in reader:
-        if max_lookups is not None and LOOKUPS_PERFORMED >= max_lookups:
-            print u"maximum number of lookups performed."
-            _shutdown()
-        lookup_performed = False
-        found = True
-        publisher = line["publisher"]
-        if publisher != "Springer Nature":
-            continue
-        issn = line["issn"]
-        period = line["period"]
-        title = line["journal_full_title"]
-        doi = line["doi"]
-        journal_id = get_springer_journal_id_from_doi(doi, issn)
-        # Retreive publication dates for articles from CSV summaries on SpringerLink.
-        # Employ a multi-level cache structure to minimize IO:
-        #  1. try to look up the doi in the persistent publication dates cache
-        #  2. if the journal is not present, repopulate local cache segment from a CSV file in the journal CSV dir
-        #  3a. if no CSV for the journal could be found, fetch it from SpringerLink
-        #  3b. Alternative to 3: If a CSV was found but it does not contain the DOI, re-fetch it from SpringerLink 
-        try:
-            _ = PERSISTENT_PUBDATES_CACHE[journal_id][doi]
-            print u"Journal {} ('{}'): DOI {} already cached.".format(journal_id, title, doi)
-        except KeyError:
-            if journal_id not in TEMP_JOURNAL_CACHE:
-                msg = u"Journal {} ('{}'): Not found in temp cache, repopulating..."
-                print msg.format(journal_id, title)
-                TEMP_JOURNAL_CACHE[journal_id] = _get_journal_cache_from_csv(journal_id, refetch=False)
-            if doi not in TEMP_JOURNAL_CACHE[journal_id]:
-                msg = u"Journal {} ('{}'): DOI {} not found in cache, re-fetching csv file..."
-                print msg.format(journal_id, title, doi)
-                TEMP_JOURNAL_CACHE[journal_id] = _get_journal_cache_from_csv(journal_id, refetch=True)
-                if doi not in TEMP_JOURNAL_CACHE[journal_id]:
-                    msg = u"Journal {} ('{}'): DOI {} NOT FOUND in SpringerLink data!"
-                    msg = colorise(msg.format(title, journal_id, doi), "red")
-                    print msg
-                    ERROR_MSGS.append(msg)
-                    found = False
-            lookup_performed = True
-            if journal_id not in PERSISTENT_PUBDATES_CACHE:
-                PERSISTENT_PUBDATES_CACHE[journal_id] = {}
-            if found:
-                PERSISTENT_PUBDATES_CACHE[journal_id][doi] = TEMP_JOURNAL_CACHE[journal_id][doi]
-                pub_year = PERSISTENT_PUBDATES_CACHE[journal_id][doi]
-                compare_msg = u"DOI {} found in Springer data, Pub year is {} ".format(doi, pub_year)
-                if pub_year == period:
-                    compare_msg += colorise("(same as offsetting period)", "green")
-                else:
-                    compare_msg += colorise("(DIFFERENT from offsetting period, which is {})".format(period), "yellow")
-                msg = u"Journal {} ('{}'): ".format(journal_id, title)
-                print msg.ljust(80) + compare_msg
-        if found:
-            pub_year = PERSISTENT_PUBDATES_CACHE[journal_id][doi]
-        else:
-            # If a lookup error occured we will retreive coverage stats for the period year instead, since
-            # the aggregation process will make use of this value.
-            pub_year = period
-        # Test if journal stats are present
-        try:
-            _ = COVERAGE_CACHE[journal_id]['years'][pub_year]["num_journal_total_articles"]
-            _ = COVERAGE_CACHE[journal_id]['years'][pub_year]["num_journal_oa_articles"]
-        except KeyError:
+    for offsetting_file in file_list:
+        reader = UnicodeReader(open(offsetting_file, "r"))
+        for line in reader:
+            if max_lookups is not None and LOOKUPS_PERFORMED >= max_lookups:
+                print u"maximum number of lookups performed."
+                _shutdown()
+            lookup_performed = False
+            found = True
+            publisher = line["publisher"]
+            if publisher != "Springer Nature":
+                continue
+            issn = line["issn"]
+            period = line["period"]
+            title = line["journal_full_title"]
+            doi = line["doi"]
+            journal_id = get_springer_journal_id_from_doi(doi, issn)
+            # Retreive publication dates for articles from CSV summaries on SpringerLink.
+            # Employ a multi-level cache structure to minimize IO:
+            #  1. try to look up the doi in the persistent publication dates cache
+            #  2. if the journal is not present, repopulate local cache segment from a CSV file in the journal CSV dir
+            #  3a. if no CSV for the journal could be found, fetch it from SpringerLink
+            #  3b. Alternative to 3: If a CSV was found but it does not contain the DOI, re-fetch it from SpringerLink 
             try:
-                _update_journal_stats(title, journal_id, pub_year)
+                _ = PERSISTENT_PUBDATES_CACHE[journal_id][doi]
+                print u"Journal {} ('{}'): DOI {} already cached.".format(journal_id, title, doi)
+            except KeyError:
+                if journal_id not in TEMP_JOURNAL_CACHE:
+                    msg = u"Journal {} ('{}'): Not found in temp cache, repopulating..."
+                    print msg.format(journal_id, title)
+                    TEMP_JOURNAL_CACHE[journal_id] = _get_journal_cache_from_csv(journal_id, refetch=False)
+                if doi not in TEMP_JOURNAL_CACHE[journal_id]:
+                    msg = u"Journal {} ('{}'): DOI {} not found in cache, re-fetching csv file..."
+                    print msg.format(journal_id, title, doi)
+                    TEMP_JOURNAL_CACHE[journal_id] = _get_journal_cache_from_csv(journal_id, refetch=True)
+                    if doi not in TEMP_JOURNAL_CACHE[journal_id]:
+                        msg = u"Journal {} ('{}'): DOI {} NOT FOUND in SpringerLink data!"
+                        msg = colorise(msg.format(title, journal_id, doi), "red")
+                        print msg
+                        ERROR_MSGS.append(msg)
+                        found = False
                 lookup_performed = True
-                error_msg = u'No stats found for journal "{}" ({}) in {} albeit having downloaded the full Open Choice catalogue. Stats were obtained retroactively.'
-                error_msg = colorise(error_msg.format(title, journal_id, pub_year), "red")
-                print error_msg
-                ERROR_MSGS.append(error_msg)
-            except ValueError as ve:
-                error_msg = u'Error while processing DOI {}: No stats found for journal "{}" ({}) in {} albeit having downloaded the full Open Choice catalogue and stats could not be obtained retroactively.'
-                error_msg = colorise(error_msg.format(doi, title, journal_id, pub_year), "red")
-                print error_msg
-                ERROR_MSGS.append(error_msg)
-        if lookup_performed:
-            LOOKUPS_PERFORMED += 1
+                if journal_id not in PERSISTENT_PUBDATES_CACHE:
+                    PERSISTENT_PUBDATES_CACHE[journal_id] = {}
+                if found:
+                    PERSISTENT_PUBDATES_CACHE[journal_id][doi] = TEMP_JOURNAL_CACHE[journal_id][doi]
+                    pub_year = PERSISTENT_PUBDATES_CACHE[journal_id][doi]
+                    compare_msg = u"DOI {} found in Springer data, Pub year is {} ".format(doi, pub_year)
+                    if pub_year == period:
+                        compare_msg += colorise("(same as offsetting period)", "green")
+                    else:
+                        compare_msg += colorise("(DIFFERENT from offsetting period, which is {})".format(period), "yellow")
+                    msg = u"Journal {} ('{}'): ".format(journal_id, title)
+                    print msg.ljust(80) + compare_msg
+            if found:
+                pub_year = PERSISTENT_PUBDATES_CACHE[journal_id][doi]
+            else:
+                # If a lookup error occured we will retreive coverage stats for the period year instead, since
+                # the aggregation process will make use of this value.
+                pub_year = period
+            # Test if journal stats are present
+            try:
+                _ = COVERAGE_CACHE[journal_id]['years'][pub_year]["num_journal_total_articles"]
+                _ = COVERAGE_CACHE[journal_id]['years'][pub_year]["num_journal_oa_articles"]
+            except KeyError:
+                try:
+                    _update_journal_stats(title, journal_id, pub_year)
+                    lookup_performed = True
+                    error_msg = u'No stats found for journal "{}" ({}) in {} albeit having downloaded the full Open Choice catalogue. Stats were obtained retroactively.'
+                    error_msg = colorise(error_msg.format(title, journal_id, pub_year), "red")
+                    print error_msg
+                    ERROR_MSGS.append(error_msg)
+                except ValueError as ve:
+                    error_msg = u'Error while processing DOI {}: No stats found for journal "{}" ({}) in {} albeit having downloaded the full Open Choice catalogue and stats could not be obtained retroactively.'
+                    error_msg = colorise(error_msg.format(doi, title, journal_id, pub_year), "red")
+                    print error_msg
+                    ERROR_MSGS.append(error_msg)
+            if lookup_performed:
+                LOOKUPS_PERFORMED += 1
     _shutdown()
     
 def _get_journal_cache_from_csv(journal_id, refetch):
