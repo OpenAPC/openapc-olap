@@ -204,7 +204,7 @@ def create_cubes_tables(connectable, apc_file_name, offsetting_file_name, schema
         article_pubyears = json.loads(cache_file.read())
         cache_file.close()
     except IOError as ioe:
-        msg = "Error while trying to cache file: {}"
+        msg = "Error while trying to access cache file: {}"
         print msg.format(ioe)
         sys.exit()
     except ValueError as ve:
@@ -213,7 +213,8 @@ def create_cubes_tables(connectable, apc_file_name, offsetting_file_name, schema
         sys.exit()
     
     summarised_offsetting = {}
-    issn_title_map = {}
+    
+    journal_id_title_map = {}
     
     reader = UnicodeReader(open(offsetting_file_name, "rb"))
     institution_key_errors = []
@@ -236,13 +237,13 @@ def create_cubes_tables(connectable, apc_file_name, offsetting_file_name, schema
         if row["euro"] != "NA":
             tables_insert_commands["combined"].execute(row)
         
-        issn_title_map[issn] = title
-        
         if publisher != "Springer Nature":
             continue
-            
+        
+        journal_id = oc._get_springer_journal_id_from_doi(doi, issn)
+        journal_id_title_map[journal_id] = title
         try:
-            pub_year = article_pubyears[issn][doi]
+            pub_year = article_pubyears[journal_id][doi]
         except KeyError:
             msg = (u"Publication year entry not found in article cache for {}. " +
                    "You might have to update the article cache with 'python " +
@@ -251,40 +252,32 @@ def create_cubes_tables(connectable, apc_file_name, offsetting_file_name, schema
             print colorise(msg.format(doi), "yellow")
             pub_year = row["period"]
         
-        if publisher not in summarised_offsetting:
-            summarised_offsetting[publisher] = {}
-        if issn not in summarised_offsetting[publisher]:
-            summarised_offsetting[publisher][issn] = {}
-        if pub_year not in summarised_offsetting[publisher][issn]:
-            summarised_offsetting[publisher][issn][pub_year] = 1
+        if journal_id not in summarised_offsetting:
+            summarised_offsetting[journal_id] = {}
+        if pub_year not in summarised_offsetting[journal_id]:
+            summarised_offsetting[journal_id][pub_year] = 1
         else:
-            summarised_offsetting[publisher][issn][pub_year] += 1
+            summarised_offsetting[journal_id][pub_year] += 1
     if institution_key_errors:
         print "KeyError: The following institutions were not found in the institutions_offsetting file:"
         for institution in institution_key_errors:
             print institution
         sys.exit()
-    for publisher, issns in summarised_offsetting.iteritems():
-        for issn, pub_years in issns.iteritems():
-            for pub_year, count in pub_years.iteritems():
-                    row = {
-                        "publisher": publisher,
-                        "journal_full_title": issn_title_map[issn],
-                        "period": pub_year,
-                        "is_hybrid": "TRUE",
-                        "num_offsetting_articles": count
-                    }
-                    try:
-                        stats = journal_coverage[issn][pub_year]
-                        row["num_journal_total_articles"] = stats["num_journal_total_articles"]
-                        row["num_journal_oa_articles"] = stats["num_journal_oa_articles"]
-                    except KeyError as ke:
-                        msg = (u"KeyError: No coverage stats found for journal '{}' " +
-                               "({}) in the {} period. Update the crossref cache with " +
-                               "'python assets_generator.py crossref_stats'.")
-                        print colorise(msg.format(issn_title_map[issn], issn, pub_year), "red")
-                        sys.exit()
-                    tables_insert_commands["offsetting_coverage"].execute(row)
+    for journal_id, info in journal_coverage.iteritems():
+        for year, stats in info["years"].iteritems():
+                row = {
+                    "publisher": "Springer Nature",
+                    "journal_full_title": info["title"],
+                    "period": year,
+                    "is_hybrid": "TRUE",
+                    "num_journal_total_articles": stats["num_journal_total_articles"],
+                    "num_journal_oa_articles": stats["num_journal_oa_articles"]
+                }
+                try:
+                    row["num_offsetting_articles"] = summarised_offsetting[journal_id][year]
+                except KeyError:
+                    row["num_offsetting_articles"] = 0
+                tables_insert_commands["offsetting_coverage"].execute(row)
     
     institution_countries = {}
     
