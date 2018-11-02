@@ -300,6 +300,8 @@ def _get_springer_journal_id_from_doi(doi, issn=None):
             JOURNAL_ID_CACHE = {}
     if doi.startswith(("10.1007/s", "10.3758/s", "10.1245/s", "10.1617/s", "10.1186/s", "10.1208/s", "10.1365/s")):
         return doi[9:14].lstrip("0")
+    elif doi.startswith(("10.14283")): # Irregular prefix, contains only the "Journal of Frailty & Aging", not at SL
+        return "00000"
     elif doi.startswith("10.1140"):
     # In case of the "European Physical journal" family, the journal id cannot be extracted directly from the DOI.
         if issn is None or issn not in JOURNAL_ID_CACHE:
