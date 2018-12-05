@@ -18,9 +18,12 @@ ARG_HELP_STRINGS = {
     
     "dir": "A path to a directory where the generated output files should be stored. " +
            "If omitted, output will be written to the current directory.",
-    "num_api_lookups": "stop execution after n journal lookups to " +
+    "num_api_lookups": "Stop execution after n journal lookups " +
                         "when performing the coverage_stats job. Useful for " +
-                        "reducing API loads and saving results from time to time."
+                        "reducing API loads and saving results from time to time.",
+    "refetch": "Try to re-fetch a journal csv file from Springerlink during the " +
+               "coverage_stats job when a DOI is not found. Only useful if the journal csv " +
+               "directory has not been cleared recently."
 }
 
 APC_DE_FILE = "apc_de.csv"
@@ -31,6 +34,7 @@ def main():
     parser.add_argument("job", choices=["tables", "model", "yamls", "db_settings", "coverage_stats"])
     parser.add_argument("-d", "--dir", help=ARG_HELP_STRINGS["dir"])
     parser.add_argument("-n", "--num_api_lookups", type=int, help=ARG_HELP_STRINGS["num_api_lookups"])
+    parser.add_argument("--refetch", action="store_true", help=ARG_HELP_STRINGS["refetch"])
     args = parser.parse_args()
     
     path = "."
@@ -74,7 +78,7 @@ def main():
         with open('db_settings.ini', 'w') as config_file:
             scp.write(config_file)
     elif args.job == "coverage_stats":
-        oc.update_coverage_stats(OFFSETTING_FILE, args.num_api_lookups)
+        oc.update_coverage_stats(OFFSETTING_FILE, args.num_api_lookups, args.refetch)
         
         
         

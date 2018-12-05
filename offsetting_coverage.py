@@ -127,7 +127,7 @@ def _update_journal_stats(title, journal_id, year, verbose=True):
     COVERAGE_CACHE[journal_id]['years'][year]["num_journal_total_articles"] = total["count"]
     COVERAGE_CACHE[journal_id]['years'][year]["num_journal_oa_articles"] = oa["count"]
     
-def update_coverage_stats(offsetting_file, max_lookups):
+def update_coverage_stats(offsetting_file, max_lookups, refetch=True):
     global COVERAGE_CACHE, JOURNAL_ID_CACHE, PERSISTENT_PUBDATES_CACHE, LOOKUPS_PERFORMED
     LOOKUPS_PERFORMED = 0
     if os.path.isfile(COVERAGE_CACHE_FILE):
@@ -184,9 +184,10 @@ def update_coverage_stats(offsetting_file, max_lookups):
                 print msg.format(journal_id, title)
                 TEMP_JOURNAL_CACHE[journal_id] = _get_journal_cache_from_csv(journal_id, refetch=False)
             if doi not in TEMP_JOURNAL_CACHE[journal_id]:
-                msg = u"Journal {} ('{}'): DOI {} not found in cache, re-fetching csv file..."
-                print msg.format(journal_id, title, doi)
-                TEMP_JOURNAL_CACHE[journal_id] = _get_journal_cache_from_csv(journal_id, refetch=True)
+                if refetch:
+                    msg = u"Journal {} ('{}'): DOI {} not found in cache, re-fetching csv file..."
+                    print msg.format(journal_id, title, doi)
+                    TEMP_JOURNAL_CACHE[journal_id] = _get_journal_cache_from_csv(journal_id, refetch=True)
                 if doi not in TEMP_JOURNAL_CACHE[journal_id]:
                     msg = u"Journal {} ('{}'): DOI {} NOT FOUND in SpringerLink data!"
                     msg = colorise(msg.format(title, journal_id, doi), "red")
