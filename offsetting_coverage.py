@@ -278,7 +278,6 @@ def _fetch_springer_journal_csv(path, journal_id):
             if not line.endswith("\n"):
                 line += "\n"
             joint_lines.append(line)
-    print joint_lines
     with open(path, "wb") as f:
         f.write("".join(joint_lines))
     
@@ -330,10 +329,17 @@ def _get_springer_journal_stats(journal_id, period, oa=False):
     if oa:
         url = SPRINGER_OA_SEARCH.format(journal_id, period, period)
     print url
-    req = urllib2.Request(url, None)
-    response = urllib2.urlopen(req)
-    content = response.read()
-    results = {}
+    try:
+        req = urllib2.Request(url, None)
+        response = urllib2.urlopen(req)
+        content = response.read()
+        results = {}
+    except urllib2.HTTPError as httpe:
+        if httpe.code == 503: # retry on timeout
+            print colorise("Timeout (HTTP 503), retrying...", "yellow")
+            return _get_springer_journal_stats(journal_id, period, oa)
+        else:
+            raise httpe
     count_match = SEARCH_RESULTS_COUNT_RE.search(content)
     if count_match:
         count = count_match.groupdict()['count']
