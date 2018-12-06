@@ -129,7 +129,7 @@ def _update_journal_stats(title, journal_id, year, verbose=True):
     COVERAGE_CACHE[journal_id]['years'][year]["num_journal_total_articles"] = total["count"]
     COVERAGE_CACHE[journal_id]['years'][year]["num_journal_oa_articles"] = oa["count"]
     
-def update_coverage_stats(file_list, max_lookups):
+def update_coverage_stats(file_list, max_lookups, refetch=True):
     global COVERAGE_CACHE, JOURNAL_ID_CACHE, PERSISTENT_PUBDATES_CACHE, LOOKUPS_PERFORMED
     LOOKUPS_PERFORMED = 0
     if os.path.isfile(COVERAGE_CACHE_FILE):
@@ -187,9 +187,10 @@ def update_coverage_stats(file_list, max_lookups):
                     print msg.format(journal_id, title)
                     TEMP_JOURNAL_CACHE[journal_id] = _get_journal_cache_from_csv(journal_id, refetch=False)
                 if doi not in TEMP_JOURNAL_CACHE[journal_id]:
-                    msg = u"Journal {} ('{}'): DOI {} not found in cache, re-fetching csv file..."
-                    print msg.format(journal_id, title, doi)
-                    TEMP_JOURNAL_CACHE[journal_id] = _get_journal_cache_from_csv(journal_id, refetch=True)
+                    if refetch:
+                        msg = u"Journal {} ('{}'): DOI {} not found in cache, re-fetching csv file..."
+                        print msg.format(journal_id, title, doi)
+                        TEMP_JOURNAL_CACHE[journal_id] = _get_journal_cache_from_csv(journal_id, refetch=True)
                     if doi not in TEMP_JOURNAL_CACHE[journal_id]:
                         msg = u"Journal {} ('{}'): DOI {} NOT FOUND in SpringerLink data!"
                         msg = colorise(msg.format(title, journal_id, doi), "red")
@@ -307,6 +308,8 @@ def get_springer_journal_id_from_doi(doi, issn=None):
         return doi[9:14].lstrip("0")
     elif doi.startswith(("10.1038")): # Nature journals are not listed on SpringerLink
         return "00000"
+    elif doi.startswith(("10.14283")): # Irregular prefix, contains only the "Journal of Frailty & Aging"
+        return "42415"
     elif doi.startswith("10.1140"):
     # In case of the "European Physical journal" family, the journal id cannot be extracted directly from the DOI.
         if issn is None or issn not in JOURNAL_ID_CACHE:
