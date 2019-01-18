@@ -58,12 +58,14 @@ def main():
         "no_oc_issn": 0,
         "offsetting_duplicate": 0,
         "internal_duplicate": 0,
-        "nature_doi": 0
+        "nature_doi": 0,
+        "wrong_period": 0
     }
     deleted_issns = {}
     deleted_offsetting_duplicates = {}
     
     doi_duplicates = {}
+    wrong_periods = {}
     
     with open("springer_pub_non_oa.csv") as in_file:
         reader = UnicodeReader(in_file)
@@ -73,6 +75,13 @@ def main():
             doi = line["doi"].strip().lower()
             if len(doi) == 0:
                 delete_stats["no_doi"] += 1
+                continue
+            if year not in ["2016", "2017"]:
+                if year not in wrong_periods:
+                    wrong_periods[year] = 1
+                else:
+                    wrong_periods[year] += 1
+                delete_stats["wrong_period"] += 1
                 continue
             if doi in doi_duplicates:
                 doi_duplicates[doi] += 1
@@ -129,7 +138,10 @@ def main():
         sorted_keys = sorted(dup_types.keys(), reverse=True)
         for key in sorted_keys:
             print "Articles occuring {} additional time(s): {} ({} deleted)".format(key, dup_types[key], key * dup_types[key])
-        
+        print "\n----- Deleted entries due to wrong publication period-----\n"
+        keys = sorted(wrong_periods.keys())
+        for key in keys:
+            print "{}: {}".format(key, wrong_periods[key])
         print "\n----- Deleted entries based on duplicate DOI in offsetting data set -----\n"
         keys = deleted_offsetting_duplicates.keys()
         sorted_keys = sorted(keys, key=lambda x: deleted_offsetting_duplicates[x]["count"], reverse=True)
