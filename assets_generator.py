@@ -28,6 +28,7 @@ ARG_HELP_STRINGS = {
 
 APC_DE_FILE = "apc_de.csv"
 OFFSETTING_FILE = "offsetting.csv"
+OPENAIRE_FILE = "OpenAIRE_APC_DE_20190131.csv"
 SIMULATED_OFFSETTING_FILE_NON_OA = "simulated_data/offsetting_germany/springer_pub_non_oa_enriched.csv"
 SIMULATED_OFFSETTING_FILE_OA = "simulated_data/offsetting_germany/springer_pub_oa_enriched.csv"
 
@@ -168,6 +169,12 @@ def create_cubes_tables(connectable, schema="openapc_schema"):
     init_table(openapc_table, apc_fields)
     openapc_insert_command = openapc_table.insert()
     
+    openaire_table = sqlalchemy.Table("openaire", metadata, autoload=False, schema=schema)
+    if openaire_table.exists():
+        openaire_table.drop(checkfirst=False)
+    init_table(openaire_table, apc_fields)
+    openaire_insert_command = openaire_table.insert()
+    
     offsetting_table = sqlalchemy.Table("offsetting", metadata, autoload=False, schema=schema)
     if offsetting_table.exists():
         offsetting_table.drop(checkfirst=False)
@@ -201,6 +208,7 @@ def create_cubes_tables(connectable, schema="openapc_schema"):
     # a dict to store individual insert commands for every table
     tables_insert_commands = {
         "openapc": openapc_insert_command,
+        "openaire": openaire_insert_command,
         "offsetting": offsetting_insert_command,
         "simulated_offsetting": simulated_offsetting_insert_command,
         "combined": combined_insert_command,
@@ -353,6 +361,15 @@ def create_cubes_tables(connectable, schema="openapc_schema"):
         tables_insert_commands[institution].execute(row)
         tables_insert_commands["openapc"].execute(row)
         tables_insert_commands["combined"].execute(row)
+        
+    reader = UnicodeReader(open(OPENAIRE_FILE, "rb"))
+    for row in reader:
+        institution = row["institution"]
+        # colons cannot be escaped in URL queries to the cubes server, so we have
+        # to remove them here
+        row["journal_full_title"] = row["journal_full_title"].replace(":", "")
+        row["country"] = institution_countries[institution]
+        tables_insert_commands["openaire"].execute(row)
 
 def generate_model_file(path):
     content = u""

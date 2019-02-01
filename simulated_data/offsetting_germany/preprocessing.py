@@ -128,6 +128,7 @@ def main():
         
         print "\n----- Deleted entries due to internal DOI duplicates-----\n"
         keys = filter(lambda x: doi_duplicates[x] > 0, doi_duplicates.keys())
+        print keys
         dup_types = {}
         for key in keys:
             dup_type = doi_duplicates[key]
