@@ -1,14 +1,17 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
+# -*- coding: UTF-8 -*-
 
+import csv
 import datetime
-from HTMLParser import HTMLParser
+from html.parser import HTMLParser
 import json
 import os
 import re
 import sys
-import urllib2
+from urllib.request import urlopen, Request
+from urllib.error import HTTPError
 
-from util import UnicodeReader, colorise
+from util import colorise
 
 JOURNAL_ID_RE = re.compile('<a href="/journal/(?P<journal_id>\d+)" title=".*?">', re.IGNORECASE)
 SEARCH_RESULTS_COUNT_RE = re.compile('<h1 id="number-of-search-results-and-search-terms">\s*<strong>(?P<count>[\d,]+)</strong>', re.IGNORECASE)
@@ -51,7 +54,7 @@ def _shutdown():
     """
     Write cache content back to disk before terminating and display collected error messages.
     """
-    print "Updating cache files.."
+    print("Updating cache files..")
     with open(COVERAGE_CACHE_FILE, "w") as f:
         f.write(json.dumps(COVERAGE_CACHE, sort_keys=True, indent=4, separators=(',', ': ')))
         f.flush()
@@ -61,15 +64,15 @@ def _shutdown():
     with open(JOURNAL_ID_CACHE_FILE, "w") as f:
         f.write(json.dumps(JOURNAL_ID_CACHE, sort_keys=True, indent=4, separators=(',', ': ')))
         f.flush()
-    print "Done."
+    print("Done.")
     num_articles = 0
     for journal_ids, dois in PERSISTENT_PUBDATES_CACHE.iteritems():
         num_articles += len(dois)
-    print "The article cache now contains publication dates for {} DOIs".format(num_articles)
+    print("The article cache now contains publication dates for {} DOIs".format(num_articles))
     if ERROR_MSGS:
-        print colorise("There were errors during the lookup process:", "yellow")
+        print(colorise("There were errors during the lookup process:", "yellow"))
         for msg in ERROR_MSGS:
-            print msg
+            print(msg)
     sys.exit()
     
 def _process_springer_catalogue(max_lookups=None):
@@ -83,7 +86,7 @@ def _process_springer_catalogue(max_lookups=None):
             raise IOError("Catalogue file " + catalogue_file + " not found!")
     for year in years:
         msg = "Looking up coverage stats for Open Choice journals in " + year
-        print colorise("--- " + msg + " ---", "green")
+        print(colorise("--- " + msg + " ---", "green"))
         catalogue_file = os.path.join(SPRINGER_JOURNAL_LISTS_DIR, year + ".csv")
         reader = UnicodeReader(open(catalogue_file, "r"))
         for line in reader:
@@ -93,7 +96,7 @@ def _process_springer_catalogue(max_lookups=None):
             oa_option = line["Open Access Option"]
             if oa_option != "Hybrid (Open Choice)":
                 msg = u'Journal "{}" is not an Open Choice journal (oa_option={}), skipping...'
-                print colorise(msg.format(title, oa_option), "yellow")
+                print(colorise(msg.format(title, oa_option), "yellow"))
                 continue
             journal_id = line["product_id"]
             already_cached = True
@@ -106,14 +109,14 @@ def _process_springer_catalogue(max_lookups=None):
                 except ValueError as ve:
                     error_msg = 'Journal "{}" ({}): ValueError while obtaining journal stats, annual stats not added to cache.'
                     error_msg = colorise(error_msg.format(title, journal_id), "red")
-                    print error_msg
+                    print(error_msg)
                     ERROR_MSGS.append(error_msg)
                     continue
                 LOOKUPS_PERFORMED += 1
                 already_cached = False
             if already_cached:
                 msg = u'Stats for journal "{}" in {} already cached.'
-                print colorise(msg.format(title, year), "yellow")
+                print(colorise(msg.format(title, year), "yellow"))
                 
 def _update_journal_stats(title, journal_id, year, verbose=True):
     global COVERAGE_CACHE
@@ -121,7 +124,7 @@ def _update_journal_stats(title, journal_id, year, verbose=True):
     oa = _get_springer_journal_stats(journal_id, year, oa=True)
     if verbose:
         msg = u'Obtained stats for journal "{}" in {}: {} OA, {} Total'
-        print colorise(msg.format(title, year, oa["count"], total["count"]), "green")
+        print(colorise(msg.format(title, year, oa["count"], total["count"]), "green"))
     if journal_id not in COVERAGE_CACHE:
         COVERAGE_CACHE[journal_id] = {'title': title, 'years': {}}
     if year not in COVERAGE_CACHE[journal_id]['years']:

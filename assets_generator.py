@@ -1,15 +1,14 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
+# -*- coding: UTF-8 -*-
 
 import argparse
 import csv
-import ConfigParser
+import configparser
 import json
 import os
 import sys
-import time
-import urllib2
 
-from util import UnicodeReader, colorise
+from util import colorise
 import offsetting_coverage as oc
 
 import sqlalchemy
@@ -45,19 +44,19 @@ def main():
         if os.path.isdir(args.dir):
             path = args.dir
         else:
-            print "ERROR: '" + args.dir + "' is no valid directory!"
+            print("ERROR: '" + args.dir + "' is no valid directory!")
     
     if args.job == "tables":
         if not os.path.isfile("db_settings.ini"):
-            print "ERROR: Database Configuration file db_settings.ini not found!"
+            print("ERROR: Database Configuration file db_settings.ini not found!")
             sys.exit()
-        scp = ConfigParser.SafeConfigParser()
-        scp.read("db_settings.ini")
+        cparser = configparser.ConfigParser()
+        cparser.read("db_settings.ini")
         try:
-            db_user = scp.get("postgres_credentials", "user")
-            db_pass = scp.get("postgres_credentials", "pass")
-        except (ConfigParser.NoSectionError, ConfigParser.NoOptionError) as e:
-            print "ERROR: db_settings.ini is malformed ({})".format(e.message)
+            db_user = cparser.get("postgres_credentials", "user")
+            db_pass = cparser.get("postgres_credentials", "pass")
+        except (configparser.NoSectionError, configparser.NoOptionError) as e:
+            print("ERROR: db_settings.ini is malformed ({})".format(e.message))
             sys.exit()
         psql_uri = "postgresql://" + db_user + ":" + db_pass + "@localhost/openapc_db"
         engine = sqlalchemy.create_engine(psql_uri)
@@ -72,14 +71,14 @@ def main():
         generate_yamls(path)
     elif args.job == "db_settings":
         if os.path.isfile("db_settings.ini"):
-            print "ERROR: db_settings.ini already exists"
+            print("ERROR: db_settings.ini already exists")
             sys.exit()
-        scp = ConfigParser.SafeConfigParser()
-        scp.add_section('postgres_credentials')
-        scp.set('postgres_credentials', 'USER', 'table_creator')
-        scp.set('postgres_credentials', 'PASS', 'change_me')
+        cparser = configparser.ConfigParser()
+        cparser.add_section('postgres_credentials')
+        cparser.set('postgres_credentials', 'USER', 'table_creator')
+        cparser.set('postgres_credentials', 'PASS', 'change_me')
         with open('db_settings.ini', 'w') as config_file:
-            scp.write(config_file)
+            cparser.write(config_file)
     elif args.job == "coverage_stats":
         oc.update_coverage_stats([OFFSETTING_FILE], args.num_api_lookups, args.refetch)
     elif args.job == "simulated_coverage_stats":
@@ -235,11 +234,11 @@ def create_cubes_tables(connectable, schema="openapc_schema"):
         cache_file.close()
     except IOError as ioe:
         msg = "Error while trying to access cache file: {}"
-        print msg.format(ioe)
+        print(msg.format(ioe))
         sys.exit()
     except ValueError as ve:
         msg = "Error while trying to decode cache structure in: {}"
-        print msg.format(ve.message)
+        print(msg.format(ve.message))
         sys.exit()
         
 
@@ -249,7 +248,7 @@ def create_cubes_tables(connectable, schema="openapc_schema"):
     journal_id_title_map = {}
     
     for file_name in [OFFSETTING_FILE, SIMULATED_OFFSETTING_FILE_NON_OA, SIMULATED_OFFSETTING_FILE_OA]:
-        reader = UnicodeReader(open(file_name, "rb"))
+        reader = csv.DictReader(open(file_name, "r"))
         institution_key_errors = []
         for row in reader:
             institution = row["institution"]
@@ -284,7 +283,7 @@ def create_cubes_tables(connectable, schema="openapc_schema"):
                        "You might have to update the article cache with 'python " +
                        "assets_generator.py coverage_stats'. Using the 'period' " +
                        "column for now.")
-                print colorise(msg.format(doi), "yellow")
+                print(colorise(msg.format(doi), "yellow"))
                 pub_year = row["period"]
                 
             if journal_id not in summarised_simulated_offsetting:
@@ -306,9 +305,9 @@ def create_cubes_tables(connectable, schema="openapc_schema"):
                 else:
                     summarised_offsetting[journal_id][pub_year] += 1
     if institution_key_errors:
-        print "KeyError: The following institutions were not found in the institutions_offsetting file:"
+        print("KeyError: The following institutions were not found in the institutions_offsetting file:")
         for institution in institution_key_errors:
-            print institution
+            print(institution)
         sys.exit()
     for journal_id, info in journal_coverage.iteritems():
         for year, stats in info["years"].iteritems():
@@ -337,7 +336,7 @@ def create_cubes_tables(connectable, schema="openapc_schema"):
     
     institution_countries = {}
     
-    reader = UnicodeReader(open("static/institutions.csv", "rb"))
+    reader = csv.DictReader(open("static/institutions.csv", "r"))
     for row in reader:
         cubes_name = row["institution_cubes_name"]
         institution_name = row["institution"]
@@ -351,7 +350,7 @@ def create_cubes_tables(connectable, schema="openapc_schema"):
             insert_command = table.insert()
             tables_insert_commands[institution_name] = insert_command
     
-    reader = UnicodeReader(open(APC_DE_FILE, "rb"))
+    reader = csv.DictReader(open(APC_DE_FILE, "r"))
     for row in reader:
         institution = row["institution"]
         # colons cannot be escaped in URL queries to the cubes server, so we have
@@ -362,7 +361,7 @@ def create_cubes_tables(connectable, schema="openapc_schema"):
         tables_insert_commands["openapc"].execute(row)
         tables_insert_commands["combined"].execute(row)
         
-    reader = UnicodeReader(open(OPENAIRE_FILE, "rb"))
+    reader = csv.DictReader(open(OPENAIRE_FILE, "r"))
     for row in reader:
         institution = row["institution"]
         # colons cannot be escaped in URL queries to the cubes server, so we have
@@ -397,7 +396,7 @@ def generate_yamls(path):
     with open("static/templates/YAML_STATIC_PART", "r") as yaml:
         yaml_static = yaml.read()
     
-    reader = UnicodeReader(open("static/institutions.csv", "rb"))
+    reader = csv.DictReader(open("static/institutions.csv", "r"))
     for row in reader:
         content = u"name: " + row["institution_full_name"] + u"\n"
         content += u"slug: " + row["institution_cubes_name"] + u"\n"
@@ -415,7 +414,7 @@ def generate_yamls(path):
         out_file_name = row["institution_cubes_name"] + ".yaml"
         out_file_path = os.path.join(path, out_file_name)
         with open(out_file_path, "w") as outfile:
-            outfile.write(content.encode("utf-8"))
+            outfile.write(content)
 
 
 if __name__ == '__main__':
