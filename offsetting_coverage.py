@@ -139,20 +139,20 @@ def update_coverage_stats(file_list, max_lookups, refetch=True):
         with open(COVERAGE_CACHE_FILE, "r") as f:
             try:
                COVERAGE_CACHE  = json.loads(f.read())
-               print "coverage cache file sucessfully loaded."
+               print("coverage cache file sucessfully loaded.")
             except ValueError:
-                print "Could not decode a cache structure from " + COVERAGE_CACHE_FILE + ", starting with an empty coverage cache."
+                print("Could not decode a cache structure from " + COVERAGE_CACHE_FILE + ", starting with an empty coverage cache.")
     else:
-        print "No cache file (" + COVERAGE_CACHE_FILE + ") found, starting with an empty coverage cache."
+        print("No cache file (" + COVERAGE_CACHE_FILE + ") found, starting with an empty coverage cache.")
     if os.path.isfile(PUBDATES_CACHE_FILE):
         with open(PUBDATES_CACHE_FILE, "r") as f:
             try:
                PERSISTENT_PUBDATES_CACHE  = json.loads(f.read())
-               print "Pub dates cache file sucessfully loaded."
+               print("Pub dates cache file sucessfully loaded.")
             except ValueError:
-                print "Could not decode a cache structure from " + PUBDATES_CACHE_FILE + ", starting with an empty pub date cache."
+                print("Could not decode a cache structure from " + PUBDATES_CACHE_FILE + ", starting with an empty pub date cache.")
     else:
-        print "No cache file (" + PUBDATES_CACHE_FILE + ") found, starting with an empty pub date cache."
+        print("No cache file (" + PUBDATES_CACHE_FILE + ") found, starting with an empty pub date cache.")
         
     if not os.path.isdir(JOURNAL_CSV_DIR):
         raise IOError("Journal CSV directory " + JOURNAL_CSV_DIR + " not found!")
@@ -163,7 +163,7 @@ def update_coverage_stats(file_list, max_lookups, refetch=True):
         reader = UnicodeReader(open(offsetting_file, "r"))
         for line in reader:
             if max_lookups is not None and LOOKUPS_PERFORMED >= max_lookups:
-                print u"maximum number of lookups performed."
+                print("maximum number of lookups performed.")
                 _shutdown()
             lookup_performed = False
             found = True
@@ -183,21 +183,21 @@ def update_coverage_stats(file_list, max_lookups, refetch=True):
             #  3b. Alternative to 3: If a CSV was found but it does not contain the DOI, re-fetch it from SpringerLink 
             try:
                 _ = PERSISTENT_PUBDATES_CACHE[journal_id][doi]
-                print u"Journal {} ('{}'): DOI {} already cached.".format(journal_id, title, doi)
+                print("Journal {} ('{}'): DOI {} already cached.".format(journal_id, title, doi))
             except KeyError:
                 if journal_id not in TEMP_JOURNAL_CACHE:
                     msg = u"Journal {} ('{}'): Not found in temp cache, repopulating..."
-                    print msg.format(journal_id, title)
+                    print(msg.format(journal_id, title))
                     TEMP_JOURNAL_CACHE[journal_id] = _get_journal_cache_from_csv(journal_id, refetch=False)
                 if doi not in TEMP_JOURNAL_CACHE[journal_id]:
                     if refetch:
                         msg = u"Journal {} ('{}'): DOI {} not found in cache, re-fetching csv file..."
-                        print msg.format(journal_id, title, doi)
+                        print(msg.format(journal_id, title, doi))
                         TEMP_JOURNAL_CACHE[journal_id] = _get_journal_cache_from_csv(journal_id, refetch=True)
                     if doi not in TEMP_JOURNAL_CACHE[journal_id]:
                         msg = u"Journal {} ('{}'): DOI {} NOT FOUND in SpringerLink data!"
                         msg = colorise(msg.format(title, journal_id, doi), "red")
-                        print msg
+                        print(msg)
                         ERROR_MSGS.append(msg)
                         found = False
                 lookup_performed = True
@@ -212,7 +212,7 @@ def update_coverage_stats(file_list, max_lookups, refetch=True):
                     else:
                         compare_msg += colorise("(DIFFERENT from offsetting period, which is {})".format(period), "yellow")
                     msg = u"Journal {} ('{}'): ".format(journal_id, title)
-                    print msg.ljust(80) + compare_msg
+                    print(msg.ljust(80) + compare_msg)
             if found:
                 pub_year = PERSISTENT_PUBDATES_CACHE[journal_id][doi]
             else:
@@ -229,12 +229,12 @@ def update_coverage_stats(file_list, max_lookups, refetch=True):
                     lookup_performed = True
                     error_msg = u'No stats found for journal "{}" ({}) in {} albeit having downloaded the full Open Choice catalogue. Stats were obtained retroactively.'
                     error_msg = colorise(error_msg.format(title, journal_id, pub_year), "red")
-                    print error_msg
+                    print(error_msg)
                     ERROR_MSGS.append(error_msg)
                 except ValueError as ve:
                     error_msg = u'Error while processing DOI {}: No stats found for journal "{}" ({}) in {} albeit having downloaded the full Open Choice catalogue and stats could not be obtained retroactively.'
                     error_msg = colorise(error_msg.format(doi, title, journal_id, pub_year), "red")
-                    print error_msg
+                    print(error_msg)
                     ERROR_MSGS.append(error_msg)
             if lookup_performed:
                 LOOKUPS_PERFORMED += 1
@@ -261,7 +261,7 @@ def _get_journal_cache_from_csv(journal_id, refetch):
     if not os.path.isfile(path) or refetch:
         fetch_springer_journal_csv(path, journal_id)
         msg = u"Journal {}: Fetching article CSV table from SpringerLink..."
-        print msg.format(journal_id)
+        print(msg.format(journal_id))
     with open(path) as p:
         reader = UnicodeReader(p)
         cache = {}
@@ -297,14 +297,14 @@ def get_springer_journal_id_from_doi(doi, issn=None):
             with open(JOURNAL_ID_CACHE_FILE, "r") as f:
                 try:
                     JOURNAL_ID_CACHE  = json.loads(f.read())
-                    print "journal_id cache file sucessfully loaded."
+                    print("journal_id cache file sucessfully loaded.")
                     if JOURNAL_ID_CACHE is None:
                         JOURNAL_ID_CACHE = {}
                 except ValueError:
-                    print "Could not decode a cache structure from " + JOURNAL_ID_CACHE_FILE + ", starting with an empty journal_id cache."
+                    print("Could not decode a cache structure from " + JOURNAL_ID_CACHE_FILE + ", starting with an empty journal_id cache.")
                     JOURNAL_ID_CACHE = {}
         else:
-            print "No cache file (" + JOURNAL_ID_CACHE_FILE + ") found, starting with an empty journal_id cache."
+            print("No cache file (" + JOURNAL_ID_CACHE_FILE + ") found, starting with an empty journal_id cache.")
             JOURNAL_ID_CACHE = {}
     doi = doi.strip().lower()
     if doi.startswith(("10.1007/s", "10.1007/5", "10.3758/s", "10.1245/s", "10.1617/s", "10.1186/s", "10.1208/s", "10.1365/s")):
@@ -316,14 +316,14 @@ def get_springer_journal_id_from_doi(doi, issn=None):
     elif doi.startswith("10.1140"):
     # In case of the "European Physical journal" family, the journal id cannot be extracted directly from the DOI.
         if issn is None or issn not in JOURNAL_ID_CACHE:
-            print "No local journal id extraction possible for doi " + doi + ", analysing landing page..." 
+            print("No local journal id extraction possible for doi " + doi + ", analysing landing page...")
             req = urllib2.Request("https://doi.org/" + doi, None)
             response = urllib2.urlopen(req)
             content = response.read()
             match = JOURNAL_ID_RE.search(content)
             if match:
                 journal_id = match.groupdict()["journal_id"]
-                print "journal id found: " + journal_id
+                print("journal id found: " + journal_id)
                 if issn:
                     JOURNAL_ID_CACHE[issn] = journal_id
                 return journal_id
@@ -340,7 +340,7 @@ def _get_springer_journal_stats(journal_id, period, oa=False):
     url = SPRINGER_FULL_SEARCH.format(journal_id, period, period)
     if oa:
         url = SPRINGER_OA_SEARCH.format(journal_id, period, period)
-    print url
+    print(url)
     req = urllib2.Request(url, None)
     response = urllib2.urlopen(req)
     content = response.read()
