@@ -1,6 +1,8 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
+# -*- coding: UTF-8 -*-
 
 import csv
+from functools import reduce
 from os import path
 import sys
         
@@ -17,26 +19,26 @@ OPEN_CHOICE_ISSNS = {}
 OFFSETTING_DOIS = {}
 
 def article_is_oa(doi, issn):
-    journal_id = get_springer_journal_id_from_doi(doi, issn)
+    journal_id = _get_springer_journal_id_from_doi(doi, issn)
     csv_file = path.join(JOURNAL_CSV_DIR, journal_id + ".csv")
     if not path.isfile(csv_file):
         msg = "Downloading OA article list for journal {}..."
-        print colorise(msg.format(journal_id), "yellow")
-        fetch_springer_journal_csv(csv_file, journal_id, oa_only=True)
-    with open(csv_file) as csv:
-        reader = UnicodeReader(csv)
+        print(colorise(msg.format(journal_id), "yellow"))
+        _fetch_springer_journal_csv(csv_file, journal_id, oa_only=True)
+    with open(csv_file) as handle:
+        reader = csv.DictReader(handle)
         for line in reader:
             if line["Item DOI"].strip().lower() == doi.strip().lower():
-                print "Article {} is OA".format(doi)
+                print("Article {} is OA".format(doi))
                 return True
-        print "Article {} is not OA".format(doi)
+        print("Article {} is not OA".format(doi))
         return False
 
 def main():
     for year, catalogue_file in SPRINGER_CATALOGUE_FILES.items():
         OPEN_CHOICE_ISSNS[year] = []
         with open(catalogue_file) as f:
-            reader = UnicodeReader(f)
+            reader = csv.DictReader(f)
             for line in reader:
                 if line["Open Access Option"] == "Hybrid (Open Choice)":
                     for issn_type in ["ISSN print", "ISSN electronic"]:
@@ -44,7 +46,7 @@ def main():
                             OPEN_CHOICE_ISSNS[year].append(line[issn_type])
                             
     with open(OFFSETTING_FILE) as f:
-        reader = UnicodeReader(f)
+        reader = csv.DictReader(f)
         for line in reader:
             OFFSETTING_DOIS[line["doi"]] = line["institution"]
     
@@ -68,7 +70,7 @@ def main():
     wrong_periods = {}
     
     with open("springer_pub_non_oa.csv") as in_file:
-        reader = UnicodeReader(in_file)
+        reader = csv.DictReader(in_file)
         for line in reader:
             year = line["period"]
             issn = line["issn"]
@@ -114,21 +116,21 @@ def main():
     
         for access_type in modified_content.keys():
             with open("out_" + access_type, "w") as out_file:
-                writer = csv.DictWriter(out_file, fieldnames=reader.reader.fieldnames, quoting=csv.QUOTE_NONNUMERIC)
+                writer = csv.DictWriter(out_file, fieldnames=reader.fieldnames, quoting=csv.QUOTE_NONNUMERIC)
                 writer.writeheader()
                 for line in modified_content[access_type]:
                     writer.writerow(line)
         
-        print "\n----- Deleted entries based on ISSN not belonging to an Open Choice journal-----\n"
+        print("\n----- Deleted entries based on ISSN not belonging to an Open Choice journal-----\n")
         keys = deleted_issns.keys()
         sorted_keys = sorted(keys, key=lambda x: deleted_issns[x]["count"], reverse=True)
         for key in sorted_keys:
-            print "{}: {}   (example DOI: {})".format(key, deleted_issns[key]["count"], deleted_issns[key]["example_doi"])
-        print "Entries from {} distinct journals removed (no Open Choice ISSN)".format(len(deleted_issns.keys()))
+            print("{}: {}   (example DOI: {})".format(key, deleted_issns[key]["count"], deleted_issns[key]["example_doi"]))
+        print("Entries from {} distinct journals removed (no Open Choice ISSN)".format(len(deleted_issns.keys())))
         
-        print "\n----- Deleted entries due to internal DOI duplicates-----\n"
+        print("\n----- Deleted entries due to internal DOI duplicates-----\n")
         keys = filter(lambda x: doi_duplicates[x] > 0, doi_duplicates.keys())
-        print keys
+        print(keys)
         dup_types = {}
         for key in keys:
             dup_type = doi_duplicates[key]
@@ -138,29 +140,31 @@ def main():
                 dup_types[dup_type] += 1
         sorted_keys = sorted(dup_types.keys(), reverse=True)
         for key in sorted_keys:
-            print "Articles occuring {} additional time(s): {} ({} deleted)".format(key, dup_types[key], key * dup_types[key])
-        print "\n----- Deleted entries due to wrong publication period-----\n"
+            print("Articles occuring {} additional time(s): {} ({} deleted)".format(key, dup_types[key], key * dup_types[key]))
+        print("\n----- Deleted entries due to wrong publication period-----\n")
         keys = sorted(wrong_periods.keys())
         for key in keys:
-            print "{}: {}".format(key, wrong_periods[key])
-        print "\n----- Deleted entries based on duplicate DOI in offsetting data set -----\n"
+            print("{}: {}".format(key, wrong_periods[key]))
+        print("\n----- Deleted entries based on duplicate DOI in offsetting data set -----\n")
         keys = deleted_offsetting_duplicates.keys()
         sorted_keys = sorted(keys, key=lambda x: deleted_offsetting_duplicates[x]["count"], reverse=True)
         for key in sorted_keys:
-            print "{}: {}   (example DOI: {})".format(key, deleted_offsetting_duplicates[key]["count"], deleted_offsetting_duplicates[key]["example_doi"])
-        print "Entries from {} distinct institution(s) removed (DOI duplicates with offsetting data)".format(len(deleted_offsetting_duplicates.keys()))
+            msg = "{}: {}   (example DOI: {})"
+            msg = msg.format(key, deleted_offsetting_duplicates[key]["count"], deleted_offsetting_duplicates[key]["example_doi"])
+            print(msg)
+        print("Entries from {} distinct institution(s) removed (DOI duplicates with offsetting data)".format(len(deleted_offsetting_duplicates.keys())))
 
         deleted_total = reduce(lambda x, y: x + y, delete_stats.values())
         msg = "\nout files created, deleted {} lines ({} without DOI, {} internal duplicates, {} lines with a Nature DOI, {} no Open Choice ISSN, {} duplicates with existing offsetting data)"
         msg = msg.format(deleted_total, delete_stats["no_doi"], delete_stats["internal_duplicate"], delete_stats["nature_doi"], delete_stats["no_oc_issn"], delete_stats["offsetting_duplicate"])
-        print msg
+        print(msg)
         
         msg = "\nOA out file contains {} articles, non-OA out file contains {} articles"
         msg = msg.format(len(modified_content["oa"]), len(modified_content["non_oa"]))
-        print msg
+        print(msg)
 
 if __name__ == '__main__' and __package__ is None:
     sys.path.append(path.dirname(path.dirname(path.dirname(path.abspath(__file__)))))
-    from util import UnicodeReader, colorise
-    from offsetting_coverage import get_springer_journal_id_from_doi, fetch_springer_journal_csv
+    from util import colorise
+    from offsetting_coverage import _get_springer_journal_id_from_doi, _fetch_springer_journal_csv
     main()
