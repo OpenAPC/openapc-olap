@@ -275,7 +275,7 @@ def create_cubes_tables(connectable, schema="openapc_schema"):
             if publisher != "Springer Nature":
                 continue
             
-            journal_id = oc.get_springer_journal_id_from_doi(doi, issn)
+            journal_id = oc._get_springer_journal_id_from_doi(doi, issn)
             journal_id_title_map[journal_id] = title
             try:
                 pub_year = article_pubyears[journal_id][doi]
