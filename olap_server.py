@@ -1,7 +1,7 @@
 from flask import Flask
-from ConfigParser import SafeConfigParser as ConfigParser
+from configparser import ConfigParser
 from cubes.server import slicer
-from flask.ext.cors import CORS
+from flask_cors import CORS
 
 
 app = Flask(__name__)

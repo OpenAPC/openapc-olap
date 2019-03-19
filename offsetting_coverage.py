@@ -13,11 +13,9 @@ from urllib.error import HTTPError
 
 from util import colorise
 
-
 JOURNAL_ID_RE = re.compile(r'<a href="/journal/(?P<journal_id>\d+)" title=".*?">', re.IGNORECASE)
 SEARCH_RESULTS_COUNT_RE = re.compile(r'<h1 id="number-of-search-results-and-search-terms">\s*<strong>(?P<count>[\d,]+)</strong>', re.IGNORECASE)
 SEARCH_RESULTS_TITLE_RE = re.compile(r'<p class="message">You are now only searching within the Journal</p>\s*<p class="title">\s*<a href="/journal/\d+">(?P<title>.*?)</a>', re.IGNORECASE | re.UNICODE)
-
 ISSN_RE = re.compile(r"^(?P<first_part>\d{4})-?(?P<second_part>\d{3})(?P<check_digit>[\dxX])$")
 
 SPRINGER_OA_SEARCH = "https://link.springer.com/search?facet-journal-id={}&package=openaccessarticles&search-within=Journal&query=&date-facet-mode=in&facet-start-year={}&facet-end-year={}"
