@@ -12,14 +12,14 @@ from util import colorise
 import offsetting_coverage as oc
 
 import sqlalchemy
-        
+
 ARG_HELP_STRINGS = {
-    
+
     "dir": "A path to a directory where the generated output files should be stored. " +
            "If omitted, output will be written to the current directory.",
-    "num_api_lookups": "stop execution after n journal lookups to " +
-                        "when performing the coverage_stats job. Useful for " +
-                        "reducing API loads and saving results from time to time.",
+    "num_api_lookups": "Stop execution after n journal lookups " +
+                       "when performing the coverage_stats job. Useful for " +
+                       "reducing API loads and saving results from time to time.",
     "refetch": "Try to re-fetch a journal csv file from Springerlink during the " +
                "coverage_stats job when a DOI is not found. Only useful if the journal csv " +
                "directory has not been cleared recently."
@@ -35,17 +35,19 @@ def main():
     parser = argparse.ArgumentParser()
     parser.add_argument("job", choices=["tables", "model", "yamls", "db_settings", "coverage_stats", "simulated_coverage_stats"])
     parser.add_argument("-d", "--dir", help=ARG_HELP_STRINGS["dir"])
-    parser.add_argument("-n", "--num_api_lookups", type=int, help=ARG_HELP_STRINGS["num_api_lookups"])
-    parser.add_argument("--refetch", action="store_true", help=ARG_HELP_STRINGS["refetch"])
+    parser.add_argument("-n", "--num_api_lookups", type=int,
+                        help=ARG_HELP_STRINGS["num_api_lookups"])
+    parser.add_argument("--refetch", action="store_true",
+                        help=ARG_HELP_STRINGS["refetch"])
     args = parser.parse_args()
-    
+
     path = "."
     if args.dir:
         if os.path.isdir(args.dir):
             path = args.dir
         else:
             print("ERROR: '" + args.dir + "' is no valid directory!")
-    
+
     if args.job == "tables":
         if not os.path.isfile("db_settings.ini"):
             print("ERROR: Database Configuration file db_settings.ini not found!")
@@ -63,8 +65,8 @@ def main():
         create_cubes_tables(engine)
         with engine.begin() as connection:
             connection.execute("GRANT SELECT ON ALL TABLES IN SCHEMA openapc_schema TO cubes_user")
-        
-        
+
+
     elif args.job == "model":
         generate_model_file(path)
     elif args.job == "yamls":
@@ -87,14 +89,14 @@ def main():
         
         
 def init_table(table, fields, create_id=False):
-    
+
     type_map = {"integer": sqlalchemy.Integer,
                 "float": sqlalchemy.Numeric,
                 "string": sqlalchemy.String(512),
                 "text": sqlalchemy.Text,
                 "date": sqlalchemy.Text,
                 "boolean": sqlalchemy.Integer}
-    
+
     if create_id:
         col = sqlalchemy.schema.Column('id', sqlalchemy.Integer, primary_key=True)
         table.append_column(col)
@@ -128,7 +130,7 @@ def create_cubes_tables(connectable, schema="openapc_schema"):
         ("doaj", "string"),
         ("country", "string")
     ]
-    
+
     offsetting_fields = [
         ("institution", "string"),
         ("period", "string"),
@@ -149,7 +151,7 @@ def create_cubes_tables(connectable, schema="openapc_schema"):
         ("doaj", "string"),
         ("country", "string"),
     ]
-    
+
     offsetting_coverage_fields = [
         ("period", "string"),
         ("publisher", "string"),
@@ -161,7 +163,7 @@ def create_cubes_tables(connectable, schema="openapc_schema"):
     ]
 
     metadata = sqlalchemy.MetaData(bind=connectable)
-    
+
     openapc_table = sqlalchemy.Table("openapc", metadata, autoload=False, schema=schema)
     if openapc_table.exists():
         openapc_table.drop(checkfirst=False)
@@ -214,15 +216,15 @@ def create_cubes_tables(connectable, schema="openapc_schema"):
         "offsetting_coverage": offsetting_coverage_insert_command,
         "simulated_offsetting_coverage": simulated_offsetting_coverage_insert_command
     }
-    
+
     offsetting_institution_countries = {}
-    
-    reader = UnicodeReader(open("static/institutions_offsetting.csv", "rb"))
+
+    reader = csv.DictReader(open("static/institutions_offsetting.csv", "r"))
     for row in reader:
         institution_name = row["institution"]
         country = row["country"]
         offsetting_institution_countries[institution_name] = country
-        
+
     journal_coverage = None
     article_pubyears = None
     try:
@@ -238,7 +240,7 @@ def create_cubes_tables(connectable, schema="openapc_schema"):
         sys.exit()
     except ValueError as ve:
         msg = "Error while trying to decode cache structure in: {}"
-        print(msg.format(ve.message))
+        print(msg.format(str(ve)))
         sys.exit()
         
 
@@ -305,12 +307,13 @@ def create_cubes_tables(connectable, schema="openapc_schema"):
                 else:
                     summarised_offsetting[journal_id][pub_year] += 1
     if institution_key_errors:
-        print("KeyError: The following institutions were not found in the institutions_offsetting file:")
+        print("KeyError: The following institutions were not found in the " +
+              "institutions_offsetting file:")
         for institution in institution_key_errors:
             print(institution)
         sys.exit()
-    for journal_id, info in journal_coverage.iteritems():
-        for year, stats in info["years"].iteritems():
+    for journal_id, info in journal_coverage.items():
+        for year, stats in info["years"].items():
                 row = {
                     "publisher": "Springer Nature",
                     "journal_full_title": info["title"],
@@ -335,7 +338,7 @@ def create_cubes_tables(connectable, schema="openapc_schema"):
                 tables_insert_commands["simulated_offsetting_coverage"].execute(row)
     
     institution_countries = {}
-    
+
     reader = csv.DictReader(open("static/institutions.csv", "r"))
     for row in reader:
         cubes_name = row["institution_cubes_name"]
@@ -371,46 +374,46 @@ def create_cubes_tables(connectable, schema="openapc_schema"):
         tables_insert_commands["openaire"].execute(row)
 
 def generate_model_file(path):
-    content = u""
+    content = ""
     with open("static/templates/MODEL_FIRST_PART", "r") as model:
         content += model.read()
-        
+
     with open("static/templates/MODEL_CUBE_STATIC_PART", "r") as model:
         static_part = model.read()
 
-    reader = UnicodeReader(open("static/institutions.csv", "rb"))
+    reader = csv.DictReader(open("static/institutions.csv", "r"))
     for row in reader:
-        content += u"        ,\n        {\n"
-        content += u'            "name": "{}",\n'.format((row["institution_cubes_name"]))
-        content += u'            "label": "{} openAPC data cube",\n'.format((row["institution_full_name"]))
+        content += "        ,\n        {\n"
+        content += '            "name": "{}",\n'.format((row["institution_cubes_name"]))
+        content += '            "label": "{} openAPC data cube",\n'.format((row["institution_full_name"]))
         content += static_part
-        
+
     with open("static/templates/MODEL_LAST_PART", "r") as model:
         content += model.read()
-    
+
     output_file = os.path.join(path, "model.json")
     with open(output_file, "w") as model:
-        model.write(content.encode("utf-8"))
-        
+        model.write(content)
+
 def generate_yamls(path):
     with open("static/templates/YAML_STATIC_PART", "r") as yaml:
         yaml_static = yaml.read()
-    
+
     reader = csv.DictReader(open("static/institutions.csv", "r"))
     for row in reader:
-        content = u"name: " + row["institution_full_name"] + u"\n"
-        content += u"slug: " + row["institution_cubes_name"] + u"\n"
-        content += u"tagline: " + row["institution_full_name"] + u" APC data\n"
-        content += u"source: Open APC\n"
-        content += u"source_url: https://github.com/OpenAPC/openapc-de\n"
-        content += u"data_url: https://github.com/OpenAPC/openapc-de/blob/master/data/apc_de.csv\n"
-        content += u"continent: " + row["continent"] + u"\n"
-        content += u"country: " + row["country"] + u"\n"
-        content += u"state: " + row["state"] + u"\n"
-        content += u"level: kommune\n"
-        content += u"dataset: '" + row["institution_cubes_name"] + "'\n"
+        content = "name: " + row["institution_full_name"] + u"\n"
+        content += "slug: " + row["institution_cubes_name"] + u"\n"
+        content += "tagline: " + row["institution_full_name"] + u" APC data\n"
+        content += "source: Open APC\n"
+        content += "source_url: https://github.com/OpenAPC/openapc-de\n"
+        content += "data_url: https://github.com/OpenAPC/openapc-de/blob/master/data/apc_de.csv\n"
+        content += "continent: " + row["continent"] + u"\n"
+        content += "country: " + row["country"] + u"\n"
+        content += "state: " + row["state"] + u"\n"
+        content += "level: kommune\n"
+        content += "dataset: '" + row["institution_cubes_name"] + "'\n"
         content += yaml_static
-        
+
         out_file_name = row["institution_cubes_name"] + ".yaml"
         out_file_path = os.path.join(path, out_file_name)
         with open(out_file_path, "w") as outfile:

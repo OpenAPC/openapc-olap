@@ -48,7 +48,7 @@ SPRINGER_JOURNAL_LISTS_DIR = "springer_journal_lists"
 ERROR_MSGS = []
 LOOKUPS_PERFORMED = None
 
-         
+
 def _shutdown():
     """
     Write cache content back to disk before terminating and display collected error messages.
@@ -73,7 +73,7 @@ def _shutdown():
         for msg in ERROR_MSGS:
             print(msg)
     sys.exit()
-    
+
 def _process_springer_catalogue(max_lookups=None):
     global COVERAGE_CACHE, LOOKUPS_PERFORMED
     current_year = datetime.datetime.now().year
@@ -117,13 +117,13 @@ def _process_springer_catalogue(max_lookups=None):
             if already_cached:
                 msg = 'Stats for journal "{}" in {} already cached.'
                 print(colorise(msg.format(title, year), "yellow"))
-                
+
 def _update_journal_stats(title, journal_id, year, verbose=True):
     global COVERAGE_CACHE
     total = _get_springer_journal_stats(journal_id, year, oa=False)
     oa = _get_springer_journal_stats(journal_id, year, oa=True)
     if verbose:
-        msg = u'Obtained stats for journal "{}" in {}: {} OA, {} Total'
+        msg = 'Obtained stats for journal "{}" in {}: {} OA, {} Total'
         print(colorise(msg.format(title, year, oa["count"], total["count"]), "green"))
     if journal_id not in COVERAGE_CACHE:
         COVERAGE_CACHE[journal_id] = {'title': title, 'years': {}}
@@ -214,6 +214,7 @@ def update_coverage_stats(file_list, max_lookups, refetch=True):
                     msg = u"Journal {} ('{}'): ".format(journal_id, title)
                     print(msg.ljust(80) + compare_msg)
             if found:
+                PERSISTENT_PUBDATES_CACHE[journal_id][doi] = TEMP_JOURNAL_CACHE[journal_id][doi]
                 pub_year = PERSISTENT_PUBDATES_CACHE[journal_id][doi]
             else:
                 # If a lookup error occured we will retreive coverage stats for the period year instead, since
@@ -250,14 +251,17 @@ def update_coverage_stats(file_list, max_lookups, refetch=True):
 def _get_journal_cache_from_csv(journal_id, refetch):
     """
     Get a mapping dict (doi -> pub_year) from a SpringerLink CSV.
+
     Open a Springerlink search results CSV file and obtain a doi -> pub_year
     mapping from the "Item DOI" and "Publication Year" columns. Download the file
     first if necessary or advised.
+
     Args:
         journal_id: The SpringerLink internal journal ID. Can be obtained
                     using _get_springer_journal_id_from_doi()
         refetch: Bool. If True, the CSV file will always be re-downloaded, otherwise
                  a local copy will be tried first.
+
     Returns:
         A dict with a doi -> pub_year mapping.
     """
@@ -292,14 +296,14 @@ def _fetch_springer_journal_csv(path, journal_id):
             joint_lines.append(line)
     with open(path, "w") as f:
         f.write("".join(joint_lines))
-    
+
 def _get_springer_journal_id_from_doi(doi, issn=None):
     global JOURNAL_ID_CACHE
     if JOURNAL_ID_CACHE is None:
         if os.path.isfile(JOURNAL_ID_CACHE_FILE):
             with open(JOURNAL_ID_CACHE_FILE, "r") as f:
                 try:
-                    JOURNAL_ID_CACHE  = json.loads(f.read())
+                    JOURNAL_ID_CACHE = json.loads(f.read())
                     print("journal_id cache file sucessfully loaded.")
                     if JOURNAL_ID_CACHE is None:
                         JOURNAL_ID_CACHE = {}
@@ -320,9 +324,10 @@ def _get_springer_journal_id_from_doi(doi, issn=None):
     # In case of the "European Physical journal" family, the journal id cannot be extracted directly from the DOI.
         if issn is None or issn not in JOURNAL_ID_CACHE:
             print("No local journal id extraction possible for doi " + doi + ", analysing landing page...")
-            req = urllib2.Request("https://doi.org/" + doi, None)
-            response = urllib2.urlopen(req)
+            req = Request("https://doi.org/" + doi, None)
+            response = urlopen(req)
             content = response.read()
+            content = content.decode("utf-8")
             match = JOURNAL_ID_RE.search(content)
             if match:
                 journal_id = match.groupdict()["journal_id"]
@@ -336,7 +341,7 @@ def _get_springer_journal_id_from_doi(doi, issn=None):
             return JOURNAL_ID_CACHE[issn]
     else:
         raise ValueError(doi + " does not seem to be a Springer DOI (prefix not in list)!") 
-    
+
 def _get_springer_journal_stats(journal_id, period, oa=False):
     if not journal_id.isdigit():
         raise ValueError("Invalid journal id " + journal_id + " (not a number)")
