@@ -13,17 +13,16 @@ from urllib.error import HTTPError
 
 from util import colorise
 
-JOURNAL_ID_RE = re.compile('<a href="/journal/(?P<journal_id>\d+)" title=".*?">', re.IGNORECASE)
-SEARCH_RESULTS_COUNT_RE = re.compile('<h1 id="number-of-search-results-and-search-terms">\s*<strong>(?P<count>[\d,]+)</strong>', re.IGNORECASE)
-SEARCH_RESULTS_TITLE_RE = re.compile('<p class="message">You are now only searching within the Journal</p>\s*<p class="title">\s*<a href="/journal/\d+">(?P<title>.*?)</a>', re.IGNORECASE | re.UNICODE)
 
-ISSN_RE = re.compile("^(?P<first_part>\d{4})-?(?P<second_part>\d{3})(?P<check_digit>[\dxX])$")
+JOURNAL_ID_RE = re.compile(r'<a href="/journal/(?P<journal_id>\d+)" title=".*?">', re.IGNORECASE)
+SEARCH_RESULTS_COUNT_RE = re.compile(r'<h1 id="number-of-search-results-and-search-terms">\s*<strong>(?P<count>[\d,]+)</strong>', re.IGNORECASE)
+SEARCH_RESULTS_TITLE_RE = re.compile(r'<p class="message">You are now only searching within the Journal</p>\s*<p class="title">\s*<a href="/journal/\d+">(?P<title>.*?)</a>', re.IGNORECASE | re.UNICODE)
+
+ISSN_RE = re.compile(r"^(?P<first_part>\d{4})-?(?P<second_part>\d{3})(?P<check_digit>[\dxX])$")
 
 SPRINGER_OA_SEARCH = "https://link.springer.com/search?facet-journal-id={}&package=openaccessarticles&search-within=Journal&query=&date-facet-mode=in&facet-start-year={}&facet-end-year={}"
 SPRINGER_FULL_SEARCH = "https://link.springer.com/search?facet-journal-id={}&query=&date-facet-mode=in&facet-start-year={}&facet-end-year={}"
-
-JOURNAL_ALL_CSV_URL = "https://link.springer.com/search/csv?date-facet-mode=between&search-within=Journal&facet-journal-id={}&facet-start-year={}&facet-end-year={}&query="
-JOURNAL_OA_CSV_URL = "https://link.springer.com/search/csv?search-within=Journal&package=openaccessarticles&date-facet-mode=in&query=&facet-journal-id={}&facet-start-year={}&facet-end-year={}"
+SPRINGER_GET_CSV = "https://link.springer.com/search/csv?date-facet-mode=between&search-within=Journal&facet-journal-id={}&facet-start-year={}&facet-end-year={}&query="
 
 COVERAGE_CACHE = {}
 PERSISTENT_PUBDATES_CACHE = {} # Persistent cache, loaded from PUBDATES_CACHE_FILE on startup
@@ -66,7 +65,7 @@ def _shutdown():
         f.flush()
     print("Done.")
     num_articles = 0
-    for journal_ids, dois in PERSISTENT_PUBDATES_CACHE.iteritems():
+    for _, dois in PERSISTENT_PUBDATES_CACHE.items():
         num_articles += len(dois)
     print("The article cache now contains publication dates for {} DOIs".format(num_articles))
     if ERROR_MSGS:
@@ -88,7 +87,7 @@ def _process_springer_catalogue(max_lookups=None):
         msg = "Looking up coverage stats for Open Choice journals in " + year
         print(colorise("--- " + msg + " ---", "green"))
         catalogue_file = os.path.join(SPRINGER_JOURNAL_LISTS_DIR, year + ".csv")
-        reader = UnicodeReader(open(catalogue_file, "r"))
+        reader = csv.DictReader(open(catalogue_file, "r"))
         for line in reader:
             if max_lookups is not None and LOOKUPS_PERFORMED >= max_lookups:
                 return
@@ -107,7 +106,8 @@ def _process_springer_catalogue(max_lookups=None):
                 try:
                     _update_journal_stats(title, journal_id, year)
                 except ValueError as ve:
-                    error_msg = 'Journal "{}" ({}): ValueError while obtaining journal stats, annual stats not added to cache.'
+                    error_msg = ('Journal "{}" ({}): ValueError while obtaining journal ' +
+                                 'stats, annual stats not added to cache.')
                     error_msg = colorise(error_msg.format(title, journal_id), "red")
                     print(error_msg)
                     ERROR_MSGS.append(error_msg)
@@ -115,7 +115,7 @@ def _process_springer_catalogue(max_lookups=None):
                 LOOKUPS_PERFORMED += 1
                 already_cached = False
             if already_cached:
-                msg = u'Stats for journal "{}" in {} already cached.'
+                msg = 'Stats for journal "{}" in {} already cached.'
                 print(colorise(msg.format(title, year), "yellow"))
                 
 def _update_journal_stats(title, journal_id, year, verbose=True):
@@ -138,8 +138,8 @@ def update_coverage_stats(file_list, max_lookups, refetch=True):
     if os.path.isfile(COVERAGE_CACHE_FILE):
         with open(COVERAGE_CACHE_FILE, "r") as f:
             try:
-               COVERAGE_CACHE  = json.loads(f.read())
-               print("coverage cache file sucessfully loaded.")
+                COVERAGE_CACHE = json.loads(f.read())
+                print("coverage cache file sucessfully loaded.")
             except ValueError:
                 print("Could not decode a cache structure from " + COVERAGE_CACHE_FILE + ", starting with an empty coverage cache.")
     else:
@@ -147,8 +147,8 @@ def update_coverage_stats(file_list, max_lookups, refetch=True):
     if os.path.isfile(PUBDATES_CACHE_FILE):
         with open(PUBDATES_CACHE_FILE, "r") as f:
             try:
-               PERSISTENT_PUBDATES_CACHE  = json.loads(f.read())
-               print("Pub dates cache file sucessfully loaded.")
+                PERSISTENT_PUBDATES_CACHE = json.loads(f.read())
+                print("Pub dates cache file sucessfully loaded.")
             except ValueError:
                 print("Could not decode a cache structure from " + PUBDATES_CACHE_FILE + ", starting with an empty pub date cache.")
     else:
@@ -156,11 +156,11 @@ def update_coverage_stats(file_list, max_lookups, refetch=True):
         
     if not os.path.isdir(JOURNAL_CSV_DIR):
         raise IOError("Journal CSV directory " + JOURNAL_CSV_DIR + " not found!")
-        
+
     _process_springer_catalogue(max_lookups)
     
     for offsetting_file in file_list:
-        reader = UnicodeReader(open(offsetting_file, "r"))
+        reader = csv.DictReader(open(offsetting_file, "r"))
         for line in reader:
             if max_lookups is not None and LOOKUPS_PERFORMED >= max_lookups:
                 print("maximum number of lookups performed.")
@@ -174,7 +174,7 @@ def update_coverage_stats(file_list, max_lookups, refetch=True):
             period = line["period"]
             title = line["journal_full_title"]
             doi = line["doi"]
-            journal_id = get_springer_journal_id_from_doi(doi, issn)
+            journal_id = _get_springer_journal_id_from_doi(doi, issn)
             # Retreive publication dates for articles from CSV summaries on SpringerLink.
             # Employ a multi-level cache structure to minimize IO:
             #  1. try to look up the doi in the persistent publication dates cache
@@ -186,7 +186,7 @@ def update_coverage_stats(file_list, max_lookups, refetch=True):
                 print("Journal {} ('{}'): DOI {} already cached.".format(journal_id, title, doi))
             except KeyError:
                 if journal_id not in TEMP_JOURNAL_CACHE:
-                    msg = u"Journal {} ('{}'): Not found in temp cache, repopulating..."
+                    msg = "Journal {} ('{}'): Not found in temp cache, repopulating..."
                     print(msg.format(journal_id, title))
                     TEMP_JOURNAL_CACHE[journal_id] = _get_journal_cache_from_csv(journal_id, refetch=False)
                 if doi not in TEMP_JOURNAL_CACHE[journal_id]:
@@ -227,43 +227,47 @@ def update_coverage_stats(file_list, max_lookups, refetch=True):
                 try:
                     _update_journal_stats(title, journal_id, pub_year)
                     lookup_performed = True
-                    error_msg = u'No stats found for journal "{}" ({}) in {} albeit having downloaded the full Open Choice catalogue. Stats were obtained retroactively.'
+                    error_msg = ('No stats found for journal "{}" ({}) in {} albeit having ' +
+                                 'downloaded the full Open Choice catalogue. Stats were ' +
+                                 'obtained retroactively.')
                     error_msg = colorise(error_msg.format(title, journal_id, pub_year), "red")
                     print(error_msg)
                     ERROR_MSGS.append(error_msg)
                 except ValueError as ve:
-                    error_msg = u'Error while processing DOI {}: No stats found for journal "{}" ({}) in {} albeit having downloaded the full Open Choice catalogue and stats could not be obtained retroactively.'
-                    error_msg = colorise(error_msg.format(doi, title, journal_id, pub_year), "red")
+                    error_msg = ('Critical Error while processing DOI {}: No stats found ' +
+                                 ' for journal "{}" ({}) in {} albeit having downloaded the ' +
+                                 'full Open Choice catalogue and stats could not be obtained ' +
+                                 'retroactively (ValueError: {}).')
+                    error_msg = colorise(error_msg.format(doi, title, journal_id, pub_year, str(ve)), "red")
                     print(error_msg)
                     ERROR_MSGS.append(error_msg)
+                    _shutdown()
             if lookup_performed:
                 LOOKUPS_PERFORMED += 1
     _shutdown()
     
+
 def _get_journal_cache_from_csv(journal_id, refetch):
     """
     Get a mapping dict (doi -> pub_year) from a SpringerLink CSV.
-    
     Open a Springerlink search results CSV file and obtain a doi -> pub_year
     mapping from the "Item DOI" and "Publication Year" columns. Download the file
     first if necessary or advised.
-    
     Args:
         journal_id: The SpringerLink internal journal ID. Can be obtained
-                    using get_springer_journal_id_from_doi()
+                    using _get_springer_journal_id_from_doi()
         refetch: Bool. If True, the CSV file will always be re-downloaded, otherwise
                  a local copy will be tried first.
-    
     Returns:
         A dict with a doi -> pub_year mapping.
     """
     path = os.path.join(JOURNAL_CSV_DIR, journal_id + ".csv")
     if not os.path.isfile(path) or refetch:
-        fetch_springer_journal_csv(path, journal_id)
+        _fetch_springer_journal_csv(path, journal_id)
         msg = u"Journal {}: Fetching article CSV table from SpringerLink..."
         print(msg.format(journal_id))
     with open(path) as p:
-        reader = UnicodeReader(p)
+        reader = csv.DictReader(p)
         cache = {}
         for line in reader:
             doi = line["Item DOI"]
@@ -271,26 +275,25 @@ def _get_journal_cache_from_csv(journal_id, refetch):
             cache[doi] = year
         return cache
         
-def fetch_springer_journal_csv(path, journal_id, oa_only=False):
+
+def _fetch_springer_journal_csv(path, journal_id):
     current_year = datetime.datetime.now().year
     years = range(2015, current_year + 1)
     joint_lines = []
     for year in years:
-        if oa_only:
-            url = JOURNAL_OA_CSV_URL.format(journal_id, year, year)
-        else:
-            url = JOURNAL_ALL_CSV_URL.format(journal_id, year, year)
-        handle = urllib2.urlopen(url)
+        url = SPRINGER_GET_CSV.format(journal_id, year, year)
+        handle = urlopen(url)
         if year > 2015:
             handle.readline() # read the CSV header only once
         for line in handle:
+            line = line.decode("utf-8")
             if not line.endswith("\n"):
                 line += "\n"
             joint_lines.append(line)
-    with open(path, "wb") as f:
+    with open(path, "w") as f:
         f.write("".join(joint_lines))
     
-def get_springer_journal_id_from_doi(doi, issn=None):
+def _get_springer_journal_id_from_doi(doi, issn=None):
     global JOURNAL_ID_CACHE
     if JOURNAL_ID_CACHE is None:
         if os.path.isfile(JOURNAL_ID_CACHE_FILE):
@@ -341,10 +344,18 @@ def _get_springer_journal_stats(journal_id, period, oa=False):
     if oa:
         url = SPRINGER_OA_SEARCH.format(journal_id, period, period)
     print(url)
-    req = urllib2.Request(url, None)
-    response = urllib2.urlopen(req)
-    content = response.read()
-    results = {}
+    try:
+        req = Request(url, None)
+        response = urlopen(req)
+        content = response.read()
+        content = content.decode("utf-8")
+        results = {}
+    except HTTPError as httpe:
+        if httpe.code == 503: # retry on timeout
+            print(colorise("Timeout (HTTP 503), retrying...", "yellow"))
+            return _get_springer_journal_stats(journal_id, period, oa)
+        else:
+            raise httpe
     count_match = SEARCH_RESULTS_COUNT_RE.search(content)
     if count_match:
         count = count_match.groupdict()['count']
@@ -355,7 +366,6 @@ def _get_springer_journal_stats(journal_id, period, oa=False):
     title_match = SEARCH_RESULTS_TITLE_RE.search(content)
     if title_match:
         title = (title_match.groupdict()['title'])
-        title = unicode(title, "utf-8")
         htmlparser = HTMLParser()
         results['title'] = htmlparser.unescape(title)
     else:
