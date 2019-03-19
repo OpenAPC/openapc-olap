@@ -255,7 +255,6 @@ def create_cubes_tables(connectable, schema="openapc_schema"):
         for row in reader:
             institution = row["institution"]
             publisher = row["publisher"]
-            is_hybrid = row["is_hybrid"]
             issn = row["issn"]
             doi = row["doi"]
             # colons cannot be escaped in URL queries to the cubes server, so we have
