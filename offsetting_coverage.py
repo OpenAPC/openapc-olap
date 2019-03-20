@@ -212,7 +212,6 @@ def update_coverage_stats(file_list, max_lookups, refetch=True):
                     msg = u"Journal {} ('{}'): ".format(journal_id, title)
                     print(msg.ljust(80) + compare_msg)
             if found:
-                PERSISTENT_PUBDATES_CACHE[journal_id][doi] = TEMP_JOURNAL_CACHE[journal_id][doi]
                 pub_year = PERSISTENT_PUBDATES_CACHE[journal_id][doi]
             else:
                 # If a lookup error occured we will retreive coverage stats for the period year instead, since
