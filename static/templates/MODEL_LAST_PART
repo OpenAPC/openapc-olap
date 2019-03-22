@@ -60,20 +60,20 @@
             "label": "Number of offsetting articles (simulated data) compared to number of journal total and oa articles",
             "aggregates": [
                 {
-                    "name": "num_offsetting_articles",
+                    "name": "offsetting_articles",
                     "label": "Offsetting articles",
                     "measure": "num_offsetting_articles",
                     "function": "sum",
                     "info": "primary"
                 },
                 {
-                    "name": "num_journal_total_articles",
+                    "name": "journal_total_articles",
                     "label": "Journal total articles",
                     "measure": "num_journal_total_articles",
                     "function": "sum"
                 },
                 {
-                    "name": "num_journal_oa_articles",
+                    "name": "journal_oa_articles",
                     "label": "Journal OA articles",
                     "measure": "num_journal_oa_articles",
                     "function": "sum"
