@@ -27,7 +27,7 @@ ARG_HELP_STRINGS = {
 
 APC_DE_FILE = "apc_de.csv"
 OFFSETTING_FILE = "offsetting.csv"
-OPENAIRE_FILE = "OpenAIRE_APC_DE_20190131.csv"
+OPENAIRE_FILE = "OpenAIRE_APC_DE.csv"
 SIMULATED_OFFSETTING_FILE_NON_OA = "simulated_data/offsetting_germany/springer_pub_non_oa_enriched.csv"
 SIMULATED_OFFSETTING_FILE_OA = "simulated_data/offsetting_germany/springer_pub_oa_enriched.csv"
 
