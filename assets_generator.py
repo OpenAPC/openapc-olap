@@ -146,6 +146,7 @@ def create_cubes_tables(connectable, apc_file_name, offsetting_file_name, schema
         ("url", "string"),
         ("doaj", "string"),
         ("country", "string"),
+        ("agreement", "string")
     ]
 
     offsetting_coverage_fields = [

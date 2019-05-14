@@ -10,7 +10,7 @@
                     "function": "count"
                 }
             ],
-            "dimensions": ["institution", "period", "publisher", "journal_full_title", "doi", "is_hybrid", "country"]
+            "dimensions": ["institution", "period", "publisher", "journal_full_title", "doi", "is_hybrid", "country", "agreement"]
         }
         ,
         {
@@ -114,6 +114,11 @@
             "name": "country",
             "description": "country the institution is located in",
             "attributes": ["country"]
+        },
+        {
+            "name": "agreement",
+            "description": "transformative agreement an article was published under (offsetting data only)",
+            "attributes": ["agreement"]
         },
         {
             "name": "num_offsetting_articles",
