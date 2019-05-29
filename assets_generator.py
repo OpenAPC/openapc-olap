@@ -26,7 +26,7 @@ ARG_HELP_STRINGS = {
 }
 
 APC_DE_FILE = "apc_de.csv"
-OFFSETTING_FILE = "offsetting.csv"
+TRANSFORMATIVE_AGREEMENTS_FILE = "transformative_agreements.csv"
 
 def main():
     parser = argparse.ArgumentParser()
@@ -103,7 +103,7 @@ def init_table(table, fields, create_id=False):
 
     table.create()
 
-def create_cubes_tables(connectable, apc_file_name, offsetting_file_name, schema="openapc_schema"):
+def create_cubes_tables(connectable, apc_file_name, transformative_agreements_file_name, schema="openapc_schema"):
 
     apc_fields = [
         ("institution", "string"),
@@ -127,7 +127,7 @@ def create_cubes_tables(connectable, apc_file_name, offsetting_file_name, schema
         ("country", "string")
     ]
 
-    offsetting_fields = [
+    transformative_agreements_fields = [
         ("institution", "string"),
         ("period", "string"),
         ("doi", "string"),
@@ -149,12 +149,12 @@ def create_cubes_tables(connectable, apc_file_name, offsetting_file_name, schema
         ("agreement", "string")
     ]
 
-    offsetting_coverage_fields = [
+    springer_compact_coverage_fields = [
         ("period", "string"),
         ("publisher", "string"),
         ("journal_full_title", "string"),
         ("is_hybrid", "string"),
-        ("num_offsetting_articles", "float"),
+        ("num_springer_compact_articles", "float"),
         ("num_journal_total_articles", "float"),
         ("num_journal_oa_articles", "float")
     ]
@@ -167,11 +167,11 @@ def create_cubes_tables(connectable, apc_file_name, offsetting_file_name, schema
     init_table(openapc_table, apc_fields)
     openapc_insert_command = openapc_table.insert()
 
-    offsetting_table = sqlalchemy.Table("offsetting", metadata, autoload=False, schema=schema)
-    if offsetting_table.exists():
-        offsetting_table.drop(checkfirst=False)
-    init_table(offsetting_table, offsetting_fields)
-    offsetting_insert_command = offsetting_table.insert()
+    transformative_agreements_table = sqlalchemy.Table("transformative_agreements", metadata, autoload=False, schema=schema)
+    if transformative_agreements_table.exists():
+        transformative_agreements_table.drop(checkfirst=False)
+    init_table(transformative_agreements_table, transformative_agreements_fields)
+    transformative_agreements_insert_command = transformative_agreements_table.insert()
 
     combined_table = sqlalchemy.Table("combined", metadata, autoload=False, schema=schema)
     if combined_table.exists():
@@ -179,28 +179,28 @@ def create_cubes_tables(connectable, apc_file_name, offsetting_file_name, schema
     init_table(combined_table, apc_fields)
     combined_insert_command = combined_table.insert()
 
-    offsetting_coverage_table = sqlalchemy.Table("offsetting_coverage", metadata,
+    springer_compact_coverage_table = sqlalchemy.Table("springer_compact_coverage", metadata,
                                                  autoload=False, schema=schema)
-    if offsetting_coverage_table.exists():
-        offsetting_coverage_table.drop(checkfirst=False)
-    init_table(offsetting_coverage_table, offsetting_coverage_fields)
-    offsetting_coverage_insert_command = offsetting_coverage_table.insert()
+    if springer_compact_coverage_table.exists():
+        springer_compact_coverage_table.drop(checkfirst=False)
+    init_table(springer_compact_coverage_table, springer_compact_coverage_fields)
+    springer_compact_coverage_insert_command = springer_compact_coverage_table.insert()
 
     # a dict to store individual insert commands for every table
     tables_insert_commands = {
         "openapc": openapc_insert_command,
-        "offsetting": offsetting_insert_command,
+        "transformative_agreements": transformative_agreements_insert_command,
         "combined": combined_insert_command,
-        "offsetting_coverage": offsetting_coverage_insert_command
+        "springer_compact_coverage": springer_compact_coverage_insert_command
     }
 
-    offsetting_institution_countries = {}
+    transformative_agreements_institution_countries = {}
 
-    reader = csv.DictReader(open("static/institutions_offsetting.csv", "r"))
+    reader = csv.DictReader(open("static/institutions_transformative_agreements.csv", "r"))
     for row in reader:
         institution_name = row["institution"]
         country = row["country"]
-        offsetting_institution_countries[institution_name] = country
+        transformative_agreements_institution_countries[institution_name] = country
 
     journal_coverage = None
     article_pubyears = None
@@ -220,11 +220,11 @@ def create_cubes_tables(connectable, apc_file_name, offsetting_file_name, schema
         print(msg.format(str(ve)))
         sys.exit()
 
-    summarised_offsetting = {}
+    summarised_transformative_agreements = {}
 
     journal_id_title_map = {}
 
-    reader = csv.DictReader(open(offsetting_file_name, "r"))
+    reader = csv.DictReader(open(transformative_agreements_file_name, "r"))
     institution_key_errors = []
     for row in reader:
         institution = row["institution"]
@@ -236,11 +236,11 @@ def create_cubes_tables(connectable, apc_file_name, offsetting_file_name, schema
         row["journal_full_title"] = row["journal_full_title"].replace(":", "")
         title = row["journal_full_title"]
         try:
-            row["country"] = offsetting_institution_countries[institution]
+            row["country"] = transformative_agreements_institution_countries[institution]
         except KeyError:
             if institution not in institution_key_errors:
                 institution_key_errors.append(institution)
-        tables_insert_commands["offsetting"].execute(row)
+        tables_insert_commands["transformative_agreements"].execute(row)
         if row["euro"] != "NA":
             tables_insert_commands["combined"].execute(row)
 
@@ -259,15 +259,15 @@ def create_cubes_tables(connectable, apc_file_name, offsetting_file_name, schema
             print(colorise(msg.format(doi), "yellow"))
             pub_year = row["period"]
 
-        if journal_id not in summarised_offsetting:
-            summarised_offsetting[journal_id] = {}
-        if pub_year not in summarised_offsetting[journal_id]:
-            summarised_offsetting[journal_id][pub_year] = 1
+        if journal_id not in summarised_transformative_agreements:
+            summarised_transformative_agreements[journal_id] = {}
+        if pub_year not in summarised_transformative_agreements[journal_id]:
+            summarised_transformative_agreements[journal_id][pub_year] = 1
         else:
-            summarised_offsetting[journal_id][pub_year] += 1
+            summarised_transformative_agreements[journal_id][pub_year] += 1
     if institution_key_errors:
         print("KeyError: The following institutions were not found in the " +
-              "institutions_offsetting file:")
+              "institutions_transformative_agreements file:")
         for institution in institution_key_errors:
             print(institution)
         sys.exit()
@@ -282,10 +282,10 @@ def create_cubes_tables(connectable, apc_file_name, offsetting_file_name, schema
                 "num_journal_oa_articles": stats["num_journal_oa_articles"]
             }
             try:
-                row["num_offsetting_articles"] = summarised_offsetting[journal_id][year]
+                row["num_springer_compact_articles"] = summarised_transformative_agreements[journal_id][year]
             except KeyError:
-                row["num_offsetting_articles"] = 0
-            tables_insert_commands["offsetting_coverage"].execute(row)
+                row["num_springer_compact_articles"] = 0
+            tables_insert_commands["springer_compact_coverage"].execute(row)
 
     institution_countries = {}
 
