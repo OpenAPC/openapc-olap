@@ -1,7 +1,7 @@
         ,
         {
-            "name": "offsetting",
-            "label": "Offsetting data cube (No monetary values!)",
+            "name": "transformative_agreements",
+            "label": "Transformative Agreements data cube (No monetary values!)",
             "aggregates": [
                 {
                     "name": "num_items",
@@ -14,13 +14,13 @@
         }
         ,
         {
-            "name": "offsetting_coverage",
-            "label": "Number of offsetting articles compared to number of journal total and oa articles",
+            "name": "springer_compact_coverage",
+            "label": "Number of Springer Compact articles compared to number of total and oa articles in Springer journals",
             "aggregates": [
                 {
-                    "name": "offsetting_articles",
-                    "label": "Offsetting articles",
-                    "measure": "num_offsetting_articles",
+                    "name": "springer_compact_articles",
+                    "label": "Springer Compact articles",
+                    "measure": "num_springer_compact_articles",
                     "function": "sum",
                     "info": "primary"
                 },
@@ -38,12 +38,12 @@
                 }
 
             ],
-            "dimensions": ["period", "publisher", "journal_full_title", "is_hybrid", "num_offsetting_articles", "num_journal_total_articles", "num_journal_oa_articles"]
+            "dimensions": ["period", "publisher", "journal_full_title", "is_hybrid", "num_springer_compact_articles", "num_journal_total_articles", "num_journal_oa_articles"]
         }
         ,
         {
             "name": "combined",
-            "label": "combined cube (combines cost data from openapc and offsetting model)",
+            "label": "combined cube (combines cost data from openapc and transformative agreements model)",
             "measures": [
                 {
                     "name": "euro",
@@ -117,13 +117,13 @@
         },
         {
             "name": "agreement",
-            "description": "transformative agreement an article was published under (offsetting data only)",
+            "description": "transformative agreement an article was published under",
             "attributes": ["agreement"]
         },
         {
-            "name": "num_offsetting_articles",
-            "description": "number of articles in the ofsetting collection for a given journal and year",
-            "attributes": ["num_offsetting_articles"]
+            "name": "num_springer_compact_articles",
+            "description": "number of SC articles for a given journal and year",
+            "attributes": ["num_springer_compact_articles"]
         },
         {
             "name": "num_journal_total_articles",
