@@ -9,7 +9,7 @@ import os
 import sys
 
 from util import colorise
-import offsetting_coverage as oc
+import springer_compact_coverage as scc
 
 import sqlalchemy
 
@@ -60,7 +60,7 @@ def main():
             sys.exit()
         psql_uri = "postgresql://" + db_user + ":" + db_pass + "@localhost/openapc_db"
         engine = sqlalchemy.create_engine(psql_uri)
-        create_cubes_tables(engine, APC_DE_FILE, OFFSETTING_FILE)
+        create_cubes_tables(engine, APC_DE_FILE, TRANSFORMATIVE_AGREEMENTS_FILE)
         with engine.begin() as connection:
             connection.execute("GRANT SELECT ON ALL TABLES IN SCHEMA openapc_schema TO cubes_user")
 
@@ -80,7 +80,7 @@ def main():
         with open('db_settings.ini', 'w') as config_file:
             cparser.write(config_file)
     elif args.job == "coverage_stats":
-        oc.update_coverage_stats(OFFSETTING_FILE, args.num_api_lookups, args.refetch)
+        scc.update_coverage_stats(TRANSFORMATIVE_AGREEMENTS_FILE, args.num_api_lookups, args.refetch)
 
 
 
@@ -205,10 +205,10 @@ def create_cubes_tables(connectable, apc_file_name, transformative_agreements_fi
     journal_coverage = None
     article_pubyears = None
     try:
-        cache_file = open(oc.COVERAGE_CACHE_FILE, "r")
+        cache_file = open(scc.COVERAGE_CACHE_FILE, "r")
         journal_coverage = json.loads(cache_file.read())
         cache_file.close()
-        cache_file = open(oc.PUBDATES_CACHE_FILE, "r")
+        cache_file = open(scc.PUBDATES_CACHE_FILE, "r")
         article_pubyears = json.loads(cache_file.read())
         cache_file.close()
     except IOError as ioe:
@@ -247,7 +247,7 @@ def create_cubes_tables(connectable, apc_file_name, transformative_agreements_fi
         if publisher != "Springer Nature":
             continue
 
-        journal_id = oc._get_springer_journal_id_from_doi(doi, issn)
+        journal_id = scc._get_springer_journal_id_from_doi(doi, issn)
         journal_id_title_map[journal_id] = title
         try:
             pub_year = article_pubyears[journal_id][doi]
