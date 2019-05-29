@@ -131,7 +131,7 @@ def _update_journal_stats(title, journal_id, year, verbose=True):
     COVERAGE_CACHE[journal_id]['years'][year]["num_journal_total_articles"] = total["count"]
     COVERAGE_CACHE[journal_id]['years'][year]["num_journal_oa_articles"] = oa["count"]
 
-def update_coverage_stats(offsetting_file, max_lookups, refetch=True):
+def update_coverage_stats(transformative_agreements_file, max_lookups, refetch=True):
     global COVERAGE_CACHE, JOURNAL_ID_CACHE, PERSISTENT_PUBDATES_CACHE, LOOKUPS_PERFORMED
     LOOKUPS_PERFORMED = 0
     if os.path.isfile(COVERAGE_CACHE_FILE):
@@ -158,7 +158,7 @@ def update_coverage_stats(offsetting_file, max_lookups, refetch=True):
 
     _process_springer_catalogue(max_lookups)
 
-    reader = csv.DictReader(open(offsetting_file, "r"))
+    reader = csv.DictReader(open(transformative_agreements_file, "r"))
     for line in reader:
         if max_lookups is not None and LOOKUPS_PERFORMED >= max_lookups:
             print("maximum number of lookups performed.")
@@ -206,9 +206,9 @@ def update_coverage_stats(offsetting_file, max_lookups, refetch=True):
                 pub_year = PERSISTENT_PUBDATES_CACHE[journal_id][doi]
                 compare_msg = u"DOI {} found in Springer data, Pub year is {} ".format(doi, pub_year)
                 if pub_year == period:
-                    compare_msg += colorise("(same as offsetting period)", "green")
+                    compare_msg += colorise("(same as transformative_agreements period)", "green")
                 else:
-                    compare_msg += colorise("(DIFFERENT from offsetting period, which is {})".format(period), "yellow")
+                    compare_msg += colorise("(DIFFERENT from transformative_agreements period, which is {})".format(period), "yellow")
                 msg = u"Journal {} ('{}'): ".format(journal_id, title)
                 print(msg.ljust(80) + compare_msg)
         if found:
