@@ -191,7 +191,7 @@ INRA,inra,Institut national de la recherche agronomique (INRA),EUROPE,FRA,FR-IDF
 ESPCI Paris,espci,École supérieure de physique et de chimie industrielles de la Ville de Paris (ESPCI),EUROPE,FRA,FR-IDF
 Université d'Avignon et des Pays de Vaucluse,avignon_u,Université d'Avignon et des Pays de Vaucluse,EUROPE,FRA,FR-PAC
 Université de Caen Normandie,caen_u,Université de Caen Normandie,EUROPE,FRA,FR-NOR
-Université de Franche-Comté,france_comte_u,Université de France-Comté,EUROPE,FRA,FR-BFC
+Université de Franche-Comté,france_comte_u,Université de Franche-Comté,EUROPE,FRA,FR-BFC
 Université Paris Diderot (Paris VII),paris_diderot_u,Université Paris Diderot (Paris VII),EUROPE,FRA,FR-IDF
 Université de Strasbourg,strasbourg_u,Université de Strasbourg,EUROPE,FRA,FR-GES
 "University of Chemistry and Technology, Prague",uct_prague_u,"University of Chemistry and Technology, Prague",EUROPE,CZE,CZ-PR
@@ -239,3 +239,4 @@ University of Debrecen,debrecen_u,University of Debrecen,EUROPE,HUN,HU-DE
 Institut für Arbeitsmarkt- und Berufsforschung,iab,Institut für Arbeitsmarkt- und Berufsforschung (IAB),EUROPE,DEU,BY
 GEOMAR,geomar,GEOMAR - Helmholtz Centre for Ocean Research Kiel,EUROPE,DEU,SH
 Jyväskylä U,jyvaskyla_u,University of Jyväskylä,EUROPE,FIN,FI-08
+"Commissariat à l'énergie atomique et aux énergies alternatives (CEA)",cea,"Commissariat à l'énergie atomique et aux énergies alternatives (CEA)",EUROPE,FRA,FR-IDF
