@@ -104,7 +104,7 @@ University of Sussex,sussex_u,University of Sussex,EUROPE,GBR,ENG
 University of Warwick,warwick_u,University of Warwick,EUROPE,GBR,ENG
 University of York,york_u,University of York,EUROPE,GBR,ENG
 Chalmers University of Technology,chalmers_u,Chalmers University of Technology,EUROPE,SWE,SE-O
-Dalarna University College,dalarna_u,Dalarna University College,EUROPE,SWE,SE-W
+Dalarna University,dalarna_u,Dalarna University,EUROPE,SWE,SE-W
 Karolinska Institutet,karolinska,Karolinska Institutet,EUROPE,SWE,SE-AB
 KTH Royal Institute of Technology,kth,KTH Royal Institute of Technology,EUROPE,SWE,SE-AB
 Linköping University,linkoping_u,Linköping University,EUROPE,SWE,SE-E
@@ -175,8 +175,8 @@ Université Grenoble Alpes,grenoble_u,Université Grenoble Alpes,EUROPE,FRA,FR-A
 Institut national polytechnique de Toulouse,inpt,Institut national polytechnique de Toulouse(INPT),EUROPE,FRA,FR-OCC
 Université Nice-Sophia-Antipolis,nice_u,Université Nice-Sophia-Antipolis,EUROPE,FRA,FR-PAC
 Université de Poitiers,poitiers_u,Université de Poitiers,EUROPE,FRA,FR-NAQ
-Borås University College,boras_uc,Borås University College,EUROPE,SWE,SE-O
-University College West,west_uc,University College West,EUROPE,SWE,SE-O
+University of Borås,boras_u,University of Borås,EUROPE,SWE,SE-O
+University West,west_u,University West,EUROPE,SWE,SE-O
 Linnaeus University,linnaeus_u,Linnaeus University,EUROPE,SWE,SE-G
 Örebro University,orebro_u,Örebro University,EUROPE,SWE,SE-T
 Université de Lorraine,lorraine_u,Université de Lorraine,EUROPE,FRA,FR-GES
@@ -240,3 +240,7 @@ Institut für Arbeitsmarkt- und Berufsforschung,iab,Institut für Arbeitsmarkt- 
 GEOMAR,geomar,GEOMAR - Helmholtz Centre for Ocean Research Kiel,EUROPE,DEU,SH
 Jyväskylä U,jyvaskyla_u,University of Jyväskylä,EUROPE,FIN,FI-08
 "Commissariat à l'énergie atomique et aux énergies alternatives (CEA)",cea,"Commissariat à l'énergie atomique et aux énergies alternatives (CEA)",EUROPE,FRA,FR-IDF
+Salzburg U,salzburg_u,University of Salzburg,EUROPE,AUT,AUT-SZ
+Swedish School of Sport and Health Sciences,swedish_school_sport_health_sciences,Swedish School of Sport and Health Sciences,EUROPE,SWE,SE-AB
+University of Skövde,skovde_u,University of Skövde,EUROPE,SWE,SE-O
+Karlstad University,karlstad_u,Karlstad University,EUROPE,SWE,SE-S
