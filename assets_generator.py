@@ -25,8 +25,10 @@ ARG_HELP_STRINGS = {
                "directory has not been cleared recently."
 }
 
-APC_DE_FILE = "apc_de.csv"
-TRANSFORMATIVE_AGREEMENTS_FILE = "transformative_agreements.csv"
+APC_DE_FILE = "../openapc-de/data/apc_de.csv"
+TRANSFORMATIVE_AGREEMENTS_FILE = "../openapc-de/data/transformative_agreements/transformative_agreements.csv"
+INSTITUTIONS_FILE = "../openapc-de/data/institutions.csv"
+INSTITUTIONS_TRANSFORMATIVE_AGREEMENTS_FILE = "../openapc-de/data/institutions_transformative_agreements.csv"
 
 def main():
     parser = argparse.ArgumentParser()
@@ -196,7 +198,7 @@ def create_cubes_tables(connectable, apc_file_name, transformative_agreements_fi
 
     transformative_agreements_institution_countries = {}
 
-    reader = csv.DictReader(open("static/institutions_transformative_agreements.csv", "r"))
+    reader = csv.DictReader(open(INSTITUTIONS_TRANSFORMATIVE_AGREEMENTS_FILE, "r"))
     for row in reader:
         institution_name = row["institution"]
         country = row["country"]
@@ -289,7 +291,7 @@ def create_cubes_tables(connectable, apc_file_name, transformative_agreements_fi
 
     institution_countries = {}
 
-    reader = csv.DictReader(open("static/institutions.csv", "r"))
+    reader = csv.DictReader(open(INSTITUTIONS_FILE, "r"))
     for row in reader:
         cubes_name = row["institution_cubes_name"]
         institution_name = row["institution"]
@@ -322,7 +324,7 @@ def generate_model_file(path):
     with open("static/templates/MODEL_CUBE_STATIC_PART", "r") as model:
         static_part = model.read()
 
-    reader = csv.DictReader(open("static/institutions.csv", "r"))
+    reader = csv.DictReader(open(INSTITUTIONS_FILE, "r"))
     for row in reader:
         content += "        ,\n        {\n"
         content += '            "name": "{}",\n'.format((row["institution_cubes_name"]))
@@ -340,7 +342,7 @@ def generate_yamls(path):
     with open("static/templates/YAML_STATIC_PART", "r") as yaml:
         yaml_static = yaml.read()
 
-    reader = csv.DictReader(open("static/institutions.csv", "r"))
+    reader = csv.DictReader(open(INSTITUTIONS_FILE, "r"))
     for row in reader:
         content = "name: " + row["institution_full_name"] + u"\n"
         content += "slug: " + row["institution_cubes_name"] + u"\n"
