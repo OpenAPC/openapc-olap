@@ -78,6 +78,45 @@
             ],
             "dimensions": ["institution", "period", "publisher", "journal_full_title", "doi", "is_hybrid", "country"]
         }
+        ,
+        {
+            "name": "deal_wiley",
+            "label": "DEAL Wiley data (cost data from hybrid articles published under the Wiley DEAL agreement)",
+            "measures": [
+                {
+                    "name": "euro",
+                    "label": "APC Amount"
+                }
+            ],
+            "aggregates": [
+                {
+                    "name": "apc_amount_sum",
+                    "label": "Sum",
+                    "measure": "euro",
+                    "function": "sum"
+                },
+                {
+                    "name": "apc_num_items",
+                    "label": "Number of Articles",
+                    "measure": "euro",
+                    "function": "count"
+                },
+                {
+                    "name": "apc_amount_avg",
+                    "label": "Mean Value",
+                    "measure": "euro",
+                    "function": "avg"
+                },
+                {
+                    "name": "apc_amount_stddev",
+                    "label": "Standard Deviation",
+                    "measure": "euro",
+                    "function": "stddev"
+                }
+            ],
+            "dimensions": ["institution", "period", "publisher", "journal_full_title", "doi", "is_hybrid", "country"]
+        }
+        
     ],
     "dimensions": [
         {

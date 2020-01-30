@@ -30,6 +30,8 @@ TRANSFORMATIVE_AGREEMENTS_FILE = "../openapc-de/data/transformative_agreements/t
 INSTITUTIONS_FILE = "../openapc-de/data/institutions.csv"
 INSTITUTIONS_TRANSFORMATIVE_AGREEMENTS_FILE = "../openapc-de/data/institutions_transformative_agreements.csv"
 
+WILEY_IMPRINTS = ["Wiley-Blackwell", "EMBO", "American Geophysical Union (AGU)"]
+
 def main():
     parser = argparse.ArgumentParser()
     parser.add_argument("job", choices=["tables", "model", "yamls", "db_settings",
@@ -187,13 +189,21 @@ def create_cubes_tables(connectable, apc_file_name, transformative_agreements_fi
         springer_compact_coverage_table.drop(checkfirst=False)
     init_table(springer_compact_coverage_table, springer_compact_coverage_fields)
     springer_compact_coverage_insert_command = springer_compact_coverage_table.insert()
+    
+    deal_wiley_table = sqlalchemy.Table("deal_wiley", metadata, autoload=False,
+                                        schema=schema)
+    if deal_wiley_table.exists():
+        deal_wiley_table.drop(checkfirst=False)
+    init_table(deal_wiley_table, apc_fields)
+    deal_wiley_insert_command = deal_wiley_table.insert()
 
     # a dict to store individual insert commands for every table
     tables_insert_commands = {
         "openapc": openapc_insert_command,
         "transformative_agreements": transformative_agreements_insert_command,
         "combined": combined_insert_command,
-        "springer_compact_coverage": springer_compact_coverage_insert_command
+        "springer_compact_coverage": springer_compact_coverage_insert_command,
+        "deal_wiley": deal_wiley_insert_command
     }
 
     transformative_agreements_institution_countries = {}
@@ -245,7 +255,10 @@ def create_cubes_tables(connectable, apc_file_name, transformative_agreements_fi
         tables_insert_commands["transformative_agreements"].execute(row)
         if row["euro"] != "NA":
             tables_insert_commands["combined"].execute(row)
-
+        if row["agreement"] == "DEAL Wiley Germany":
+            # DEAL Wiley
+            tables_insert_commands["deal_wiley"].execute(row)
+            
         if publisher != "Springer Nature":
             continue
 
@@ -315,6 +328,11 @@ def create_cubes_tables(connectable, apc_file_name, transformative_agreements_fi
         tables_insert_commands[institution].execute(row)
         tables_insert_commands["openapc"].execute(row)
         tables_insert_commands["combined"].execute(row)
+        #DEAL Wiley
+        if row["publisher"] in WILEY_IMPRINTS and row["country"] == "DEU" and row["is_hybrid"] == "FALSE":
+            if row["period"] in ["2019", "2020", "2021", "2022"]:
+                tables_insert_commands["deal_wiley"].execute(row)
+        
 
 def generate_model_file(path):
     content = ""
