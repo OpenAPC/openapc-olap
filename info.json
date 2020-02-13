@@ -1,7 +1,7 @@
 {
     "name": "olap.intact-project.org",
-    "label": "Open APC",
-    "description": "The Open APC initiative releases datasets on fees paid for open access journal articles by universities and research institutions under an open database license.",
+    "label": "OpenAPC",
+    "description": "openapc-olap is a small OLAP Server based on <a href=\"http://cubes.databrewery.org/\">cubes</a>. It offers a fast and efficient way of querying the OpenAPC data and also works as backend for the OpenAPC treemaps server. To get started, please have a look at our <a href=\"https://github.com/OpenAPC/openapc-olap/blob/master/HOWTO.md\">HOWTO</a>.",
     "license": "Open Database License",
     "keywords": ["financial", "APC", "publication fees", "Open Access"],
     "maintainer": "Christoph Broschinski <https://github.com/cbroschinski>",
@@ -10,6 +10,12 @@
         {
             "label": "OpenAPC Treemaps",
             "url": "http://treemaps.intact-project.org"
+        }
+    ],
+    "references": [
+        {
+            "label": "openapc-olap on GitHub",
+            "url": "https://github.com/OpenAPC/openapc-olap"
         }
     ]
 }
