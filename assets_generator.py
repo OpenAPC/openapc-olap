@@ -257,6 +257,10 @@ def create_cubes_tables(connectable, apc_file_name, transformative_agreements_fi
             tables_insert_commands["combined"].execute(row)
         if row["agreement"] == "DEAL Wiley Germany":
             # DEAL Wiley
+            if row["period"] == "2019":
+                # Special rule: Half 2019 costs since DEAL only started in 07/19 
+                halved = round(float(row["euro"]) / 2, 2)
+                row["euro"] = str(halved)
             tables_insert_commands["deal_wiley"].execute(row)
             
         if publisher != "Springer Nature":
