@@ -80,6 +80,44 @@
         }
         ,
         {
+            "name": "bpc",
+            "label": "Monograph processing charges (beta)",
+            "measures": [
+                {
+                    "name": "euro",
+                    "label": "BPC Amount"
+                }
+            ],
+            "aggregates": [
+                {
+                    "name": "bpc_amount_sum",
+                    "label": "Sum",
+                    "measure": "euro",
+                    "function": "sum"
+                },
+                {
+                    "name": "bpc_num_items",
+                    "label": "Number of Articles",
+                    "measure": "euro",
+                    "function": "count"
+                },
+                {
+                    "name": "bpc_amount_avg",
+                    "label": "Mean Value",
+                    "measure": "euro",
+                    "function": "avg"
+                },
+                {
+                    "name": "bpc_amount_stddev",
+                    "label": "Standard Deviation",
+                    "measure": "euro",
+                    "function": "stddev"
+                }
+            ],
+            "dimensions": ["institution", "period", "publisher", "book_title", "doi", "country"]
+        }
+        ,
+        {
             "name": "deal_wiley",
             "label": "DEAL Wiley data (cost data from hybrid articles published under the Wiley DEAL agreement)",
             "measures": [
@@ -138,6 +176,11 @@
             "name": "journal_full_title",
             "description": "title of a journal an article was published in",
             "attributes": ["journal_full_title"]
+        },
+        {
+            "name": "book_title",
+            "description": "title of a monograph",
+            "attributes": ["book_title"]
         },
         {
             "name": "doi",
