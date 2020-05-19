@@ -26,6 +26,7 @@ ARG_HELP_STRINGS = {
 }
 
 APC_DE_FILE = "../openapc-de/data/apc_de.csv"
+BPC_FILE = "../openapc-de/data/bpc.csv"
 TRANSFORMATIVE_AGREEMENTS_FILE = "../openapc-de/data/transformative_agreements/transformative_agreements.csv"
 INSTITUTIONS_FILE = "../openapc-de/data/institutions.csv"
 INSTITUTIONS_TRANSFORMATIVE_AGREEMENTS_FILE = "../openapc-de/data/institutions_transformative_agreements.csv"
@@ -152,6 +153,25 @@ def create_cubes_tables(connectable, apc_file_name, transformative_agreements_fi
         ("country", "string"),
         ("agreement", "string")
     ]
+    
+    bpc_fields = [
+        ("institution", "string"),
+        ("period", "string"),
+        ("euro", "float"),
+        ("doi", "string"),
+        ("publisher", "string"),
+        ("book_title", "string"),
+        ("isbn", "string"),
+        ("isbn_print", "string"),
+        ("isbn_electronic", "string"),
+        ("license_ref", "string"),
+        ("indexed_in_crossref", "string"),
+        ("pmid", "string"),
+        ("pmcid", "string"),
+        ("ut", "string"),
+        ("doab", "string"),
+        ("country", "string")
+    ]
 
     springer_compact_coverage_fields = [
         ("period", "string"),
@@ -176,6 +196,12 @@ def create_cubes_tables(connectable, apc_file_name, transformative_agreements_fi
         transformative_agreements_table.drop(checkfirst=False)
     init_table(transformative_agreements_table, transformative_agreements_fields)
     transformative_agreements_insert_command = transformative_agreements_table.insert()
+    
+    bpc_table = sqlalchemy.Table("bpc", metadata, autoload=False, schema=schema)
+    if bpc_table.exists():
+        bpc_table.drop(checkfirst=False)
+    init_table(bpc_table, bpc_fields)
+    bpc_insert_command = bpc_table.insert()
 
     combined_table = sqlalchemy.Table("combined", metadata, autoload=False, schema=schema)
     if combined_table.exists():
@@ -201,10 +227,17 @@ def create_cubes_tables(connectable, apc_file_name, transformative_agreements_fi
     tables_insert_commands = {
         "openapc": openapc_insert_command,
         "transformative_agreements": transformative_agreements_insert_command,
+        "bpc": bpc_insert_command,
         "combined": combined_insert_command,
         "springer_compact_coverage": springer_compact_coverage_insert_command,
         "deal_wiley": deal_wiley_insert_command
     }
+    
+    reader = csv.DictReader(open(BPC_FILE, "r"))
+    for row in reader:
+        row["book_title"] = row["book_title"].replace(":", "")
+        row["country"] = "DEU"
+        tables_insert_commands["bpc"].execute(row)
 
     transformative_agreements_institution_countries = {}
 
@@ -336,7 +369,6 @@ def create_cubes_tables(connectable, apc_file_name, transformative_agreements_fi
         if row["publisher"] in WILEY_IMPRINTS and row["country"] == "DEU" and row["is_hybrid"] == "FALSE":
             if row["period"] in ["2019", "2020", "2021", "2022"]:
                 tables_insert_commands["deal_wiley"].execute(row)
-        
 
 def generate_model_file(path):
     content = ""
