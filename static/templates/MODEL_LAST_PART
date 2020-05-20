@@ -97,13 +97,13 @@
                 },
                 {
                     "name": "bpc_num_items",
-                    "label": "Number of Articles",
+                    "label": "Number of Books",
                     "measure": "euro",
                     "function": "count"
                 },
                 {
                     "name": "bpc_amount_avg",
-                    "label": "Mean Value",
+                    "label": "Mean BPC",
                     "measure": "euro",
                     "function": "avg"
                 },
@@ -114,7 +114,7 @@
                     "function": "stddev"
                 }
             ],
-            "dimensions": ["institution", "period", "publisher", "book_title", "doi", "country"]
+            "dimensions": ["institution", "period", "publisher", "book_title", "doi", "doab", "backlist", "country"]
         }
         ,
         {
@@ -181,6 +181,16 @@
             "name": "book_title",
             "description": "title of a monograph",
             "attributes": ["book_title"]
+        },
+        {
+            "name": "doab",
+            "description": "flag identifying if the book is listed in the DOAB",
+            "attributes": ["doab"]
+        },
+        {
+            "name": "backlist",
+            "description": "flag identifying if the book was published OA from the beginning (Frontlist, FALSE) or was flipped to OA later (Backlist, TRUE)",
+            "attributes": ["backlist"]
         },
         {
             "name": "doi",

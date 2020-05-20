@@ -170,6 +170,7 @@ def create_cubes_tables(connectable, apc_file_name, transformative_agreements_fi
         ("pmcid", "string"),
         ("ut", "string"),
         ("doab", "string"),
+        ("backlist", "string"),
         ("country", "string")
     ]
 
