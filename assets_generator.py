@@ -153,12 +153,13 @@ def create_cubes_tables(connectable, apc_file_name, transformative_agreements_fi
         ("country", "string"),
         ("agreement", "string")
     ]
-    
+
     bpc_fields = [
         ("institution", "string"),
         ("period", "string"),
         ("euro", "float"),
         ("doi", "string"),
+        ("backlist_oa", "string"),
         ("publisher", "string"),
         ("book_title", "string"),
         ("isbn", "string"),
@@ -166,11 +167,7 @@ def create_cubes_tables(connectable, apc_file_name, transformative_agreements_fi
         ("isbn_electronic", "string"),
         ("license_ref", "string"),
         ("indexed_in_crossref", "string"),
-        ("pmid", "string"),
-        ("pmcid", "string"),
-        ("ut", "string"),
         ("doab", "string"),
-        ("backlist", "string"),
         ("country", "string")
     ]
 

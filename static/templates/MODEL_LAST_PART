@@ -81,7 +81,7 @@
         ,
         {
             "name": "bpc",
-            "label": "Monograph processing charges (beta)",
+            "label": "Monograph processing charges",
             "measures": [
                 {
                     "name": "euro",
@@ -114,7 +114,7 @@
                     "function": "stddev"
                 }
             ],
-            "dimensions": ["institution", "period", "publisher", "book_title", "doi", "doab", "backlist", "country"]
+            "dimensions": ["institution", "period", "publisher", "book_title", "doi", "doab", "backlist_oa", "country"]
         }
         ,
         {
@@ -188,9 +188,9 @@
             "attributes": ["doab"]
         },
         {
-            "name": "backlist",
+            "name": "backlist_oa",
             "description": "flag identifying if the book was published OA from the beginning (Frontlist, FALSE) or was flipped to OA later (Backlist, TRUE)",
-            "attributes": ["backlist"]
+            "attributes": ["backlist_oa"]
         },
         {
             "name": "doi",
