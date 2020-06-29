@@ -80,6 +80,44 @@
         }
         ,
         {
+            "name": "bpc",
+            "label": "Monograph processing charges",
+            "measures": [
+                {
+                    "name": "euro",
+                    "label": "BPC Amount"
+                }
+            ],
+            "aggregates": [
+                {
+                    "name": "bpc_amount_sum",
+                    "label": "Sum",
+                    "measure": "euro",
+                    "function": "sum"
+                },
+                {
+                    "name": "bpc_num_items",
+                    "label": "Number of Books",
+                    "measure": "euro",
+                    "function": "count"
+                },
+                {
+                    "name": "bpc_amount_avg",
+                    "label": "Mean BPC",
+                    "measure": "euro",
+                    "function": "avg"
+                },
+                {
+                    "name": "bpc_amount_stddev",
+                    "label": "Standard Deviation",
+                    "measure": "euro",
+                    "function": "stddev"
+                }
+            ],
+            "dimensions": ["institution", "period", "publisher", "book_title", "doi", "doab", "backlist_oa", "country"]
+        }
+        ,
+        {
             "name": "deal_wiley",
             "label": "DEAL Wiley data (cost data from hybrid articles published under the Wiley DEAL agreement)",
             "measures": [
@@ -138,6 +176,21 @@
             "name": "journal_full_title",
             "description": "title of a journal an article was published in",
             "attributes": ["journal_full_title"]
+        },
+        {
+            "name": "book_title",
+            "description": "title of a monograph",
+            "attributes": ["book_title"]
+        },
+        {
+            "name": "doab",
+            "description": "flag identifying if the book is listed in the DOAB",
+            "attributes": ["doab"]
+        },
+        {
+            "name": "backlist_oa",
+            "description": "flag identifying if the book was published OA from the beginning (Frontlist, FALSE) or was flipped to OA later (Backlist, TRUE)",
+            "attributes": ["backlist_oa"]
         },
         {
             "name": "doi",
