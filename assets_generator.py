@@ -30,6 +30,7 @@ BPC_FILE = "../openapc-de/data/bpc.csv"
 TRANSFORMATIVE_AGREEMENTS_FILE = "../openapc-de/data/transformative_agreements/transformative_agreements.csv"
 INSTITUTIONS_FILE = "../openapc-de/data/institutions.csv"
 INSTITUTIONS_TRANSFORMATIVE_AGREEMENTS_FILE = "../openapc-de/data/institutions_transformative_agreements.csv"
+INSTITUTIONS_BPC_FILE = "../openapc-de/data/institutions_bpcs.csv"
 
 WILEY_IMPRINTS = ["Wiley-Blackwell", "EMBO", "American Geophysical Union (AGU)"]
 
@@ -231,10 +232,19 @@ def create_cubes_tables(connectable, apc_file_name, transformative_agreements_fi
         "deal_wiley": deal_wiley_insert_command
     }
     
+    bpcs_institution_countries = {}
+
+    reader = csv.DictReader(open(INSTITUTIONS_BPC_FILE, "r"))
+    for row in reader:
+        institution_name = row["institution"]
+        country = row["country"]
+        bpcs_institution_countries[institution_name] = country
+
     reader = csv.DictReader(open(BPC_FILE, "r"))
     for row in reader:
         row["book_title"] = row["book_title"].replace(":", "")
-        row["country"] = "DEU"
+        institution = row["institution"]
+        row["country"] = bpcs_institution_countries[institution]
         tables_insert_commands["bpc"].execute(row)
 
     transformative_agreements_institution_countries = {}
