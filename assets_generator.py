@@ -28,6 +28,7 @@ ARG_HELP_STRINGS = {
 APC_DE_FILE = "../openapc-de/data/apc_de.csv"
 BPC_FILE = "../openapc-de/data/bpc.csv"
 TRANSFORMATIVE_AGREEMENTS_FILE = "../openapc-de/data/transformative_agreements/transformative_agreements.csv"
+DEAL_WILEY_OPT_OUT_FILE = "../openapc-de/data/transformative_agreements/deal_wiley_germany_opt_out/deal_wiley_germany_opt_out.csv"
 INSTITUTIONS_FILE = "../openapc-de/data/institutions.csv"
 INSTITUTIONS_TRANSFORMATIVE_AGREEMENTS_FILE = "../openapc-de/data/institutions_transformative_agreements.csv"
 INSTITUTIONS_BPC_FILE = "../openapc-de/data/institutions_bpcs.csv"
@@ -133,6 +134,8 @@ def create_cubes_tables(connectable, apc_file_name, transformative_agreements_fi
         ("country", "string")
     ]
 
+    deal_wiley_fields = apc_fields + [("opt_out", "string")]
+
     transformative_agreements_fields = [
         ("institution", "string"),
         ("period", "string"),
@@ -214,12 +217,12 @@ def create_cubes_tables(connectable, apc_file_name, transformative_agreements_fi
         springer_compact_coverage_table.drop(checkfirst=False)
     init_table(springer_compact_coverage_table, springer_compact_coverage_fields)
     springer_compact_coverage_insert_command = springer_compact_coverage_table.insert()
-    
+
     deal_wiley_table = sqlalchemy.Table("deal_wiley", metadata, autoload=False,
                                         schema=schema)
     if deal_wiley_table.exists():
         deal_wiley_table.drop(checkfirst=False)
-    init_table(deal_wiley_table, apc_fields)
+    init_table(deal_wiley_table, deal_wiley_fields)
     deal_wiley_insert_command = deal_wiley_table.insert()
 
     # a dict to store individual insert commands for every table
@@ -277,8 +280,25 @@ def create_cubes_tables(connectable, apc_file_name, transformative_agreements_fi
 
     journal_id_title_map = {}
 
-    reader = csv.DictReader(open(transformative_agreements_file_name, "r"))
     institution_key_errors = []
+
+    reader = csv.DictReader(open(DEAL_WILEY_OPT_OUT_FILE, "r"))
+    for row in reader:
+        row["opt_out"] = "TRUE"
+        institution = row["institution"]
+        try:
+            row["country"] = transformative_agreements_institution_countries[institution]
+        except KeyError:
+            if institution not in institution_key_errors:
+                institution_key_errors.append(institution)
+        if row["period"] == "2019":
+            # Special rule: Half 2019 costs since DEAL only started in 07/19
+            halved = round(float(row["euro"]) / 2, 2)
+            row["euro"] = str(halved)
+        tables_insert_commands["deal_wiley"].execute(row)
+
+    reader = csv.DictReader(open(transformative_agreements_file_name, "r"))
+
     for row in reader:
         institution = row["institution"]
         publisher = row["publisher"]
@@ -298,6 +318,7 @@ def create_cubes_tables(connectable, apc_file_name, transformative_agreements_fi
             tables_insert_commands["combined"].execute(row)
         if row["agreement"] == "DEAL Wiley Germany":
             # DEAL Wiley
+            row["opt_out"] = "FALSE"
             if row["period"] == "2019":
                 # Special rule: Half 2019 costs since DEAL only started in 07/19 
                 halved = round(float(row["euro"]) / 2, 2)

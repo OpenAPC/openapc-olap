@@ -152,7 +152,7 @@
                     "function": "stddev"
                 }
             ],
-            "dimensions": ["institution", "period", "publisher", "journal_full_title", "doi", "is_hybrid", "country"]
+            "dimensions": ["institution", "period", "publisher", "journal_full_title", "doi", "is_hybrid", "country", "opt_out"]
         }
         
     ],
@@ -196,6 +196,11 @@
             "name": "doi",
             "description": "doi identifying an article",
             "attributes": ["doi"]
+        },
+        {
+            "name": "opt_out",
+            "description": "flag identifying if this DEAL Wiley article has been opted out from OA (meaning it is now closed access)",
+            "attributes": ["opt_out"]
         },
         {
             "name": "is_hybrid",
