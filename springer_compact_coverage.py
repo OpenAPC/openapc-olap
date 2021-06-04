@@ -308,7 +308,7 @@ def _get_springer_journal_id_from_doi(doi, issn=None):
         else:
             print("No cache file (" + JOURNAL_ID_CACHE_FILE + ") found, starting with an empty journal_id cache.")
             JOURNAL_ID_CACHE = {}
-    if doi.startswith(("10.1007/s", "10.3758/s", "10.1245/s", "10.1617/s", "10.1186/s", "10.1208/s", "10.1365/s")):
+    if doi.startswith(("10.1007/s", "10.3758/s", "10.1245/s", "10.1617/s", "10.1186/s", "10.1208/s", "10.1365/s", "10.1038/s", "10.1057/s")):
         return doi[9:14].lstrip("0")
     elif doi.startswith(("10.14283")): # Irregular prefix, contains only the "Journal of Frailty & Aging"
         return "42415"
