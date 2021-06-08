@@ -118,8 +118,8 @@
         }
         ,
         {
-            "name": "deal_wiley",
-            "label": "DEAL Wiley data (cost data from hybrid articles published under the Wiley DEAL agreement)",
+            "name": "deal",
+            "label": "DEAL data (cost data from articles published under the German DEAL agreement)",
             "measures": [
                 {
                     "name": "euro",

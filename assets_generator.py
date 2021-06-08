@@ -4,6 +4,7 @@
 import argparse
 import csv
 import configparser
+from copy import deepcopy
 import json
 import os
 import sys
@@ -29,11 +30,15 @@ APC_DE_FILE = "../openapc-de/data/apc_de.csv"
 BPC_FILE = "../openapc-de/data/bpc.csv"
 TRANSFORMATIVE_AGREEMENTS_FILE = "../openapc-de/data/transformative_agreements/transformative_agreements.csv"
 DEAL_WILEY_OPT_OUT_FILE = "../openapc-de/data/transformative_agreements/deal_germany_opt_out/deal_wiley_germany_opt_out.csv"
+DEAL_SPRINGER_OPT_OUT_FILE = "../openapc-de/data/transformative_agreements/deal_germany_opt_out/deal_springer_nature_germany_opt_out.csv"
 INSTITUTIONS_FILE = "../openapc-de/data/institutions.csv"
 INSTITUTIONS_TRANSFORMATIVE_AGREEMENTS_FILE = "../openapc-de/data/institutions_transformative_agreements.csv"
 INSTITUTIONS_BPC_FILE = "../openapc-de/data/institutions_bpcs.csv"
 
-WILEY_IMPRINTS = ["Wiley-Blackwell", "EMBO", "American Geophysical Union (AGU)"]
+DEAL_IMPRINTS = {
+    "Wiley-Blackwell": ["Wiley-Blackwell", "EMBO", "American Geophysical Union (AGU)", "International Union of Crystallography (IUCr)"],
+    "Springer Nature": ["Springer Nature"]
+}
 
 def main():
     parser = argparse.ArgumentParser()
@@ -134,7 +139,7 @@ def create_cubes_tables(connectable, apc_file_name, transformative_agreements_fi
         ("country", "string")
     ]
 
-    deal_wiley_fields = apc_fields + [("opt_out", "string")]
+    deal_fields = apc_fields + [("opt_out", "string")]
 
     transformative_agreements_fields = [
         ("institution", "string"),
@@ -218,12 +223,12 @@ def create_cubes_tables(connectable, apc_file_name, transformative_agreements_fi
     init_table(springer_compact_coverage_table, springer_compact_coverage_fields)
     springer_compact_coverage_insert_command = springer_compact_coverage_table.insert()
 
-    deal_wiley_table = sqlalchemy.Table("deal_wiley", metadata, autoload=False,
+    deal_table = sqlalchemy.Table("deal", metadata, autoload=False,
                                         schema=schema)
-    if deal_wiley_table.exists():
-        deal_wiley_table.drop(checkfirst=False)
-    init_table(deal_wiley_table, deal_wiley_fields)
-    deal_wiley_insert_command = deal_wiley_table.insert()
+    if deal_table.exists():
+        deal_table.drop(checkfirst=False)
+    init_table(deal_table, deal_fields)
+    deal_insert_command = deal_table.insert()
 
     # a dict to store individual insert commands for every table
     tables_insert_commands = {
@@ -232,7 +237,7 @@ def create_cubes_tables(connectable, apc_file_name, transformative_agreements_fi
         "bpc": bpc_insert_command,
         "combined": combined_insert_command,
         "springer_compact_coverage": springer_compact_coverage_insert_command,
-        "deal_wiley": deal_wiley_insert_command
+        "deal": deal_insert_command
     }
     
     bpcs_institution_countries = {}
@@ -284,18 +289,35 @@ def create_cubes_tables(connectable, apc_file_name, transformative_agreements_fi
 
     reader = csv.DictReader(open(DEAL_WILEY_OPT_OUT_FILE, "r"))
     for row in reader:
-        row["opt_out"] = "TRUE"
-        institution = row["institution"]
+        row_copy = deepcopy(row) # work on a deep copy since we make some DEAL-specific changes 
+        row_copy["opt_out"] = "TRUE"
+        if row_copy["publisher"] in DEAL_IMPRINTS["Wiley-Blackwell"]:
+            row_copy["publisher"] = "Wiley-Blackwell"
+        institution = row_copy["institution"]
         try:
-            row["country"] = transformative_agreements_institution_countries[institution]
+            row_copy["country"] = transformative_agreements_institution_countries[institution]
         except KeyError:
             if institution not in institution_key_errors:
                 institution_key_errors.append(institution)
-        if row["period"] == "2019":
+        if row_copy["period"] == "2019":
             # Special rule: Half 2019 costs since DEAL only started in 07/19
-            halved = round(float(row["euro"]) / 2, 2)
-            row["euro"] = str(halved)
-        tables_insert_commands["deal_wiley"].execute(row)
+            halved = round(float(row_copy["euro"]) / 2, 2)
+            row_copy["euro"] = str(halved)
+        tables_insert_commands["deal"].execute(row_copy)
+        
+    reader = csv.DictReader(open(DEAL_SPRINGER_OPT_OUT_FILE, "r"))
+    for row in reader:
+        row_copy = deepcopy(row) # work on a deep copy since we make some DEAL-specific changes 
+        row_copy["opt_out"] = "TRUE"
+        if row_copy["publisher"] in DEAL_IMPRINTS["Springer Nature"]:
+                row_copy["publisher"] = "Springer Nature"
+        institution = row_copy["institution"]
+        try:
+            row_copy["country"] = transformative_agreements_institution_countries[institution]
+        except KeyError:
+            if institution not in institution_key_errors:
+                institution_key_errors.append(institution)
+        tables_insert_commands["deal"].execute(row_copy)
 
     reader = csv.DictReader(open(transformative_agreements_file_name, "r"))
 
@@ -318,12 +340,23 @@ def create_cubes_tables(connectable, apc_file_name, transformative_agreements_fi
             tables_insert_commands["combined"].execute(row)
         if row["agreement"] == "DEAL Wiley Germany":
             # DEAL Wiley
-            row["opt_out"] = "FALSE"
-            if row["period"] == "2019":
+            row_copy = deepcopy(row)
+            row_copy["opt_out"] = "FALSE"
+            if row_copy["period"] == "2019":
                 # Special rule: Half 2019 costs since DEAL only started in 07/19 
                 halved = round(float(row["euro"]) / 2, 2)
-                row["euro"] = str(halved)
-            tables_insert_commands["deal_wiley"].execute(row)
+                row_copy["euro"] = str(halved)
+            if row_copy["publisher"] in DEAL_IMPRINTS["Wiley-Blackwell"]:
+                row_copy["publisher"] = "Wiley-Blackwell"
+            tables_insert_commands["deal"].execute(row_copy)
+            
+        if row["agreement"] == "DEAL Springer Nature Germany":
+            row_copy = deepcopy(row)
+            # DEAL SN
+            row_copy["opt_out"] = "FALSE"
+            if row_copy["publisher"] in DEAL_IMPRINTS["Springer Nature"]:
+                row_copy["publisher"] = "Springer Nature"
+            tables_insert_commands["deal"].execute(row_copy)       
             
         if publisher != "Springer Nature":
             continue
@@ -394,10 +427,16 @@ def create_cubes_tables(connectable, apc_file_name, transformative_agreements_fi
         tables_insert_commands[institution].execute(row)
         tables_insert_commands["openapc"].execute(row)
         tables_insert_commands["combined"].execute(row)
-        #DEAL Wiley
-        if row["publisher"] in WILEY_IMPRINTS and row["country"] == "DEU" and row["is_hybrid"] == "FALSE":
+        # DEAL Wiley
+        if row["publisher"] in DEAL_IMPRINTS["Wiley-Blackwell"] and row["country"] == "DEU" and row["is_hybrid"] == "FALSE":
             if row["period"] in ["2019", "2020", "2021", "2022"]:
-                tables_insert_commands["deal_wiley"].execute(row)
+                row["publisher"] = "Wiley-Blackwell" # Imprint normalization
+                tables_insert_commands["deal"].execute(row)
+        # DEAL Springer
+        if row["publisher"] in DEAL_IMPRINTS["Springer Nature"] and row["country"] == "DEU" and row["is_hybrid"] == "FALSE":
+            if row["period"] in ["2020", "2021", "2022"]:
+                row["publisher"] = "Springer Nature"
+                tables_insert_commands["deal"].execute(row)        
 
 def generate_model_file(path):
     content = ""
