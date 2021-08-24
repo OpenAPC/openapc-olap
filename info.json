@@ -1,5 +1,5 @@
 {
-    "name": "olap.intact-project.org",
+    "name": "olap.openapc.net",
     "label": "OpenAPC",
     "description": "openapc-olap is a small OLAP Server based on <a href=\"http://cubes.databrewery.org/\">cubes</a>. It offers a fast and efficient way of querying the OpenAPC data and also works as backend for the OpenAPC treemaps server. To get started, please have a look at our <a href=\"https://github.com/OpenAPC/openapc-olap/blob/master/HOWTO.md\">HOWTO</a>.",
     "license": "Open Database License",
@@ -9,7 +9,7 @@
     "visualizers": [
         {
             "label": "OpenAPC Treemaps",
-            "url": "http://treemaps.intact-project.org"
+            "url": "http://treemaps.openapc.net"
         }
     ],
     "references": [

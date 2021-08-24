@@ -1,6 +1,6 @@
 ## Introduction
 
-The OpenAPC [OLAP server](https://olap.intact-project.org) is the data back end for the [treemap visualisations](https://treemaps.intact-project.org) and can also be used as a public API to access the OpenAPC data. Querying the OLAP might be a convenient middle way if you don't want to process the raw CSV file first, but need more functionality than the treemaps can offer.
+The OpenAPC [OLAP server](https://olap.openapc.net) is the data back end for the [treemap visualisations](https://treemaps.openapc.net) and can also be used as a public API to access the OpenAPC data. Querying the OLAP might be a convenient middle way if you don't want to process the raw CSV file first, but need more functionality than the treemaps can offer.
 
 The server is based on [cubes](https://pythonhosted.org/cubes/), and its documentation applies to the OpenAPC variant as well (you will probably be using the [aggregate](https://pythonhosted.org/cubes/server.html#aggregate) function most often).
 
@@ -20,16 +20,16 @@ Before we get started, there are are 3 things to keep in mind:
 
 Every participating institution in OpenAPC has its data stored in their own OLAP cube, but there's also an aggregated one (named "openapc") which contains all collected data. This query provides a list of all existing cubes:
 
-1. <https://olap.intact-project.org/cubes>
+1. <https://olap.openapc.net/cubes>
 
 The most basic operation is to list all entries (or _cells_ in OLAP parlance) contained in a singular cube:
 
-2. <https://olap.intact-project.org/cube/bielefeld_u/facts>
+2. <https://olap.openapc.net/cube/bielefeld_u/facts>
 
 As we can see, the results page is cut at 500 entries, so we have to activate pagination to obtain all of them:
 
-3. <https://olap.intact-project.org/cube/bielefeld_u/facts?pagesize=500&page=0>
-4. <https://olap.intact-project.org/cube/bielefeld_u/facts?pagesize=500&page=1>
+3. <https://olap.openapc.net/cube/bielefeld_u/facts?pagesize=500&page=0>
+4. <https://olap.openapc.net/cube/bielefeld_u/facts?pagesize=500&page=1>
 
 The most interesting function of an OLAP server is the use of _aggregates_. Aggregates are functions which can be applied to a certain set of cells, calculating a single result. The OpenAPC OLAP server implements four  different aggregate functions:
 
@@ -40,43 +40,43 @@ The most interesting function of an OLAP server is the use of _aggregates_. Aggr
 
 In its most simple form, an aggregate call will pull together all cells in a cube and apply all functions to them:
 
-5. <https://olap.intact-project.org/cube/bielefeld_u/aggregate>
+5. <https://olap.openapc.net/cube/bielefeld_u/aggregate>
 
 Since we operate on the cube belonging to Bielefeld University, all numbers will relate to the total amount of articles contributed by this institution.
 
 More interesting, however, is the application of _drilldowns_ and _cuts_ to the data prior to aggregation. A drilldown is executed along a certain _dimension_ and will partition the cube into subsets. For example, if we are interested how the total APC cost amount we had obtained for Bielefeld University in the previous query is distributed over different publishers, we may apply a drilldown along the _publisher_ dimension:
 
-6. <https://olap.intact-project.org/cube/bielefeld_u/aggregate?drilldown=publisher>
+6. <https://olap.openapc.net/cube/bielefeld_u/aggregate?drilldown=publisher>
 
 This will create a subset for every publisher Bielefeld University has published at least one article with and then apply the 4 aggregate functions to each of them. The aggregation results can also be used for ordering: For example, if want to sort the results according to the APC amount paid to each publisher, we can do the following:
 
-7. <https://olap.intact-project.org/cube/bielefeld_u/aggregate?drilldown=publisher&order=apc_amount_sum>
+7. <https://olap.openapc.net/cube/bielefeld_u/aggregate?drilldown=publisher&order=apc_amount_sum>
 
 It's also possible to drill down along more than one dimension. In the following example we repeat our publisher drilldown from the previous example, followed by a drilldown along the _journal_full_title_ dimension. By doing this we split the publisher partitions into even smaller units by creating a subset for each existing publisher/journal combination:
 
-8. <https://olap.intact-project.org/cube/bielefeld_u/aggregate?drilldown=publisher|journal_full_title>
+8. <https://olap.openapc.net/cube/bielefeld_u/aggregate?drilldown=publisher|journal_full_title>
 
 If you want to know which dimensions are available for drilldown, you may examine a cube's model and have a look at the _dimensions_ key:
 
-9. <https://olap.intact-project.org/cube/bielefeld_u/model>
+9. <https://olap.openapc.net/cube/bielefeld_u/model>
 
 Drilling down will subset a cube, but it will never reduce the amount of cells. If we want to exempt certain data from showing up, we can apply a _cut_:
 
-10. <https://olap.intact-project.org/cube/openapc/aggregate?cut=institution:Bielefeld%20U>
+10. <https://olap.openapc.net/cube/openapc/aggregate?cut=institution:Bielefeld%20U>
 
 We are now working with the full OpenAPC data set (cube "openapc"), but then applying a cut reducing it to those articles where the institution is "Bielefeld U", so the result is equivalent to query number 5. If the dimension we use for cutting is numerical, we can also specify a range (In the OpenAPC data model, _period_ is the only dimension where this is possible):
 
-11. <https://olap.intact-project.org/cube/openapc/aggregate?cut=period:2014-2016>
+11. <https://olap.openapc.net/cube/openapc/aggregate?cut=period:2014-2016>
 
 This shows APC expenditures which occured between 2014 to 2016. It's also possible to combine cuts and drilldowns:
 
-12. <https://olap.intact-project.org/cube/openapc/aggregate?drilldown=institution&cut=country:DEU>
+12. <https://olap.openapc.net/cube/openapc/aggregate?drilldown=institution&cut=country:DEU>
 
 Here we are creating an overview of the institutions participating in OpenAPC, but reducing it to those located in Germany.
 
 All of the methods above can be combined freely, which can make OLAP queries both powerful and complex:
 
-13. <https://olap.intact-project.org/cube/openapc/aggregate?drilldown=publisher|institution&cut=country:GBR|is_hybrid:TRUE&order=apc_num_items&pagesize=500&page=0>
+13. <https://olap.openapc.net/cube/openapc/aggregate?drilldown=publisher|institution&cut=country:GBR|is_hybrid:TRUE&order=apc_num_items&pagesize=500&page=0>
 
 What's happening here? We're creating a 2-level drilldown along the publisher and institution dimensions, so we will see a partition showing how much each publisher has received from each institution. However, we are also applying two cuts which reduce the result to institutions based in the United Kingdom and to articles published in hybrid journals. We are then ordering the results according to the number of articles and since the result set is large, we are also requesting pagination. Conclusion? If we iterate to the last page, we can find the one British institution in our data set which has published the most articles in hybrid journals with one given publisher.
 
