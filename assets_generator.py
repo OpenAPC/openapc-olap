@@ -37,7 +37,7 @@ INSTITUTIONS_BPC_FILE = "../openapc-de/data/institutions_bpcs.csv"
 
 DEAL_IMPRINTS = {
     "Wiley-Blackwell": ["Wiley-Blackwell", "EMBO", "American Geophysical Union (AGU)", "International Union of Crystallography (IUCr)"],
-    "Springer Nature": ["Springer Nature"]
+    "Springer Nature": ["Springer Nature", "Zhejiang University Press"]
 }
 
 def main():
