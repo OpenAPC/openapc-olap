@@ -10,7 +10,7 @@
                     "function": "count"
                 }
             ],
-            "dimensions": ["institution", "period", "publisher", "journal_full_title", "doi", "is_hybrid", "country", "agreement"]
+            "dimensions": ["institution", "period", "publisher", "journal_full_title", "issn", "doi", "is_hybrid", "country", "agreement"]
         }
         ,
         {
@@ -38,7 +38,7 @@
                 }
 
             ],
-            "dimensions": ["period", "publisher", "journal_full_title", "is_hybrid", "num_springer_compact_articles", "num_journal_total_articles", "num_journal_oa_articles"]
+            "dimensions": ["period", "publisher", "journal_full_title", "issn", "is_hybrid", "num_springer_compact_articles", "num_journal_total_articles", "num_journal_oa_articles"]
         }
         ,
         {
@@ -76,7 +76,7 @@
                     "function": "stddev"
                 }
             ],
-            "dimensions": ["institution", "period", "publisher", "journal_full_title", "doi", "is_hybrid", "country"]
+            "dimensions": ["institution", "period", "publisher", "journal_full_title", "issn", "doi", "is_hybrid", "country"]
         }
         ,
         {
@@ -152,7 +152,7 @@
                     "function": "stddev"
                 }
             ],
-            "dimensions": ["institution", "period", "publisher", "journal_full_title", "doi", "is_hybrid", "country", "opt_out"]
+            "dimensions": ["institution", "period", "publisher", "journal_full_title", "issn", "doi", "is_hybrid", "country", "opt_out"]
         }
         
     ],
@@ -196,6 +196,11 @@
             "name": "doi",
             "description": "doi identifying an article",
             "attributes": ["doi"]
+        },
+        {
+            "name": "issn",
+            "description": "issn identifying a journal. This corresponds to the primary ISSN provided by crossref, which might be a print or electronic variant",
+            "attributes": ["issn"]
         },
         {
             "name": "opt_out",
