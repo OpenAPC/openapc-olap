@@ -66,7 +66,7 @@ Drilling down will subset a cube, but it will never reduce the amount of cells. 
 
 We are now working with the full OpenAPC data set (cube "openapc"), but then applying a cut reducing it to those articles where the institution is "Bielefeld U", so the result is equivalent to query number 5. If the dimension we use for cutting is numerical, we can also specify a range (In the OpenAPC data model, _period_ is the only dimension where this is possible):
 
-11. <https://olap.openapc.net/cube/openapc/aggregate?cut=period:2014-2016>
+11. <https://olap.openapc.net/cube/openapc/aggregate?cut=period:2014~2016>
 
 This shows APC expenditures which occured between 2014 to 2016. It's also possible to combine cuts and drilldowns:
 
