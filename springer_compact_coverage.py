@@ -312,6 +312,8 @@ def _get_springer_journal_id_from_doi(doi, issn=None):
         return doi[9:14].lstrip("0")
     elif doi.startswith(("10.14283")): # Irregular prefix, contains only the "Journal of Frailty & Aging"
         return "42415"
+    elif doi.startswith(("10.1631")): # Irregular, "Journal of Zhejiang University-SCIENCE A"
+        return "11582"
     elif doi.startswith(("10.1140","10.17269")):
     # In case of these journals, the id cannot be extracted directly from the DOI. (EPJ family, Canadian Public Health Association)
         if issn is None or issn not in JOURNAL_ID_CACHE:
