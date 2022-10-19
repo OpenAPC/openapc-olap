@@ -218,6 +218,11 @@
             "attributes": ["country"]
         },
         {
+            "name": "institution_ror",
+            "description": "ROR ID for an institution, without the URL prefix",
+            "attributes": ["institution_ror"]
+        },
+        {
             "name": "agreement",
             "description": "transformative agreement an article was published under",
             "attributes": ["agreement"]

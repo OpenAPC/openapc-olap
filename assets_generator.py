@@ -136,7 +136,8 @@ def create_cubes_tables(connectable, apc_file_name, transformative_agreements_fi
         ("ut", "string"),
         ("url", "string"),
         ("doaj", "string"),
-        ("country", "string")
+        ("country", "string"),
+        ("institution_ror", "string")
     ]
 
     deal_fields = apc_fields + [("opt_out", "string")]
@@ -402,13 +403,18 @@ def create_cubes_tables(connectable, apc_file_name, transformative_agreements_fi
             tables_insert_commands["springer_compact_coverage"].execute(row)
 
     institution_countries = {}
+    institution_ror_ids = {}
 
     reader = csv.DictReader(open(INSTITUTIONS_FILE, "r"))
     for row in reader:
         cubes_name = row["institution_cubes_name"]
         institution_name = row["institution"]
         country = row["country"]
+        ror_id = 'NA'
+        if row["ror_id"].startswith("https://ror.org/"):
+            ror_id = row["ror_id"][16:] # Remove 'https://ror.org/'
         institution_countries[institution_name] = country
+        institution_ror_ids[institution_name] = ror_id
         if institution_name not in tables_insert_commands:
             table = sqlalchemy.Table(cubes_name, metadata, autoload=False, schema=schema)
             if table.exists():
@@ -424,6 +430,7 @@ def create_cubes_tables(connectable, apc_file_name, transformative_agreements_fi
         # to remove them here
         row["journal_full_title"] = row["journal_full_title"].replace(":", "")
         row["country"] = institution_countries[institution]
+        row["institution_ror"] = institution_ror_ids[institution]
         tables_insert_commands[institution].execute(row)
         tables_insert_commands["openapc"].execute(row)
         tables_insert_commands["combined"].execute(row)
