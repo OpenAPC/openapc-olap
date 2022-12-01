@@ -193,52 +193,38 @@ def create_cubes_tables(connectable, apc_file_name, transformative_agreements_fi
 
     metadata = sqlalchemy.MetaData(bind=connectable)
 
-    openapc_table = sqlalchemy.Table("openapc", metadata, autoload=False, schema=schema)
-    if openapc_table.exists():
-        openapc_table.drop(checkfirst=False)
-    init_table(openapc_table, apc_fields)
-    openapc_insert_command = openapc_table.insert()
-
-    transformative_agreements_table = sqlalchemy.Table("transformative_agreements", metadata, autoload=False, schema=schema)
-    if transformative_agreements_table.exists():
-        transformative_agreements_table.drop(checkfirst=False)
-    init_table(transformative_agreements_table, transformative_agreements_fields)
-    transformative_agreements_insert_command = transformative_agreements_table.insert()
-    
-    bpc_table = sqlalchemy.Table("bpc", metadata, autoload=False, schema=schema)
-    if bpc_table.exists():
-        bpc_table.drop(checkfirst=False)
-    init_table(bpc_table, bpc_fields)
-    bpc_insert_command = bpc_table.insert()
-
-    combined_table = sqlalchemy.Table("combined", metadata, autoload=False, schema=schema)
-    if combined_table.exists():
-        combined_table.drop(checkfirst=False)
-    init_table(combined_table, apc_fields)
-    combined_insert_command = combined_table.insert()
-
-    springer_compact_coverage_table = sqlalchemy.Table("springer_compact_coverage", metadata,
-                                                 autoload=False, schema=schema)
-    if springer_compact_coverage_table.exists():
-        springer_compact_coverage_table.drop(checkfirst=False)
-    init_table(springer_compact_coverage_table, springer_compact_coverage_fields)
-    springer_compact_coverage_insert_command = springer_compact_coverage_table.insert()
-
-    deal_table = sqlalchemy.Table("deal", metadata, autoload=False,
-                                        schema=schema)
-    if deal_table.exists():
-        deal_table.drop(checkfirst=False)
-    init_table(deal_table, deal_fields)
-    deal_insert_command = deal_table.insert()
-
-    # a dict to store individual insert commands for every table
-    tables_insert_commands = {
-        "openapc": openapc_insert_command,
-        "transformative_agreements": transformative_agreements_insert_command,
-        "bpc": bpc_insert_command,
-        "combined": combined_insert_command,
-        "springer_compact_coverage": springer_compact_coverage_insert_command,
-        "deal": deal_insert_command
+    # a dict to store individual insert commands and data for every table
+    tables_insert_data = {
+        "openapc": {
+            "fields": apc_fields,
+            "cubes_name": "openapc",
+            "data": []
+        },
+        "transformative_agreements": {
+            "fields": transformative_agreements_fields,
+            "cubes_name": "transformative_agreements",
+            "data": []
+        },
+        "bpc": {
+            "fields": bpc_fields,
+            "cubes_name": "bpc",
+            "data": []
+        },
+        "combined": {
+            "fields": apc_fields,
+            "cubes_name": "combined",
+            "data": []
+        },
+        "springer_compact_coverage": {
+             "fields": springer_compact_coverage_fields,
+             "cubes_name": "springer_compact_coverage",
+             "data": []
+        },
+        "deal": {
+            "fields": deal_fields,
+            "cubes_name": "deal",
+            "data": []
+        }
     }
     
     bpcs_institution_countries = {}
@@ -249,12 +235,14 @@ def create_cubes_tables(connectable, apc_file_name, transformative_agreements_fi
         country = row["country"]
         bpcs_institution_countries[institution_name] = country
 
+    print(colorise("Processing BPC file...", "green"))
     reader = csv.DictReader(open(BPC_FILE, "r"))
+    bpc_data = []
     for row in reader:
         row["book_title"] = row["book_title"].replace(":", "")
         institution = row["institution"]
         row["country"] = bpcs_institution_countries[institution]
-        tables_insert_commands["bpc"].execute(row)
+        bpc_data.append(row)
 
     transformative_agreements_institution_countries = {}
 
@@ -289,6 +277,7 @@ def create_cubes_tables(connectable, apc_file_name, transformative_agreements_fi
     institution_key_errors = []
 
     reader = csv.DictReader(open(DEAL_WILEY_OPT_OUT_FILE, "r"))
+    print(colorise("Processing Wiley Opt-Out file...", "green"))
     for row in reader:
         row_copy = deepcopy(row) # work on a deep copy since we make some DEAL-specific changes 
         row_copy["opt_out"] = "TRUE"
@@ -304,9 +293,10 @@ def create_cubes_tables(connectable, apc_file_name, transformative_agreements_fi
             # Special rule: Half 2019 costs since DEAL only started in 07/19
             halved = round(float(row_copy["euro"]) / 2, 2)
             row_copy["euro"] = str(halved)
-        tables_insert_commands["deal"].execute(row_copy)
+        tables_insert_data["deal"]["data"].append(row_copy)
         
     reader = csv.DictReader(open(DEAL_SPRINGER_OPT_OUT_FILE, "r"))
+    print(colorise("Processing Springer Opt-Out file...", "green"))
     for row in reader:
         row_copy = deepcopy(row) # work on a deep copy since we make some DEAL-specific changes 
         row_copy["opt_out"] = "TRUE"
@@ -318,11 +308,13 @@ def create_cubes_tables(connectable, apc_file_name, transformative_agreements_fi
         except KeyError:
             if institution not in institution_key_errors:
                 institution_key_errors.append(institution)
-        tables_insert_commands["deal"].execute(row_copy)
+        tables_insert_data["deal"]["data"].append(row_copy)
 
     reader = csv.DictReader(open(transformative_agreements_file_name, "r"))
-
+    print(colorise("Processing Transformative Agreements file...", "green"))
     for row in reader:
+        if reader.line_num % 10000 == 0:
+            print(str(reader.line_num) + " records processed")
         institution = row["institution"]
         publisher = row["publisher"]
         issn = row["issn"]
@@ -336,9 +328,9 @@ def create_cubes_tables(connectable, apc_file_name, transformative_agreements_fi
         except KeyError:
             if institution not in institution_key_errors:
                 institution_key_errors.append(institution)
-        tables_insert_commands["transformative_agreements"].execute(row)
+        tables_insert_data["transformative_agreements"]["data"].append(row)
         if row["euro"] != "NA":
-            tables_insert_commands["combined"].execute(row)
+            tables_insert_data["combined"]["data"].append(row)
         if row["agreement"] == "DEAL Wiley Germany":
             # DEAL Wiley
             row_copy = deepcopy(row)
@@ -349,7 +341,7 @@ def create_cubes_tables(connectable, apc_file_name, transformative_agreements_fi
                 row_copy["euro"] = str(halved)
             if row_copy["publisher"] in DEAL_IMPRINTS["Wiley-Blackwell"]:
                 row_copy["publisher"] = "Wiley-Blackwell"
-            tables_insert_commands["deal"].execute(row_copy)
+            tables_insert_data["deal"]["data"].append(row_copy)
             
         if row["agreement"] == "DEAL Springer Nature Germany":
             row_copy = deepcopy(row)
@@ -357,7 +349,7 @@ def create_cubes_tables(connectable, apc_file_name, transformative_agreements_fi
             row_copy["opt_out"] = "FALSE"
             if row_copy["publisher"] in DEAL_IMPRINTS["Springer Nature"]:
                 row_copy["publisher"] = "Springer Nature"
-            tables_insert_commands["deal"].execute(row_copy)       
+            tables_insert_data["deal"]["data"].append(row_copy)
             
         if publisher != "Springer Nature":
             continue
@@ -367,11 +359,6 @@ def create_cubes_tables(connectable, apc_file_name, transformative_agreements_fi
         try:
             pub_year = article_pubyears[journal_id][doi]
         except KeyError:
-            msg = (u"Publication year entry not found in article cache for {}. " +
-                   "You might have to update the article cache with 'python " +
-                   "assets_generator.py coverage_stats'. Using the 'period' " +
-                   "column for now.")
-            print(colorise(msg.format(doi), "yellow"))
             pub_year = row["period"]
 
         if journal_id not in summarised_transformative_agreements:
@@ -386,6 +373,8 @@ def create_cubes_tables(connectable, apc_file_name, transformative_agreements_fi
         for institution in institution_key_errors:
             print(institution)
         sys.exit()
+    print(colorise("Generating Springer Compact Coverage data...", "green"))
+    
     for journal_id, info in journal_coverage.items():
         for year, stats in info["years"].items():
             row = {
@@ -400,7 +389,7 @@ def create_cubes_tables(connectable, apc_file_name, transformative_agreements_fi
                 row["num_springer_compact_articles"] = summarised_transformative_agreements[journal_id][year]
             except KeyError:
                 row["num_springer_compact_articles"] = 0
-            tables_insert_commands["springer_compact_coverage"].execute(row)
+            tables_insert_data["springer_compact_coverage"]["data"].append(row)
 
     institution_countries = {}
     institution_ror_ids = {}
@@ -415,35 +404,50 @@ def create_cubes_tables(connectable, apc_file_name, transformative_agreements_fi
             ror_id = row["ror_id"][16:] # Remove 'https://ror.org/'
         institution_countries[institution_name] = country
         institution_ror_ids[institution_name] = ror_id
-        if institution_name not in tables_insert_commands:
-            table = sqlalchemy.Table(cubes_name, metadata, autoload=False, schema=schema)
-            if table.exists():
-                table.drop(checkfirst=False)
-            init_table(table, apc_fields)
-            insert_command = table.insert()
-            tables_insert_commands[institution_name] = insert_command
+        if institution_name not in tables_insert_data:
+            tables_insert_data[institution_name] = {
+                "fields": apc_fields,
+                "cubes_name": cubes_name,
+                "data": []
+            }
 
+    print(colorise("Processing APC file...", "green"))
     reader = csv.DictReader(open(apc_file_name, "r"))
     for row in reader:
+        if reader.line_num % 10000 == 0:
+            print(str(reader.line_num) + " records processed")
         institution = row["institution"]
         # colons cannot be escaped in URL queries to the cubes server, so we have
         # to remove them here
         row["journal_full_title"] = row["journal_full_title"].replace(":", "")
         row["country"] = institution_countries[institution]
         row["institution_ror"] = institution_ror_ids[institution]
-        tables_insert_commands[institution].execute(row)
-        tables_insert_commands["openapc"].execute(row)
-        tables_insert_commands["combined"].execute(row)
+        tables_insert_data[institution]["data"].append(row)
+        tables_insert_data["openapc"]["data"].append(row)
+        tables_insert_data["combined"]["data"].append(row)
         # DEAL Wiley
         if row["publisher"] in DEAL_IMPRINTS["Wiley-Blackwell"] and row["country"] == "DEU" and row["is_hybrid"] == "FALSE":
             if row["period"] in ["2019", "2020", "2021", "2022"]:
-                row["publisher"] = "Wiley-Blackwell" # Imprint normalization
-                tables_insert_commands["deal"].execute(row)
+                row_copy = deepcopy(row)
+                row_copy["publisher"] = "Wiley-Blackwell" # Imprint normalization
+                row_copy["opt_out"] = "FALSE"
+                tables_insert_data["deal"]["data"].append(row_copy)
         # DEAL Springer
         if row["publisher"] in DEAL_IMPRINTS["Springer Nature"] and row["country"] == "DEU" and row["is_hybrid"] == "FALSE":
-            if row["period"] in ["2020", "2021", "2022"]:
-                row["publisher"] = "Springer Nature"
-                tables_insert_commands["deal"].execute(row)        
+            if row_copy["period"] in ["2020", "2021", "2022"]:
+                row_copy = deepcopy(row)
+                row_copy["opt_out"] = "FALSE"
+                row_copy["publisher"] = "Springer Nature"
+                tables_insert_data["deal"]["data"].append(row_copy)
+
+    print(colorise("Populating database tables...", "green"))
+    for table_name, data in tables_insert_data.items():
+        print("Table '" + data["cubes_name"] + "'...")
+        table = sqlalchemy.Table(data["cubes_name"], metadata, autoload=False, schema=schema)
+        if table.exists():
+            table.drop(checkfirst=False)
+        init_table(table, data["fields"])
+        connectable.execute(table.insert(), data["data"])
 
 def generate_model_file(path):
     content = ""
