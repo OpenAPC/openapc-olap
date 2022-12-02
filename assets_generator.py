@@ -242,7 +242,7 @@ def create_cubes_tables(connectable, apc_file_name, transformative_agreements_fi
         row["book_title"] = row["book_title"].replace(":", "")
         institution = row["institution"]
         row["country"] = bpcs_institution_countries[institution]
-        bpc_data.append(row)
+        tables_insert_data["bpc"]["data"].append(row)
 
     transformative_agreements_institution_countries = {}
 
