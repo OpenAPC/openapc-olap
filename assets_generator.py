@@ -32,8 +32,6 @@ TRANSFORMATIVE_AGREEMENTS_FILE = "../openapc-de/data/transformative_agreements/t
 DEAL_WILEY_OPT_OUT_FILE = "../openapc-de/data/transformative_agreements/deal_germany_opt_out/deal_wiley_germany_opt_out.csv"
 DEAL_SPRINGER_OPT_OUT_FILE = "../openapc-de/data/transformative_agreements/deal_germany_opt_out/deal_springer_nature_germany_opt_out.csv"
 INSTITUTIONS_FILE = "../openapc-de/data/institutions.csv"
-INSTITUTIONS_TRANSFORMATIVE_AGREEMENTS_FILE = "../openapc-de/data/institutions_transformative_agreements.csv"
-INSTITUTIONS_BPC_FILE = "../openapc-de/data/institutions_bpcs.csv"
 
 DEAL_IMPRINTS = {
     "Wiley-Blackwell": ["Wiley-Blackwell", "EMBO", "American Geophysical Union (AGU)", "International Union of Crystallography (IUCr)", "The Econometric Society"],
@@ -226,14 +224,27 @@ def create_cubes_tables(connectable, apc_file_name, transformative_agreements_fi
             "data": []
         }
     }
-    
-    bpcs_institution_countries = {}
 
-    reader = csv.DictReader(open(INSTITUTIONS_BPC_FILE, "r"))
+    institution_countries = {}
+    institution_ror_ids = {}
+
+    print(colorise("Processing institutions file...", "green"))
+    reader = csv.DictReader(open(INSTITUTIONS_FILE, "r"))
     for row in reader:
+        cubes_name = row["institution_cubes_name"]
         institution_name = row["institution"]
         country = row["country"]
-        bpcs_institution_countries[institution_name] = country
+        ror_id = 'NA'
+        if row["ror_id"].startswith("https://ror.org/"):
+            ror_id = row["ror_id"][16:] # Remove 'https://ror.org/'
+        institution_countries[institution_name] = country
+        institution_ror_ids[institution_name] = ror_id
+        if _is_cubes_institution(row) and institution_name not in tables_insert_data:
+           tables_insert_data[institution_name] = {
+                "fields": apc_fields,
+                "cubes_name": cubes_name,
+                "data": []
+            }
 
     print(colorise("Processing BPC file...", "green"))
     reader = csv.DictReader(open(BPC_FILE, "r"))
@@ -241,16 +252,8 @@ def create_cubes_tables(connectable, apc_file_name, transformative_agreements_fi
     for row in reader:
         row["book_title"] = row["book_title"].replace(":", "")
         institution = row["institution"]
-        row["country"] = bpcs_institution_countries[institution]
+        row["country"] = institution_countries[institution]
         tables_insert_data["bpc"]["data"].append(row)
-
-    transformative_agreements_institution_countries = {}
-
-    reader = csv.DictReader(open(INSTITUTIONS_TRANSFORMATIVE_AGREEMENTS_FILE, "r"))
-    for row in reader:
-        institution_name = row["institution"]
-        country = row["country"]
-        transformative_agreements_institution_countries[institution_name] = country
 
     journal_coverage = None
     article_pubyears = None
@@ -285,7 +288,7 @@ def create_cubes_tables(connectable, apc_file_name, transformative_agreements_fi
             row_copy["publisher"] = "Wiley-Blackwell"
         institution = row_copy["institution"]
         try:
-            row_copy["country"] = transformative_agreements_institution_countries[institution]
+            row_copy["country"] = institution_countries[institution]
         except KeyError:
             if institution not in institution_key_errors:
                 institution_key_errors.append(institution)
@@ -304,7 +307,7 @@ def create_cubes_tables(connectable, apc_file_name, transformative_agreements_fi
                 row_copy["publisher"] = "Springer Nature"
         institution = row_copy["institution"]
         try:
-            row_copy["country"] = transformative_agreements_institution_countries[institution]
+            row_copy["country"] = institution_countries[institution]
         except KeyError:
             if institution not in institution_key_errors:
                 institution_key_errors.append(institution)
@@ -324,7 +327,7 @@ def create_cubes_tables(connectable, apc_file_name, transformative_agreements_fi
         row["journal_full_title"] = row["journal_full_title"].replace(":", "")
         title = row["journal_full_title"]
         try:
-            row["country"] = transformative_agreements_institution_countries[institution]
+            row["country"] = institution_countries[institution]
         except KeyError:
             if institution not in institution_key_errors:
                 institution_key_errors.append(institution)
@@ -391,26 +394,6 @@ def create_cubes_tables(connectable, apc_file_name, transformative_agreements_fi
                 row["num_springer_compact_articles"] = 0
             tables_insert_data["springer_compact_coverage"]["data"].append(row)
 
-    institution_countries = {}
-    institution_ror_ids = {}
-
-    reader = csv.DictReader(open(INSTITUTIONS_FILE, "r"))
-    for row in reader:
-        cubes_name = row["institution_cubes_name"]
-        institution_name = row["institution"]
-        country = row["country"]
-        ror_id = 'NA'
-        if row["ror_id"].startswith("https://ror.org/"):
-            ror_id = row["ror_id"][16:] # Remove 'https://ror.org/'
-        institution_countries[institution_name] = country
-        institution_ror_ids[institution_name] = ror_id
-        if institution_name not in tables_insert_data:
-            tables_insert_data[institution_name] = {
-                "fields": apc_fields,
-                "cubes_name": cubes_name,
-                "data": []
-            }
-
     print(colorise("Processing APC file...", "green"))
     reader = csv.DictReader(open(apc_file_name, "r"))
     for row in reader:
@@ -422,9 +405,10 @@ def create_cubes_tables(connectable, apc_file_name, transformative_agreements_fi
         row["journal_full_title"] = row["journal_full_title"].replace(":", "")
         row["country"] = institution_countries[institution]
         row["institution_ror"] = institution_ror_ids[institution]
-        tables_insert_data[institution]["data"].append(row)
         tables_insert_data["openapc"]["data"].append(row)
         tables_insert_data["combined"]["data"].append(row)
+        if institution in tables_insert_data:
+            tables_insert_data[institution]["data"].append(row)
         # DEAL Wiley
         if row["publisher"] in DEAL_IMPRINTS["Wiley-Blackwell"] and row["country"] == "DEU" and row["is_hybrid"] == "FALSE":
             if row["period"] in ["2019", "2020", "2021", "2022"]:
@@ -449,6 +433,12 @@ def create_cubes_tables(connectable, apc_file_name, transformative_agreements_fi
         init_table(table, data["fields"])
         connectable.execute(table.insert(), data["data"])
 
+def _is_cubes_institution(institutions_row):
+    cubes_name = institutions_row["institution_cubes_name"]
+    if cubes_name and cubes_name != "NA":
+        return True
+    return False
+
 def generate_model_file(path):
     content = ""
     with open("static/templates/MODEL_FIRST_PART", "r") as model:
@@ -459,10 +449,11 @@ def generate_model_file(path):
 
     reader = csv.DictReader(open(INSTITUTIONS_FILE, "r"))
     for row in reader:
-        content += "        ,\n        {\n"
-        content += '            "name": "{}",\n'.format((row["institution_cubes_name"]))
-        content += '            "label": "{} openAPC data cube",\n'.format((row["institution_full_name"]))
-        content += static_part
+        if _is_cubes_institution(row):
+            content += "        ,\n        {\n"
+            content += '            "name": "{}",\n'.format((row["institution_cubes_name"]))
+            content += '            "label": "{} openAPC data cube",\n'.format((row["institution_full_name"]))
+            content += static_part
 
     with open("static/templates/MODEL_LAST_PART", "r") as model:
         content += model.read()
@@ -477,23 +468,24 @@ def generate_yamls(path):
 
     reader = csv.DictReader(open(INSTITUTIONS_FILE, "r"))
     for row in reader:
-        content = "name: " + row["institution_full_name"] + u"\n"
-        content += "slug: " + row["institution_cubes_name"] + u"\n"
-        content += "tagline: " + row["institution_full_name"] + u" APC data\n"
-        content += "source: Open APC\n"
-        content += "source_url: https://github.com/OpenAPC/openapc-de\n"
-        content += "data_url: https://github.com/OpenAPC/openapc-de/blob/master/data/apc_de.csv\n"
-        content += "continent: " + row["continent"] + u"\n"
-        content += "country: " + row["country"] + u"\n"
-        content += "state: " + row["state"] + u"\n"
-        content += "level: kommune\n"
-        content += "dataset: '" + row["institution_cubes_name"] + "'\n"
-        content += yaml_static
+        if _is_cubes_institution(row):
+            content = "name: " + row["institution_full_name"] + u"\n"
+            content += "slug: " + row["institution_cubes_name"] + u"\n"
+            content += "tagline: " + row["institution_full_name"] + u" APC data\n"
+            content += "source: Open APC\n"
+            content += "source_url: https://github.com/OpenAPC/openapc-de\n"
+            content += "data_url: https://github.com/OpenAPC/openapc-de/blob/master/data/apc_de.csv\n"
+            content += "continent: " + row["continent"] + u"\n"
+            content += "country: " + row["country"] + u"\n"
+            content += "state: " + row["state"] + u"\n"
+            content += "level: kommune\n"
+            content += "dataset: '" + row["institution_cubes_name"] + "'\n"
+            content += yaml_static
 
-        out_file_name = row["institution_cubes_name"] + ".yaml"
-        out_file_path = os.path.join(path, out_file_name)
-        with open(out_file_path, "w") as outfile:
-            outfile.write(content)
+            out_file_name = row["institution_cubes_name"] + ".yaml"
+            out_file_path = os.path.join(path, out_file_name)
+            with open(out_file_path, "w") as outfile:
+                outfile.write(content)
 
 
 if __name__ == '__main__':
