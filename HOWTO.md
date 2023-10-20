@@ -16,9 +16,19 @@ Before we get started, there are are 3 things to keep in mind:
 
 3) Performance, part 2. Whenever making heavy use of the OLAP server, especially in scripted scenarios, be gentle. Our ressources, both in terms of bandwidth and computational power, are limited, so please try to avoid putting a strain on them. Store/cache intermediate results and add a sleeping interval of at least one second to your scripts when performing multiple queries.
 
-## Usage
+## General Usage
 
-Every participating institution in OpenAPC has its data stored in their own OLAP cube, but there's also an aggregated one (named "openapc") which contains all collected data. This query provides a list of all existing cubes:
+Each participating institution in OpenAPC has its data stored in their own OLAP cube, but there are also a number of aggregated ones which correspond to certain OpenAPC data sets: 
+
+|cube name| description |
+|---------|-------------|
+| *openapc* | OpenAPC core data set, contains cost data on APCs |
+| *bpc* | BPC data set, contains cost data on OA monographs/books |
+| *transformative_agreements* | Contains metadata on articles published under transformative agreements (TAs). Note that the records in here usually do not have cost data assigned. |
+| *combined* | Combines the *openapc* cube with those articles from *transformative_agreements* which have cost data assigned. |
+
+
+This query provides a list of all existing cubes:
 
 1. <https://olap.openapc.net/cubes>
 
@@ -80,3 +90,21 @@ All of the methods above can be combined freely, which can make OLAP queries bot
 
 What's happening here? We're creating a 2-level drilldown along the publisher and institution dimensions, so we will see a partition showing how much each publisher has received from each institution. However, we are also applying two cuts which reduce the result to institutions based in the United Kingdom and to articles published in hybrid journals. We are then ordering the results according to the number of articles and since the result set is large, we are also requesting pagination. Conclusion? If we iterate to the last page, we can find the one British institution in our data set which has published the most articles in hybrid journals with one given publisher.
 
+## DOI Lookup
+
+Another common use case for the OLAP server is to look up if a certain DOI is present in OpenAPC. This can be achieved by applying the DOI as cut function to a facts listing of one of the aggregated cubes:
+
+14. https://olap.openapc.net/cube/openapc/facts?cut=doi:10.3389/fmicb.2020.589364
+
+This will return a single cell containing the associated metadata if the DOI is present and an empty result (`[]`) otherwise. There are two things to keep in mind when using this kind of query, however:
+
+- There is no single aggregated cube which contains **all** publications listed in OpenAPC (consult the table at the beginning of the [previous paragraph](#general-usage) for reference). This means that you might have to query more than one cube, depending on what you know about the DOI you are searching for:
+
+    - If you know that the DOI belongs to an OA article which was paid for with an APC, you only need to search the *openapc* cube.
+    - If you know that the DOI belongs to any OA article, you need to search the *openapc* and the *transformative_agreements* cubes.
+    - If you know that the DOI belongs to an OA monograph, you need to search the *bpc* cube.
+    - If you do not have any additional information on the DOI, you need to search all three cubes (*openapc*, *transformative_agreements* and *bpc*).
+    
+- The DOI must be given in OpenAPC-normalized form, meaning:
+    - It has to be a "pure" DOI, e.g starting with the `10.` prefix. Other notations like the DOI handbook format (`doi:10.xxx`) or URLs (`doi.org/10.xxx`, `http://dx.doi.org/10.xxx`) won't return any results.
+    - Although DOI names are generally case insensitive, OpenAPC normalizes them to all lower case during processing. Since the OLAP URL scheme is case sensitive, **query DOIs have to be converted to all lower case**! Example: https://olap.openapc.net/cube/openapc/facts?cut=doi:10.3389/fmicb.2020.589364 vs https://olap.openapc.net/cube/openapc/facts?cut=doi:10.3389/FMICB.2020.589364
