@@ -92,19 +92,13 @@ What's happening here? We're creating a 2-level drilldown along the publisher an
 
 ## DOI Lookup
 
-Another common use case for the OLAP server is to look up if a certain DOI is present in OpenAPC. This can be achieved by applying the DOI as cut function to a facts listing of one of the aggregated cubes:
+Another common use case for the OLAP server is to look up if a certain DOI is present in OpenAPC. For this purpose there's a special cube *doi_lookup* which holds all DOIs from the 3 main OpenAPC data sets. A doi lookup is possible by applying the DOI as cut function to a facts listing of this cube: 
 
-14. https://olap.openapc.net/cube/openapc/facts?cut=doi:10.3389/fmicb.2020.589364
+14. https://olap.openapc.net/cube/doi_lookup/facts?cut=doi:10.3389/fmicb.2020.589364
 
-This will return a single cell containing the associated metadata if the DOI is present and an empty result (`[]`) otherwise. There are two things to keep in mind when using this kind of query, however:
-
-- There is no single aggregated cube which contains **all** publications listed in OpenAPC (consult the table at the beginning of the [previous paragraph](#general-usage) for reference). This means that you might have to query more than one cube, depending on what you know about the DOI you are searching for:
-
-    - If you know that the DOI belongs to an OA article which was paid for with an APC, you only need to search the *openapc* cube.
-    - If you know that the DOI belongs to any OA article, you need to search the *openapc* and the *transformative_agreements* cubes.
-    - If you know that the DOI belongs to an OA monograph, you need to search the *bpc* cube.
-    - If you do not have any additional information on the DOI, you need to search all three cubes (*openapc*, *transformative_agreements* and *bpc*).
+If the DOI is present this will return a cell with basic record metadata, including an `url` field which contains a link to the original cell. If the DOI is not present in OpenAPC, an empty result (`[]`) is returned.  There are two things to keep in mind when using this kind of query, however:
     
 - The DOI must be given in OpenAPC-normalized form, meaning:
     - It has to be a "pure" DOI, e.g starting with the `10.` prefix. Other notations like the DOI handbook format (`doi:10.xxx`) or URLs (`doi.org/10.xxx`, `http://dx.doi.org/10.xxx`) won't return any results.
     - Although DOI names are generally case insensitive, OpenAPC normalizes them to all lower case during processing. Since the OLAP URL scheme is case sensitive, **query DOIs have to be converted to all lower case**! Example: https://olap.openapc.net/cube/openapc/facts?cut=doi:10.3389/fmicb.2020.589364 vs https://olap.openapc.net/cube/openapc/facts?cut=doi:10.3389/FMICB.2020.589364
+- There are a small number of records in OpenAPC without a DOI, these cannot be obtained via this method. This is usually more of a problem within the BPC data set, as DOI assignment is a less common practice for OA monographs compared to journal articles. If you want to look up a larger list of OA books, the better approach is probably to obtain our BPC data set as [CSV file](https://github.com/OpenAPC/openapc-de/blob/master/data/bpc.csv) and include a title/ISBN search. 
