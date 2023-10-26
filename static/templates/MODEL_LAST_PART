@@ -14,6 +14,20 @@
         }
         ,
         {
+            "name": "doi_lookup",
+            "label": "DOI lookup cube, contains DOIs from all OpenAPC data sets",
+            "aggregates": [
+                {
+                    "name": "num_items",
+                    "label": "Number of Records",
+                    "measure": "doi",
+                    "function": "count"
+                }
+            ],
+            "dimensions": ["institution", "institution_ror", "period", "doi", "url"]
+        }
+        ,
+        {
             "name": "springer_compact_coverage",
             "label": "Number of Springer Compact articles compared to number of total and oa articles in Springer journals",
             "aggregates": [
@@ -241,6 +255,11 @@
             "name": "num_journal_oa_articles",
             "description": "number of open access articles for a given journal and year (based on Crossref license analysis, might be inaccurate!)",
             "attributes": ["num_journal_oa_articles"]
+        },
+        {
+            "name": "url",
+            "description": "A URL pointing to a record's facts data",
+            "attributes": ["url"]
         }
     ]
 }
