@@ -70,7 +70,7 @@ def main():
             sys.exit()
         psql_uri = "postgresql://" + db_user + ":" + db_pass + "@localhost/openapc_db"
         engine = sqlalchemy.create_engine(psql_uri)
-        create_cubes_tables(engine, APC_DE_FILE, TRANSFORMATIVE_AGREEMENTS_FILE)
+        create_cubes_tables(engine)
         with engine.begin() as connection:
             connection.execute("GRANT SELECT ON ALL TABLES IN SCHEMA openapc_schema TO cubes_user")
 
@@ -93,7 +93,6 @@ def main():
         scc.update_coverage_stats(TRANSFORMATIVE_AGREEMENTS_FILE, args.num_api_lookups, args.refetch)
 
 
-
 def init_table(table, fields, create_id=False):
 
     type_map = {"integer": sqlalchemy.Integer,
@@ -113,7 +112,7 @@ def init_table(table, fields, create_id=False):
 
     table.create()
 
-def create_cubes_tables(connectable, apc_file_name, transformative_agreements_file_name, schema="openapc_schema"):
+def create_cubes_tables(connectable, schema="openapc_schema"):
 
     apc_fields = [
         ("institution", "string"),
@@ -188,11 +187,24 @@ def create_cubes_tables(connectable, apc_file_name, transformative_agreements_fi
         ("num_journal_total_articles", "float"),
         ("num_journal_oa_articles", "float")
     ]
+    
+    doi_lookup_fields = [
+        ("institution", "string"),
+        ("institution_ror", "string"),
+        ("period", "string"),
+        ("doi", "string"),
+        ("url", "string")
+    ]
 
     metadata = sqlalchemy.MetaData(bind=connectable)
 
     # a dict to store individual insert commands and data for every table
     tables_insert_data = {
+        "doi_lookup": {
+            "fields": doi_lookup_fields,
+            "cubes_name": "doi_lookup",
+            "data": []
+        },
         "openapc": {
             "fields": apc_fields,
             "cubes_name": "openapc",
@@ -254,6 +266,10 @@ def create_cubes_tables(connectable, apc_file_name, transformative_agreements_fi
         institution = row["institution"]
         row["country"] = institution_countries[institution]
         tables_insert_data["bpc"]["data"].append(row)
+        ror_id = institution_ror_ids[institution]
+        lookup_data = _create_lookup_data(row, ror_id, "bpc")
+        if lookup_data:
+            tables_insert_data["doi_lookup"]["data"].append(lookup_data)
 
     journal_coverage = None
     article_pubyears = None
@@ -313,7 +329,7 @@ def create_cubes_tables(connectable, apc_file_name, transformative_agreements_fi
                 institution_key_errors.append(institution)
         tables_insert_data["deal"]["data"].append(row_copy)
 
-    reader = csv.DictReader(open(transformative_agreements_file_name, "r"))
+    reader = csv.DictReader(open(TRANSFORMATIVE_AGREEMENTS_FILE, "r"))
     print(colorise("Processing Transformative Agreements file...", "green"))
     for row in reader:
         if reader.line_num % 10000 == 0:
@@ -332,6 +348,10 @@ def create_cubes_tables(connectable, apc_file_name, transformative_agreements_fi
             if institution not in institution_key_errors:
                 institution_key_errors.append(institution)
         tables_insert_data["transformative_agreements"]["data"].append(row)
+        ror_id = institution_ror_ids[institution]
+        lookup_data = _create_lookup_data(row, ror_id, "transformative_agreements")
+        if lookup_data:
+            tables_insert_data["doi_lookup"]["data"].append(lookup_data)
         if row["euro"] != "NA":
             tables_insert_data["combined"]["data"].append(row)
         if row["agreement"] == "DEAL Wiley Germany":
@@ -395,7 +415,7 @@ def create_cubes_tables(connectable, apc_file_name, transformative_agreements_fi
             tables_insert_data["springer_compact_coverage"]["data"].append(row)
 
     print(colorise("Processing APC file...", "green"))
-    reader = csv.DictReader(open(apc_file_name, "r"))
+    reader = csv.DictReader(open(APC_DE_FILE, "r"))
     for row in reader:
         if reader.line_num % 10000 == 0:
             print(str(reader.line_num) + " records processed")
@@ -404,8 +424,12 @@ def create_cubes_tables(connectable, apc_file_name, transformative_agreements_fi
         # to remove them here
         row["journal_full_title"] = row["journal_full_title"].replace(":", "")
         row["country"] = institution_countries[institution]
-        row["institution_ror"] = institution_ror_ids[institution]
+        ror_id = institution_ror_ids[institution]
+        row["institution_ror"] = ror_id
         tables_insert_data["openapc"]["data"].append(row)
+        lookup_data = _create_lookup_data(row, ror_id, "openapc")
+        if lookup_data:
+            tables_insert_data["doi_lookup"]["data"].append(lookup_data)
         tables_insert_data["combined"]["data"].append(row)
         if institution in tables_insert_data:
             tables_insert_data[institution]["data"].append(row)
@@ -438,6 +462,17 @@ def _is_cubes_institution(institutions_row):
     if cubes_name and cubes_name != "NA":
         return True
     return False
+
+def _create_lookup_data(row, ror_id, cube_name):
+    facts_doi_url = "https://olap.openapc.net/cube/{}/facts?cut=doi:{}"
+    data = {}
+    if row["doi"] == "NA":
+        return {}
+    for key in ["institution", "period", "doi"]:
+        data[key] = row[key]
+    data["institution_ror"] = ror_id
+    data["url"] = facts_doi_url.format(cube_name, row["doi"])
+    return data
 
 def generate_model_file(path):
     content = ""
