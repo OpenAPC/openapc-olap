@@ -24,7 +24,7 @@
                     "function": "count"
                 }
             ],
-            "dimensions": ["institution", "institution_ror", "period", "doi", "url"]
+            "dimensions": ["institution", "institution_ror", "euro", "period", "doi", "url"]
         }
         ,
         {
@@ -180,6 +180,11 @@
             "name": "institution",
             "description": "A data-providing institution (like unibi)",
             "attributes": ["institution"]
+        },
+        {
+            "name": "euro",
+            "description": "Cost data for a publication",
+            "attributes": ["euro"]
         },
         {
             "name": "publisher",

@@ -191,6 +191,7 @@ def create_cubes_tables(connectable, schema="openapc_schema"):
     doi_lookup_fields = [
         ("institution", "string"),
         ("institution_ror", "string"),
+        ("euro", "string"),
         ("period", "string"),
         ("doi", "string"),
         ("url", "string")
@@ -468,7 +469,7 @@ def _create_lookup_data(row, ror_id, cube_name):
     data = {}
     if row["doi"] == "NA":
         return {}
-    for key in ["institution", "period", "doi"]:
+    for key in ["institution", "euro", "period", "doi"]:
         data[key] = row[key]
     data["institution_ror"] = ror_id
     data["url"] = facts_doi_url.format(cube_name, row["doi"])
