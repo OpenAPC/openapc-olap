@@ -24,7 +24,7 @@
                     "function": "count"
                 }
             ],
-            "dimensions": ["institution", "institution_ror", "euro", "period", "doi", "url"]
+            "dimensions": ["institution", "institution_ror", "institution_full_name", "euro", "period", "doi", "url"]
         }
         ,
         {
@@ -178,7 +178,7 @@
         },
         {
             "name": "institution",
-            "description": "A data-providing institution (like unibi)",
+            "description": "A data-providing institution (like unibi). This is the OpenAPC internal identifier.",
             "attributes": ["institution"]
         },
         {
@@ -265,6 +265,11 @@
             "name": "url",
             "description": "A URL pointing to a record's facts data",
             "attributes": ["url"]
+        },
+        {
+            "name": "institution_full_name",
+            "description": "An institution's full name",
+            "attributes": ["institution_full_name"]
         }
     ]
 }

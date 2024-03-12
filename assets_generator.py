@@ -191,6 +191,7 @@ def create_cubes_tables(connectable, schema="openapc_schema"):
     doi_lookup_fields = [
         ("institution", "string"),
         ("institution_ror", "string"),
+        ("institution_full_name", "string"),
         ("euro", "string"),
         ("period", "string"),
         ("doi", "string"),
@@ -238,20 +239,23 @@ def create_cubes_tables(connectable, schema="openapc_schema"):
         }
     }
 
-    institution_countries = {}
-    institution_ror_ids = {}
+    institution_data = {}
 
     print(colorise("Processing institutions file...", "green"))
     reader = csv.DictReader(open(INSTITUTIONS_FILE, "r"))
     for row in reader:
         cubes_name = row["institution_cubes_name"]
         institution_name = row["institution"]
+        full_name = row["institution_full_name"]
         country = row["country"]
         ror_id = 'NA'
         if row["ror_id"].startswith("https://ror.org/"):
             ror_id = row["ror_id"][16:] # Remove 'https://ror.org/'
-        institution_countries[institution_name] = country
-        institution_ror_ids[institution_name] = ror_id
+        institution_data[institution_name] = {
+            "country": country,
+            "ror_id": ror_id,
+            "full_name": full_name
+        }
         if _is_cubes_institution(row) and institution_name not in tables_insert_data:
            tables_insert_data[institution_name] = {
                 "fields": apc_fields,
@@ -265,10 +269,11 @@ def create_cubes_tables(connectable, schema="openapc_schema"):
     for row in reader:
         row["book_title"] = row["book_title"].replace(":", "")
         institution = row["institution"]
-        row["country"] = institution_countries[institution]
+        row["country"] = institution_data[institution]["country"]
         tables_insert_data["bpc"]["data"].append(row)
-        ror_id = institution_ror_ids[institution]
-        lookup_data = _create_lookup_data(row, ror_id, "bpc")
+        ror_id = institution_data[institution]["ror_id"]
+        full_name = institution_data[institution]["full_name"]
+        lookup_data = _create_lookup_data(row, ror_id, full_name, "bpc")
         if lookup_data:
             tables_insert_data["doi_lookup"]["data"].append(lookup_data)
 
@@ -305,7 +310,7 @@ def create_cubes_tables(connectable, schema="openapc_schema"):
             row_copy["publisher"] = "Wiley-Blackwell"
         institution = row_copy["institution"]
         try:
-            row_copy["country"] = institution_countries[institution]
+            row_copy["country"] = institution_data[institution]["country"]
         except KeyError:
             if institution not in institution_key_errors:
                 institution_key_errors.append(institution)
@@ -324,7 +329,7 @@ def create_cubes_tables(connectable, schema="openapc_schema"):
                 row_copy["publisher"] = "Springer Nature"
         institution = row_copy["institution"]
         try:
-            row_copy["country"] = institution_countries[institution]
+            row_copy["country"] = institution_data[institution]["country"]
         except KeyError:
             if institution not in institution_key_errors:
                 institution_key_errors.append(institution)
@@ -344,13 +349,14 @@ def create_cubes_tables(connectable, schema="openapc_schema"):
         row["journal_full_title"] = row["journal_full_title"].replace(":", "")
         title = row["journal_full_title"]
         try:
-            row["country"] = institution_countries[institution]
+            row["country"] = institution_data[institution]["country"]
         except KeyError:
             if institution not in institution_key_errors:
                 institution_key_errors.append(institution)
         tables_insert_data["transformative_agreements"]["data"].append(row)
-        ror_id = institution_ror_ids[institution]
-        lookup_data = _create_lookup_data(row, ror_id, "transformative_agreements")
+        ror_id = institution_data[institution]["ror_id"]
+        full_name = institution_data[institution]["full_name"]
+        lookup_data = _create_lookup_data(row, ror_id, full_name, "transformative_agreements")
         if lookup_data:
             tables_insert_data["doi_lookup"]["data"].append(lookup_data)
         if row["euro"] != "NA":
@@ -424,11 +430,12 @@ def create_cubes_tables(connectable, schema="openapc_schema"):
         # colons cannot be escaped in URL queries to the cubes server, so we have
         # to remove them here
         row["journal_full_title"] = row["journal_full_title"].replace(":", "")
-        row["country"] = institution_countries[institution]
-        ror_id = institution_ror_ids[institution]
+        row["country"] = institution_data[institution]["country"]
+        ror_id = institution_data[institution]["ror_id"]
+        full_name = institution_data[institution]["full_name"]
         row["institution_ror"] = ror_id
         tables_insert_data["openapc"]["data"].append(row)
-        lookup_data = _create_lookup_data(row, ror_id, "openapc")
+        lookup_data = _create_lookup_data(row, ror_id, full_name, "openapc")
         if lookup_data:
             tables_insert_data["doi_lookup"]["data"].append(lookup_data)
         tables_insert_data["combined"]["data"].append(row)
@@ -464,7 +471,7 @@ def _is_cubes_institution(institutions_row):
         return True
     return False
 
-def _create_lookup_data(row, ror_id, cube_name):
+def _create_lookup_data(row, ror_id, full_name, cube_name):
     facts_doi_url = "https://olap.openapc.net/cube/{}/facts?cut=doi:{}"
     data = {}
     if row["doi"] == "NA":
@@ -472,6 +479,7 @@ def _create_lookup_data(row, ror_id, cube_name):
     for key in ["institution", "euro", "period", "doi"]:
         data[key] = row[key]
     data["institution_ror"] = ror_id
+    data["institution_full_name"] = full_name
     data["url"] = facts_doi_url.format(cube_name, row["doi"])
     return data
 
