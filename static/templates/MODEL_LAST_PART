@@ -270,6 +270,16 @@
             "name": "institution_full_name",
             "description": "An institution's full name",
             "attributes": ["institution_full_name"]
+        },
+        {
+            "name": "apc",
+            "description": "Cost data (apc)",
+            "attributes": ["apc"]
+        },
+        {
+            "name": "cost_type",
+            "description": "Cost Type",
+            "attributes": ["cost_type"]
         }
     ]
 }

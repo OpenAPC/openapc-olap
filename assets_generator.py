@@ -32,6 +32,7 @@ TRANSFORMATIVE_AGREEMENTS_FILE = "../openapc-de/data/transformative_agreements/t
 DEAL_WILEY_OPT_OUT_FILE = "../openapc-de/data/transformative_agreements/deal_germany_opt_out/deal_wiley_germany_opt_out.csv"
 DEAL_SPRINGER_OPT_OUT_FILE = "../openapc-de/data/transformative_agreements/deal_germany_opt_out/deal_springer_nature_germany_opt_out.csv"
 INSTITUTIONS_FILE = "../openapc-de/data/institutions.csv"
+ADDITIONAL_COSTS_FILE = "../openapc-de/data/apc_additional_costs.csv"
 
 DEAL_IMPRINTS = {
     "Wiley-Blackwell": ["Wiley-Blackwell", "EMBO", "American Geophysical Union (AGU)", "International Union of Crystallography (IUCr)", "The Econometric Society"],
@@ -137,6 +138,10 @@ def create_cubes_tables(connectable, schema="openapc_schema"):
         ("institution_ror", "string")
     ]
 
+    cost_type = [
+        ("cost_type", "string")
+    ]
+
     deal_fields = apc_fields + [("opt_out", "string")]
 
     transformative_agreements_fields = [
@@ -239,6 +244,25 @@ def create_cubes_tables(connectable, schema="openapc_schema"):
         }
     }
 
+    additional_cost_data = {}
+
+    print(colorise("Processing additional costs file...", "green"))
+    reader = csv.DictReader(open(ADDITIONAL_COSTS_FILE, "r"))
+    for row in reader:
+        cost_dict = {}
+        doi = None
+        for column, value in row.items():
+            if column == "doi":
+                doi = value
+            else:
+                try:
+                    value = float(value)
+                    cost_dict[column] = value
+                except ValueError:
+                    pass
+        if cost_dict:
+            additional_cost_data[doi] = cost_dict
+
     institution_data = {}
 
     print(colorise("Processing institutions file...", "green"))
@@ -258,7 +282,7 @@ def create_cubes_tables(connectable, schema="openapc_schema"):
         }
         if _is_cubes_institution(row) and institution_name not in tables_insert_data:
            tables_insert_data[institution_name] = {
-                "fields": apc_fields,
+                "fields": apc_fields + cost_type,
                 "cubes_name": cubes_name,
                 "data": []
             }
@@ -404,7 +428,7 @@ def create_cubes_tables(connectable, schema="openapc_schema"):
             print(institution)
         sys.exit()
     print(colorise("Generating Springer Compact Coverage data...", "green"))
-    
+
     for journal_id, info in journal_coverage.items():
         for year, stats in info["years"].items():
             row = {
@@ -440,7 +464,16 @@ def create_cubes_tables(connectable, schema="openapc_schema"):
             tables_insert_data["doi_lookup"]["data"].append(lookup_data)
         tables_insert_data["combined"]["data"].append(row)
         if institution in tables_insert_data:
-            tables_insert_data[institution]["data"].append(row)
+            row_copy = deepcopy(row)
+            row_copy["cost_type"] = "apc" # Add standard euro value as cost type "apc"
+            tables_insert_data[institution]["data"].append(row_copy)
+            if row["doi"] in additional_cost_data:
+                doi = row["doi"]
+                for cost_type, value in additional_cost_data[doi].items():
+                    row_copy = deepcopy(row)
+                    row_copy["cost_type"] = cost_type
+                    row_copy["euro"] = value
+                    tables_insert_data[institution]["data"].append(row_copy)
         # DEAL Wiley
         if row["publisher"] in DEAL_IMPRINTS["Wiley-Blackwell"] and row["country"] == "DEU" and row["is_hybrid"] == "FALSE":
             if row["period"] in ["2019", "2020", "2021", "2022"]:
@@ -506,9 +539,28 @@ def generate_model_file(path):
     with open(output_file, "w") as model:
         model.write(content)
 
+def _get_additional_costs_institutions():
+    additional_costs_institutions = []
+    additional_costs_dois = []
+    reader = csv.DictReader(open(ADDITIONAL_COSTS_FILE, "r"))
+    for row in reader:
+        additional_costs_dois.append(row["doi"])
+    reader = csv.DictReader(open(APC_DE_FILE, "r"))
+    for row in reader:
+        if row["institution"] in additional_costs_institutions:
+            continue
+        if row["doi"] in additional_costs_dois:
+            additional_costs_institutions.append(row["institution"])
+    print("The following institutions have additional costs attached: " + ", ".join(additional_costs_institutions))
+    return additional_costs_institutions
+
 def generate_yamls(path):
+
+    additional_costs_institutions = _get_additional_costs_institutions()
     with open("static/templates/YAML_STATIC_PART", "r") as yaml:
         yaml_static = yaml.read()
+    with open("static/templates/YAML_STATIC_PART_ADDITIONAL_COSTS", "r") as yaml:
+        yaml_static_ac = yaml.read()
 
     reader = csv.DictReader(open(INSTITUTIONS_FILE, "r"))
     for row in reader:
@@ -525,12 +577,13 @@ def generate_yamls(path):
             content += "level: kommune\n"
             content += "dataset: '" + row["institution_cubes_name"] + "'\n"
             content += yaml_static
+            if row["institution"] in additional_costs_institutions:
+                content += yaml_static_ac
 
             out_file_name = row["institution_cubes_name"] + ".yaml"
             out_file_path = os.path.join(path, out_file_name)
             with open(out_file_path, "w") as outfile:
                 outfile.write(content)
-
 
 if __name__ == '__main__':
     main()

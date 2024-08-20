@@ -1,4 +1,4 @@
-default: publisher
+default: standard
 
 primary_aggregate: "apc_amount_sum"
 
@@ -9,6 +9,10 @@ table_items:
   - name: 'apc_num_items'
     type: 'aggregate'
     format: 'number'
+  - name: 'cost_data_num_items'
+    type: 'aggregate'
+    format: 'number'
+    not_shown_in: 'standard'
   - name: 'apc_amount_avg'
     type: 'aggregate'
     format: 'monetary'
@@ -30,8 +34,10 @@ filters:
     nullable: true
 
 hierarchies:
-    publisher:
-        name: Publisher
+    standard:
+        name: Standard
+        cuts:
+            cost_type: apc
         drilldowns:
             - publisher
             - journal_full_title
