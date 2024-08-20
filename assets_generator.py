@@ -139,7 +139,8 @@ def create_cubes_tables(connectable, schema="openapc_schema"):
     ]
 
     cost_type = [
-        ("cost_type", "string")
+        ("cost_type", "string"),
+        ("publication_key", "string")
     ]
 
     deal_fields = apc_fields + [("opt_out", "string")]
@@ -466,11 +467,13 @@ def create_cubes_tables(connectable, schema="openapc_schema"):
         if institution in tables_insert_data:
             row_copy = deepcopy(row)
             row_copy["cost_type"] = "apc" # Add standard euro value as cost type "apc"
+            row_copy["publication_key"] = row["doi"] if row["doi"] != 'NA' else row['url']
             tables_insert_data[institution]["data"].append(row_copy)
             if row["doi"] in additional_cost_data:
                 doi = row["doi"]
                 for cost_type, value in additional_cost_data[doi].items():
                     row_copy = deepcopy(row)
+                    row_copy["publication_key"] = doi
                     row_copy["cost_type"] = cost_type
                     row_copy["euro"] = value
                     tables_insert_data[institution]["data"].append(row_copy)

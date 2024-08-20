@@ -280,6 +280,11 @@
             "name": "cost_type",
             "description": "Cost Type",
             "attributes": ["cost_type"]
+        },
+        {
+            "name": "publication_key",
+            "description": "Key for identifying a publication. Eqivalent to the DOI in most cases, but may also be an URL for publications without a DOI.",
+            "attributes": ["publication_key"]
         }
     ]
 }
