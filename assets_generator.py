@@ -7,6 +7,7 @@ import configparser
 from copy import deepcopy
 import json
 import os
+import re
 import sys
 
 from util import colorise
@@ -38,6 +39,8 @@ DEAL_IMPRINTS = {
     "Wiley-Blackwell": ["Wiley-Blackwell", "EMBO", "American Geophysical Union (AGU)", "International Union of Crystallography (IUCr)", "The Econometric Society"],
     "Springer Nature": ["Springer Nature", "Zhejiang University Press"]
 }
+
+URL_WITHOUT_SCHEME_RE = re.compile(r"^http(s)?:\/\/(?P<path>.*?)$")
 
 def main():
     parser = argparse.ArgumentParser()
@@ -457,7 +460,7 @@ def create_cubes_tables(connectable, schema="openapc_schema"):
         row["journal_full_title"] = row["journal_full_title"].replace(":", "")
         row["country"] = institution_data[institution]["country"]
         row["cost_type"] = "apc" # Add standard euro value as cost type "apc"
-        row["publication_key"] = row["doi"] if row["doi"] != 'NA' else row['url']
+        row["publication_key"] = _create_publication_key(row)
         ror_id = institution_data[institution]["ror_id"]
         full_name = institution_data[institution]["full_name"]
         row["institution_ror"] = ror_id
@@ -518,6 +521,17 @@ def _create_lookup_data(row, ror_id, full_name, cube_name):
     data["institution_full_name"] = full_name
     data["url"] = facts_doi_url.format(cube_name, row["doi"])
     return data
+
+def _create_publication_key(row):
+    if row["doi"] and row["doi"] != 'NA':
+        return row["doi"]
+    if row["url"] and row["url"] != 'NA':
+        match = URL_WITHOUT_SCHEME_RE.match(row["url"])
+        if match:
+            return match.group("path")
+        else:
+            return row["url"]
+    raise Exception("Error while processing row " + ",".join(row) + ": Cound not extract a publication key!")
 
 def generate_model_file(path):
     content = ""
