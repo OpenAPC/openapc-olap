@@ -214,7 +214,7 @@ def create_cubes_tables(connectable, schema="openapc_schema"):
             "data": []
         },
         "openapc": {
-            "fields": apc_fields,
+            "fields": apc_fields + cost_type,
             "cubes_name": "openapc",
             "data": []
         },
@@ -456,6 +456,8 @@ def create_cubes_tables(connectable, schema="openapc_schema"):
         # to remove them here
         row["journal_full_title"] = row["journal_full_title"].replace(":", "")
         row["country"] = institution_data[institution]["country"]
+        row["cost_type"] = "apc" # Add standard euro value as cost type "apc"
+        row["publication_key"] = row["doi"] if row["doi"] != 'NA' else row['url']
         ror_id = institution_data[institution]["ror_id"]
         full_name = institution_data[institution]["full_name"]
         row["institution_ror"] = ror_id
@@ -466,17 +468,15 @@ def create_cubes_tables(connectable, schema="openapc_schema"):
         tables_insert_data["combined"]["data"].append(row)
         if institution in tables_insert_data:
             row_copy = deepcopy(row)
-            row_copy["cost_type"] = "apc" # Add standard euro value as cost type "apc"
-            row_copy["publication_key"] = row["doi"] if row["doi"] != 'NA' else row['url']
             tables_insert_data[institution]["data"].append(row_copy)
             if row["doi"] in additional_cost_data:
                 doi = row["doi"]
                 for cost_type, value in additional_cost_data[doi].items():
                     row_copy = deepcopy(row)
-                    row_copy["publication_key"] = doi
                     row_copy["cost_type"] = cost_type
                     row_copy["euro"] = value
                     tables_insert_data[institution]["data"].append(row_copy)
+                    tables_insert_data["openapc"]["data"].append(row_copy)
         # DEAL Wiley
         if row["publisher"] in DEAL_IMPRINTS["Wiley-Blackwell"] and row["country"] == "DEU" and row["is_hybrid"] == "FALSE":
             if row["period"] in ["2019", "2020", "2021", "2022"]:
