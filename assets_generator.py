@@ -33,7 +33,7 @@ TRANSFORMATIVE_AGREEMENTS_FILE = "../openapc-de/data/transformative_agreements/t
 DEAL_WILEY_OPT_OUT_FILE = "../openapc-de/data/transformative_agreements/deal_germany_opt_out/deal_wiley_germany_opt_out.csv"
 DEAL_SPRINGER_OPT_OUT_FILE = "../openapc-de/data/transformative_agreements/deal_germany_opt_out/deal_springer_nature_germany_opt_out.csv"
 INSTITUTIONS_FILE = "../openapc-de/data/institutions.csv"
-ADDITIONAL_COSTS_FILE = "../openapc-de/data/apc_additional_costs.csv"
+ADDITIONAL_COSTS_FILE = "../openapc-de/data/apc_de_additional_costs.csv"
 
 DEAL_IMPRINTS = {
     "Wiley-Blackwell": ["Wiley-Blackwell", "EMBO", "American Geophysical Union (AGU)", "International Union of Crystallography (IUCr)", "The Econometric Society"],
