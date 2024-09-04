@@ -338,7 +338,7 @@ def create_cubes_tables(connectable, schema="openapc_schema"):
     for row in reader:
         row["book_title"] = row["book_title"].replace(":", "")
         institution = row["institution"]
-        _insert_institutional_tables_data(institutional_tables_data, institution_lookup_table, "bpc", row)
+        _insert_into_institutional_tables_data(institutional_tables_data, institution_lookup_table, "bpc", row)
         row["country"] = institution_lookup_table[institution]["country"]
         static_tables_data["bpc"]["data"].append(row)
         ror_id = institution_lookup_table[institution]["ror_id"]
@@ -510,19 +510,20 @@ def create_cubes_tables(connectable, schema="openapc_schema"):
         if lookup_data:
             static_tables_data["doi_lookup"]["data"].append(lookup_data)
         static_tables_data["combined"]["data"].append(row)
-        _insert_institutional_tables_data(institutional_tables_data, institution_lookup_table, "apc", row)
+        _insert_into_institutional_tables_data(institutional_tables_data, institution_lookup_table, "apc", row)
         # create copy with ac fields
         row_copy = deepcopy(row)
         row_copy["publication_key"] = _create_publication_key(row)
         row_copy["cost_type"] = "apc"
         static_tables_data["openapc_ac"]["data"].append(row_copy)
+        _insert_into_institutional_tables_data(institutional_tables_data, institution_lookup_table, "apc_ac", row_copy)
         if doi in additional_cost_data:
             for cost_type, value in additional_cost_data[doi].items():
                 row_copy = deepcopy(row)
                 row_copy["cost_type"] = cost_type
                 row_copy["euro"] = value
                 row_copy["publication_key"] = _create_publication_key(row)
-                _insert_institutional_tables_data(institutional_tables_data, institution_lookup_table, "apc_ac", row_copy)
+                _insert_into_institutional_tables_data(institutional_tables_data, institution_lookup_table, "apc_ac", row_copy)
                 static_tables_data["openapc_ac"]["data"].append(row_copy)
         # DEAL Wiley
         if row["publisher"] in DEAL_IMPRINTS["Wiley-Blackwell"] and row["country"] == "DEU" and row["is_hybrid"] == "FALSE":
@@ -539,6 +540,8 @@ def create_cubes_tables(connectable, schema="openapc_schema"):
                 row_copy["publisher"] = "Springer Nature"
                 static_tables_data["deal"]["data"].append(row_copy)
 
+    _clear_additional_costs_tables(institutional_tables_data)
+    _report_non_apc_cubes(institutional_tables_data)
     print(colorise("Populating database tables...", "green"))
     for table_name, data in static_tables_data.items():
         print("Aggregated table '" + data["cubes_name"] + "'...")
@@ -617,30 +620,54 @@ def generate_model_file(path):
     with open(output_file, "w") as model:
         model.write(content)
 
-def _insert_institutional_tables_data(insert_tables, institution_lookup_table, table_type, row):
+# Remove institutional ac tables if no additional costs are present
+def _clear_additional_costs_tables(institutional_tables_data):
+    for institution, data in deepcopy(institutional_tables_data).items():
+        if "apc_ac" in data:
+            for row in data["apc_ac"]["data"]:
+                if row["cost_type"] != "apc":
+                    break
+            else:
+                del institutional_tables_data[institution]["apc_ac"]
+
+def _report_non_apc_cubes(institutional_tables_data):
+    non_apc_cubes = {}
+    for institution, cubes in institutional_tables_data.items():
+        for cube_type, data in cubes.items():
+            if cube_type == "apc":
+                continue
+            if cube_type not in non_apc_cubes:
+                non_apc_cubes[cube_type] = []
+            non_apc_cubes[cube_type].append(institution)
+    for cube_type, institution_list in non_apc_cubes.items():
+        msg = "Additional {} cubes will be generated for {} institutions: {}\n"
+        msg = msg.format(cube_type, len(institution_list), ", ".join(sorted(institution_list)))
+        print(colorise(msg, "cyan"))
+
+def _insert_into_institutional_tables_data(institutional_tables_data, institution_lookup_table, table_type, row):
     institution = row["institution"]
     full_name = institution_lookup_table[institution]["full_name"]
     cube_name = institution_lookup_table[institution]["cube_name"]
     if not cube_name or cube_name == "NA":
         return
-    if institution not in insert_tables:
-        insert_tables[institution] = {}
+    if institution not in institutional_tables_data:
+        institutional_tables_data[institution] = {}
     target_cube_name = cube_name
     if table_type != "apc":
         target_cube_name += "_" + table_type
-    if table_type not in insert_tables[institution]:
-        insert_tables[institution][table_type] = {
+    if table_type not in institutional_tables_data[institution]:
+        institutional_tables_data[institution][table_type] = {
             "fields": TABLE_SCHEMAS[table_type],
             "cubes_name": target_cube_name,
             "full_name": full_name,
             "data": []
         }
-    insert_tables[institution][table_type]["data"].append(deepcopy(row))
+    institutional_tables_data[institution][table_type]["data"].append(deepcopy(row))
     # create/reorder priority
     priority = 0
     for priority_type in CUBES_PRIORITIES:
-        if priority_type in insert_tables[institution]:
-            insert_tables[institution][priority_type]["priority"] = priority
+        if priority_type in institutional_tables_data[institution]:
+            institutional_tables_data[institution][priority_type]["priority"] = priority
             priority += 1
 
 def _create_institution_lookup_table():
