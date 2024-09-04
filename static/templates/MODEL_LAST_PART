@@ -1,5 +1,49 @@
         ,
         {
+        "name": "openapc_ac",
+        "label": "openapc additional costs",
+        "measures": [
+            {
+                "name": "euro",
+                "label": "Cost Amount"
+            }
+        ],
+        "aggregates": [
+                {
+                    "name": "apc_amount_sum",
+                    "label": "Sum",
+                    "measure": "euro",
+                    "function": "sum"
+                },
+                {
+                    "name": "apc_num_items",
+                    "label": "Number of Articles",
+                    "measure": "publication_key",
+                    "function": "count_distinct"
+                },
+                {
+                    "name": "cost_data_num_items",
+                    "label": "Matters of Expense",
+                    "measure": "publication_key",
+                    "function": "count"
+                },
+                {
+                    "name": "apc_amount_avg",
+                    "label": "Mean Value",
+                    "measure": "euro",
+                    "function": "avg"
+                },
+                {
+                    "name": "apc_amount_stddev",
+                    "label": "Standard Deviation",
+                    "measure": "euro",
+                    "function": "stddev"
+                }
+            ],
+            "dimensions": ["institution", "period", "publisher", "journal_full_title", "issn", "doi", "is_hybrid", "country", "institution_ror", "cost_type", "publication_key"]
+        }
+        ,
+        {
             "name": "transformative_agreements",
             "label": "Transformative Agreements data cube (No monetary values!)",
             "aggregates": [

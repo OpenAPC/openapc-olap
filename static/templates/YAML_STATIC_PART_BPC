@@ -1,0 +1,37 @@
+        name: BPC
+        primary_aggregate: bpc_amount_sum
+        filters:
+          - field: 'period'
+            name: 'Year'
+            nullable: true
+          - field: 'country'
+            name: 'Country'
+            nullable: true
+          - field: 'backlist_oa'
+            name: 'Backlist OA'
+            nullable: true
+          - field: 'doab'
+            name: 'in DOAB'
+            nullable: true
+        table_items:
+          - name: 'bpc_amount_sum'
+            type: 'aggregate'
+            format: 'monetary'
+          - name: 'bpc_num_items'
+            type: 'aggregate'
+            format: 'number'
+          - name: 'bpc_amount_avg'
+            type: 'aggregate'
+            format: 'monetary'
+          - name: 'bpc_amount_stddev'
+            type: 'aggregate'
+            format: 'monetary'
+          - name: 'percentage'
+            type: 'total_percentage'
+            format: 'percentage'
+            relates_to: 'bpc_amount_sum'
+            label: 'Percentage'
+        drilldowns:
+            - publisher
+            - book_title
+            - doi

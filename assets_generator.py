@@ -35,12 +35,115 @@ DEAL_SPRINGER_OPT_OUT_FILE = "../openapc-de/data/transformative_agreements/deal_
 INSTITUTIONS_FILE = "../openapc-de/data/institutions.csv"
 ADDITIONAL_COSTS_FILE = "../openapc-de/data/apc_de_additional_costs.csv"
 
+CUBES_LIST_FILE = "institutional_cubes.csv"
+CUBES_PRIORITIES = ["apc", "apc_ac", "bpc"] # Treemap hierarchy menu order from left to right
+
 DEAL_IMPRINTS = {
     "Wiley-Blackwell": ["Wiley-Blackwell", "EMBO", "American Geophysical Union (AGU)", "International Union of Crystallography (IUCr)", "The Econometric Society"],
     "Springer Nature": ["Springer Nature", "Zhejiang University Press"]
 }
 
 URL_WITHOUT_SCHEME_RE = re.compile(r"^http(s)?:\/\/(?P<path>.*?)$")
+
+MODEL_STATIC_FILES = {
+    "apc": "MODEL_CUBE_STATIC_PART",
+    "apc_ac": "MODEL_CUBE_STATIC_PART_AC",
+    "bpc": "MODEL_CUBE_STATIC_PART_BPC"
+}
+
+YAML_STATIC_FILES = {
+    "apc": "YAML_STATIC_PART_APC",
+    "apc_ac": "YAML_STATIC_PART_APC_AC",
+    "bpc": "YAML_STATIC_PART_BPC"
+}
+
+TABLE_SCHEMAS = {
+    "bpc": [
+        ("institution", "string"),
+        ("period", "string"),
+        ("euro", "float"),
+        ("doi", "string"),
+        ("backlist_oa", "string"),
+        ("publisher", "string"),
+        ("book_title", "string"),
+        ("isbn", "string"),
+        ("isbn_print", "string"),
+        ("isbn_electronic", "string"),
+        ("license_ref", "string"),
+        ("indexed_in_crossref", "string"),
+        ("doab", "string"),
+        ("country", "string")
+    ],
+    "apc": [
+        ("institution", "string"),
+        ("period", "string"),
+        ("euro", "float"),
+        ("doi", "string"),
+        ("is_hybrid", "string"),
+        ("publisher", "string"),
+        ("journal_full_title", "string"),
+        ("issn", "string"),
+        ("issn_print", "string"),
+        ("issn_electronic", "string"),
+        ("issn_l", "string"),
+        ("license_ref", "string"),
+        ("indexed_in_crossref", "string"),
+        ("pmid", "string"),
+        ("pmcid", "string"),
+        ("ut", "string"),
+        ("url", "string"),
+        ("doaj", "string"),
+        ("country", "string"),
+        ("institution_ror", "string")
+    ],
+    "apc_ac": [
+        ("institution", "string"),
+        ("period", "string"),
+        ("euro", "float"),
+        ("doi", "string"),
+        ("is_hybrid", "string"),
+        ("publisher", "string"),
+        ("journal_full_title", "string"),
+        ("issn", "string"),
+        ("issn_print", "string"),
+        ("issn_electronic", "string"),
+        ("issn_l", "string"),
+        ("license_ref", "string"),
+        ("indexed_in_crossref", "string"),
+        ("pmid", "string"),
+        ("pmcid", "string"),
+        ("ut", "string"),
+        ("url", "string"),
+        ("doaj", "string"),
+        ("country", "string"),
+        ("institution_ror", "string"),
+        ("cost_type", "string"),
+        ("publication_key", "string")
+    ],
+    "deal": [
+        ("institution", "string"),
+        ("period", "string"),
+        ("euro", "float"),
+        ("doi", "string"),
+        ("is_hybrid", "string"),
+        ("publisher", "string"),
+        ("journal_full_title", "string"),
+        ("issn", "string"),
+        ("issn_print", "string"),
+        ("issn_electronic", "string"),
+        ("issn_l", "string"),
+        ("license_ref", "string"),
+        ("indexed_in_crossref", "string"),
+        ("pmid", "string"),
+        ("pmcid", "string"),
+        ("ut", "string"),
+        ("url", "string"),
+        ("doaj", "string"),
+        ("country", "string"),
+        ("institution_ror", "string"),
+        ("opt_out", "string")
+    ],
+}
 
 def main():
     parser = argparse.ArgumentParser()
@@ -96,7 +199,6 @@ def main():
     elif args.job == "coverage_stats":
         scc.update_coverage_stats(TRANSFORMATIVE_AGREEMENTS_FILE, args.num_api_lookups, args.refetch)
 
-
 def init_table(table, fields, create_id=False):
 
     type_map = {"integer": sqlalchemy.Integer,
@@ -118,36 +220,6 @@ def init_table(table, fields, create_id=False):
 
 def create_cubes_tables(connectable, schema="openapc_schema"):
 
-    apc_fields = [
-        ("institution", "string"),
-        ("period", "string"),
-        ("euro", "float"),
-        ("doi", "string"),
-        ("is_hybrid", "string"),
-        ("publisher", "string"),
-        ("journal_full_title", "string"),
-        ("issn", "string"),
-        ("issn_print", "string"),
-        ("issn_electronic", "string"),
-        ("issn_l", "string"),
-        ("license_ref", "string"),
-        ("indexed_in_crossref", "string"),
-        ("pmid", "string"),
-        ("pmcid", "string"),
-        ("ut", "string"),
-        ("url", "string"),
-        ("doaj", "string"),
-        ("country", "string"),
-        ("institution_ror", "string")
-    ]
-
-    cost_type = [
-        ("cost_type", "string"),
-        ("publication_key", "string")
-    ]
-
-    deal_fields = apc_fields + [("opt_out", "string")]
-
     transformative_agreements_fields = [
         ("institution", "string"),
         ("period", "string"),
@@ -168,23 +240,6 @@ def create_cubes_tables(connectable, schema="openapc_schema"):
         ("doaj", "string"),
         ("country", "string"),
         ("agreement", "string")
-    ]
-
-    bpc_fields = [
-        ("institution", "string"),
-        ("period", "string"),
-        ("euro", "float"),
-        ("doi", "string"),
-        ("backlist_oa", "string"),
-        ("publisher", "string"),
-        ("book_title", "string"),
-        ("isbn", "string"),
-        ("isbn_print", "string"),
-        ("isbn_electronic", "string"),
-        ("license_ref", "string"),
-        ("indexed_in_crossref", "string"),
-        ("doab", "string"),
-        ("country", "string")
     ]
 
     springer_compact_coverage_fields = [
@@ -209,16 +264,21 @@ def create_cubes_tables(connectable, schema="openapc_schema"):
 
     metadata = sqlalchemy.MetaData(bind=connectable)
 
-    # a dict to store individual insert commands and data for every table
-    tables_insert_data = {
+    # a dict to store individual insert commands and data for static tables
+    static_tables_data = {
         "doi_lookup": {
             "fields": doi_lookup_fields,
             "cubes_name": "doi_lookup",
             "data": []
         },
         "openapc": {
-            "fields": apc_fields + cost_type,
+            "fields": TABLE_SCHEMAS["apc"],
             "cubes_name": "openapc",
+            "data": []
+        },
+        "openapc_ac": {
+            "fields": TABLE_SCHEMAS["apc_ac"],
+            "cubes_name": "openapc_ac",
             "data": []
         },
         "transformative_agreements": {
@@ -227,12 +287,12 @@ def create_cubes_tables(connectable, schema="openapc_schema"):
             "data": []
         },
         "bpc": {
-            "fields": bpc_fields,
+            "fields": TABLE_SCHEMAS["bpc"],
             "cubes_name": "bpc",
             "data": []
         },
         "combined": {
-            "fields": apc_fields,
+            "fields": TABLE_SCHEMAS["apc"],
             "cubes_name": "combined",
             "data": []
         },
@@ -242,11 +302,14 @@ def create_cubes_tables(connectable, schema="openapc_schema"):
              "data": []
         },
         "deal": {
-            "fields": deal_fields,
+            "fields": TABLE_SCHEMAS["deal"],
             "cubes_name": "deal",
             "data": []
         }
     }
+
+    # a dict to store individual insert commands and data for institutional tables
+    institutional_tables_data = {}
 
     additional_cost_data = {}
 
@@ -267,29 +330,7 @@ def create_cubes_tables(connectable, schema="openapc_schema"):
         if cost_dict:
             additional_cost_data[doi] = cost_dict
 
-    institution_data = {}
-
-    print(colorise("Processing institutions file...", "green"))
-    reader = csv.DictReader(open(INSTITUTIONS_FILE, "r"))
-    for row in reader:
-        cubes_name = row["institution_cubes_name"]
-        institution_name = row["institution"]
-        full_name = row["institution_full_name"]
-        country = row["country"]
-        ror_id = 'NA'
-        if row["ror_id"].startswith("https://ror.org/"):
-            ror_id = row["ror_id"][16:] # Remove 'https://ror.org/'
-        institution_data[institution_name] = {
-            "country": country,
-            "ror_id": ror_id,
-            "full_name": full_name
-        }
-        if _is_cubes_institution(row) and institution_name not in tables_insert_data:
-           tables_insert_data[institution_name] = {
-                "fields": apc_fields + cost_type,
-                "cubes_name": cubes_name,
-                "data": []
-            }
+    institution_lookup_table = _create_institution_lookup_table()
 
     print(colorise("Processing BPC file...", "green"))
     reader = csv.DictReader(open(BPC_FILE, "r"))
@@ -297,13 +338,14 @@ def create_cubes_tables(connectable, schema="openapc_schema"):
     for row in reader:
         row["book_title"] = row["book_title"].replace(":", "")
         institution = row["institution"]
-        row["country"] = institution_data[institution]["country"]
-        tables_insert_data["bpc"]["data"].append(row)
-        ror_id = institution_data[institution]["ror_id"]
-        full_name = institution_data[institution]["full_name"]
+        _insert_institutional_tables_data(institutional_tables_data, institution_lookup_table, "bpc", row)
+        row["country"] = institution_lookup_table[institution]["country"]
+        static_tables_data["bpc"]["data"].append(row)
+        ror_id = institution_lookup_table[institution]["ror_id"]
+        full_name = institution_lookup_table[institution]["full_name"]
         lookup_data = _create_lookup_data(row, ror_id, full_name, "bpc")
         if lookup_data:
-            tables_insert_data["doi_lookup"]["data"].append(lookup_data)
+            static_tables_data["doi_lookup"]["data"].append(lookup_data)
 
     journal_coverage = None
     article_pubyears = None
@@ -338,7 +380,7 @@ def create_cubes_tables(connectable, schema="openapc_schema"):
             row_copy["publisher"] = "Wiley-Blackwell"
         institution = row_copy["institution"]
         try:
-            row_copy["country"] = institution_data[institution]["country"]
+            row_copy["country"] = institution_lookup_table[institution]["country"]
         except KeyError:
             if institution not in institution_key_errors:
                 institution_key_errors.append(institution)
@@ -346,7 +388,7 @@ def create_cubes_tables(connectable, schema="openapc_schema"):
             # Special rule: Half 2019 costs since DEAL only started in 07/19
             halved = round(float(row_copy["euro"]) / 2, 2)
             row_copy["euro"] = str(halved)
-        tables_insert_data["deal"]["data"].append(row_copy)
+        static_tables_data["deal"]["data"].append(row_copy)
         
     reader = csv.DictReader(open(DEAL_SPRINGER_OPT_OUT_FILE, "r"))
     print(colorise("Processing Springer Opt-Out file...", "green"))
@@ -357,11 +399,11 @@ def create_cubes_tables(connectable, schema="openapc_schema"):
                 row_copy["publisher"] = "Springer Nature"
         institution = row_copy["institution"]
         try:
-            row_copy["country"] = institution_data[institution]["country"]
+            row_copy["country"] = institution_lookup_table[institution]["country"]
         except KeyError:
             if institution not in institution_key_errors:
                 institution_key_errors.append(institution)
-        tables_insert_data["deal"]["data"].append(row_copy)
+        static_tables_data["deal"]["data"].append(row_copy)
 
     reader = csv.DictReader(open(TRANSFORMATIVE_AGREEMENTS_FILE, "r"))
     print(colorise("Processing Transformative Agreements file...", "green"))
@@ -377,18 +419,18 @@ def create_cubes_tables(connectable, schema="openapc_schema"):
         row["journal_full_title"] = row["journal_full_title"].replace(":", "")
         title = row["journal_full_title"]
         try:
-            row["country"] = institution_data[institution]["country"]
+            row["country"] = institution_lookup_table[institution]["country"]
         except KeyError:
             if institution not in institution_key_errors:
                 institution_key_errors.append(institution)
-        tables_insert_data["transformative_agreements"]["data"].append(row)
-        ror_id = institution_data[institution]["ror_id"]
-        full_name = institution_data[institution]["full_name"]
+        static_tables_data["transformative_agreements"]["data"].append(row)
+        ror_id = institution_lookup_table[institution]["ror_id"]
+        full_name = institution_lookup_table[institution]["full_name"]
         lookup_data = _create_lookup_data(row, ror_id, full_name, "transformative_agreements")
         if lookup_data:
-            tables_insert_data["doi_lookup"]["data"].append(lookup_data)
+            static_tables_data["doi_lookup"]["data"].append(lookup_data)
         if row["euro"] != "NA":
-            tables_insert_data["combined"]["data"].append(row)
+            static_tables_data["combined"]["data"].append(row)
         if row["agreement"] == "DEAL Wiley Germany":
             # DEAL Wiley
             row_copy = deepcopy(row)
@@ -399,7 +441,7 @@ def create_cubes_tables(connectable, schema="openapc_schema"):
                 row_copy["euro"] = str(halved)
             if row_copy["publisher"] in DEAL_IMPRINTS["Wiley-Blackwell"]:
                 row_copy["publisher"] = "Wiley-Blackwell"
-            tables_insert_data["deal"]["data"].append(row_copy)
+            static_tables_data["deal"]["data"].append(row_copy)
             
         if row["agreement"] == "DEAL Springer Nature Germany":
             row_copy = deepcopy(row)
@@ -407,7 +449,7 @@ def create_cubes_tables(connectable, schema="openapc_schema"):
             row_copy["opt_out"] = "FALSE"
             if row_copy["publisher"] in DEAL_IMPRINTS["Springer Nature"]:
                 row_copy["publisher"] = "Springer Nature"
-            tables_insert_data["deal"]["data"].append(row_copy)
+            static_tables_data["deal"]["data"].append(row_copy)
             
         if publisher != "Springer Nature":
             continue
@@ -447,7 +489,7 @@ def create_cubes_tables(connectable, schema="openapc_schema"):
                 row["num_springer_compact_articles"] = summarised_transformative_agreements[journal_id][year]
             except KeyError:
                 row["num_springer_compact_articles"] = 0
-            tables_insert_data["springer_compact_coverage"]["data"].append(row)
+            static_tables_data["springer_compact_coverage"]["data"].append(row)
 
     print(colorise("Processing APC file...", "green"))
     reader = csv.DictReader(open(APC_DE_FILE, "r"))
@@ -455,54 +497,68 @@ def create_cubes_tables(connectable, schema="openapc_schema"):
         if reader.line_num % 10000 == 0:
             print(str(reader.line_num) + " records processed")
         institution = row["institution"]
+        doi = row["doi"]
         # colons cannot be escaped in URL queries to the cubes server, so we have
         # to remove them here
         row["journal_full_title"] = row["journal_full_title"].replace(":", "")
-        row["country"] = institution_data[institution]["country"]
-        row["cost_type"] = "apc" # Add standard euro value as cost type "apc"
-        row["publication_key"] = _create_publication_key(row)
-        ror_id = institution_data[institution]["ror_id"]
-        full_name = institution_data[institution]["full_name"]
+        row["country"] = institution_lookup_table[institution]["country"]
+        ror_id = institution_lookup_table[institution]["ror_id"]
+        full_name = institution_lookup_table[institution]["full_name"]
         row["institution_ror"] = ror_id
-        tables_insert_data["openapc"]["data"].append(row)
+        static_tables_data["openapc"]["data"].append(row)
         lookup_data = _create_lookup_data(row, ror_id, full_name, "openapc")
         if lookup_data:
-            tables_insert_data["doi_lookup"]["data"].append(lookup_data)
-        tables_insert_data["combined"]["data"].append(row)
-        if institution in tables_insert_data:
-            row_copy = deepcopy(row)
-            tables_insert_data[institution]["data"].append(row_copy)
-            if row["doi"] in additional_cost_data:
-                doi = row["doi"]
-                for cost_type, value in additional_cost_data[doi].items():
-                    row_copy = deepcopy(row)
-                    row_copy["cost_type"] = cost_type
-                    row_copy["euro"] = value
-                    tables_insert_data[institution]["data"].append(row_copy)
-                    tables_insert_data["openapc"]["data"].append(row_copy)
+            static_tables_data["doi_lookup"]["data"].append(lookup_data)
+        static_tables_data["combined"]["data"].append(row)
+        _insert_institutional_tables_data(institutional_tables_data, institution_lookup_table, "apc", row)
+        # create copy with ac fields
+        row_copy = deepcopy(row)
+        row_copy["publication_key"] = _create_publication_key(row)
+        row_copy["cost_type"] = "apc"
+        static_tables_data["openapc_ac"]["data"].append(row_copy)
+        if doi in additional_cost_data:
+            for cost_type, value in additional_cost_data[doi].items():
+                row_copy = deepcopy(row)
+                row_copy["cost_type"] = cost_type
+                row_copy["euro"] = value
+                row_copy["publication_key"] = _create_publication_key(row)
+                _insert_institutional_tables_data(institutional_tables_data, institution_lookup_table, "apc_ac", row_copy)
+                static_tables_data["openapc_ac"]["data"].append(row_copy)
         # DEAL Wiley
         if row["publisher"] in DEAL_IMPRINTS["Wiley-Blackwell"] and row["country"] == "DEU" and row["is_hybrid"] == "FALSE":
             if row["period"] in ["2019", "2020", "2021", "2022"]:
                 row_copy = deepcopy(row)
                 row_copy["publisher"] = "Wiley-Blackwell" # Imprint normalization
                 row_copy["opt_out"] = "FALSE"
-                tables_insert_data["deal"]["data"].append(row_copy)
+                static_tables_data["deal"]["data"].append(row_copy)
         # DEAL Springer
         if row["publisher"] in DEAL_IMPRINTS["Springer Nature"] and row["country"] == "DEU" and row["is_hybrid"] == "FALSE":
             if row_copy["period"] in ["2020", "2021", "2022"]:
                 row_copy = deepcopy(row)
                 row_copy["opt_out"] = "FALSE"
                 row_copy["publisher"] = "Springer Nature"
-                tables_insert_data["deal"]["data"].append(row_copy)
+                static_tables_data["deal"]["data"].append(row_copy)
 
     print(colorise("Populating database tables...", "green"))
-    for table_name, data in tables_insert_data.items():
-        print("Table '" + data["cubes_name"] + "'...")
+    for table_name, data in static_tables_data.items():
+        print("Aggregated table '" + data["cubes_name"] + "'...")
         table = sqlalchemy.Table(data["cubes_name"], metadata, autoload=False, schema=schema)
         if table.exists():
             table.drop(checkfirst=False)
         init_table(table, data["fields"])
         connectable.execute(table.insert(), data["data"])
+    with open(CUBES_LIST_FILE, "w") as cubes_list:
+        writer = csv.writer(cubes_list)
+        writer.writerow(["institution", "cube_name", "full_name", "cube_type", "priority"])
+        for institution, institutional_data in institutional_tables_data.items():
+            for table_type, data in institutional_data.items():
+                print("Institutional " + table_type + " table '" + data["cubes_name"] + "'...")
+                table = sqlalchemy.Table(data["cubes_name"], metadata, autoload=False, schema=schema)
+                if table.exists():
+                    table.drop(checkfirst=False)
+                init_table(table, data["fields"])
+                connectable.execute(table.insert(), data["data"])
+                writer.writerow([institution, data["cubes_name"], data["full_name"], table_type, data["priority"]])
 
 def _is_cubes_institution(institutions_row):
     cubes_name = institutions_row["institution_cubes_name"]
@@ -534,20 +590,25 @@ def _create_publication_key(row):
     raise Exception("Error while processing row " + ",".join(row) + ": Cound not extract a publication key!")
 
 def generate_model_file(path):
+    if not os.path.isfile(CUBES_LIST_FILE):
+        print('Error: Cubes list file ("' + CUBES_LIST_FILE + '") not found. ' +
+              'Run this script with the "tables" job first to generate it.')
+        sys.exit()
     content = ""
     with open("static/templates/MODEL_FIRST_PART", "r") as model:
         content += model.read()
 
-    with open("static/templates/MODEL_CUBE_STATIC_PART", "r") as model:
-        static_part = model.read()
+    model_contents = {}
+    for model_type, file_name in MODEL_STATIC_FILES.items():
+        with open("static/templates/" + file_name, "r") as model:
+            model_contents[model_type] = model.read()
 
-    reader = csv.DictReader(open(INSTITUTIONS_FILE, "r"))
+    reader = csv.DictReader(open(CUBES_LIST_FILE, "r"))
     for row in reader:
-        if _is_cubes_institution(row):
-            content += "        ,\n        {\n"
-            content += '            "name": "{}",\n'.format((row["institution_cubes_name"]))
-            content += '            "label": "{} openAPC data cube",\n'.format((row["institution_full_name"]))
-            content += static_part
+        content += "        ,\n        {\n"
+        content += '            "name": "{}",\n'.format((row["cube_name"]))
+        content += '            "label": "{} openAPC data cube",\n'.format((row["full_name"]))
+        content += model_contents[row["cube_type"]]
 
     with open("static/templates/MODEL_LAST_PART", "r") as model:
         content += model.read()
@@ -555,6 +616,51 @@ def generate_model_file(path):
     output_file = os.path.join(path, "model.json")
     with open(output_file, "w") as model:
         model.write(content)
+
+def _insert_institutional_tables_data(insert_tables, institution_lookup_table, table_type, row):
+    institution = row["institution"]
+    full_name = institution_lookup_table[institution]["full_name"]
+    cube_name = institution_lookup_table[institution]["cube_name"]
+    if not cube_name or cube_name == "NA":
+        return
+    if institution not in insert_tables:
+        insert_tables[institution] = {}
+    target_cube_name = cube_name
+    if table_type != "apc":
+        target_cube_name += "_" + table_type
+    if table_type not in insert_tables[institution]:
+        insert_tables[institution][table_type] = {
+            "fields": TABLE_SCHEMAS[table_type],
+            "cubes_name": target_cube_name,
+            "full_name": full_name,
+            "data": []
+        }
+    insert_tables[institution][table_type]["data"].append(deepcopy(row))
+    # create/reorder priority
+    priority = 0
+    for priority_type in CUBES_PRIORITIES:
+        if priority_type in insert_tables[institution]:
+            insert_tables[institution][priority_type]["priority"] = priority
+            priority += 1
+
+def _create_institution_lookup_table():
+    print(colorise("Processing institutions file...", "green"))
+    reader = csv.DictReader(open(INSTITUTIONS_FILE, "r"))
+    ret = {}
+    for row in reader:
+        institution_name = row["institution"]
+        ror_id = 'NA'
+        if row["ror_id"].startswith("https://ror.org/"):
+            ror_id = row["ror_id"][16:] # Remove 'https://ror.org/'
+        ret[institution_name] = {
+            "continent": row["continent"],
+            "country": row["country"],
+            "state": row["state"],
+            "ror_id": ror_id,
+            "full_name": row["institution_full_name"],
+            "cube_name": row["institution_cubes_name"]
+        }
+    return ret
 
 def _get_additional_costs_institutions():
     additional_costs_institutions = []
@@ -572,35 +678,57 @@ def _get_additional_costs_institutions():
     return additional_costs_institutions
 
 def generate_yamls(path):
+    if not os.path.isfile(CUBES_LIST_FILE):
+        print('Error: Cubes list file ("' + CUBES_LIST_FILE + '") not found. ' +
+              'Run this script with the "tables" job first to generate it.')
+        sys.exit()
 
-    additional_costs_institutions = _get_additional_costs_institutions()
-    with open("static/templates/YAML_STATIC_PART", "r") as yaml:
-        yaml_static = yaml.read()
-    with open("static/templates/YAML_STATIC_PART_ADDITIONAL_COSTS", "r") as yaml:
-        yaml_static_ac = yaml.read()
+    institution_cubes = {}
+    print(colorise("Processing cubes list file...", "green"))
+    reader = csv.DictReader(open(CUBES_LIST_FILE, "r"))
+    for line in reader:
+        institution = line["institution"]
+        if institution not in institution_cubes:
+            institution_cubes[institution] = []
+        institution_cubes[institution].append(line)
 
-    reader = csv.DictReader(open(INSTITUTIONS_FILE, "r"))
-    for row in reader:
-        if _is_cubes_institution(row):
-            content = "name: " + row["institution_full_name"] + u"\n"
-            content += "slug: " + row["institution_cubes_name"] + u"\n"
-            content += "tagline: " + row["institution_full_name"] + u" APC data\n"
-            content += "source: Open APC\n"
-            content += "source_url: https://github.com/OpenAPC/openapc-de\n"
-            content += "data_url: https://github.com/OpenAPC/openapc-de/blob/master/data/apc_de.csv\n"
-            content += "continent: " + row["continent"] + u"\n"
-            content += "country: " + row["country"] + u"\n"
-            content += "state: " + row["state"] + u"\n"
-            content += "level: kommune\n"
-            content += "dataset: '" + row["institution_cubes_name"] + "'\n"
-            content += yaml_static
-            if row["institution"] in additional_costs_institutions:
-                content += yaml_static_ac
+    yaml_static_contents = {}
+    print(colorise("Processing yaml templates...", "green"))
+    for model_type, file_name in YAML_STATIC_FILES.items():
+        with open("static/templates/" + file_name, "r") as yaml:
+            yaml_static_contents[model_type] = yaml.read()
 
-            out_file_name = row["institution_cubes_name"] + ".yaml"
-            out_file_path = os.path.join(path, out_file_name)
-            with open(out_file_path, "w") as outfile:
-                outfile.write(content)
+    institution_lookup_table = _create_institution_lookup_table()
+
+    for institution_name, row_list in institution_cubes.items():
+        row_list = sorted(row_list, key=lambda x: x["priority"], reverse=False)
+        default = row_list[0]["cube_type"]
+
+        institution = institution_lookup_table[institution_name]
+
+        content = "name: " + institution["full_name"] + u"\n"
+        content += "slug: " + institution["cube_name"] + u"\n"
+        content += "tagline: " + institution["full_name"] + " publication cost data\n"
+        content += "source: Open APC\n"
+        content += "source_url: https://github.com/OpenAPC/openapc-de\n"
+        content += "data_url: https://github.com/OpenAPC/openapc-de/blob/master/data/apc_de.csv\n"
+        content += "continent: " + institution["continent"] + u"\n"
+        content += "country: " + institution["country"] + u"\n"
+        content += "state: " + institution["state"] + u"\n"
+        content += "level: kommune\n"
+        content += "dataset: '" + institution["cube_name"] + "'\n"
+        content += "default: " + default + "\n\n"
+        content += "hierarchies:\n"
+
+        for row in row_list:
+            content += "    " + row["cube_type"] + ":\n"
+            content += "        cube: " + row["cube_name"] + "\n"
+            content += yaml_static_contents[row["cube_type"]]
+
+        out_file_name = institution["cube_name"] + ".yaml"
+        out_file_path = os.path.join(path, out_file_name)
+        with open(out_file_path, "w") as outfile:
+            outfile.write(content)
 
 if __name__ == '__main__':
     main()

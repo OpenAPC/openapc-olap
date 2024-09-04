@@ -1,0 +1,31 @@
+        name: APC
+        primary_aggregate: apc_amount_sum
+        filters:
+          - field: 'period'
+            name: 'Year'
+            nullable: true
+          - field: 'is_hybrid'
+            name: 'Hybrid Status'
+            nullable: true
+        table_items:
+          - name: 'apc_amount_sum'
+            type: 'aggregate'
+            format: 'monetary'
+          - name: 'apc_num_items'
+            type: 'aggregate'
+            format: 'number'
+          - name: 'apc_amount_avg'
+            type: 'aggregate'
+            format: 'monetary'
+          - name: 'apc_amount_stddev'
+            type: 'aggregate'
+            format: 'monetary'
+          - name: 'percentage'
+            type: 'total_percentage'
+            format: 'percentage'
+            relates_to: 'apc_amount_sum'
+            label: 'Percentage'
+        drilldowns:
+            - publisher
+            - journal_full_title
+            - doi

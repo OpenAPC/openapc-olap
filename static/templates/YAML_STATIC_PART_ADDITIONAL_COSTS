@@ -1,7 +1,0 @@
-    additional_costs:
-        name: Additional Costs
-        drilldowns:
-            - publisher
-            - journal_full_title
-            - doi
-            - cost_type

@@ -1,34 +1,34 @@
             "measures": [
                 {
                     "name": "euro",
-                    "label": "APC Amount"
+                    "label": "BPC Amount"
                 }
             ],
             "aggregates": [
                 {
-                    "name": "apc_amount_sum",
+                    "name": "bpc_amount_sum",
                     "label": "Sum",
                     "measure": "euro",
                     "function": "sum"
                 },
                 {
-                    "name": "apc_num_items",
-                    "label": "Number of Articles",
+                    "name": "bpc_num_items",
+                    "label": "Number of Books",
                     "measure": "euro",
                     "function": "count"
                 },
                 {
-                    "name": "apc_amount_avg",
-                    "label": "Mean Value",
+                    "name": "bpc_amount_avg",
+                    "label": "Mean BPC",
                     "measure": "euro",
                     "function": "avg"
                 },
                 {
-                    "name": "apc_amount_stddev",
+                    "name": "bpc_amount_stddev",
                     "label": "Standard Deviation",
                     "measure": "euro",
                     "function": "stddev"
                 }
             ],
-            "dimensions": ["institution", "period", "publisher", "journal_full_title", "issn", "doi", "is_hybrid", "country", "institution_ror"]
+            "dimensions": ["institution", "period", "publisher", "book_title", "doi", "doab", "backlist_oa", "country"]
         }
