@@ -326,6 +326,11 @@
             "attributes": ["cost_type"]
         },
         {
+            "name": "cost_category",
+            "description": "Cost category, either APC or additional ocst",
+            "attributes": ["cost_category"]
+        },
+        {
             "name": "publication_key",
             "description": "Key for identifying a publication. Eqivalent to the DOI in most cases, but may also be an URL for publications without a DOI.",
             "attributes": ["publication_key"]

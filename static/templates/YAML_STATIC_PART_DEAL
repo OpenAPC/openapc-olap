@@ -1,23 +1,10 @@
-        name: Additional Costs
+        name: DEAL
         primary_aggregate: apc_amount_sum
-        filters:
-          - field: 'period'
-            name: 'Year'
-            nullable: true
-          - field: 'is_hybrid'
-            name: 'Hybrid Status'
-            nullable: true
-          - field: 'cost_category'
-            name: 'Cost Category'
-            nullable: true
         table_items:
           - name: 'apc_amount_sum'
             type: 'aggregate'
             format: 'monetary'
           - name: 'apc_num_items'
-            type: 'aggregate'
-            format: 'number'
-          - name: 'cost_data_num_items'
             type: 'aggregate'
             format: 'number'
           - name: 'apc_amount_avg'
@@ -31,8 +18,17 @@
             format: 'percentage'
             relates_to: 'apc_amount_sum'
             label: 'Percentage'
+        filters:
+          - field: 'period'
+            name: 'Year'
+            nullable: true
+          - field: 'is_hybrid'
+            name: 'Hybrid Status'
+            nullable: true
+          - field: 'opt_out'
+            name: 'Opt Out'
+            nullable: true
         drilldowns:
             - publisher
             - journal_full_title
             - doi
-            - cost_type

@@ -14,13 +14,7 @@
                 {
                     "name": "apc_num_items",
                     "label": "Number of Articles",
-                    "measure": "publication_key",
-                    "function": "count_distinct"
-                },
-                {
-                    "name": "cost_data_num_items",
-                    "label": "Matters of Expense",
-                    "measure": "publication_key",
+                    "measure": "euro",
                     "function": "count"
                 },
                 {
@@ -36,5 +30,5 @@
                     "function": "stddev"
                 }
             ],
-            "dimensions": ["institution", "period", "publisher", "journal_full_title", "issn", "doi", "is_hybrid", "country", "institution_ror", "cost_type", "publication_key", "cost_category"]
+            "dimensions": ["institution", "period", "publisher", "journal_full_title", "issn", "doi", "is_hybrid", "country", "opt_out"]
         }

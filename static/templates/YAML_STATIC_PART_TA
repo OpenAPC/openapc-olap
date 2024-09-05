@@ -1,0 +1,22 @@
+        name: TA
+        primary_aggregate: num_items
+        table_items:
+          - name: 'num_items'
+            type: 'aggregate'
+            format: 'number'
+          - name: 'percentage'
+            type: 'total_percentage'
+            format: 'percentage'
+            relates_to: 'num_items'
+            label: 'Percentage'
+        filters:
+          - field: 'period'
+            name: 'Year'
+            nullable: true
+          - field: 'is_hybrid'
+            name: 'Hybrid Status'
+            nullable: true
+        drilldowns:
+          - agreement
+          - journal_full_title
+          - doi

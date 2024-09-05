@@ -36,7 +36,7 @@ INSTITUTIONS_FILE = "../openapc-de/data/institutions.csv"
 ADDITIONAL_COSTS_FILE = "../openapc-de/data/apc_de_additional_costs.csv"
 
 CUBES_LIST_FILE = "institutional_cubes.csv"
-CUBES_PRIORITIES = ["apc", "apc_ac", "bpc"] # Treemap hierarchy menu order from left to right
+CUBES_PRIORITIES = ["apc", "apc_ac", "bpc", "ta", "deal"] # Treemap hierarchy menu order from left to right
 
 DEAL_IMPRINTS = {
     "Wiley-Blackwell": ["Wiley-Blackwell", "EMBO", "American Geophysical Union (AGU)", "International Union of Crystallography (IUCr)", "The Econometric Society"],
@@ -48,13 +48,17 @@ URL_WITHOUT_SCHEME_RE = re.compile(r"^http(s)?:\/\/(?P<path>.*?)$")
 MODEL_STATIC_FILES = {
     "apc": "MODEL_CUBE_STATIC_PART",
     "apc_ac": "MODEL_CUBE_STATIC_PART_AC",
-    "bpc": "MODEL_CUBE_STATIC_PART_BPC"
+    "bpc": "MODEL_CUBE_STATIC_PART_BPC",
+    "ta": "MODEL_CUBE_STATIC_PART_TA",
+    "deal": "MODEL_CUBE_STATIC_PART_DEAL"
 }
 
 YAML_STATIC_FILES = {
     "apc": "YAML_STATIC_PART_APC",
     "apc_ac": "YAML_STATIC_PART_APC_AC",
-    "bpc": "YAML_STATIC_PART_BPC"
+    "bpc": "YAML_STATIC_PART_BPC",
+    "ta": "YAML_STATIC_PART_TA",
+    "deal": "YAML_STATIC_PART_DEAL"
 }
 
 TABLE_SCHEMAS = {
@@ -118,6 +122,7 @@ TABLE_SCHEMAS = {
         ("country", "string"),
         ("institution_ror", "string"),
         ("cost_type", "string"),
+        ("cost_category", "string"),
         ("publication_key", "string")
     ],
     "deal": [
@@ -143,6 +148,27 @@ TABLE_SCHEMAS = {
         ("institution_ror", "string"),
         ("opt_out", "string")
     ],
+    "ta": [
+        ("institution", "string"),
+        ("period", "string"),
+        ("doi", "string"),
+        ("is_hybrid", "string"),
+        ("publisher", "string"),
+        ("journal_full_title", "string"),
+        ("issn", "string"),
+        ("issn_print", "string"),
+        ("issn_electronic", "string"),
+        ("issn_l", "string"),
+        ("license_ref", "string"),
+        ("indexed_in_crossref", "string"),
+        ("pmid", "string"),
+        ("pmcid", "string"),
+        ("ut", "string"),
+        ("url", "string"),
+        ("doaj", "string"),
+        ("country", "string"),
+        ("agreement", "string")
+    ]
 }
 
 def main():
@@ -220,28 +246,6 @@ def init_table(table, fields, create_id=False):
 
 def create_cubes_tables(connectable, schema="openapc_schema"):
 
-    transformative_agreements_fields = [
-        ("institution", "string"),
-        ("period", "string"),
-        ("doi", "string"),
-        ("is_hybrid", "string"),
-        ("publisher", "string"),
-        ("journal_full_title", "string"),
-        ("issn", "string"),
-        ("issn_print", "string"),
-        ("issn_electronic", "string"),
-        ("issn_l", "string"),
-        ("license_ref", "string"),
-        ("indexed_in_crossref", "string"),
-        ("pmid", "string"),
-        ("pmcid", "string"),
-        ("ut", "string"),
-        ("url", "string"),
-        ("doaj", "string"),
-        ("country", "string"),
-        ("agreement", "string")
-    ]
-
     springer_compact_coverage_fields = [
         ("period", "string"),
         ("publisher", "string"),
@@ -282,7 +286,7 @@ def create_cubes_tables(connectable, schema="openapc_schema"):
             "data": []
         },
         "transformative_agreements": {
-            "fields": transformative_agreements_fields,
+            "fields": TABLE_SCHEMAS["ta"],
             "cubes_name": "transformative_agreements",
             "data": []
         },
@@ -389,6 +393,8 @@ def create_cubes_tables(connectable, schema="openapc_schema"):
             halved = round(float(row_copy["euro"]) / 2, 2)
             row_copy["euro"] = str(halved)
         static_tables_data["deal"]["data"].append(row_copy)
+        _insert_into_institutional_tables_data(institutional_tables_data, institution_lookup_table, "deal", row_copy)
+        institution_lookup_table[institution]["deal_participant"] = True
         
     reader = csv.DictReader(open(DEAL_SPRINGER_OPT_OUT_FILE, "r"))
     print(colorise("Processing Springer Opt-Out file...", "green"))
@@ -404,6 +410,8 @@ def create_cubes_tables(connectable, schema="openapc_schema"):
             if institution not in institution_key_errors:
                 institution_key_errors.append(institution)
         static_tables_data["deal"]["data"].append(row_copy)
+        _insert_into_institutional_tables_data(institutional_tables_data, institution_lookup_table, "deal", row_copy)
+        institution_lookup_table[institution]["deal_participant"] = True
 
     reader = csv.DictReader(open(TRANSFORMATIVE_AGREEMENTS_FILE, "r"))
     print(colorise("Processing Transformative Agreements file...", "green"))
@@ -424,6 +432,7 @@ def create_cubes_tables(connectable, schema="openapc_schema"):
             if institution not in institution_key_errors:
                 institution_key_errors.append(institution)
         static_tables_data["transformative_agreements"]["data"].append(row)
+        _insert_into_institutional_tables_data(institutional_tables_data, institution_lookup_table, "ta", row)
         ror_id = institution_lookup_table[institution]["ror_id"]
         full_name = institution_lookup_table[institution]["full_name"]
         lookup_data = _create_lookup_data(row, ror_id, full_name, "transformative_agreements")
@@ -442,7 +451,9 @@ def create_cubes_tables(connectable, schema="openapc_schema"):
             if row_copy["publisher"] in DEAL_IMPRINTS["Wiley-Blackwell"]:
                 row_copy["publisher"] = "Wiley-Blackwell"
             static_tables_data["deal"]["data"].append(row_copy)
-            
+            _insert_into_institutional_tables_data(institutional_tables_data, institution_lookup_table, "deal", row_copy)
+            institution_lookup_table[institution]["deal_participant"] = True
+
         if row["agreement"] == "DEAL Springer Nature Germany":
             row_copy = deepcopy(row)
             # DEAL SN
@@ -450,7 +461,9 @@ def create_cubes_tables(connectable, schema="openapc_schema"):
             if row_copy["publisher"] in DEAL_IMPRINTS["Springer Nature"]:
                 row_copy["publisher"] = "Springer Nature"
             static_tables_data["deal"]["data"].append(row_copy)
-            
+            _insert_into_institutional_tables_data(institutional_tables_data, institution_lookup_table, "deal", row_copy)
+            institution_lookup_table[institution]["deal_participant"] = True
+
         if publisher != "Springer Nature":
             continue
 
@@ -515,12 +528,14 @@ def create_cubes_tables(connectable, schema="openapc_schema"):
         row_copy = deepcopy(row)
         row_copy["publication_key"] = _create_publication_key(row)
         row_copy["cost_type"] = "apc"
+        row_copy["cost_category"] = "APC"
         static_tables_data["openapc_ac"]["data"].append(row_copy)
         _insert_into_institutional_tables_data(institutional_tables_data, institution_lookup_table, "apc_ac", row_copy)
         if doi in additional_cost_data:
             for cost_type, value in additional_cost_data[doi].items():
                 row_copy = deepcopy(row)
                 row_copy["cost_type"] = cost_type
+                row_copy["cost_category"] = "Additional Cost"
                 row_copy["euro"] = value
                 row_copy["publication_key"] = _create_publication_key(row)
                 _insert_into_institutional_tables_data(institutional_tables_data, institution_lookup_table, "apc_ac", row_copy)
@@ -532,6 +547,7 @@ def create_cubes_tables(connectable, schema="openapc_schema"):
                 row_copy["publisher"] = "Wiley-Blackwell" # Imprint normalization
                 row_copy["opt_out"] = "FALSE"
                 static_tables_data["deal"]["data"].append(row_copy)
+                _insert_into_institutional_tables_data(institutional_tables_data, institution_lookup_table, "deal", row_copy)
         # DEAL Springer
         if row["publisher"] in DEAL_IMPRINTS["Springer Nature"] and row["country"] == "DEU" and row["is_hybrid"] == "FALSE":
             if row_copy["period"] in ["2020", "2021", "2022"]:
@@ -539,8 +555,9 @@ def create_cubes_tables(connectable, schema="openapc_schema"):
                 row_copy["opt_out"] = "FALSE"
                 row_copy["publisher"] = "Springer Nature"
                 static_tables_data["deal"]["data"].append(row_copy)
+                _insert_into_institutional_tables_data(institutional_tables_data, institution_lookup_table, "deal", row_copy)
 
-    _clear_additional_costs_tables(institutional_tables_data)
+    _postprocess_institutional_tables(institutional_tables_data, institution_lookup_table)
     _report_non_apc_cubes(institutional_tables_data)
     print(colorise("Populating database tables...", "green"))
     for table_name, data in static_tables_data.items():
@@ -620,8 +637,10 @@ def generate_model_file(path):
     with open(output_file, "w") as model:
         model.write(content)
 
-# Remove institutional ac tables if no additional costs are present
-def _clear_additional_costs_tables(institutional_tables_data):
+# - Remove institutional ac tables if no additional costs are present
+# - Remove institutional deal tables if no TA entries with a deal agreemnt 
+def _postprocess_institutional_tables(institutional_tables_data, institution_lookup_table):
+    deal_deleted = []
     for institution, data in deepcopy(institutional_tables_data).items():
         if "apc_ac" in data:
             for row in data["apc_ac"]["data"]:
@@ -629,6 +648,14 @@ def _clear_additional_costs_tables(institutional_tables_data):
                     break
             else:
                 del institutional_tables_data[institution]["apc_ac"]
+        if "deal" in data:
+            if not institution_lookup_table[institution].get("deal_participant", False):
+                deal_deleted.append(institution)
+                del institutional_tables_data[institution]["deal"]
+    msg = ("A deal cube will not be generated for these {} institutions " +
+           "since they did not report hybrid DEAL TA data: {}\n")
+    msg = msg.format(len(deal_deleted), ", ".join(deal_deleted))
+    print(colorise(msg, "yellow"))
 
 def _report_non_apc_cubes(institutional_tables_data):
     non_apc_cubes = {}
