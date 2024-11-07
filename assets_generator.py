@@ -760,9 +760,9 @@ def generate_yamls(path):
 
         institution = institution_lookup_table[institution_name]
 
-        content = "name: " + institution["full_name"] + u"\n"
-        content += "slug: " + institution["cube_name"] + u"\n"
-        content += "tagline: " + institution["full_name"] + " publication cost data\n"
+        content = 'name: "' + institution["full_name"] + '"\n'
+        content += "slug: " + institution["cube_name"] + "\n"
+        content += 'tagline: "' + institution["full_name"] + ' publication cost data"\n'
         content += "source: Open APC\n"
         content += "source_url: https://github.com/OpenAPC/openapc-de\n"
         content += "data_url: https://github.com/OpenAPC/openapc-de/blob/master/data/apc_de.csv\n"
