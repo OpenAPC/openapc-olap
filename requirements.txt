@@ -3,3 +3,4 @@ Flask==2.2.2
 Flask-Cors==3.0.10
 SQLAlchemy==1.2.19
 psycopg2==2.9.5
+Werkzeug==2.2.2
