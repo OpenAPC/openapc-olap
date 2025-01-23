@@ -5,6 +5,7 @@ import argparse
 import csv
 import configparser
 from copy import deepcopy
+from datetime import datetime
 import json
 import os
 import re
@@ -37,6 +38,9 @@ ADDITIONAL_COSTS_FILE = "../openapc-de/data/apc_de_additional_costs.csv"
 
 CUBES_LIST_FILE = "institutional_cubes.csv"
 CUBES_PRIORITIES = ["apc", "apc_ac", "bpc", "ta", "deal"] # Treemap hierarchy menu order from left to right
+
+DEAL_WILEY_START_YEAR = datetime(2019, 1, 1)
+DEAL_SPRINGER_START_YEAR = datetime(2020, 1, 1)
 
 DEAL_IMPRINTS = {
     "Wiley-Blackwell": ["Wiley-Blackwell", "EMBO", "American Geophysical Union (AGU)", "International Union of Crystallography (IUCr)", "The Econometric Society"],
@@ -542,7 +546,7 @@ def create_cubes_tables(connectable, schema="openapc_schema"):
                 static_tables_data["openapc_ac"]["data"].append(row_copy)
         # DEAL Wiley
         if row["publisher"] in DEAL_IMPRINTS["Wiley-Blackwell"] and row["country"] == "DEU" and row["is_hybrid"] == "FALSE":
-            if row["period"] in ["2019", "2020", "2021", "2022"]:
+            if datetime.strptime(row["period"], "%Y") > DEAL_WILEY_START_YEAR:
                 row_copy = deepcopy(row)
                 row_copy["publisher"] = "Wiley-Blackwell" # Imprint normalization
                 row_copy["opt_out"] = "FALSE"
@@ -550,7 +554,7 @@ def create_cubes_tables(connectable, schema="openapc_schema"):
                 _insert_into_institutional_tables_data(institutional_tables_data, institution_lookup_table, "deal", row_copy)
         # DEAL Springer
         if row["publisher"] in DEAL_IMPRINTS["Springer Nature"] and row["country"] == "DEU" and row["is_hybrid"] == "FALSE":
-            if row_copy["period"] in ["2020", "2021", "2022"]:
+            if datetime.strptime(row["period"], "%Y") > DEAL_SPRINGER_START_YEAR:
                 row_copy = deepcopy(row)
                 row_copy["opt_out"] = "FALSE"
                 row_copy["publisher"] = "Springer Nature"
