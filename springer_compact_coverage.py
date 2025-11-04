@@ -314,6 +314,8 @@ def _get_springer_journal_id_from_doi(doi, issn=None):
         return "42415"
     elif doi.startswith(("10.1631")): # Irregular, "Journal of Zhejiang University-SCIENCE A"
         return "11582"
+    elif doi.startswith(("10.3938/jkps")): # Irregular, "Journal of the Korean Physical Society"
+        return "40042"
     elif doi.startswith(("10.1140","10.17269")):
     # In case of these journals, the id cannot be extracted directly from the DOI. (EPJ family, Canadian Public Health Association)
         if issn is None or issn not in JOURNAL_ID_CACHE:
