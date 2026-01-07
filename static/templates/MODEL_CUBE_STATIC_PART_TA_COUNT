@@ -6,5 +6,5 @@
                     "function": "count"
                 }
             ],
-            "dimensions": ["institution", "period", "opt-out", "publisher", "journal_full_title", "issn", "doi", "is_hybrid", "country", "contract_name"]
+            "dimensions": ["institution", "period", "opt_out", "publisher", "journal_full_title", "issn", "doi", "is_hybrid", "country", "contract_name"]
         }
