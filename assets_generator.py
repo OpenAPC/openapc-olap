@@ -35,7 +35,7 @@ INSTITUTIONS_FILE = "../openapc-de/data/institutions.csv"
 ADDITIONAL_COSTS_FILE = "../openapc-de/data/apc_de_additional_costs.csv"
 
 CUBES_LIST_FILE = "institutional_cubes.csv"
-CUBES_PRIORITIES = ["apc", "apc_ac", "bpc", "ta_euro", "ta_count"] # Treemap hierarchy menu order from left to right
+CUBES_PRIORITIES = ["apc", "apc_ac", "bpc", "contracts", "ta_euro", "ta_count"] # Treemap hierarchy menu order from left to right
 
 URL_WITHOUT_SCHEME_RE = re.compile(r"^http(s)?:\/\/(?P<path>.*?)$")
 
@@ -45,7 +45,8 @@ MODEL_STATIC_FILES = {
     "bpc": "MODEL_CUBE_STATIC_PART_BPC",
     "ta_euro": "MODEL_CUBE_STATIC_PART_TA_EURO",
     "ta_count": "MODEL_CUBE_STATIC_PART_TA_COUNT",
-    "deal": "MODEL_CUBE_STATIC_PART_DEAL"
+    "deal": "MODEL_CUBE_STATIC_PART_DEAL",
+    "contracts": "MODEL_CUBE_STATIC_PART_CONTRACTS"
 }
 
 YAML_STATIC_FILES = {
@@ -53,7 +54,8 @@ YAML_STATIC_FILES = {
     "apc_ac": "YAML_STATIC_PART_APC_AC",
     "bpc": "YAML_STATIC_PART_BPC",
     "ta_count": "YAML_STATIC_PART_TA_COUNT",
-    "ta_euro": "YAML_STATIC_PART_TA_EURO"
+    "ta_euro": "YAML_STATIC_PART_TA_EURO",
+    "contracts": "YAML_STATIC_PART_CONTRACTS",
 }
 
 TABLE_SCHEMAS = {
@@ -165,6 +167,14 @@ TABLE_SCHEMAS = {
         ("country", "string"),
         ("contract_name", "string"),
         ("opt_out", "string")
+    ],
+    "contracts": [
+        ("institution", "string"),
+        ("period", "string"),
+        ("contract_name", "string"),
+        ("cost_type", "string"),
+        ("euro", "float"),
+        ("country", "string"),
     ],
     "deal": [
         ("institution", "string"),
@@ -315,12 +325,16 @@ def create_cubes_tables(connectable, schema="openapc_schema"):
             "fields": TABLE_SCHEMAS["deal"],
             "cubes_name": "deal",
             "data": []
+        },
+        "contracts": {
+            "fields": TABLE_SCHEMAS["contracts"],
+            "cubes_name": "contracts",
+            "data": []
         }
     }
 
     # a dict to store individual insert commands and data for institutional tables
     institutional_tables_data = {}
-
     additional_cost_data = {}
 
     print(colorise("Processing additional costs file...", "green"))
@@ -345,7 +359,6 @@ def create_cubes_tables(connectable, schema="openapc_schema"):
 
     print(colorise("Processing BPC file...", "green"))
     reader = csv.DictReader(open(BPC_FILE, "r"))
-    bpc_data = []
     for row in reader:
         row["book_title"] = row["book_title"].replace(":", "")
         institution = row["institution"]
@@ -357,6 +370,18 @@ def create_cubes_tables(connectable, schema="openapc_schema"):
         lookup_data = _create_lookup_data(row, ror_id, full_name, "bpc")
         if lookup_data:
             static_tables_data["doi_lookup"]["data"].append(lookup_data)
+            
+    print(colorise("Processing Contracts file...", "green"))
+    reader = csv.DictReader(open(CONTRACTS_FILE, "r"))
+    for row in reader:
+        institution = row["institution"]
+        euro = row["euro"]
+        if euro == "NA":
+            continue
+        row["country"] = institution_lookup_table[institution]["country"]
+        row["period"] = row["period_from"]
+        _insert_into_institutional_tables_data(institutional_tables_data, institution_lookup_table, "contracts", row)
+        static_tables_data["contracts"]["data"].append(row)
 
     institution_key_errors = []
 
