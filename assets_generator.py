@@ -39,6 +39,31 @@ CUBES_PRIORITIES = ["apc", "apc_ac", "bpc", "contracts", "ta_euro", "ta_count"] 
 
 URL_WITHOUT_SCHEME_RE = re.compile(r"^http(s)?:\/\/(?P<path>.*?)$")
 
+CONTRACT_PLACEHOLDER_ARTICLE = {
+    "institution": None,
+    "period": None,
+    "euro": None,
+    "doi": "NO ARTICLE LEVEL DATA",
+    "is_hybrid": "NA",
+    "publisher": "NA",
+    "journal_full_title": "NO ARTICLE LEVEL DATA",
+    "issn": "NA",
+    "issn_print": "NA",
+    "issn_electronic": "NA",
+    "issn_l": "NA",
+    "license_ref": "NA",
+    "indexed_in_crossref": "NA",
+    "pmid": "NA",
+    "pmcid": "NA",
+    "ut": "NA",
+    "url": "NA",
+    "doaj": "NA",
+    "country": "NA",
+    "institution_ror": "NA",
+    "contract_name": "NA",
+    "opt_out": "NA"
+}
+
 MODEL_STATIC_FILES = {
     "apc": "MODEL_CUBE_STATIC_PART",
     "apc_ac": "MODEL_CUBE_STATIC_PART_AC",
@@ -355,7 +380,7 @@ def create_cubes_tables(connectable, schema="openapc_schema"):
             additional_cost_data[doi] = cost_dict
 
     institution_lookup_table = _create_institution_lookup_table()
-    contracts_lookup_table = _create_contracts_lookup_table()
+    eapc_lookup_table = _create_eapc_lookup_table()
 
     print(colorise("Processing BPC file...", "green"))
     reader = csv.DictReader(open(BPC_FILE, "r"))
@@ -372,16 +397,23 @@ def create_cubes_tables(connectable, schema="openapc_schema"):
             static_tables_data["doi_lookup"]["data"].append(lookup_data)
             
     print(colorise("Processing Contracts file...", "green"))
+    contracts_ins_dict = {} # Stores institutional group_ids to track contracts without linked articles
     reader = csv.DictReader(open(CONTRACTS_FILE, "r"))
     for row in reader:
         institution = row["institution"]
         euro = row["euro"]
+        group_id = row["group_id"]
         if euro == "NA":
             continue
         row["country"] = institution_lookup_table[institution]["country"]
         row["period"] = row["period_from"]
         _insert_into_institutional_tables_data(institutional_tables_data, institution_lookup_table, "contracts", row)
         static_tables_data["contracts"]["data"].append(row)
+        if institution not in contracts_ins_dict:
+            contracts_ins_dict[institution] = {}
+        if group_id not in contracts_ins_dict[institution]:
+            contracts_ins_dict[institution][group_id] = []
+        contracts_ins_dict[institution][group_id].append(row)
 
     institution_key_errors = []
 
@@ -410,7 +442,7 @@ def create_cubes_tables(connectable, schema="openapc_schema"):
     for group_id, group_data in group_id_dict.items():
         if group_data["non_euro_articles"] == 0:
             continue
-        contract_data = contracts_lookup_table[group_id]
+        contract_data = eapc_lookup_table[group_id]
         if contract_data["euro"] != "NA":
             eapc = round(contract_data["euro"] / group_data["non_euro_articles"], 2)
             group_data["eapc"] = eapc
@@ -424,7 +456,7 @@ def create_cubes_tables(connectable, schema="openapc_schema"):
         doi = row["doi"]
         euro = row["euro"]
         group_id = row["group_id"]
-        row["contract_name"] = contracts_lookup_table[group_id]["contract_name"]
+        row["contract_name"] = eapc_lookup_table[group_id]["contract_name"]
         # colons cannot be escaped in URL queries to the cubes server, so we have
         # to remove them here
         row["journal_full_title"] = row["journal_full_title"].replace(":", "")
@@ -450,13 +482,31 @@ def create_cubes_tables(connectable, schema="openapc_schema"):
         lookup_data = _create_lookup_data(row, ror_id, full_name, "transformative_agreements")
         if lookup_data:
             static_tables_data["doi_lookup"]["data"].append(lookup_data)
-
+        if contracts_ins_dict.get(institution, {}).get(group_id, []):
+            del(contracts_ins_dict[institution][group_id]) # group_id has linked articles, delete it
+        if institution in contracts_ins_dict and contracts_ins_dict[institution] == {}:
+            del(contracts_ins_dict[institution])
+            
+    print(json.dumps(contracts_ins_dict, indent=2))
     if institution_key_errors:
         print("KeyError: The following institutions were not found in the " +
               "institutions_transformative_agreements file:")
         for institution in institution_key_errors:
             print(institution)
         sys.exit()
+
+    for ins, group_id_dict in contracts_ins_dict.items():
+        for group_id, contracts in group_id_dict.items():
+            print(group_id)
+            print(contracts)
+            total_euro = sum([float(contract["euro"]) for contract in contracts])
+            total_euro = round(total_euro, 2)
+            row = deepcopy(CONTRACT_PLACEHOLDER_ARTICLE)
+            row["institution"] = ins
+            row["euro"] = total_euro
+            row["contract_name"] = contracts[0]["contract_name"]
+            row["period"] = contracts[0]["period_from"]
+            _insert_into_institutional_tables_data(institutional_tables_data, institution_lookup_table, "ta_euro", row)
 
     print(colorise("Processing APC file...", "green"))
     reader = csv.DictReader(open(APC_DE_FILE, "r"))
@@ -641,7 +691,7 @@ def _create_institution_lookup_table():
         }
     return ret
     
-def _create_contracts_lookup_table():
+def _create_eapc_lookup_table():
     print(colorise("Processing contracts file...", "green"))
     reader = csv.DictReader(open(CONTRACTS_FILE, "r"))
     ret = {}
