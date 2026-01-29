@@ -18,6 +18,12 @@
                     "function": "count"
                 },
                 {
+                    "name": "apc_num_articles",
+                    "label": "Number of Articles",
+                    "measure": "is_article",
+                    "function": "article_count"
+                },
+                {
                     "name": "apc_amount_avg",
                     "label": "Mean Value",
                     "measure": "euro",
@@ -30,5 +36,5 @@
                     "function": "stddev"
                 }
             ],
-            "dimensions": ["institution", "period", "publisher", "journal_full_title", "issn", "doi", "is_hybrid", "country", "institution_ror"]
+            "dimensions": ["institution", "period", "publisher", "journal_full_title", "issn", "doi", "is_hybrid", "country", "institution_ror", "origin", "cost_type", "is_article"]
         }

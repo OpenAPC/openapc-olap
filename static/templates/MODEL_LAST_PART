@@ -1,49 +1,5 @@
         ,
         {
-        "name": "openapc_ac",
-        "label": "openapc additional costs",
-        "measures": [
-            {
-                "name": "euro",
-                "label": "Cost Amount"
-            }
-        ],
-        "aggregates": [
-                {
-                    "name": "apc_amount_sum",
-                    "label": "Sum",
-                    "measure": "euro",
-                    "function": "sum"
-                },
-                {
-                    "name": "apc_num_items",
-                    "label": "Number of Articles",
-                    "measure": "publication_key",
-                    "function": "count_distinct"
-                },
-                {
-                    "name": "cost_data_num_items",
-                    "label": "Matters of Expense",
-                    "measure": "publication_key",
-                    "function": "count"
-                },
-                {
-                    "name": "apc_amount_avg",
-                    "label": "Mean Value",
-                    "measure": "euro",
-                    "function": "avg"
-                },
-                {
-                    "name": "apc_amount_stddev",
-                    "label": "Standard Deviation",
-                    "measure": "euro",
-                    "function": "stddev"
-                }
-            ],
-            "dimensions": ["institution", "period", "publisher", "journal_full_title", "issn", "doi", "is_hybrid", "country", "institution_ror", "cost_type", "publication_key"]
-        }
-        ,
-        {
             "name": "ta_count",
             "label": "Transformative Agreements data cube, for articles/agreement without assigned costs",
             "aggregates": [
@@ -80,36 +36,10 @@
                     "function": "count"
                 },
                 {
-                    "name": "apc_amount_avg",
-                    "label": "Mean Value",
-                    "measure": "euro",
-                    "function": "avg"
-                },
-                {
-                    "name": "apc_amount_stddev",
-                    "label": "Standard Deviation",
-                    "measure": "euro",
-                    "function": "stddev"
-                }
-            ],
-            "dimensions": ["institution", "period", "publisher", "journal_full_title", "issn", "doi", "is_hybrid", "country", "opt_out", "contract_name"]
-        }
-        ,
-        {
-            "name": "contracts",
-            "label": "Contracts with cost data",
-            "measures": [
-                {
-                    "name": "euro",
-                    "label": "Cost Amount"
-                }
-            ],
-            "aggregates": [
-                {
-                    "name": "apc_amount_sum",
-                    "label": "Sum",
-                    "measure": "euro",
-                    "function": "sum"
+                    "name": "apc_num_articles",
+                    "label": "Number of Articles",
+                    "measure": "is_article",
+                    "function": "article_count"
                 },
                 {
                     "name": "apc_amount_avg",
@@ -124,7 +54,7 @@
                     "function": "stddev"
                 }
             ],
-            "dimensions": ["institution", "period", "contract_name", "cost_type", "country"]
+            "dimensions": ["institution", "period", "publisher", "journal_full_title", "issn", "doi", "is_hybrid", "country", "opt_out", "contract_name", "cost_type", "is_article"]
         }
         ,
         {
@@ -181,7 +111,7 @@
         ,
         {
             "name": "deal",
-            "label": "DEAL data (cost data from articles published under the German DEAL agreement)",
+            "label": "DEAL data (cost data from articles published under the German DEAL agreements)",
             "measures": [
                 {
                     "name": "euro",
@@ -202,6 +132,12 @@
                     "function": "count"
                 },
                 {
+                    "name": "apc_num_articles",
+                    "label": "Number of Articles",
+                    "measure": "is_article",
+                    "function": "article_count"
+                },
+                {
                     "name": "apc_amount_avg",
                     "label": "Mean Value",
                     "measure": "euro",
@@ -214,7 +150,7 @@
                     "function": "stddev"
                 }
             ],
-            "dimensions": ["institution", "period", "publisher", "journal_full_title", "issn", "doi", "is_hybrid", "country", "opt_out", "contract_name"]
+            "dimensions": ["institution", "period", "publisher", "journal_full_title", "issn", "doi", "is_hybrid", "country", "opt_out", "contract_name", "cost_type", "is_article"]
         }
         
     ],
@@ -338,6 +274,16 @@
             "name": "publication_key",
             "description": "Key for identifying a publication. Eqivalent to the DOI in most cases, but may also be an URL for publications without a DOI.",
             "attributes": ["publication_key"]
+        },
+        {
+            "name": "origin",
+            "description": "Identifies which data set an APC record originates from.",
+            "attributes": ["origin"]
+        },
+        {
+            "name": "is_article",
+            "description": "TRUE if this record represent an article, FALSE otherwise.",
+            "attributes": ["is_article"]
         }
     ]
 }
