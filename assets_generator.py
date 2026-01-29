@@ -32,10 +32,10 @@ BPC_FILE = "../openapc-de/data/bpc.csv"
 TRANSFORMATIVE_AGREEMENTS_FILE = "../openapc-de/data/transformative_agreements/transformative_agreements.csv"
 CONTRACTS_FILE = "../openapc-de/data/transformative_agreements/contracts.csv"
 INSTITUTIONS_FILE = "../openapc-de/data/institutions.csv"
-ADDITIONAL_COSTS_FILE = "../openapc-de/data/apc_de_additional_costs.csv"
+ADDITIONAL_COSTS_FILE = "../openapc-de/data/additional_costs.csv"
 
 CUBES_LIST_FILE = "institutional_cubes.csv"
-CUBES_PRIORITIES = ["apc", "apc_ac", "bpc", "contracts", "ta_euro", "ta_count"] # Treemap hierarchy menu order from left to right
+CUBES_PRIORITIES = ["apc", "bpc", "ta_euro", "ta_count"] # Treemap hierarchy menu order from left to right
 
 URL_WITHOUT_SCHEME_RE = re.compile(r"^http(s)?:\/\/(?P<path>.*?)$")
 
@@ -60,27 +60,25 @@ CONTRACT_PLACEHOLDER_ARTICLE = {
     "doaj": "NA",
     "country": "NA",
     "institution_ror": "NA",
+    "cost_type": "NA",
     "contract_name": "NA",
-    "opt_out": "NA"
+    "opt_out": "NA",
+    "is_article": "TRUE",
 }
 
 MODEL_STATIC_FILES = {
     "apc": "MODEL_CUBE_STATIC_PART",
-    "apc_ac": "MODEL_CUBE_STATIC_PART_AC",
     "bpc": "MODEL_CUBE_STATIC_PART_BPC",
     "ta_euro": "MODEL_CUBE_STATIC_PART_TA_EURO",
     "ta_count": "MODEL_CUBE_STATIC_PART_TA_COUNT",
     "deal": "MODEL_CUBE_STATIC_PART_DEAL",
-    "contracts": "MODEL_CUBE_STATIC_PART_CONTRACTS"
 }
 
 YAML_STATIC_FILES = {
     "apc": "YAML_STATIC_PART_APC",
-    "apc_ac": "YAML_STATIC_PART_APC_AC",
     "bpc": "YAML_STATIC_PART_BPC",
     "ta_count": "YAML_STATIC_PART_TA_COUNT",
     "ta_euro": "YAML_STATIC_PART_TA_EURO",
-    "contracts": "YAML_STATIC_PART_CONTRACTS",
 }
 
 TABLE_SCHEMAS = {
@@ -120,32 +118,10 @@ TABLE_SCHEMAS = {
         ("url", "string"),
         ("doaj", "string"),
         ("country", "string"),
-        ("institution_ror", "string")
-    ],
-    "apc_ac": [
-        ("institution", "string"),
-        ("period", "string"),
-        ("euro", "float"),
-        ("doi", "string"),
-        ("is_hybrid", "string"),
-        ("publisher", "string"),
-        ("journal_full_title", "string"),
-        ("issn", "string"),
-        ("issn_print", "string"),
-        ("issn_electronic", "string"),
-        ("issn_l", "string"),
-        ("license_ref", "string"),
-        ("indexed_in_crossref", "string"),
-        ("pmid", "string"),
-        ("pmcid", "string"),
-        ("ut", "string"),
-        ("url", "string"),
-        ("doaj", "string"),
-        ("country", "string"),
         ("institution_ror", "string"),
         ("cost_type", "string"),
-        ("cost_category", "string"),
-        ("publication_key", "string")
+        ("origin", "string"),
+        ("is_article", "string")
     ],
     "ta_euro": [
         ("institution", "string"),
@@ -168,8 +144,10 @@ TABLE_SCHEMAS = {
         ("doaj", "string"),
         ("country", "string"),
         ("institution_ror", "string"),
+        ("cost_type", "string"),
         ("contract_name", "string"),
-        ("opt_out", "string")
+        ("opt_out", "string"),
+        ("is_article", "string")
     ],
     "ta_count": [
         ("institution", "string"),
@@ -193,14 +171,6 @@ TABLE_SCHEMAS = {
         ("contract_name", "string"),
         ("opt_out", "string")
     ],
-    "contracts": [
-        ("institution", "string"),
-        ("period", "string"),
-        ("contract_name", "string"),
-        ("cost_type", "string"),
-        ("euro", "float"),
-        ("country", "string"),
-    ],
     "deal": [
         ("institution", "string"),
         ("period", "string"),
@@ -221,9 +191,11 @@ TABLE_SCHEMAS = {
         ("url", "string"),
         ("doaj", "string"),
         ("country", "string"),
+        ("cost_type", "string"),
         ("institution_ror", "string"),
         ("contract_name", "string"),
-        ("opt_out", "string")
+        ("opt_out", "string"),
+        ("is_article", "string")
     ]
 }
 
@@ -326,11 +298,6 @@ def create_cubes_tables(connectable, schema="openapc_schema"):
             "cubes_name": "openapc",
             "data": []
         },
-        "openapc_ac": {
-            "fields": TABLE_SCHEMAS["apc_ac"],
-            "cubes_name": "openapc_ac",
-            "data": []
-        },
         "ta_count": {
             "fields": TABLE_SCHEMAS["ta_count"],
             "cubes_name": "ta_count",
@@ -349,11 +316,6 @@ def create_cubes_tables(connectable, schema="openapc_schema"):
         "deal": {
             "fields": TABLE_SCHEMAS["deal"],
             "cubes_name": "deal",
-            "data": []
-        },
-        "contracts": {
-            "fields": TABLE_SCHEMAS["contracts"],
-            "cubes_name": "contracts",
             "data": []
         }
     }
@@ -407,8 +369,6 @@ def create_cubes_tables(connectable, schema="openapc_schema"):
             continue
         row["country"] = institution_lookup_table[institution]["country"]
         row["period"] = row["period_from"]
-        _insert_into_institutional_tables_data(institutional_tables_data, institution_lookup_table, "contracts", row)
-        static_tables_data["contracts"]["data"].append(row)
         if institution not in contracts_ins_dict:
             contracts_ins_dict[institution] = {}
         if group_id not in contracts_ins_dict[institution]:
@@ -456,7 +416,10 @@ def create_cubes_tables(connectable, schema="openapc_schema"):
         doi = row["doi"]
         euro = row["euro"]
         group_id = row["group_id"]
+        row["cost_type"] = "NA"
+        row["is_article"] = "TRUE"
         row["contract_name"] = eapc_lookup_table[group_id]["contract_name"]
+        is_deal = _is_deal(group_id, eapc_lookup_table)
         # colons cannot be escaped in URL queries to the cubes server, so we have
         # to remove them here
         row["journal_full_title"] = row["journal_full_title"].replace(":", "")
@@ -466,16 +429,40 @@ def create_cubes_tables(connectable, schema="openapc_schema"):
         except KeyError:
             if institution not in institution_key_errors:
                 institution_key_errors.append(institution)
+        
         # Assign possible EAPC
         if row["euro"] == "NA":
             group_data = group_id_dict[group_id]
             if "eapc" in group_data:
                 row["euro"] = group_data["eapc"]
+                row["cost_type"] = "Equivalent APC"
+        else:
+            row["cost_type"] = "APC"
+            row_copy = deepcopy(row)
+            row_copy["origin"] = "TA DATA"
+            static_tables_data["openapc"]["data"].append(row_copy)
+            _insert_into_institutional_tables_data(institutional_tables_data, institution_lookup_table, "apc", row_copy)
+        if doi in additional_cost_data:
+            for cost_type, value in additional_cost_data[doi].items():
+                row_copy = deepcopy(row)
+                row_copy["cost_type"] = cost_type
+                row_copy["euro"] = value
+                row_copy["is_article"] = "FALSE"
+                static_tables_data["ta_euro"]["data"].append(row_copy)
+                _insert_into_institutional_tables_data(institutional_tables_data, institution_lookup_table, "ta_euro", row_copy)
+                if is_deal:
+                    static_tables_data["deal"]["data"].append(row_copy)
+                if row["cost_type"] == "APC":
+                    row_copy["origin"] = "TA DATA"
+                    static_tables_data["openapc"]["data"].append(row_copy)
+                    _insert_into_institutional_tables_data(institutional_tables_data, institution_lookup_table, "apc", row_copy)
         static_tables_data["ta_count"]["data"].append(row)
         _insert_into_institutional_tables_data(institutional_tables_data, institution_lookup_table, "ta_count", row)
         if row["euro"] != "NA":
             static_tables_data["ta_euro"]["data"].append(row)
             _insert_into_institutional_tables_data(institutional_tables_data, institution_lookup_table, "ta_euro", row)
+            if is_deal:
+                static_tables_data["deal"]["data"].append(row)
         
         ror_id = institution_lookup_table[institution]["ror_id"]
         full_name = institution_lookup_table[institution]["full_name"]
@@ -486,8 +473,7 @@ def create_cubes_tables(connectable, schema="openapc_schema"):
             del(contracts_ins_dict[institution][group_id]) # group_id has linked articles, delete it
         if institution in contracts_ins_dict and contracts_ins_dict[institution] == {}:
             del(contracts_ins_dict[institution])
-            
-    print(json.dumps(contracts_ins_dict, indent=2))
+
     if institution_key_errors:
         print("KeyError: The following institutions were not found in the " +
               "institutions_transformative_agreements file:")
@@ -495,10 +481,9 @@ def create_cubes_tables(connectable, schema="openapc_schema"):
             print(institution)
         sys.exit()
 
+    # insert placeholders for group_ids without linked articles
     for ins, group_id_dict in contracts_ins_dict.items():
         for group_id, contracts in group_id_dict.items():
-            print(group_id)
-            print(contracts)
             total_euro = sum([float(contract["euro"]) for contract in contracts])
             total_euro = round(total_euro, 2)
             row = deepcopy(CONTRACT_PLACEHOLDER_ARTICLE)
@@ -506,7 +491,11 @@ def create_cubes_tables(connectable, schema="openapc_schema"):
             row["euro"] = total_euro
             row["contract_name"] = contracts[0]["contract_name"]
             row["period"] = contracts[0]["period_from"]
+            row["is_article"] = "FALSE"
+            static_tables_data["ta_euro"]["data"].append(row)
             _insert_into_institutional_tables_data(institutional_tables_data, institution_lookup_table, "ta_euro", row)
+            if _is_deal(group_id, eapc_lookup_table):
+                static_tables_data["deal"]["data"].append(row)
 
     print(colorise("Processing APC file...", "green"))
     reader = csv.DictReader(open(APC_DE_FILE, "r"))
@@ -519,6 +508,9 @@ def create_cubes_tables(connectable, schema="openapc_schema"):
         # to remove them here
         row["journal_full_title"] = row["journal_full_title"].replace(":", "")
         row["country"] = institution_lookup_table[institution]["country"]
+        row["origin"] = "APC DATA"
+        row["is_article"] = "TRUE"
+        row["cost_type"] = "APC"
         ror_id = institution_lookup_table[institution]["ror_id"]
         full_name = institution_lookup_table[institution]["full_name"]
         row["institution_ror"] = ror_id
@@ -527,22 +519,15 @@ def create_cubes_tables(connectable, schema="openapc_schema"):
         if lookup_data:
             static_tables_data["doi_lookup"]["data"].append(lookup_data)
         _insert_into_institutional_tables_data(institutional_tables_data, institution_lookup_table, "apc", row)
-        # create copy with ac fields
-        row_copy = deepcopy(row)
-        row_copy["publication_key"] = _create_publication_key(row)
-        row_copy["cost_type"] = "apc"
-        row_copy["cost_category"] = "APC"
-        static_tables_data["openapc_ac"]["data"].append(row_copy)
-        _insert_into_institutional_tables_data(institutional_tables_data, institution_lookup_table, "apc_ac", row_copy)
         if doi in additional_cost_data:
             for cost_type, value in additional_cost_data[doi].items():
                 row_copy = deepcopy(row)
                 row_copy["cost_type"] = cost_type
-                row_copy["cost_category"] = "Additional Cost"
                 row_copy["euro"] = value
                 row_copy["publication_key"] = _create_publication_key(row)
-                _insert_into_institutional_tables_data(institutional_tables_data, institution_lookup_table, "apc_ac", row_copy)
-                static_tables_data["openapc_ac"]["data"].append(row_copy)
+                row_copy["is_article"] = "FALSE"
+                _insert_into_institutional_tables_data(institutional_tables_data, institution_lookup_table, "apc", row_copy)
+                static_tables_data["openapc"]["data"].append(row_copy)
 
     _postprocess_institutional_tables(institutional_tables_data, institution_lookup_table)
     _report_non_apc_cubes(institutional_tables_data)
@@ -704,6 +689,12 @@ def _create_eapc_lookup_table():
         else:
             ret[group_id]["euro"] += row["euro"]
     return ret
+
+def _is_deal(group_id, eapc_lookup_table):
+    identifier = eapc_lookup_table[group_id]["identifier"]
+    if identifier in ["wiley2019deal", "wiley2024deal", "sn2020deal", "sn2024deal", "els2023deal"]:
+        return True
+    return False
 
 def _get_additional_costs_institutions():
     additional_costs_institutions = []
