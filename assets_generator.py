@@ -488,6 +488,7 @@ def create_cubes_tables(connectable, schema="openapc_schema"):
             total_euro = round(total_euro, 2)
             row = deepcopy(CONTRACT_PLACEHOLDER_ARTICLE)
             row["institution"] = ins
+            row["country"] = institution_lookup_table[ins]["country"]
             row["euro"] = total_euro
             row["contract_name"] = contracts[0]["contract_name"]
             row["period"] = contracts[0]["period_from"]

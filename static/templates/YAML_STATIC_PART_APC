@@ -10,6 +10,9 @@
           - field: 'is_hybrid'
             name: 'Hybrid Status'
             nullable: true
+          - field: 'origin'
+            name: 'Origin'
+            nullable: true
         table_items:
           - name: 'apc_amount_sum'
             type: 'aggregate'
