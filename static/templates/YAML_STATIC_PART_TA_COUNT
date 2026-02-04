@@ -17,6 +17,6 @@
             name: 'Hybrid Status'
             nullable: true
         drilldowns:
-          - agreement
+          - contract_name
           - journal_full_title
           - doi

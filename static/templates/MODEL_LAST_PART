@@ -1,51 +1,7 @@
         ,
         {
-        "name": "openapc_ac",
-        "label": "openapc additional costs",
-        "measures": [
-            {
-                "name": "euro",
-                "label": "Cost Amount"
-            }
-        ],
-        "aggregates": [
-                {
-                    "name": "apc_amount_sum",
-                    "label": "Sum",
-                    "measure": "euro",
-                    "function": "sum"
-                },
-                {
-                    "name": "apc_num_items",
-                    "label": "Number of Articles",
-                    "measure": "publication_key",
-                    "function": "count_distinct"
-                },
-                {
-                    "name": "cost_data_num_items",
-                    "label": "Matters of Expense",
-                    "measure": "publication_key",
-                    "function": "count"
-                },
-                {
-                    "name": "apc_amount_avg",
-                    "label": "Mean Value",
-                    "measure": "euro",
-                    "function": "avg"
-                },
-                {
-                    "name": "apc_amount_stddev",
-                    "label": "Standard Deviation",
-                    "measure": "euro",
-                    "function": "stddev"
-                }
-            ],
-            "dimensions": ["institution", "period", "publisher", "journal_full_title", "issn", "doi", "is_hybrid", "country", "institution_ror", "cost_type", "publication_key"]
-        }
-        ,
-        {
-            "name": "transformative_agreements",
-            "label": "Transformative Agreements data cube (No monetary values!)",
+            "name": "ta_count",
+            "label": "Transformative Agreements data cube, for articles/agreement without assigned costs",
             "aggregates": [
                 {
                     "name": "num_items",
@@ -54,54 +10,12 @@
                     "function": "count"
                 }
             ],
-            "dimensions": ["institution", "period", "publisher", "journal_full_title", "issn", "doi", "is_hybrid", "country", "agreement"]
+            "dimensions": ["institution", "period", "publisher", "journal_full_title", "issn", "doi", "is_hybrid", "country", "contract_name"]
         }
         ,
         {
-            "name": "doi_lookup",
-            "label": "DOI lookup cube, contains DOIs from all OpenAPC data sets",
-            "aggregates": [
-                {
-                    "name": "num_items",
-                    "label": "Number of Records",
-                    "measure": "doi",
-                    "function": "count"
-                }
-            ],
-            "dimensions": ["institution", "institution_ror", "institution_full_name", "euro", "period", "doi", "url"]
-        }
-        ,
-        {
-            "name": "springer_compact_coverage",
-            "label": "Number of Springer Compact articles compared to number of total and oa articles in Springer journals",
-            "aggregates": [
-                {
-                    "name": "springer_compact_articles",
-                    "label": "Springer Compact articles",
-                    "measure": "num_springer_compact_articles",
-                    "function": "sum",
-                    "info": "primary"
-                },
-                {
-                    "name": "journal_total_articles",
-                    "label": "Journal total articles",
-                    "measure": "num_journal_total_articles",
-                    "function": "sum"
-                },
-                {
-                    "name": "journal_oa_articles",
-                    "label": "Journal OA articles",
-                    "measure": "num_journal_oa_articles",
-                    "function": "sum"
-                }
-
-            ],
-            "dimensions": ["period", "publisher", "journal_full_title", "issn", "is_hybrid", "num_springer_compact_articles", "num_journal_total_articles", "num_journal_oa_articles"]
-        }
-        ,
-        {
-            "name": "combined",
-            "label": "combined cube (combines cost data from openapc and transformative agreements model)",
+            "name": "ta_euro",
+            "label": "Transformative Agreements data cube, for articles/agreements with cost data",
             "measures": [
                 {
                     "name": "euro",
@@ -122,6 +36,12 @@
                     "function": "count"
                 },
                 {
+                    "name": "apc_num_articles",
+                    "label": "Number of Articles",
+                    "measure": "is_article",
+                    "function": "article_count"
+                },
+                {
                     "name": "apc_amount_avg",
                     "label": "Mean Value",
                     "measure": "euro",
@@ -134,7 +54,21 @@
                     "function": "stddev"
                 }
             ],
-            "dimensions": ["institution", "period", "publisher", "journal_full_title", "issn", "doi", "is_hybrid", "country"]
+            "dimensions": ["institution", "period", "publisher", "journal_full_title", "issn", "doi", "is_hybrid", "country", "opt_out", "contract_name", "cost_type", "is_article"]
+        }
+        ,
+        {
+            "name": "doi_lookup",
+            "label": "DOI lookup cube, contains DOIs from all OpenAPC data sets",
+            "aggregates": [
+                {
+                    "name": "num_items",
+                    "label": "Number of Records",
+                    "measure": "doi",
+                    "function": "count"
+                }
+            ],
+            "dimensions": ["institution", "institution_ror", "institution_full_name", "euro", "period", "doi", "url"]
         }
         ,
         {
@@ -177,7 +111,7 @@
         ,
         {
             "name": "deal",
-            "label": "DEAL data (cost data from articles published under the German DEAL agreement)",
+            "label": "DEAL data (cost data from articles published under the German DEAL agreements)",
             "measures": [
                 {
                     "name": "euro",
@@ -198,6 +132,12 @@
                     "function": "count"
                 },
                 {
+                    "name": "apc_num_articles",
+                    "label": "Number of Articles",
+                    "measure": "is_article",
+                    "function": "article_count"
+                },
+                {
                     "name": "apc_amount_avg",
                     "label": "Mean Value",
                     "measure": "euro",
@@ -210,7 +150,7 @@
                     "function": "stddev"
                 }
             ],
-            "dimensions": ["institution", "period", "publisher", "journal_full_title", "issn", "doi", "is_hybrid", "country", "opt_out"]
+            "dimensions": ["institution", "period", "publisher", "journal_full_title", "issn", "doi", "is_hybrid", "country", "opt_out", "contract_name", "cost_type", "is_article"]
         }
         
     ],
@@ -286,9 +226,9 @@
             "attributes": ["institution_ror"]
         },
         {
-            "name": "agreement",
+            "name": "contract_name",
             "description": "transformative agreement an article was published under",
-            "attributes": ["agreement"]
+            "attributes": ["contract_name"]
         },
         {
             "name": "num_springer_compact_articles",
@@ -334,6 +274,16 @@
             "name": "publication_key",
             "description": "Key for identifying a publication. Eqivalent to the DOI in most cases, but may also be an URL for publications without a DOI.",
             "attributes": ["publication_key"]
+        },
+        {
+            "name": "origin",
+            "description": "Identifies which data set an APC record originates from.",
+            "attributes": ["origin"]
+        },
+        {
+            "name": "is_article",
+            "description": "TRUE if this record represent an article, FALSE otherwise.",
+            "attributes": ["is_article"]
         }
     ]
 }
