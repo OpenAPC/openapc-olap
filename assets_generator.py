@@ -676,7 +676,7 @@ def _create_institution_lookup_table():
             "cube_name": row["institution_cubes_name"]
         }
     return ret
-    
+
 def _create_eapc_lookup_table():
     print(colorise("Processing contracts file...", "green"))
     reader = csv.DictReader(open(CONTRACTS_FILE, "r"))
@@ -688,7 +688,10 @@ def _create_eapc_lookup_table():
         if group_id not in ret:
             ret[group_id] = row
         else:
-            ret[group_id]["euro"] += row["euro"]
+            if ret[group_id]["euro"] == "NA":
+                ret[group_id]["euro"] = row["euro"]
+            else:
+                ret[group_id]["euro"] += row["euro"]
     return ret
 
 def _is_deal(group_id, eapc_lookup_table):
